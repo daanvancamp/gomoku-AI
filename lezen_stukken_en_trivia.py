@@ -27,7 +27,7 @@ def start_muziek_vertraagd(tijd=5):#standard 5 seconden, kan ook worden verander
 def initialiseer_spelbord_json_bestanden():
     import json
     relevante_stukken=[]
-    pads=[r"C:\Users\daanv\Source\Repos\gomoku-ai(van github gepakt.)\bord_gomoku\bord_na_zet.json",r"C:\Users\daanv\Source\Repos\gomoku-ai(van github gepakt.)\bord_gomoku\bord_voor_zet.json"]
+    pads=[r".\bord_gomoku\bord_na_zet.json",r".\bord_gomoku\bord_voor_zet.json"]
 
     for pad in pads:
         with open(pad, 'w') as json_file:
@@ -35,7 +35,7 @@ def initialiseer_spelbord_json_bestanden():
 
 
 def controleer_vertraging_data():
-    data=lees_van_json(r"C:\Users\daanv\Source\Repos\gomoku-ai(van github gepakt.)\bord_gomoku\bord_na_zet.json")
+    data=lees_van_json(r".\bord_gomoku\bord_na_zet.json")
     if data: #eerste keer zal dit nog geen waarde hebben
         from datetime import datetime
         huidige_timestamp=datetime.now().isoformat()
@@ -88,8 +88,8 @@ def lees_van_json(pad)-> List[Tuple[int, int]]:
 
 
 def bepaal_relevante_zet () -> List[Tuple[int, int]]:
-    stukken_na_zet=lees_van_json(r"C:\Users\daanv\Source\Repos\gomoku-ai(van github gepakt.)\bord_gomoku\bord_na_zet.json")
-    stukken_voor_zet=lees_van_json(r"C:\Users\daanv\Source\Repos\gomoku-ai(van github gepakt.)\bord_gomoku\bord_voor_zet.json")
+    stukken_na_zet=lees_van_json(r".\bord_gomoku\bord_na_zet.json")
+    stukken_voor_zet=lees_van_json(r".\bord_gomoku\bord_voor_zet.json")
     relevante_zetten=[]
     if stukken_voor_zet is None:
         stukken_voor_zet = []
@@ -128,12 +128,12 @@ def schrijf_relevante_stukken_weg(pad)->None:
         raise Exception("Geen stukken van de relevante kleur gevonden")
 
 def schrijf_relevante_stukken_voor_zet_weg () :
-    pad_relevante_stukken_voor_zet=r"C:\Users\daanv\Source\Repos\gomoku-ai(van github gepakt.)\bord_gomoku\bord_voor_zet.json"
+    pad_relevante_stukken_voor_zet=r".\bord_gomoku\bord_voor_zet.json"
     schrijf_relevante_stukken_weg(pad_relevante_stukken_voor_zet)
 
 def schrijf_relevante_stukken_na_zet_weg () :#kunnen er ook meer zijn (tot (15*15)/2 stukken)
     global board, old_board
-    pad_relevante_stukken_na_zet=r"C:\Users\daanv\Source\Repos\gomoku-ai(van github gepakt.)\bord_gomoku\bord_na_zet.json"
+    pad_relevante_stukken_na_zet=r".\bord_gomoku\bord_na_zet.json"
     schrijf_relevante_stukken_weg(pad_relevante_stukken_na_zet)
 
 

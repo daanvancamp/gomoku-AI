@@ -1,8 +1,6 @@
 import random
 DEPTH = 5
 
-
-
 def check_line(row, col, direction, board, ai_id):
     score_white = score_black = previous = 0
     multiplier = 1

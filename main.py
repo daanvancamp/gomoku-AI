@@ -9,7 +9,7 @@ def main():
     mainmenu.mainmenu_run()
 
 def controleer_bestandspaden():
-    paden=[r"C:\Users\daanv\Source\Repos\gomoku-ai(van github gepakt.)\bord_gomoku\bord_na_zet.json",r"C:\Users\daanv\Source\Repos\gomoku-ai(van github gepakt.)\bord_gomoku\bord_voor_zet.json",r"C:\Users\daanv\source\repos\vijf_op_een_rij_beeldherkenning\vijf_op_een_rij_beeldherkenning\detected_pieces.json"]
+    paden=[r".\bord_gomoku\bord_na_zet.json",r".\bord_gomoku\bord_voor_zet.json",r"C:\Users\daanv\source\repos\vijf_op_een_rij_beeldherkenning\vijf_op_een_rij_beeldherkenning\detected_pieces.json"]
     for bestandspad in paden:
         if not os.path.exists(bestandspad):
             print("Het JSON-bestand bestaat niet. Maak het aan en probeer het opnieuw.")
