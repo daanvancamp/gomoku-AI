@@ -2,17 +2,27 @@ import json
 import datetime
 import os
 
-
+#todo: verwijder onnodige zaken
 def create_gomoku_game(filename):
+    """
+    This function creates a Gomoku game based on the configuration from a JSON file.
+
+    Args:
+        filename (str): The path to the JSON file containing the Gomoku configuration.
+
+    Returns:
+        list: A list of values extracted from the Gomoku configuration.
+    """
     with open(filename, 'r') as file:
         data = json.load(file)
         gomoku_config = data.get("gomoku", [])[0]
         values = []
         for key, value in gomoku_config.items():
             if type(value) is str:
-                value = string_to_color(value)
+                value = string_to_color(value)  # Assuming string_to_color is defined elsewhere
             values.append(value)
         return values
+
 
 
 def load_scores(filename):
@@ -25,8 +35,19 @@ def load(filename):
 
 
 def string_to_color(in_col):
+    """
+    Converts a string representation of an RGB color to a tuple of integers representing the color.
+
+    Args:
+        in_col (str): The string representation of the RGB color in the format "(R, G, B)"
+
+    Returns:
+        tuple: A tuple representing the RGB color as integers (R, G, B)
+    """
+    # Remove parentheses
     new_col = in_col.replace('(', '')
     new_col = new_col.replace(')', '')
+    # Split the string into individual RGB values
     rgb = new_col.split(', ')
     return int(rgb[0]), int(rgb[1]), int(rgb[2])
 

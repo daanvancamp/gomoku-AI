@@ -8,10 +8,16 @@ import numpy as np
 import random
 from collections import deque
 
-MAX_MEMORY = 1_000_000
-BATCH_SIZE = 10000
+MAX_MEMORY = 1_000_0000          # origineel 1_000_000
+BATCH_SIZE = 10_000
 MIN_EPSILON = 0.01
 EPSILON_DECAY_RATE = 0.999
+
+#todo: Verbeteringen aanbrengen in het model door een complexere neurale netwerkarchitectuur te implementeren.:zeer moeilijk
+#todo: Een aanpasbare leerfactor introduceren om de precisie van het leren te verbeteren. concreet: learn rate verlagen naarmate het trainen vordert.:matig
+#De optimalisatiefunctie is veranderd van Adam naar SGD om de voorspelnauwkeurigheid te verhogen.:zeer eenvoudig
+#todo: Experimenteren met genetische algoritmes om de optimale modelparameters te ontdekken.:zeer moeilijk
+#todo: Meer tijd besteden aan het trainen van complexere netwerken om hun effectiviteit te testen. :???
 
 
 class ConvNet(nn.Module):
@@ -48,10 +54,11 @@ class ConvNet(nn.Module):
         model_folder = './data/'
         full_path = os.path.join(model_folder, file_name)
         if os.path.isfile(full_path):
-            print("A model exist, loading model.")
+            print("A model already exists, loading model...")
+            print("Wanneer je het model traint, wordt het model bijgewerkt.")
             self.load_state_dict(torch.load(full_path))
         else:
-            print("No model exist. Creating a new model.")
+            print("No model exists. Creating a new model.")
 
     def save_model(self, file_name='model.pth'):
         model_folder = './data/'
@@ -72,7 +79,9 @@ class GomokuAI:
         self.epsilon = 0.25
         self.memory = deque(maxlen=MAX_MEMORY)
         self.model = self.build_model(self.board_size)
-        self.optimizer = optim.Adam(params=self.model.parameters(), lr=self.learning_rate)
+        #self.optimizer = optim.Adam(params=self.model.parameters(), lr=self.learning_rate) #todo: verander naar SGD
+        self.optimizer= optim.SGD(params=self.model.parameters(), lr=self.learning_rate)
+
         self.criterion = nn.MSELoss()
         self.loss = 0
         self.train = False
@@ -169,12 +178,22 @@ class GomokuAI:
                     action = (pred_indices[0][idx], pred_indices[1][idx])
             else:
                 action = None
-        while action is None:
+        attempts=0#initialiseer
+        max_attempts=70 #todo:test dit
+        while action is None:#Het programma blijft hier hangen!!!
+            attempts+=1
+            if attempts>max_attempts:
+                  action = random.random.choice(valid_moves) #vorm: (x,y)
+                  if action is None:
+                      raise Exception("A random move couldn't be found")
+                  print("move not found, random move chosen")
+                  #stop na 3O pogingen #todo: controleer werking
+                  #break
             # if no action, switch to exploration
             print("Exploration")
             action = self.id_to_move(self.get_random_action(state), valid_moves)
         # Decay Epsilon Over Time
-        self.adjust_epsilon()
+        self.adjust_epsilon()#todo: pas decay_epsilon aan
         return action
 
     def get_random_action(self, board):
@@ -186,7 +205,7 @@ class GomokuAI:
                 break
         return p
 
-    def convert_to_one_hot(self, board, player_id):
+    def convert_to_one_hot(self, board, player_id):#vermijd dat ai denkt dat de getallen iets betekenen.
         board = np.array(board)
         height, width = board.shape
         one_hot_board = np.zeros((3, height, width), dtype=np.float32)

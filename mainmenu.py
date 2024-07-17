@@ -7,8 +7,11 @@ import filereader
 import stats
 from PIL import Image, ImageTk
 import json
+from lezen_stukken_en_trivia import TE_DETECTEREN_KLEUR, initialiseer_spelbord_json_bestanden
 
-WIDTH = 230
+#todo: make it look nice
+
+WIDTH = 250 #origineel 230
 HEIGHT = 315
 game_instance = gomoku.GomokuGame(filereader.create_gomoku_game("consts.json"))
 
@@ -17,9 +20,20 @@ root.geometry(str(WIDTH) + "x" + str(HEIGHT))
 root.minsize(WIDTH, HEIGHT)
 root.maxsize(WIDTH, HEIGHT)
 root.title("Gomoku -- Main Menu")
+if TE_DETECTEREN_KLEUR=="Blauw":
+    root.configure(bg="blue")
+elif TE_DETECTEREN_KLEUR=="Rood":
+    root.configure(bg="red")
+else:
+    raise Exception("Unknown color, change the color of the background here... Add if statement and you're done.")
+
+
+root.attributes("-topmost", True)
+
 try:
     root.wm_iconphoto(False, ImageTk.PhotoImage(Image.open('res/ico.png')))
 except TclError:
+    print("icoon kon niet geladen worden.")
     pass
 
 tabControl = ttk.Notebook(root)
@@ -28,12 +42,12 @@ tab1 = ttk.Frame(tabControl)
 tab2 = ttk.Frame(tabControl)
 tab3 = ttk.Frame(tabControl)
 
-tabControl.add(tab1, text='Play Game')
+tabControl.add(tab1, text='Play gomoku')
 tabControl.add(tab2, text='Train')
-tabControl.add(tab3, text='Replay')
+tabControl.add(tab3, text='Replay old games')
 tabControl.grid(row=0, sticky="w")
 
-style_numbers = ["georgia", 10, "white", 12, 2]
+style_numbers = ["georgia", 10, "white", 12, 2]#font, size, color, bold, underline
 
 input_canvas = Canvas(root, relief="groove", borderwidth=0, highlightthickness=0)
 input_canvas.grid(row=1, padx=2, pady=2)
@@ -86,25 +100,45 @@ def run():
     gomoku.run(game_instance)
 
 
+import json
+
 def start_new_game(is_training=False, moves:dict=None):
+    try:
+        initialiseer_spelbord_json_bestanden()
+    except:
+        raise Exception("Fout in functie: initialiseer_spelbord_json_bestanden")
     try:
         if is_training:
             p1.set("MM-AI")
             set_player_type(0)
         runs = int(game_runs.get())
-        game_instance.ai_delay = delayvar.get()
+        game_instance.ai_delay = delayvar.get()#waar of niet waar (boolean)
         stats.should_log = logvar.get()
         stats.setup_logging(p1.get(), p2.get())
         root.wm_state('iconic')
         for i in range(runs):
+            try:
+                initialiseer_spelbord_json_bestanden()#geen stukken op bord
+            except:
+                raise Exception("Fout in functie: initialiseer_spelbord_json_bestanden")
+
+            print("in loop")
             stats.log_message(f"Game {i+1} begins.")
             game_instance.current_game = i+1
             game_instance.last_round = (i+1 == runs)
-            gomoku.run(game_instance, i, is_training, repvar.get(), moves)
+            try:
+                gomoku.run(game_instance, i, is_training, repvar.get(), moves) #kan als hoofdprogramma beschouwd worden (één spel is één run)
+            except Exception as e:
+                print("error in gomoku.run, herschrijf die functie.")
+                raise Exception("De error is waarschijnlijk te wijten aan een foute zet, controleer het lezen van de json bestanden die het bord opslaan." + str(e))
+
     except ValueError:
-        print("Game runs value invalid.")
+        print("Most likely: Game runs value invalid, try again.")
+
+    
     game_over()
 
+    
 
 def game_over():
     root.wm_state('normal')
@@ -112,7 +146,7 @@ def game_over():
 
 
 def quit_game():
-    sys.exit()
+    sys.exit()#beeindig het programma volledig
 
 
 ### TABS ###

@@ -1,13 +1,20 @@
 import operator
+from re import T
+from threading import Thread
 import time
+from timeit import Timer
 import pygame
+from GUI_timer import verander_timer, timer_bezig
 import testai
 import ai
 import random
 import stats
 import numpy as np
 import filereader
-
+from lezen_stukken_en_trivia import *
+from time import sleep
+#todo: Voeg hover-effecten toe om te laten zien waar een steen geplaatst zal worden
+#instructie: druk op de linkermuisknop wanneer je een zet hebt gedaan op het fysiek bord.
 
 class GomokuGame:
     def __init__(self, values):
@@ -19,7 +26,23 @@ class GomokuGame:
         self.BOARD_COL = values[4]
         self.LINE_COL = values[5]
         self.SLEEP_BEFORE_END = values[6]
-        self.board = [[0] * self.GRID_SIZE for _ in range(self.GRID_SIZE)]
+        self.board = [[0] * self.GRID_SIZE for _ in range(self.GRID_SIZE)] # 0 = empty, 1 = player 1, 2 = player 2. De waarden corresponderen aan de kleuren.
+        #[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+        #[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+        #[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+        #[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+        #[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+        #[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+        #[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+        #[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+        #[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+        #[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+        #[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+        #[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+        #[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+        #[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+        #[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+
         self.screen = pygame.display.set_mode((self.WIDTH, self.HEIGHT))
         self.winning_cells = []
         self.current_game = 0
@@ -29,8 +52,14 @@ class GomokuGame:
 
 class Player:
     def __init__(self, player_type, player_id):
-        self.TYPE = str(player_type)
-        self.ID = int(player_id)
+                
+            #Initialize a Player object with the given player type and ID.
+
+          
+    
+
+        self.TYPE = str(player_type) #type can be human, testai or MM-ai
+        self.ID = int(player_id) #id can be 1 or 2
         self.moves = 0
         self.wins = 0
         self.losses = 0
@@ -46,12 +75,12 @@ class Player:
         self.final_move_scores = []
         self.final_move_loss = []
         self.win_rate = 0
-        self.ai = ai.GomokuAI()
+        self.ai = ai.GomokuAI()#self.board_size
         self.final_action = None
 
     def set_player(self, player_type, player_id):
-        self.TYPE = str(player_type)
-        self.ID = int(player_id)
+        self.TYPE = str(player_type)#type can be human, testai or MM-ai
+        self.ID = int(player_id)#id can be 1 or 2 corresponding to human or AI
         #if self.ID == 2:
             #self.ai = ai.GomokuAI()
         print("Set player", self.ID, "to", self.TYPE)
@@ -85,7 +114,7 @@ class Player:
         self.weighed_moves = []
         self.move_loss = []
 
-    def reset_all_stats(self):
+    def reset_all_stats(self): #purely for testing purposes
         self.moves = 0
         self.wins = 0
         self.losses = 0
@@ -102,7 +131,7 @@ class Player:
         self.avg_moves = 0
 
 
-# Set default player types. Can be changed on runtime
+# Set default player types. Can be changed on runtime (buttons in GUI)
 player1 = Player("Human", 0)
 player2 = Player("MM-AI", 1)
 players = [player1, player2]
@@ -148,9 +177,9 @@ current_player = 1
 
 # Function to draw the game board
 def draw_board(instance):
-    instance.screen.fill(instance.BOARD_COL)
-    cell_size = instance.CELL_SIZE
-    for row in range(instance.GRID_SIZE):
+    instance.screen.fill(instance.BOARD_COL)#background color
+    cell_size = instance.CELL_SIZE#cell_size=30
+    for row in range(instance.GRID_SIZE):#grid_size=15
         for col in range(instance.GRID_SIZE):
             pygame.draw.rect(instance.screen, instance.LINE_COL, (col * cell_size, row * cell_size, cell_size, cell_size), 1)
             if instance.board[row][col] == 1:
@@ -159,8 +188,8 @@ def draw_board(instance):
                 pygame.draw.circle(instance.screen, instance.P2COL, (col * cell_size + cell_size // 2, row * cell_size + cell_size // 2), cell_size // 2 - 5)
     # Draw the winning line
     if instance.winning_cells:
-        start_row, start_col = instance.winning_cells[0]
-        end_row, end_col = instance.winning_cells[-1]
+        start_row, start_col = instance.winning_cells[0]#start_cell=(0,0)
+        end_row, end_col = instance.winning_cells[-1]#end_cell=(15,15)
         pygame.draw.line(instance.screen, (0, 255, 0),
                          (start_col * cell_size + cell_size // 2, start_row * cell_size + cell_size // 2),
                          (end_col * cell_size + cell_size // 2, end_row * cell_size + cell_size // 2), 5)
@@ -173,7 +202,7 @@ def reset_game(instance):
 
 
 def calculate_score(board: tuple, board_size=15):
-    directions = [(0, 1), (0, -1), (1, 0), (-1, 0), (1, 1), (-1, -1), (1, -1), (-1, 1)]
+    directions = [(0, 1), (0, -1), (1, 0), (-1, 0), (1, 1), (-1, -1), (1, -1), (-1, 1)]#richtingen om te controleren of er 5 stukkenp een rij zijn.
     score_board = filereader.load_scores("consts.json")
     scored_board = np.zeros((board_size, board_size))
     for row in range(len(board[0])):
@@ -254,7 +283,7 @@ def calculate_score(board: tuple, board_size=15):
         if new_normalized_score < 0:
             new_normalized_score = 0
         scores_normalized.append(new_normalized_score)
-    return max_score, scored_board, scores_normalized
+    return max_score, scored_board, scores_normalized#return de hoogste score, het board met scores, de scores genormaliseerd
 
 
 def check_win(row, col, player, instance):
@@ -281,7 +310,7 @@ def check_win(row, col, player, instance):
                 winning_direction = (drow, dcol)
             else:
                 break
-        if count >= 5:  # Victory condition
+        if count >= 5:  # Victory condition #todo: verander naar =5 om het moeilijker te maken.
             match winning_direction:    # sort the array so that a strike can be drawn correctly
                 case (1, 0):
                     winning_cells.sort()
@@ -296,7 +325,7 @@ def check_win(row, col, player, instance):
     return False
 
 
-def check_board_full(instance):
+def check_board_full(instance):# checkt of het bord vol is
     board = instance.board
     grid_size = instance.GRID_SIZE
     for row in range(grid_size):
@@ -306,7 +335,7 @@ def check_board_full(instance):
     return True
 
 
-def convert_to_one_hot(board, player_id):
+def convert_to_one_hot(board, player_id):#vermijd dat ai denkt dat de getallen iets betekenen.
     board = np.array(board)
     height, width = board.shape
     one_hot_board = np.zeros((3, height, width), dtype=np.float32)
@@ -323,7 +352,7 @@ def convert_to_one_hot(board, player_id):
 def run(instance, game_number, train, record_replay=False, moves:dict=None):
     # Main game loop
     global window_name, victory_text, current_player
-    for p in players:
+    for p in players: #players=[Human, AI]
         if p.TYPE == "MM-AI":
             p.ai.model.load_model()
             p.ai.train = train
@@ -343,12 +372,54 @@ def run(instance, game_number, train, record_replay=False, moves:dict=None):
         if not check_board_full(instance):
             # Human move
             if players[current_player-1].TYPE == "Human":
+                
+                
+                # Handle events
                 for event in pygame.event.get():
                     if event.type == pygame.QUIT:
-                        running = False
-                    elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
-                        x, y = event.pos
-                        col = x // instance.CELL_SIZE
+                        running = False 
+                        #druk op linkermuisknop om te zetten
+                    elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 1: #kan zo gelaten worden. Wanneer op de muis wordt gedrukt,wordt de zet gelezen van het besstand
+                        print("muis ingedrukt")
+                        pygame.mixer.music.stop()
+                        print("muziek gestopt")
+                        schrijf_relevante_stukken_na_zet_weg()#sla de stukken van de mens op in een bestand.
+                        zetten_mens=bepaal_relevante_zet()#vergeet de haakjes niet!!
+                        print("zetten_mens:",zetten_mens)#vorm: lijst van coordinaten(=[tuple(x,y),...])
+                        thread_controleer_vertraging=Thread(target=controleer_vertraging_data) #thread stoppen is moeilijk, daarom wordt die iedere keer opnieuw aangemaakt.
+                        thread_controleer_vertraging.start()
+                        for i in zetten_mens:
+                            try:
+                                int(i[0])
+                                int(i[1])
+
+                            except:
+                                raise Exception("geen getallen")
+                        try:
+                            if len(zetten_mens)==0:
+                                raise Exception("Er werd geen zet gedetecteerd.")
+
+                            elif len(zetten_mens)==1:
+                                print("1 zet, super")
+                                x, y = zetten_mens[0]
+                            elif zetten_mens is None: #zou nooit mogen voorkomen
+                                raise Exception("Geen zetten, of variabele niet gedeclareerd")
+                            else:
+                                raise Exception("Meerdere zetten")
+
+                            antwoord=input("Klopt deze zet? (ja/nee) :",x,y)#todo: haal op termijn weg, wanneer de code betrouwbaar genoeg is.
+                            #=debugging
+                            if antwoord=="ja":
+                                pass
+                            else:
+                                raise Exception("Als u het denkt, waarde wordt op de normale manier ingesteld.")
+                        except Exception as e:#todo: haal ook op termijn weg. Dit kan het beste door een knop vervangen worden.
+                            x,y=event.pos # dit mag er niet meer staan.
+                            print("normale waarde ingesteld(pos muis)",e)
+                        
+                        schrijf_relevante_stukken_voor_zet_weg() #sla stukken opnieuw op.
+                        #x, y = event.pos 
+                        col = x // instance.CELL_SIZE 
                         row = y // instance.CELL_SIZE
                         if instance.GRID_SIZE > row >= 0 == instance.board[row][col] and 0 <= col < instance.GRID_SIZE:
                             instance.board[row][col] = current_player
@@ -362,7 +433,13 @@ def run(instance, game_number, train, record_replay=False, moves:dict=None):
                                 running = False
                             else:
                                 # Switch player if neither player have won
-                                current_player = 3 - current_player
+                                current_player = 3 - current_player #current_player kan 2 zijn of 1, maar in beide gevallen zal er van speler gewisseld worden.
+                                pygame.mixer.music.stop()
+                                thread_start_muziek=Thread(target=start_muziek_vertraagd) #wordt iedere keer opnieuw aangemaakt aangezien threads moeilijk te stoppen zijn.
+                                thread_start_muziek.start()
+
+                                
+
             # TestAI move
             elif players[current_player-1].TYPE == "AI" and not testai.check_game_over(instance):
                 if instance.ai_delay:
@@ -429,8 +506,20 @@ def run(instance, game_number, train, record_replay=False, moves:dict=None):
                     move_id += 1
             draw_board(instance)
             pygame.display.flip()
-            window_name = "Gomoku - Game: " + str(game_number) + " - Player " + str(current_player)
+            window_name = "Gomoku - Game: " + str(game_number) + " - Player " + str(current_player) #beurt start
             pygame.display.set_caption(window_name)
+
+            if players[current_player-1].TYPE == "Human" :
+                try:
+                    if not thread_verander_timer.is_alive() and not timer_bezig:
+                        thread_verander_timer=Thread(target=verander_timer, daemon=True)
+                        thread_verander_timer.start()
+                except:
+                    thread_verander_timer=Thread(target=verander_timer, daemon=True)
+                    thread_verander_timer.start()
+            
+             
+                
         else:
             victory_text = "TIE"
             current_player = -1
@@ -453,7 +542,7 @@ def run(instance, game_number, train, record_replay=False, moves:dict=None):
             p.score_loss.append(p.ai.loss)
             move_loss = [float(val) for val in p.move_loss]
             p.final_move_loss.append(sum(move_loss)/len(move_loss))
-            p.ai.model.save_model()
+            p.ai.model.save_model()#model saves after each round
             p.final_move_scores.append(sum(p.weighed_moves)/len(p.weighed_moves))
             stats.log_message(f"{p.TYPE} {p.ID}: score loss: {float(p.ai.loss)}")
             stats.log_message(f"{p.TYPE} {p.ID}: move loss: {sum(p.move_loss)/len(p.move_loss)}")
@@ -466,15 +555,18 @@ def run(instance, game_number, train, record_replay=False, moves:dict=None):
                 move_loss_data[f"{p.TYPE} {p.ID}: move loss"] = p.final_move_loss
                 stats.log_message(f"{p.TYPE} {p.ID}: average score loss: {sum([float(val) for val in p.score_loss]) / len([float(val) for val in p.score_loss])}")
                 stats.log_message(f"{p.TYPE} {p.ID}: average move loss: {sum(p.final_move_loss) / len(p.final_move_loss)}")
-            p.reset_all_stats()
+            p.reset_all_stats()#purely for testing purposes
     if len(data) > 0:
         stats.plot_graph(data, 'accuracy')
     if len(loss_data) > 0:
         stats.plot_graph(loss_data, 'loss data')
     if len(move_loss_data) > 0:
         stats.plot_graph(move_loss_data, 'loss data')
-    time.sleep(instance.SLEEP_BEFORE_END)
+    time.sleep(instance.SLEEP_BEFORE_END)#sleep before closing for SLEEP_BEFORE_END seconds
     reset_game(instance)
+    #todo: verklein learning rate
+    #learning_rate = learning_rate * 0.99 #todo: test dit
+
 
 
 pygame.quit()
