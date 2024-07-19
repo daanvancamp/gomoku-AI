@@ -36,8 +36,6 @@ def start_muziek_vertraagd(tijd=1):#standard 5 seconden, kan ook worden verander
         except:
             raise Exception("Fout bij het starten van de muziek. Controleer of het bestand wel bestaat en niet geopend is in een ander programma.")
 
-
-
 def initialiseer_spelbord_json_bestanden():
     import json
     relevante_stukken=[]
@@ -46,7 +44,6 @@ def initialiseer_spelbord_json_bestanden():
     for pad in pads:
         with open(pad, 'w') as json_file:
             json.dump({'stukken': relevante_stukken}, json_file)#zie lees_van_json
-
 
 def controleer_vertraging_data():
     data=lees_van_json(r".\bord_gomoku\bord_na_zet.json")
@@ -88,23 +85,20 @@ def controleer_vertraging_data():
         if datum_verschillend or tijd_verschillend:
             raise Exception("Herzie het programma, er zit te veel vertraging op." ,"Gebruik threads om vertraging op te lossen.")
         else:
-            print("Deze data is niet te oud.")
+            print("Deze data is minder dan 3 seconden oud.")
     
-
-
 def lees_van_json(pad)-> List[Tuple[int, int]]:
-
     if not os.path.exists(pad):
         raise Exception("Het json bestand bestaat niet. Creer het en probeer opnieuw. Zet het bestand ook in de juiste map.")
     with open(pad, 'r') as json_file:
         data = json.load(json_file)
     return data["stukken"]#zie json.dump in schrijf_relevante_stukken_weg (dictionary naar lijst van tuples)
 
-
 def bepaal_relevante_zet () -> List[Tuple[int, int]]:
     stukken_na_zet=lees_van_json(r".\bord_gomoku\bord_na_zet.json")
     stukken_voor_zet=lees_van_json(r".\bord_gomoku\bord_voor_zet.json")
     relevante_zetten=[]
+
     if stukken_voor_zet is None:
         stukken_voor_zet = []
     if stukken_na_zet is None:#mag niet voorkomen-daarom raise exception
@@ -164,94 +158,5 @@ def lees_gedetecteerde_stukken() -> Dict[str, Any]:#retourneert alle stukken op 
         print(f"Fout bij het lezen van het JSON-bestand: {e}")
         return {}
 
-
-
-
-#archief vanaf hier
-#oude code hieronder.....
-
-
-
-
-
-
-
-
-
-
-#ga niet verder...
-
-
-
-
-#oude code...
-def creer_bord(data: Dict[str, Any]) -> Tuple[List[List[int]], List[Tuple[int, int]]]:
-    global board, old_board, zet, lijst_stukken, relevante_stukken
-    relevante_stukken = []#bevat alle zetten van de gespecificeerde kleur zie hierboven
-    
-    if data and data!=data_oud:
-        print(f"Tijdstip: {data['timestamp']}")
-        alle_stukken = set((stuk['kleur'], stuk['coordinaten'][0], stuk['coordinaten'][1]) for stuk in data['stukken'])#bevat alle zetten
-        
-        # filtert alle nieuwe zetten van de gespecificeerde kleur (Dit zou er 1 moeten zijn.)
-        for kleur, x, y in alle_stukken:
-            if (kleur, x, y) not in lijst_stukken and kleur == TE_DETECTEREN_KLEUR:#enkel unieke stukken toevoegen
-                relevante_stukken.append((x, y))#als dit er meer dan 1 is, dan is er een fout in het vorige programma
-
-        if relevante_stukken>0:
-            print(f"Aantal nieuwe zetten: {len(relevante_stukken)}")
-        if len(relevante_stukken)>1:
-            print("Meer dan 1 zet gedetecteerd. Controleer de beeldherkenning.")
-        elif len(relevante_stukken)==1:
-            print(f"Geplaatst stuk: Kleur={kleur}, Positie=({x},{y})")  
-            print("de herkenning ging juist.")
-        elif len(relevante_stukken)==0:
-            print("Geen nieuwe zetten gevonden.","Controleer de beeldherkenning.")
-        if relevante_stukken is None:
-            raise Exception("Geen stukken gedetecteerd")
-
-        data_oud=data
-        lijst_stukken = list(set(lijst_stukken) | alle_stukken)#enkel unieke stukken toevoegen, vorige programma kan eenzelfde stuk 2 keer herkennen
-        print(f"Aantal unieke stukken: {len(lijst_stukken)}")
-    
-    for kleur, x, y in lijst_stukken:
-        board[y-1][x-1] = 1 if kleur == "Blauw" else 2 if kleur == "Rood" else 0 #0 = leeg, 1 = blauw, 2 = rood
-        print(f"Geplaatst stuk: Kleur={kleur}, Positie=({x},{y})") 
-    
-    old_board = [row[:] for row in board]
-    return board, relevante_stukken
-
-def geef_huidig_bord() -> Tuple[List[List[int]], List[Tuple[int, int]]]:
-    global old_board , board, relevante_stukken
-    data = lees_gedetecteerde_stukken()
-    print("Gelezen data:", data)
-    bord, relevante_stukken = creer_bord(data)
-    print("\nHuidig bord:")
-    for row in bord:
-        print(" ".join(str(cel) for cel in row))
-    if relevante_stukken:
-        print(f"\nNieuwe {TE_DETECTEREN_KLEUR} zetten:")
-        for x, y in relevante_stukken:
-            print(f"Zet: Positie=({x},{y})")
-    return bord, relevante_stukken
-
-def main_lezen_stukken():
-    global board, old_board, relevante_stukken
-    while True:
-        i = 0
-        print(f"\nRun {i+1}")
-        bord, relevante_stukken = geef_huidig_bord() #old_board en board moeten beide worden bijgehouden. Je moet dus het programma laten draaien tijdens het andere.
-        i += 1
-def get_moved_pieces () -> List[Tuple[int, int]]: #enkel runnen wanneer deze functie MANUEEL wordt aangeroepen
-    global relevante_stukken
-    print("zet:",relevante_stukken)
-    return relevante_stukken #enkel van de te detecteren kleur; (TE_DETECTEREN_KLEUR = "Blauw")
-
-
-
-
-
-#if __name__ == "__main__":#debugging(enkel runnen in de testfase)
-    #main_lezen_stukken()#debugging 
 
 
