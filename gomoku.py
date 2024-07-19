@@ -509,10 +509,6 @@ def run(instance, game_number, train, record_replay=False, moves:dict=None):#mai
             pygame.display.flip()#refresh
             window_name = "Gomoku - Game: " + str(game_number) + " - Player " + str(current_player) #beurt start
             pygame.display.set_caption(window_name)
-
-            
-            
-             
                 
         else:
             victory_text = "TIE"
@@ -560,7 +556,5 @@ def run(instance, game_number, train, record_replay=False, moves:dict=None):#mai
     reset_game(instance)
     #todo: verklein learning rate na iedere trainloop
     #learning_rate = learning_rate * 0.99 #todo: test dit
-
-
 
 pygame.quit()

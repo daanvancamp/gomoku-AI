@@ -6,13 +6,11 @@ import gomoku
 import filereader
 import stats
 from PIL import Image, ImageTk
-import json
 from lezen_stukken_en_trivia import TE_DETECTEREN_KLEUR, initialiseer_spelbord_json_bestanden
-
 
 #todo: make it look nice
 
-WIDTH = 250 #origineel 230
+WIDTH = 240 #origineel 230
 HEIGHT = 315
 game_instance = gomoku.GomokuGame(filereader.create_gomoku_game("consts.json"))
 
@@ -27,7 +25,6 @@ elif TE_DETECTEREN_KLEUR=="Rood":
     root.configure(bg="red")
 else:
     raise Exception("Unknown color, change the color of the background here... Add if statement and you're done.")
-
 
 root.attributes("-topmost", True)
 
@@ -54,9 +51,6 @@ tabControl.add(tab1, text='Play gomoku')
 tabControl.add(tab2, text='Train')
 tabControl.add(tab3, text='Replay old games')
 tabControl.grid(row=0, sticky="w")
-
-
-
 
 style_numbers = ["georgia", 10, "white", 12, 2]#font, size, color, bold, underline
 
@@ -145,16 +139,13 @@ def start_new_game(is_training=False, moves:dict=None):
 
     except ValueError:
         print("Most likely: Game runs value invalid, try again.")
-
     
     game_over()
 
-    
 
 def game_over():
     root.wm_state('normal')
     game_instance.current_game = 0
-
 
 def quit_game():
     sys.exit()#beeindig het programma volledig
@@ -222,7 +213,6 @@ delaybutton2 = Checkbutton(tab3, text="Use AI Delay", variable=delayvar, font=(s
 delaybutton2.grid(row=2, column=0, sticky="w")
 button_5 = Button(tab3, text="Play", bg=style_numbers[2], font=(style_numbers[0], style_numbers[1]), width=style_numbers[3], height=style_numbers[4], command=lambda: replay())
 button_5.grid(row=3, column=0, sticky="w")
-
 
 def mainmenu_run():
     root.mainloop()

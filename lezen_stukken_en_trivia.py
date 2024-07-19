@@ -5,7 +5,6 @@ from typing import List, Tuple, Dict, Any
 import pygame
 
 #belangrijk: dit programma wordt nooit zelf uitgevoerd. De functies worden enkel geimporteerd vanuit gomuku.py en main.py
-#belangrijk: enkel de kleur is veranderbaar
 
 board: List[List[int]] = []
 old_board: List[List[int]] = []
@@ -102,7 +101,7 @@ def bepaal_relevante_zet () -> List[Tuple[int, int]]:
     if stukken_voor_zet is None:
         stukken_voor_zet = []
     if stukken_na_zet is None:#mag niet voorkomen-daarom raise exception
-        raise Exception("waarschijnlijk: fout in het gomoku programma, bekijk ook de functie schrijf_relevante_stukken_weg")
+        raise Exception("waarschijnlijk: fout in het gomoku programma, bekijk ook de functie schrijf_relevante_stukken_weg en programma met webcam")
         #stukken_na_zet = []
     for i in stukken_na_zet: #ik ga ervan uit dat er af en toe meerdere zetten gevonden kunnen worden, dit mag niet, maar een lijst is de gemakkelijkste manier om dit op te lossen.
         #als er meerdere stukken zijn, dan is er een fout/instabiliteitsprogramma in het programma dat de beeldherkenning doet.
@@ -119,7 +118,6 @@ def schrijf_relevante_stukken_weg(pad)->None:
     print(data)
     
     if data:
-
         alle_stukken = set((stuk['color'], stuk['coordinates'][0], stuk['coordinates'][1]) for stuk in data['pieces'])#bevat alle unieke zetten
     
         for kleur, x, y in alle_stukken:
