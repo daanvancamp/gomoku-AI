@@ -38,8 +38,6 @@ def start_muziek_vertraagd(tijd=1):#standard 5 seconden, kan ook worden verander
 
 
 
-
-
 def initialiseer_spelbord_json_bestanden():
     import json
     relevante_stukken=[]

@@ -3,7 +3,7 @@ import operator
 from threading import Thread
 import time
 import pygame
-from GUI_timer import initialiseer_timer, verander_timer, reset_timer
+from GUI_timer import reset_timer,initialiseer_timer
 import testai
 import ai
 import random
@@ -369,7 +369,6 @@ def run(instance, game_number, train, record_replay=False, moves:dict=None):#mai
             # Human move
             if players[current_player-1].TYPE == "Human":
                 
-                
                 # Handle events
                 for event in pygame.event.get():
                     if event.type == pygame.QUIT:
@@ -379,6 +378,7 @@ def run(instance, game_number, train, record_replay=False, moves:dict=None):#mai
                         print("muis ingedrukt")
                         pygame.mixer.music.stop()
                         print("muziek gestopt")
+                        reset_timer()
                         schrijf_relevante_stukken_na_zet_weg()#sla de stukken van de mens op in een bestand.
                         zetten_mens=bepaal_relevante_zet()#vergeet de haakjes niet!!
                         print("zetten_mens:",zetten_mens)#vorm: lijst van coordinaten(=[tuple(x,y),...])
@@ -434,8 +434,7 @@ def run(instance, game_number, train, record_replay=False, moves:dict=None):#mai
                                 thread_start_muziek=Thread(target=start_muziek_vertraagd) #wordt iedere keer opnieuw aangemaakt aangezien threads moeilijk te stoppen zijn.
                                 thread_start_muziek.start() #vertraging simuleert de tijd dat de zet van het model duurt
                                 
-                                reset_timer()
-                                verander_timer()
+                                initialiseer_timer()
 
                                 
                                 print("muziek gestart")
@@ -507,7 +506,7 @@ def run(instance, game_number, train, record_replay=False, moves:dict=None):#mai
                     current_player = 3 - current_player
                     move_id += 1
             draw_board(instance)
-            pygame.display.flip()
+            pygame.display.flip()#refresh
             window_name = "Gomoku - Game: " + str(game_number) + " - Player " + str(current_player) #beurt start
             pygame.display.set_caption(window_name)
 
