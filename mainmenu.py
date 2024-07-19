@@ -178,7 +178,7 @@ radiobutton6 = Radiobutton(tab1, text="MM-AI", variable=p2, value="MM-AI", comma
 radiobutton6.grid(row=5, column=1, sticky="w")
 gamerunslabel = Label(tab1, text="Number of games: ", font=(style_numbers[0], style_numbers[1]))
 gamerunslabel.grid(row=6, column=0, sticky="w")
-gamerunsentry = Entry(tab1, textvariable=game_runs)
+gamerunsentry = ttk.Entry(tab1, textvariable=game_runs)
 gamerunsentry.grid(row=6, column=1, sticky="w")
 delaybutton = Checkbutton(tab1, text="Use AI Delay", variable=delayvar, font=(style_numbers[0], style_numbers[1]))
 delaybutton.grid(row=7, column=0, sticky="w")
