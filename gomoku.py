@@ -554,7 +554,7 @@ def run(instance, game_number, train, record_replay=False, moves:dict=None):#mai
         stats.plot_graph(move_loss_data, 'loss data')
     time.sleep(instance.SLEEP_BEFORE_END)#sleep before closing for SLEEP_BEFORE_END seconds
     reset_game(instance)
-    #todo: verklein learning rate na iedere trainloop
+    #todo: verklein µ rate na iedere trainloop
     #learning_rate = learning_rate * 0.99 #todo: test dit
 
 pygame.quit()

@@ -87,6 +87,10 @@ class GomokuAI:
         self.criterion = nn.MSELoss()
         self.loss = 0
         self.train = False
+    def decrease_learning_rate(self):
+        self.learning_rate *= 0.99 #decrease learning rate
+        for param_group in self.optimizer.param_groups:
+            param_group['lr'] = self.learning_rate
 
     def set_game(self, _game):
         self.game = _game

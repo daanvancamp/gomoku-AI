@@ -3,6 +3,8 @@ from tkinter import *
 from tkinter import ttk
 from tkinter import filedialog
 import gomoku
+from ai import GomokuAI
+gomoku_ai=GomokuAI(15)#board_size
 import filereader
 import stats
 from PIL import Image, ImageTk
@@ -128,6 +130,7 @@ def start_new_game(is_training=False, moves:dict=None):
                 raise Exception("Fout in functie: initialiseer_spelbord_json_bestanden")
 
             print("in loop")
+            
             stats.log_message(f"Game {i+1} begins.")
             game_instance.current_game = i+1
             game_instance.last_round = (i+1 == runs)
@@ -136,6 +139,8 @@ def start_new_game(is_training=False, moves:dict=None):
             except Exception as e:
                 print("error in gomoku.run, herschrijf die functie.")
                 raise Exception("De error is waarschijnlijk te wijten aan een foute zet, controleer het lezen van de json bestanden die het bord opslaan." + str(e))
+            
+            gomoku_ai.decrease_learning_rate()
 
     except ValueError:
         print("Most likely: Game runs value invalid, try again.")
