@@ -1,9 +1,8 @@
 {
   "ExpandedNodes": [
     "",
-    "\\data",
-    "\\res"
+    "\\bord_gomoku"
   ],
-  "SelectedNode": "\\wachten_muziek.mp3",
+  "SelectedNode": "\\main.py",
   "PreviewInSolutionExplorer": false
 }
