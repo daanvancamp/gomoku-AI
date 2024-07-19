@@ -159,6 +159,12 @@ class GomokuAI:
                     count += 1
                     winning_cells.append((row_, col_))#cellen van tegenstander (meerdere naast elkaar)
                     winning_direction = [(drow, dcol)]
+                    if i=1:
+                        eerste_stuk_p=(row_,col_)
+                    elif i=5:
+                        laatste_stuk_p=(row_col_)
+                    
+                    
                 else:
                     break
             # negative direction
@@ -168,6 +174,10 @@ class GomokuAI:
                     count += 1
                     winning_cells.append((row_, col_))#cellen van tegenstander meerdere naast elkaar
                     winning_direction = (drow, dcol)
+                    if i=1:
+                        eerste_stuk_n=(row_,col_)
+                    elif i=5:
+                        laatste_stuk_n=(row_col_)
                 else:
                     break
             if count == 3:
