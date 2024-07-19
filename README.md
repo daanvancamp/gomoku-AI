@@ -6,6 +6,8 @@ A few of the optimizations I have done:
 
 Changed optimizer from Adam to SGD.
 Fixed a bug where the training kept repeating the exploration phase: it couldn't choose a move. Now, it is completely random after 30 tries instead of using the function. This doesn't have a significant impact on the training process because it happens approximately one in a 1000 times.
+Imoportant:
+I added a function in the gomoku class to decrease the learning rate after each training round. By doing so, the model explores more specific patterns. The learning rate is multiplied by 0.99 after each round. Like mikko described in his conclusion: It can improve the performance of the model.
 
 Note: it is still under development. The added features aren't stable.
 
