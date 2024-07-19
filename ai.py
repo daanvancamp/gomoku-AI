@@ -139,7 +139,7 @@ class GomokuAI:
         self.optimizer.step()
         self.optimizer.zero_grad(set_to_none=False)
 
-    def get_valid_moves(self, board): #returns list of valid moves (overroelen ai kan hier gebeuren door de lijst met lengte 1 te maken.) 
+    def get_valid_moves(self, board):#voeg de nodige parameters toe. #returns list of valid moves (overroelen ai kan hier gebeuren door de lijst met lengte 1 te maken.) 
         #TODO: overroel AI
         valid_moves = []
         for row in range(len(board)):
@@ -157,7 +157,7 @@ class GomokuAI:
                 row_, col_ = row + i * drow, col + i * dcol
                 if 0 <= row_ < instance.GRID_SIZE and 0 <= col_ < instance.GRID_SIZE and instance.board[row_][col_] == player:
                     count += 1
-                    winning_cells.append((row_, col_))#cellen van tegenstander meerdere naast elkaar
+                    winning_cells.append((row_, col_))#cellen van tegenstander (meerdere naast elkaar)
                     winning_direction = [(drow, dcol)]
                 else:
                     break
@@ -170,9 +170,9 @@ class GomokuAI:
                     winning_direction = (drow, dcol)
                 else:
                     break
-            if count = 3: #
+            if count == 3:
                 valid_moves=              #enkel de 2 naburige cellen mogen gekozen worden door het model. #laat ai kiezen wanneer er meerdere keer 3 op een rij is
-            elif count=4:
+            elif count==4:
                 valid_moves=              #enkel de naburige cel mag gekozen worden door het model.
             else: #laat de ai doen. Doe zoals normaal omdat er geen speler is die kan winnen als men niets doet.(De andere speler heeft geen 3 of 4 op een rij.)
                 valid_moves = []
@@ -180,9 +180,6 @@ class GomokuAI:
                     for col in range(len(board[row])):
                         if board[row][col] == 0:
                             valid_moves.append((row, col))
-
-                
-               
         
 
 
