@@ -37,6 +37,13 @@ except TclError:
     print("icoon kon niet geladen worden.")
     pass
 
+# Maak een Style object aan
+style = ttk.Style()
+style.theme_use('default')
+
+# Configureer de stijl voor de TNotebook.Tab
+style.configure('TNotebook.Tab', background='green')
+
 tabControl = ttk.Notebook(root)
 
 tab1 = ttk.Frame(tabControl)
@@ -47,6 +54,9 @@ tabControl.add(tab1, text='Play gomoku')
 tabControl.add(tab2, text='Train')
 tabControl.add(tab3, text='Replay old games')
 tabControl.grid(row=0, sticky="w")
+
+
+
 
 style_numbers = ["georgia", 10, "white", 12, 2]#font, size, color, bold, underline
 
@@ -128,7 +138,7 @@ def start_new_game(is_training=False, moves:dict=None):
             game_instance.current_game = i+1
             game_instance.last_round = (i+1 == runs)
             try:
-                gomoku.run(game_instance, i, is_training, repvar.get(), moves) #kan als hoofdprogramma beschouwd worden (één spel is één run)
+                gomoku.run(game_instance, i, is_training, repvar.get(), moves) #kan als hoofdprogramma beschouwd worden (ï¿½ï¿½n spel is ï¿½ï¿½n run)
             except Exception as e:
                 print("error in gomoku.run, herschrijf die functie.")
                 raise Exception("De error is waarschijnlijk te wijten aan een foute zet, controleer het lezen van de json bestanden die het bord opslaan." + str(e))

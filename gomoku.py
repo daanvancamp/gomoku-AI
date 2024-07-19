@@ -345,7 +345,7 @@ def convert_to_one_hot(board, player_id):#vermijd dat ai denkt dat de getallen i
     return one_hot_board
 
 
-def run(instance, game_number, train, record_replay=False, moves:dict=None):
+def run(instance, game_number, train, record_replay=False, moves:dict=None):#main function
     # Main game loop
     global window_name, victory_text, current_player
     for p in players: #players=[Human, AI]
