@@ -3,7 +3,7 @@ import operator
 from threading import Thread
 import time
 import pygame
-from GUI_timer import reset_timer,initialiseer_timer
+from GUI_timer import reset_timer
 import testai
 import ai
 import random
@@ -434,7 +434,7 @@ def run(instance, game_number, train, record_replay=False, moves:dict=None):#mai
                                 thread_start_muziek=Thread(target=start_muziek_vertraagd) #wordt iedere keer opnieuw aangemaakt aangezien threads moeilijk te stoppen zijn.
                                 thread_start_muziek.start() #vertraging simuleert de tijd dat de zet van het model duurt
                                 
-                                initialiseer_timer()
+                                #initialiseer_timer()
 
                                 
                                 print("muziek gestart")

@@ -6,7 +6,6 @@ from lezen_stukken_en_trivia import initialiseer_muziek
 
 def main():
     mainmenu.mainmenu_run()
-
 def controleer_bestandspaden():
     paden=[r".\bord_gomoku\bord_na_zet.json",r".\bord_gomoku\bord_voor_zet.json",r"C:\Users\daanv\source\repos\vijf_op_een_rij_beeldherkenning\vijf_op_een_rij_beeldherkenning\detected_pieces.json"]
     for bestandspad in paden:

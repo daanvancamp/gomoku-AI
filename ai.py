@@ -83,19 +83,19 @@ class GomokuAI:
         self.model = self.build_model(self.board_size)
         #self.optimizer = optim.Adam(params=self.model.parameters(), lr=self.learning_rate) #veranderd naar SGD
         self.optimizer= optim.SGD(params=self.model.parameters(), lr=self.learning_rate)
-
         self.criterion = nn.MSELoss()
         self.loss = 0
         self.train = False
     def decrease_learning_rate(self):
         self.learning_rate *= 0.99 #decrease learning rate
+        print("learning rate automatically declined by 1%, current lr:", self.learning_rate)
         for param_group in self.optimizer.param_groups:
             param_group['lr'] = self.learning_rate
 
     def set_game(self, _game):
         self.game = _game
 
-    def build_model(self, input_dim: int) -> ConvNet:
+    def build_model(self, input_dim: int) -> ConvNet:#multi-layered network
         return ConvNet(input_dim, 30, 255)
 
     def get_state(self, game):
