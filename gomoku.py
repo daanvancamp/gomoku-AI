@@ -1,10 +1,9 @@
-from cgitb import reset
+
 import operator
-from re import T
 from threading import Thread
 import time
 import pygame
-from GUI_timer import verander_timer, timer_bezig, reset_timer
+from GUI_timer import initialiseer_timer, verander_timer, reset_timer
 import testai
 import ai
 import random
@@ -377,7 +376,6 @@ def run(instance, game_number, train, record_replay=False, moves:dict=None):
                         running = False 
                         #druk op linkermuisknop om te zetten
                     elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 1: #kan zo gelaten worden. Wanneer op de muis wordt gedrukt,wordt de zet gelezen van het besstand
-                        reset_timer()
                         print("muis ingedrukt")
                         pygame.mixer.music.stop()
                         print("muziek gestopt")
@@ -434,7 +432,11 @@ def run(instance, game_number, train, record_replay=False, moves:dict=None):
                                 current_player = 3 - current_player #current_player kan 2 zijn of 1, maar in beide gevallen zal er van speler gewisseld worden.
                               
                                 thread_start_muziek=Thread(target=start_muziek_vertraagd) #wordt iedere keer opnieuw aangemaakt aangezien threads moeilijk te stoppen zijn.
-                                thread_start_muziek.start()
+                                thread_start_muziek.start() #vertraging simuleert de tijd dat de zet van het model duurt
+                                
+                                reset_timer()
+                                verander_timer()
+
                                 
                                 print("muziek gestart")
 
@@ -509,14 +511,7 @@ def run(instance, game_number, train, record_replay=False, moves:dict=None):
             window_name = "Gomoku - Game: " + str(game_number) + " - Player " + str(current_player) #beurt start
             pygame.display.set_caption(window_name)
 
-            if players[current_player-1].TYPE == "Human" :
-                try:
-                    if not thread_verander_timer.is_alive() and not timer_bezig:
-                        thread_verander_timer=Thread(target=verander_timer, daemon=True)
-                        thread_verander_timer.start()
-                except:
-                    thread_verander_timer=Thread(target=verander_timer, daemon=True)
-                    thread_verander_timer.start()
+            
             
              
                 

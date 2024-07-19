@@ -9,6 +9,7 @@ from PIL import Image, ImageTk
 import json
 from lezen_stukken_en_trivia import TE_DETECTEREN_KLEUR, initialiseer_spelbord_json_bestanden
 
+
 #todo: make it look nice
 
 WIDTH = 250 #origineel 230

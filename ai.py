@@ -7,6 +7,7 @@ import torch.nn.functional as F
 import numpy as np
 import random
 from collections import deque
+import operator
 
 MAX_MEMORY = 1_000_0000          # origineel 1_000_000
 BATCH_SIZE = 10_000
@@ -205,6 +206,7 @@ class GomokuAI:
         valid_moves = self.get_valid_moves(state)
         np_scores = np.array(scores).reshape(15, 15)
         current_state = torch.tensor(self.get_state(one_hot_board), dtype=torch.float)
+
         action = None
         with torch.no_grad():
             prediction = self.model(current_state)
