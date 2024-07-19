@@ -1,10 +1,10 @@
+from cgitb import reset
 import operator
 from re import T
 from threading import Thread
 import time
-from timeit import Timer
 import pygame
-from GUI_timer import verander_timer, timer_bezig
+from GUI_timer import verander_timer, timer_bezig, reset_timer
 import testai
 import ai
 import random
@@ -54,9 +54,6 @@ class Player:
     def __init__(self, player_type, player_id):
                 
             #Initialize a Player object with the given player type and ID.
-
-          
-    
 
         self.TYPE = str(player_type) #type can be human, testai or MM-ai
         self.ID = int(player_id) #id can be 1 or 2
@@ -380,6 +377,7 @@ def run(instance, game_number, train, record_replay=False, moves:dict=None):
                         running = False 
                         #druk op linkermuisknop om te zetten
                     elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 1: #kan zo gelaten worden. Wanneer op de muis wordt gedrukt,wordt de zet gelezen van het besstand
+                        reset_timer()
                         print("muis ingedrukt")
                         pygame.mixer.music.stop()
                         print("muziek gestopt")
@@ -434,9 +432,11 @@ def run(instance, game_number, train, record_replay=False, moves:dict=None):
                             else:
                                 # Switch player if neither player have won
                                 current_player = 3 - current_player #current_player kan 2 zijn of 1, maar in beide gevallen zal er van speler gewisseld worden.
-                                pygame.mixer.music.stop()
+                              
                                 thread_start_muziek=Thread(target=start_muziek_vertraagd) #wordt iedere keer opnieuw aangemaakt aangezien threads moeilijk te stoppen zijn.
                                 thread_start_muziek.start()
+                                
+                                print("muziek gestart")
 
                                 
 
@@ -564,7 +564,7 @@ def run(instance, game_number, train, record_replay=False, moves:dict=None):
         stats.plot_graph(move_loss_data, 'loss data')
     time.sleep(instance.SLEEP_BEFORE_END)#sleep before closing for SLEEP_BEFORE_END seconds
     reset_game(instance)
-    #todo: verklein learning rate
+    #todo: verklein learning rate na iedere trainloop
     #learning_rate = learning_rate * 0.99 #todo: test dit
 
 

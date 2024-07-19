@@ -13,14 +13,14 @@ def controleer_bestandspaden():
     for bestandspad in paden:
         if not os.path.exists(bestandspad):
             print("Het JSON-bestand bestaat niet. Maak het aan en probeer het opnieuw.")
-            raise Exception("JSON-bestand bestaat niet, los het op door het programma dat leest van de webcam te runnen, of pas het pad in het programma aan.")
+            raise Exception("JSON-bestand bestaat niet, los het op door het programma dat leest van de webcam te runnen, of pas het pad in het programma aan.",bestandspad)
 
 
 if __name__ == '__main__':
     #thread_GUI_timer=Thread(target=initialiseer_timer,daemon=True)
     #thread_GUI_timer.start()
     #bevat bugs voorlopig
-
+    initialiseer_timer()
     controleer_bestandspaden()
     initialiseer_muziek()
     main()

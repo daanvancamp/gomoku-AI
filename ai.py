@@ -13,11 +13,12 @@ BATCH_SIZE = 10_000
 MIN_EPSILON = 0.01
 EPSILON_DECAY_RATE = 0.999
 
+#moeilijkheidsgraad is vermeld iedere keer.
 #todo: Verbeteringen aanbrengen in het model door een complexere neurale netwerkarchitectuur te implementeren.:zeer moeilijk
 #todo: Een aanpasbare leerfactor introduceren om de precisie van het leren te verbeteren. concreet: learn rate verlagen naarmate het trainen vordert.:matig
 #De optimalisatiefunctie is veranderd van Adam naar SGD om de voorspelnauwkeurigheid te verhogen.:zeer eenvoudig
 #todo: Experimenteren met genetische algoritmes om de optimale modelparameters te ontdekken.:zeer moeilijk
-#todo: Meer tijd besteden aan het trainen van complexere netwerken om hun effectiviteit te testen. :???
+#todo: Meer tijd besteden aan het trainen van complexere netwerken om hun effectiviteit te testen. :??? lees conclusie finse student in detail
 
 
 class ConvNet(nn.Module):
@@ -79,7 +80,7 @@ class GomokuAI:
         self.epsilon = 0.25
         self.memory = deque(maxlen=MAX_MEMORY)
         self.model = self.build_model(self.board_size)
-        #self.optimizer = optim.Adam(params=self.model.parameters(), lr=self.learning_rate) #todo: verander naar SGD
+        #self.optimizer = optim.Adam(params=self.model.parameters(), lr=self.learning_rate) #veranderd naar SGD
         self.optimizer= optim.SGD(params=self.model.parameters(), lr=self.learning_rate)
 
         self.criterion = nn.MSELoss()
@@ -138,13 +139,54 @@ class GomokuAI:
         self.optimizer.step()
         self.optimizer.zero_grad(set_to_none=False)
 
-    def get_valid_moves(self, board):
+    def get_valid_moves(self, board): #returns list of valid moves (overroelen ai kan hier gebeuren door de lijst met lengte 1 te maken.) 
+        #TODO: overroel AI
         valid_moves = []
         for row in range(len(board)):
             for col in range(len(board[row])):
                 if board[row][col] == 0:
                     valid_moves.append((row, col))
         return valid_moves
+        '''directions = [(0, 1), (1, 0), (1, 1), (1, -1)]
+        for drow, dcol in directions:
+            winning_cells = [(row, col)]
+            winning_direction = ()
+            count = 1
+            # positive direction
+            for i in range(1, 5):
+                row_, col_ = row + i * drow, col + i * dcol
+                if 0 <= row_ < instance.GRID_SIZE and 0 <= col_ < instance.GRID_SIZE and instance.board[row_][col_] == player:
+                    count += 1
+                    winning_cells.append((row_, col_))#cellen van tegenstander meerdere naast elkaar
+                    winning_direction = [(drow, dcol)]
+                else:
+                    break
+            # negative direction
+            for i in range(1, 5):
+                row_, col_ = row - i * drow, col - i * dcol
+                if 0 <= row_ < instance.GRID_SIZE and 0 <= col_ < instance.GRID_SIZE and instance.board[row_][col_] == player:
+                    count += 1
+                    winning_cells.append((row_, col_))#cellen van tegenstander meerdere naast elkaar
+                    winning_direction = (drow, dcol)
+                else:
+                    break
+            if count = 3: #
+                valid_moves=              #enkel de 2 naburige cellen mogen gekozen worden door het model. #laat ai kiezen wanneer er meerdere keer 3 op een rij is
+            elif count=4:
+                valid_moves=              #enkel de naburige cel mag gekozen worden door het model.
+            else: #laat de ai doen. Doe zoals normaal omdat er geen speler is die kan winnen als men niets doet.(De andere speler heeft geen 3 of 4 op een rij.)
+                valid_moves = []
+                for row in range(len(board)):
+                    for col in range(len(board[row])):
+                        if board[row][col] == 0:
+                            valid_moves.append((row, col))
+
+                
+               
+        
+
+
+        return valid_moves'''
 
     def id_to_move(self, move_id, valid_moves):
         if move_id < len(valid_moves):
@@ -183,17 +225,18 @@ class GomokuAI:
         while action is None:#Het programma blijft hier hangen!!!
             attempts+=1
             if attempts>max_attempts:
-                  action = random.random.choice(valid_moves) #vorm: (x,y)
+                  action = random.choice(valid_moves) #vorm: (x,y)
                   if action is None:
                       raise Exception("A random move couldn't be found")
                   print("move not found, random move chosen")
                   #stop na 3O pogingen #todo: controleer werking
                   #break
             # if no action, switch to exploration
-            print("Exploration")
-            action = self.id_to_move(self.get_random_action(state), valid_moves)
+            else:
+                print("Exploration")
+                action = self.id_to_move(self.get_random_action(state), valid_moves)
         # Decay Epsilon Over Time
-        self.adjust_epsilon()#todo: pas decay_epsilon aan
+        self.adjust_epsilon()
         return action
 
     def get_random_action(self, board):

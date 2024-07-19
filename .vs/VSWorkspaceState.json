@@ -1,7 +1,9 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\data",
+    "\\res"
   ],
-  "SelectedNode": "\\C:\\Users\\daanv\\Source\\Repos\\gomoku-thesis-project",
+  "SelectedNode": "\\wachten_muziek.mp3",
   "PreviewInSolutionExplorer": false
 }

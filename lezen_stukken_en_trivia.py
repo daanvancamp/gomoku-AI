@@ -16,11 +16,27 @@ relevante_stukken: List[Tuple[int, int]] = []
 # Instelling voor de te detecteren kleur
 TE_DETECTEREN_KLEUR:str = "Blauw"  # Verander dit naar "Rood" om rode zetten te beschouwen als mens
 
+def initialiseer_muziek():
+    # Initialiseer pygame mixer
+    pygame.mixer.init(buffer=100000,allowedchanges=0) #voorkom haperingen
+    pygame.mixer.music.load(r"wachten_muziek.mp3")#add to memory
+
+def start_muziek_vertraagd(tijd=1):#standard 5 seconden, kan ook worden veranderd
+    sleep(tijd) #blokkeert enkel thread
+    try:
+        pygame.mixer.music.stop()
+
+        pygame.mixer.music.play()
+    except:#de code komt steeds hier
+        try:
+            pygame.mixer.music.load(r"wachten_muziek.mp3")#tijdelijk #todo: werk weg door initialiseer_muziek te verbeteren of een andere wijziging toe te passen
+            pygame.mixer.music.stop()
+
+            pygame.mixer.music.play()
+        except:
+            raise Exception("Fout bij het starten van de muziek. Controleer of het bestand wel bestaat en niet geopend is in een ander programma.")
 
 
-def start_muziek_vertraagd(tijd=5):#standard 5 seconden, kan ook worden veranderd
-    sleep(tijd)
-    pygame.mixer.music.play()
 
 
 
@@ -69,7 +85,7 @@ def controleer_vertraging_data():
 
         max_vertraging=3
         datum_verschillend=(jaar!=huidig_jaar) or (maand!=huidige_maand) or (dag!=huidige_dag)
-        tijd_verschillend= huidig_tijdstip>tijdstip+max_vertraging#todo: maak de berekening juist.
+        tijd_verschillend= huidig_tijdstip>tijdstip+max_vertraging# todo: maak de berekening juist.
 
         if datum_verschillend or tijd_verschillend:
             raise Exception("Herzie het programma, er zit te veel vertraging op." ,"Gebruik threads om vertraging op te lossen.")
@@ -151,10 +167,7 @@ def lees_gedetecteerde_stukken() -> Dict[str, Any]:#retourneert alle stukken op 
         return {}
 
 
-def initialiseer_muziek():
-    # Initialiseer pygame mixer
-    pygame.mixer.init()
-    pygame.mixer.music.load(r"wachten_muziek.mp3")#add to memory
+
 
 #archief vanaf hier
 #oude code hieronder.....
