@@ -2,8 +2,6 @@ import sys
 from tkinter import *
 from tkinter import ttk
 from tkinter import filedialog
-from turtle import st
-from unittest.loader import VALID_MODULE_NAME
 import gomoku
 from ai import GomokuAI
 gomoku_ai=GomokuAI(15)#board_size
@@ -39,11 +37,11 @@ except TclError:
     pass
 
 # Maak een Style object aan
-style = ttk.Style()
-style.theme_use('default')
+style2 = ttk.Style()
+style2.theme_use('default')
 
 # Configureer de stijl voor de TNotebook.Tab
-style.configure('TNotebook.Tab', background='green')
+style2.configure('TNotebook.Tab', background='green')
 
 tabControl = ttk.Notebook(root)
 
@@ -162,12 +160,12 @@ def quit_game():
     sys.exit()#beeindig het programma volledig
 
 #style_numbers = ["georgia", 10, "white", 12, 2]#font, size, color, bold, underline (already defined)
-style=ttk.Style()
-style.configure("TButton", font=(style_numbers[0], style_numbers[1]),bg=style_numbers[2],ipadx=style_numbers[3],ipady=style_numbers[4],pady=15)#font=georgia, size=10;bg=white
-style.configure("TRadiobutton",fg="white",bg="green")
-style.configure("TEntry",fg="white",bg="green")
-style.configure("TLabel", font=(style_numbers[0], style_numbers[1]),fg="white",bg="green")#font=georgia, size=10
-style.configure("TCheckbutton", font=(style_numbers[0], style_numbers[1]),fg="white",bg="green")#font=georgia, size=10
+style2=ttk.Style()
+style2.configure("TButton", font=(style_numbers[0], style_numbers[1]),bg=style_numbers[2],ipadx=style_numbers[3],ipady=style_numbers[4],pady=15)#font=georgia, size=10;bg=white
+style2.configure("TRadiobutton",fg="white",bg="green")
+style2.configure("TEntry",fg="white",bg="green")
+style2.configure("TLabel", font=(style_numbers[0], style_numbers[1]),fg="white",bg="green")#font=georgia, size=10
+style2.configure("TCheckbutton", font=(style_numbers[0], style_numbers[1]),fg="white",bg="green")#font=georgia, size=10
 
 ### TABS ###
 ttk.Label(tab1)
