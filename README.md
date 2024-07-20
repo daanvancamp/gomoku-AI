@@ -10,5 +10,7 @@ Fixed a bug where the training kept repeating the exploration phase: it couldn't
 Important:
 I added a function in the gomoku class to decrease the learning rate after each training round. By doing so, the model explores more specific patterns. The learning rate is multiplied by 0.9999 after each round. Like Mikko described in his conclusion: It can improve the performance of the model because the model learns more specific patterns.
 The GUI is now more modern.
+I also added exception handling in some functions.
+2 functions were defined twice, now they are defined just once.
 
 Note: it is still under development. The added features aren't stable as of right now.
