@@ -12,4 +12,3 @@ I added a function in the gomoku class to decrease the learning rate after each 
 The GUI is now more modern.
 
 Note: it is still under development. The added features aren't stable as of right now.
-
