@@ -75,7 +75,6 @@ repvar.set(False)
 replay_path = StringVar()
 replay_path.set("")
 
-
 def set_player_type(playerid):
     if playerid == 0:
         newtype = p1.get()
