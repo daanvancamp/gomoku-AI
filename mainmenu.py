@@ -114,6 +114,10 @@ import json
 def schrijf_bool_naar_tekstbestand():
     with open("bool_overrule.txt", "w") as f:
         f.write(str(var_allow_overrule.get()))
+        if var_allow_overrule.get():
+            print("overruling of the model is turned on")
+        else:
+            print("overruling of the model is turned off")
 
 def start_new_game(is_training=False, moves:dict=None):
     schrijf_bool_naar_tekstbestand()
