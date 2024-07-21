@@ -12,6 +12,6 @@ I also added exception handling in some functions.
 2 functions in filereader.py were defined twice, now they are defined just once.
 Important:
 I added a function in the gomoku class to decrease the learning rate after each training round. By doing so, the model explores more specific patterns. The learning rate is multiplied by 0.9999 after each round, in other words, the learning rate declines by 0,01% after each training round. Like Mikko described in his conclusion: It can improve the performance of the model because the model learns more specific patterns.
+I implemented a way to overrule the model. When the opponent has 4 in a row with one open end, then he will never be able to win. When an opponent has 3 in a row with 2 open ends, the function that overrules the model will block this. The model chooses from the list of empty cells. By narrowing down that list, the problem of hallucination is solved with a relatively low amount of computing power. You need a lot af expensive hardware to develop a model that can beat everyone. Overruling can be easily turned on and off by clicking a checkbox in the GUI. Turning it on is recommended, it drastically improves the performance. 
 
-
-Note: the project is still under development. The added features aren't stable as of right now.
+Note: the project is still under development. Some added features aren't stable as of right now.
