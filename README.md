@@ -3,7 +3,7 @@ https://github.com/Mig26/gomoku-thesis-proj
 
 I added support for physical boards via webcam. I also optimized a few things. The code for the webcam can be found here. You need to run both programs simultaneously, otherwise, it won't work as expected. The information is transfered via a json file. A file is used to save system resources; a thread is more hardware intensive.  https://github.com/daanvancamp/vijf_op_een_rij_beeldherkenning
 
-A few of the optimizations I have done:
+A few of the optimizations I have done and some added features:
 
 Changed optimizer from Adam to SGD.
 Fixed a bug where the training kept repeating the exploration phase: it couldn't choose a move. Now, it is completely random after 30 tries instead of using the function "choose_action". This doesn't have a significant impact on the training process because it happens approximately one in a 1000 times.
