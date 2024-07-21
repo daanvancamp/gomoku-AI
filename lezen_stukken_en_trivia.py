@@ -87,8 +87,6 @@ def controleer_vertraging_data():
             print("Deze data is minder dan 3 seconden oud.")
     
 def lees_van_json(pad)-> List[Tuple[int, int]]:
-    if not os.path.exists(pad):
-        raise Exception("Het json bestand bestaat niet. Creer het en probeer opnieuw. Zet het bestand ook in de juiste map.")
     with open(pad, 'r') as json_file:
         data = json.load(json_file)
     return data["stukken"]#zie json.dump in schrijf_relevante_stukken_weg (dictionary naar lijst van tuples)
@@ -145,10 +143,6 @@ def schrijf_relevante_stukken_na_zet_weg () :#kunnen er ook meer zijn (tot (15*1
 
 def lees_gedetecteerde_stukken() -> Dict[str, Any]:#retourneert alle stukken op het bord (leest json bestand)
     bestandspad = r'C:\Users\daanv\source\repos\vijf_op_een_rij_beeldherkenning\vijf_op_een_rij_beeldherkenning\detected_pieces.json'
-    if not os.path.exists(bestandspad):
-        raise Exception("Het JSON-bestand bestaat niet. Maak het aan en probeer het opnieuw.")
-        return {}
-    
     try:
         with open(bestandspad, 'r') as json_file:
             return json.load(json_file)
