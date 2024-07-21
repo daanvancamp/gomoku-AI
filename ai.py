@@ -144,15 +144,33 @@ class GomokuAI:
         self.loss = loss.detach().numpy()  # for logging purposes
         self.optimizer.step()
         self.optimizer.zero_grad(set_to_none=False)
-
+    
+    def determine_current_player(self,board):
+        pieces_player1=0
+        pieces_player2=0
+        for i in range(len(board)):
+            for j in range(len(board[i])):#sublist
+                if board[i][j]==1:
+                    pieces_player1+=1
+                elif board[i][j]==2:
+                    pieces_player2+=1
+        if pieces_player1>pieces_player2:
+            return 2
+        elif pieces_player1==pieces_player2:
+            return 1 #player one hasn't done his move yet, so he has one piece less than player2#this is also the case if the board is full or empty
+        else:
+            raise Exception("rewrite this function, this is wrong")
+        
     def get_valid_moves(self, board):#voeg de nodige parameters toe. #returns list of valid moves (overroelen ai kan hier gebeuren door de lijst met lengte 1 te maken.) 
         #TODO: overroel AI
-        valid_moves = []
+        '''valid_moves = []
+        print(board)
         for row in range(len(board)):
             for col in range(len(board[row])):
                 if board[row][col] == 0:
                     valid_moves.append((row, col))
-        return valid_moves
+        return valid_moves'''
+
         '''directions = [(0, 1), (1, 0), (1, 1), (1, -1)]
         for drow, dcol in directions:
             winning_cells = [(row, col)]
@@ -200,6 +218,68 @@ class GomokuAI:
 
 
         return valid_moves'''
+
+        #new try (21/7/2024)
+        valid_moves = []
+        allow_overrule=False #TODO: make this available as an option in the GUI
+        opponent = 3 - self.determine_current_player(board)  # 3-2=1 and 3-1=2 Player 1 is a one in the list and player 2 is a 2 in the list.
+        threat_moves = []
+    
+        directions = [(0, 1), (1, 0), (1, 1), (1, -1)]
+    
+        for row in range(len(board)):
+            for col in range(len(board)):
+                if board[row][col] == 0:  # Lege cel
+                    valid_moves.append((row, col))
+                
+                    # Controleer op dreigende situaties
+                    for drow, dcol in directions:
+                        count = 1
+                        open_ends = 0
+                    
+                        # Controleer in positieve richting
+                        for i in range(1, 5):
+                            r, c = row + i * drow, col + i * dcol
+                            if 0 <= r < len(board) and 0 <= c < len(board):
+                                if board[r][c] == opponent:
+                                    count += 1
+                                elif board[r][c] == 0:
+                                    open_ends += 1
+                                    break
+                                else:
+                                    break
+                            else:
+                                break
+                    
+                        # Controleer in negatieve richting
+                        for i in range(1, 5):
+                            r, c = row - i * drow, col - i * dcol
+                            if 0 <= r < len(board) and 0 <= c < len(board):
+                                if board[r][c] == opponent:
+                                    count += 1
+                                elif board[r][c] == 0:
+                                    open_ends += 1
+                                    break
+                                else:
+                                    break
+                            else:
+                                break
+                    
+                        # Controleer op dreigende situaties
+                        if (count == 3 and open_ends == 2) or (count == 4 and open_ends >= 1):
+                            threat_moves.append((row, col))
+                            break  # We hoeven niet verder te zoeken voor deze cel
+    
+        # Bepaal welke zetten te retourneren op basis van allow_overrule
+        if allow_overrule and threat_moves:
+            print("overruled")
+            print(threat_moves)
+            return threat_moves
+        else:
+            print("normal moves")
+            return valid_moves
+
+
 
     def id_to_move(self, move_id, valid_moves):
         if move_id < len(valid_moves):
