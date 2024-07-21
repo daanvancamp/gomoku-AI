@@ -250,68 +250,7 @@ class GomokuAI:
 
 
     def get_valid_moves(self, board,allow_overrule=None):#voeg de nodige parameters toe. #returns list of valid moves (overroelen ai kan hier gebeuren door de lijst met lengte 1 te maken.)
-        print("in functie get_valid_moves")
-        #TODO: overroel AI
-        '''valid_moves = []
-        print(board)
-        for row in range(len(board)):
-            for col in range(len(board[row])):
-                if board[row][col] == 0:
-                    valid_moves.append((row, col))
-        return valid_moves'''
-
-        '''directions = [(0, 1), (1, 0), (1, 1), (1, -1)]
-        for drow, dcol in directions:
-            winning_cells = [(row, col)]
-            winning_direction = ()
-            count = 1
-            # positive direction
-            for i in range(1, 5):
-                row_, col_ = row + i * drow, col + i * dcol
-                if 0 <= row_ < instance.GRID_SIZE and 0 <= col_ < instance.GRID_SIZE and instance.board[row_][col_] == player:
-                    count += 1
-                    winning_cells.append((row_, col_))#cellen van tegenstander (meerdere naast elkaar)
-                    winning_direction = [(drow, dcol)]
-                    if i=1:
-                        eerste_stuk_p=(row_,col_)
-                    elif i=5:
-                        laatste_stuk_p=(row_col_)
-                    
-                    
-                else:
-                    break
-            # negative direction
-            for i in range(1, 5):
-                row_, col_ = row - i * drow, col - i * dcol
-                if 0 <= row_ < instance.GRID_SIZE and 0 <= col_ < instance.GRID_SIZE and instance.board[row_][col_] == player:
-                    count += 1
-                    winning_cells.append((row_, col_))#cellen van tegenstander meerdere naast elkaar
-                    winning_direction = (drow, dcol)
-                    if i=1:
-                        eerste_stuk_n=(row_,col_)
-                    elif i=5:
-                        laatste_stuk_n=(row_col_)
-                else:
-                    break
-            if count == 3:
-                valid_moves=              #enkel de 2 naburige cellen mogen gekozen worden door het model. #laat ai kiezen wanneer er meerdere keer 3 op een rij is
-            elif count==4:
-                valid_moves=              #enkel de naburige cel mag gekozen worden door het model.
-            else: #laat de ai doen. Doe zoals normaal omdat er geen speler is die kan winnen als men niets doet.(De andere speler heeft geen 3 of 4 op een rij.)
-                valid_moves = []
-                for row in range(len(board)):
-                    for col in range(len(board[row])):
-                        if board[row][col] == 0:
-                            valid_moves.append((row, col))
-        
-
-
-        return valid_moves'''
-
-        #new try (21/7/2024)
-        valid_moves = []
-        #allow_overrule=False 
-        
+        valid_moves = [] 
         if allow_overrule is None:
             allow_overrule=self.determine_bool_allow_overrule()
         
@@ -327,7 +266,7 @@ class GomokuAI:
                 
                     # Controleer op dreigende situaties
                     for drow, dcol in directions:
-                        count= 0  #origineel op 1 geinitialiseerd
+                        count= 0  
                         open_ends = 0
                     
                         # Controleer in positieve richting
@@ -370,8 +309,6 @@ class GomokuAI:
         else:
             print("normal moves")
             return valid_moves
-
-
 
     def id_to_move(self, move_id, valid_moves):
         if move_id < len(valid_moves):
