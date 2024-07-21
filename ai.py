@@ -140,12 +140,10 @@ class GomokuAI:
         self.optimizer.zero_grad(set_to_none=False)
     
 
-
     def determine_bool_allow_overrule(self):
         file_name = 'bool_overrule.txt'#same directory as this file
         with open(file_name, 'r') as file:
             line = file.readline()
-            print(line)
 
         return line == 'True'
 
@@ -249,10 +247,6 @@ class GomokuAI:
                             print("better offensive move found")
                             return True #better #als je 3 op een rij hebt en de tegenstander geen vier op een rij heeft.
         return False
-
-        
-
-
 
 
     def get_valid_moves(self, board,allow_overrule=None):#voeg de nodige parameters toe. #returns list of valid moves (overroelen ai kan hier gebeuren door de lijst met lengte 1 te maken.)
