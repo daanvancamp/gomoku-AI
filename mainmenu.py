@@ -76,7 +76,7 @@ repvar.set(False)
 replay_path = StringVar()
 replay_path.set("")
 var_allow_overrule=BooleanVar()
-var_allow_overrule.set(False)
+var_allow_overrule.set(True)
 
 def set_player_type(playerid):
     if playerid == 0:
