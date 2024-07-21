@@ -5,3 +5,5 @@ logs/
 /.vs/gomoku-thesis-proj/FileContentIndex/01d3bded-388b-487d-b33e-df977dc7b08f.vsidx
 /.vs/gomoku-thesis-proj/FileContentIndex/4c5616d5-c38a-446a-a8ff-a8fd0477159d.vsidx
 *.vsidx
+/.vs/gomoku-thesis-proj/v17/.wsuo
+/.vs/gomoku-thesis-proj/v17/DocumentLayout.backup.json
