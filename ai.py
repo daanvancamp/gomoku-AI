@@ -145,6 +145,16 @@ class GomokuAI:
         self.optimizer.step()
         self.optimizer.zero_grad(set_to_none=False)
     
+
+
+    def determine_bool_allow_overrule(self):
+        file_name = 'bool_overrule.txt'#same directory as this file
+        with open(file_name, 'r') as file:
+            line = file.readline()
+            print(line)
+
+        return line == 'True'
+
     def determine_current_player(self,board):
         pieces_player1=0
         pieces_player2=0
@@ -221,7 +231,13 @@ class GomokuAI:
 
         #new try (21/7/2024)
         valid_moves = []
-        allow_overrule=False #TODO: make this available as an option in the GUI
+        #allow_overrule=False 
+        try:
+            if allow_overrule is None:
+                pass
+        except:
+            allow_overrule=self.determine_bool_allow_overrule()
+        
         opponent = 3 - self.determine_current_player(board)  # 3-2=1 and 3-1=2 Player 1 is a one in the list and player 2 is a 2 in the list.
         threat_moves = []
     

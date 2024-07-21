@@ -1,7 +1,10 @@
+from ssl import OPENSSL_VERSION
 import sys
 from tkinter import *
 from tkinter import ttk
 from tkinter import filedialog
+
+from numpy import var
 import gomoku
 from ai import GomokuAI
 gomoku_ai=GomokuAI(15)#board_size
@@ -72,6 +75,8 @@ repvar = BooleanVar()
 repvar.set(False)
 replay_path = StringVar()
 replay_path.set("")
+var_allow_overrule=BooleanVar()
+var_allow_overrule.set(False)
 
 def set_player_type(playerid):
     if playerid == 0:
@@ -106,8 +111,12 @@ def run():
 
 
 import json
+def schrijf_bool_naar_tekstbestand():
+    with open("bool_overrule.txt", "w") as f:
+        f.write(str(var_allow_overrule.get()))
 
 def start_new_game(is_training=False, moves:dict=None):
+    schrijf_bool_naar_tekstbestand()
     try:
         initialiseer_spelbord_json_bestanden()
     except:
@@ -141,7 +150,7 @@ def start_new_game(is_training=False, moves:dict=None):
                 gomoku.run(game_instance, i, is_training, repvar.get(), moves) #kan als hoofdprogramma beschouwd worden (��n spel is ��n run)
             except Exception as e:
                 print("error in gomoku.run, herschrijf die functie.")
-                raise Exception("De error is waarschijnlijk te wijten aan een foute zet, controleer het lezen van de json bestanden die het bord opslaan." + str(e))
+                raise Exception("De error is waarschijnlijk te wijten aan een foute zet, controleer het lezen van de json bestanden die het bord opslaan." , str(e))
             
             gomoku_ai.decrease_learning_rate()
 
@@ -199,6 +208,8 @@ logbutton = ttk.Checkbutton(tab1, text="Create log file", variable=logvar,style=
 logbutton.grid(row=8, column=0, sticky="w")
 replaybutton = ttk.Checkbutton(tab1, text="Save replays", variable=repvar,style="TCheckbutton") 
 replaybutton.grid(row=9, column=0, sticky="w")
+overrule_button=ttk.Checkbutton(tab1, text="Allow overrule", variable=var_allow_overrule,style="TCheckbutton")
+overrule_button.grid(row=10, column=0, sticky="w")
 button_3 = ttk.Button(input_canvas, text="Quit Game", style="TButton", command=lambda: quit_game())
 button_3.grid(row=1, column=0, sticky="e")
 
@@ -218,8 +229,10 @@ gamerunsentry2 = ttk.Entry(tab2, textvariable=game_runs,style="TEntry")
 gamerunsentry2.grid(row=5, column=0, sticky="w")
 replaybutton2 = ttk.Checkbutton(tab2, text="Save replays", variable=repvar,style="TCheckbutton")
 replaybutton2.grid(row=6, column=0, sticky="w")
+overrule_button=ttk.Checkbutton(tab2, text="Allow overrule", variable=var_allow_overrule,style="TCheckbutton")
+overrule_button.grid(row=7, column=0, sticky="w")
 train_description = Label(tab2, text="It is recommended to run at least 3 000 games per training session.", font=(style_numbers[0], style_numbers[1]), wraplength=WIDTH-5, justify=LEFT)
-train_description.grid(row=7, column=0, sticky="w")
+train_description.grid(row=8, column=0, sticky="w")
 
 
 ttk.Label(tab3)
