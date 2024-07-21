@@ -14,13 +14,7 @@ BATCH_SIZE = 10_000
 MIN_EPSILON = 0.01
 EPSILON_DECAY_RATE = 0.999
 
-#moeilijkheidsgraad is vermeld iedere keer.
 #todo: Verbeteringen aanbrengen in het model door een complexere neurale netwerkarchitectuur te implementeren.:zeer moeilijk
-#todo: Een aanpasbare leerfactor introduceren om de precisie van het leren te verbeteren. concreet: learn rate verlagen naarmate het trainen vordert.:matig
-#De optimalisatiefunctie is veranderd van Adam naar SGD om de voorspelnauwkeurigheid te verhogen.:zeer eenvoudig
-#todo: Experimenteren met genetische algoritmes om de optimale modelparameters te ontdekken.:zeer moeilijk
-#todo: Meer tijd besteden aan het trainen van complexere netwerken om hun effectiviteit te testen. :??? lees conclusie finse student in detail
-
 
 class ConvNet(nn.Module):
     def __init__(self, input_dim, hidden_dim, output_dim):
@@ -170,8 +164,99 @@ class GomokuAI:
             return 1 #player one hasn't done his move yet, so he has one piece less than player2#this is also the case if the board is full or empty
         else:
             raise Exception("rewrite this function, this is wrong")
+     
+    def check_own_chances(self,board)->bool:
         
-    def get_valid_moves(self, board):#voeg de nodige parameters toe. #returns list of valid moves (overroelen ai kan hier gebeuren door de lijst met lengte 1 te maken.) 
+        directions = [(0, 1), (1, 0), (1, 1), (1, -1)]
+        player=self.determine_current_player(board)
+        for row in range(len(board)):
+            for col in range(len(board[0])):
+                if board[row][col] == player:  # Speler heeft hier een stuk
+                    for drow, dcol in directions:
+                        count = 1
+                        open_ends = 0
+
+                        # Controleer in positieve richting
+                        for i in range(1, 5):
+                            r, c = row + i * drow, col + i * dcol
+                            if 0 <= r < len(board) and 0 <= c < len(board[0]):
+                                if board[r][c] == player:
+                                    count += 1
+                                elif board[r][c] == 0:
+                                    open_ends += 1
+                                    break
+                                else:
+                                    break
+                            else:
+                                break
+
+                        # Controleer in negatieve richting
+                        for i in range(1, 5):
+                            r, c = row - i * drow, col - i * dcol
+                            if 0 <= r < len(board) and 0 <= c < len(board[0]):
+                                if board[r][c] == player:
+                                    count += 1
+                                elif board[r][c] == 0:
+                                    open_ends += 1
+                                    break
+                                else:
+                                    break
+                            else:
+                                break
+
+                        if (count == 4 and open_ends >= 1): #speel niet defensief
+                            print("better offensive move found")
+                            return True
+                        elif (count==3 and open_ends == 2):#afhankelijk van tegenstander
+                            opponent=3-player #3-2=1 and 3-1=2
+                            for row in range(len(board)):
+                                for col in range(len(board[0])):
+                                    if board[row][col] == opponent:  # Speler heeft hier een stuk
+                                        for drow, dcol in directions:
+                                            count = 1
+                                            open_ends = 0
+
+                                            # Controleer in positieve richting
+                                            for i in range(1, 5):
+                                                r, c = row + i * drow, col + i * dcol
+                                                if 0 <= r < len(board) and 0 <= c < len(board[0]):
+                                                    if board[r][c] == opponent:
+                                                        count += 1
+                                                    elif board[r][c] == 0:
+                                                        open_ends += 1
+                                                        break
+                                                    else:
+                                                        break
+                                                else:
+                                                    break
+
+                                            # Controleer in negatieve richting
+                                            for i in range(1, 5):
+                                                r, c = row - i * drow, col - i * dcol
+                                                if 0 <= r < len(board) and 0 <= c < len(board[0]):
+                                                    if board[r][c] == opponent:
+                                                        count += 1
+                                                    elif board[r][c] == 0:
+                                                        open_ends += 1
+                                                        break
+                                                    else:
+                                                        break
+                                                else:
+                                                    break
+
+                                            if count==4 and open_ends>=1: #play defensive instead of offensive if the opponent can win
+                                                return False
+                            print("better offensive move found")
+                            return True #better #als je 3 op een rij hebt en de tegenstander geen vier op een rij heeft.
+        return False
+
+        
+
+
+
+
+    def get_valid_moves(self, board,allow_overrule=None):#voeg de nodige parameters toe. #returns list of valid moves (overroelen ai kan hier gebeuren door de lijst met lengte 1 te maken.)
+        print("in functie get_valid_moves")
         #TODO: overroel AI
         '''valid_moves = []
         print(board)
@@ -232,10 +317,8 @@ class GomokuAI:
         #new try (21/7/2024)
         valid_moves = []
         #allow_overrule=False 
-        try:
-            if allow_overrule is None:
-                pass
-        except:
+        
+        if allow_overrule is None:
             allow_overrule=self.determine_bool_allow_overrule()
         
         opponent = 3 - self.determine_current_player(board)  # 3-2=1 and 3-1=2 Player 1 is a one in the list and player 2 is a 2 in the list.
@@ -250,7 +333,7 @@ class GomokuAI:
                 
                     # Controleer op dreigende situaties
                     for drow, dcol in directions:
-                        count = 1
+                        count= 0  #origineel op 1 geinitialiseerd
                         open_ends = 0
                     
                         # Controleer in positieve richting
@@ -287,7 +370,7 @@ class GomokuAI:
                             break  # We hoeven niet verder te zoeken voor deze cel
     
         # Bepaal welke zetten te retourneren op basis van allow_overrule
-        if allow_overrule and threat_moves:
+        if allow_overrule and threat_moves and not self.check_own_chances(board):#when the current player can win, don't overrule offcourse, winning is better than defending
             print("overruled")
             print(threat_moves)
             return threat_moves

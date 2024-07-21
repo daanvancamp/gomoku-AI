@@ -22,13 +22,14 @@ def initialiseer_muziek():
 def start_muziek_vertraagd(tijd=1):#standard 5 seconden, kan ook worden veranderd
     sleep(tijd) #blokkeert enkel thread
     try:
-        pygame.mixer.music.stop()
+        pygame.mixer.music.fadeout(1000)
+
 
         pygame.mixer.music.play()
     except:#de code komt steeds hier
         try:
             pygame.mixer.music.load(r"wachten_muziek.mp3")#tijdelijk #todo: werk weg door initialiseer_muziek te verbeteren of een andere wijziging toe te passen
-            pygame.mixer.music.stop()
+            pygame.mixer.music.fadeout(1000)
 
             pygame.mixer.music.play()
         except:

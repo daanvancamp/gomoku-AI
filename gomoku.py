@@ -369,7 +369,7 @@ def run(instance, game_number, train, record_replay=False, moves:dict=None):#mai
                         #druk op linkermuisknop om te zetten
                     elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 1: #kan zo gelaten worden. Wanneer op de muis wordt gedrukt,wordt de zet gelezen van het besstand
                         print("muis ingedrukt")
-                        pygame.mixer.music.stop()
+                        pygame.mixer.music.fadeout(1000)
                         print("muziek gestopt")
                         reset_timer()
                         schrijf_relevante_stukken_na_zet_weg()#sla de stukken van de mens op in een bestand.
