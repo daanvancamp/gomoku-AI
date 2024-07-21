@@ -371,8 +371,7 @@ class GomokuAI:
     
         # Bepaal welke zetten te retourneren op basis van allow_overrule
         if allow_overrule and threat_moves and not self.check_own_chances(board):#when the current player can win, don't overrule offcourse, winning is better than defending
-            print("overruled")
-            print(threat_moves)
+            print("overruled:",threat_moves)
             return threat_moves
         else:
             print("normal moves")
