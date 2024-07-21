@@ -133,7 +133,7 @@ def start_new_game(is_training=False, moves:dict=None):
             except:
                 print("invalid number, try again")
 
-        game_instance.ai_delay = delayvar.get()#waar of niet waar (boolean)
+        game_instance.ai_delay = delayvar.get()
         stats.should_log = logvar.get()
         stats.setup_logging(p1.get(), p2.get())
         root.wm_state('iconic')
