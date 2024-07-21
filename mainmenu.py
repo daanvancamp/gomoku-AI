@@ -80,7 +80,6 @@ def set_player_type(playerid):
         newtype = p2.get()
     gomoku.players[playerid].set_player(newtype, playerid)
 
-
 def set_game_instance(new_instance):
     global game_instance
     game_instance = new_instance

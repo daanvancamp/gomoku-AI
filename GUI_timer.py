@@ -1,4 +1,3 @@
-from logging import root
 import tkthread; tkthread.patch()
 import tkinter as tk
 from threading import Thread, Event

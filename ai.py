@@ -86,6 +86,7 @@ class GomokuAI:
         self.criterion = nn.MSELoss()
         self.loss = 0
         self.train = False
+
     def decrease_learning_rate(self):
         self.learning_rate *= 0.9999 #decrease learning rate
         print("learning rate automatically declined by 0.001%, current lr:", self.learning_rate)

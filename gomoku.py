@@ -167,9 +167,7 @@ def set_players(_players):
 
 window_name = "Gomoku"
 victory_text = ""
-
 current_player = 1
-
 
 # Function to draw the game board
 def draw_board(instance):
@@ -195,7 +193,6 @@ def reset_game(instance):
     global current_player
     instance.board = [[0] * instance.GRID_SIZE for _ in range(instance.GRID_SIZE)]
     current_player = 1
-
 
 def calculate_score(board: tuple, board_size=15):
     directions = [(0, 1), (0, -1), (1, 0), (-1, 0), (1, 1), (-1, -1), (1, -1), (-1, 1)]#richtingen om te controleren of er 5 stukkenp een rij zijn.
@@ -281,7 +278,6 @@ def calculate_score(board: tuple, board_size=15):
         scores_normalized.append(new_normalized_score)
     return max_score, scored_board, scores_normalized#return de hoogste score, het board met scores, de scores genormaliseerd
 
-
 def check_win(row, col, player, instance):
     directions = [(0, 1), (1, 0), (1, 1), (1, -1)]
     for drow, dcol in directions:
@@ -308,18 +304,17 @@ def check_win(row, col, player, instance):
                 break
         if count >= 5:  # Victory condition #todo: verander naar =5 om het moeilijker te maken.
             match winning_direction:    # sort the array so that a strike can be drawn correctly
-                case (1, 0):
+                case (1, 0): #if winning_direction==(1,0):
                     winning_cells.sort()
-                case(0, 1):
+                case(0, 1):#if winning_direction==(0,1):
                     winning_cells.sort(key=lambda i: i[1])
-                case(1, 1):
+                case(1, 1):#if winning_direction==(1,1):
                     winning_cells.sort(key=operator.itemgetter(0, 1))
-                case(1, -1):
+                case(1, -1):#if winning_direction==(1,-1):
                     winning_cells.sort(key=operator.itemgetter(0, 1), reverse=True)
             instance.winning_cells = winning_cells
             return True
     return False
-
 
 def check_board_full(instance):# checkt of het bord vol is
     board = instance.board
@@ -329,7 +324,6 @@ def check_board_full(instance):# checkt of het bord vol is
             if board[row][col] == 0:
                 return False
     return True
-
 
 def convert_to_one_hot(board, player_id):#vermijd dat ai denkt dat de getallen iets betekenen.
     board = np.array(board)
@@ -343,7 +337,6 @@ def convert_to_one_hot(board, player_id):#vermijd dat ai denkt dat de getallen i
         one_hot_board[1] = (board == 2).astype(np.float32)  # AI's pieces as Player 2
         one_hot_board[2] = (board == 1).astype(np.float32)
     return one_hot_board
-
 
 def run(instance, game_number, train, record_replay=False, moves:dict=None):#main function
     # Main game loop
@@ -437,9 +430,7 @@ def run(instance, game_number, train, record_replay=False, moves:dict=None):#mai
                                 #initialiseer_timer()
 
                                 
-                                print("muziek gestart")
-
-                                
+                                print("muziek gestart")            
 
             # TestAI move
             elif players[current_player-1].TYPE == "AI" and not testai.check_game_over(instance):

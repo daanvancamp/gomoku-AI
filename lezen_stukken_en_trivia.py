@@ -1,5 +1,4 @@
 import json
-import os
 from time import sleep
 from typing import List, Tuple, Dict, Any
 import pygame
