@@ -2,7 +2,6 @@ import json
 import datetime
 import os
 
-#todo: verwijder onnodige zaken
 def create_gomoku_game(filename):
     with open(filename, 'r') as file:
         data = json.load(file)
@@ -14,8 +13,6 @@ def create_gomoku_game(filename):
             values.append(value)
         return values
 
-
-
 def load_scores(filename):
     with open(filename, 'r') as file:
         return json.load(file).get("scores", [])
@@ -24,12 +21,7 @@ def load_scores(filename):
 def load(filename):
     return json.load(filename)
 
-
 def string_to_color(in_col):
-    """
-    Converts a string representation of an RGB color to a tuple of integers representing the color.
-
-    """
     # Remove parentheses
     new_col = in_col.replace('(', '')
     new_col = new_col.replace(')', '')

@@ -352,8 +352,7 @@ class GomokuAI:
                   if action is None:
                       raise Exception("A random move couldn't be found")
                   print("move not found, random move chosen")
-                  #stop na 3O pogingen #todo: controleer werking
-                  #break
+                 
             # if no action, switch to exploration
             else:
                 print("Exploration")

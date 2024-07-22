@@ -79,7 +79,7 @@ def controleer_vertraging_data():
 
         max_vertraging=3
         datum_verschillend=(jaar!=huidig_jaar) or (maand!=huidige_maand) or (dag!=huidige_dag)
-        tijd_verschillend= huidig_tijdstip>tijdstip+max_vertraging# todo: maak de berekening juist.
+        tijd_verschillend= huidig_tijdstip>tijdstip+max_vertraging
 
         if datum_verschillend or tijd_verschillend:
             raise Exception("Herzie het programma, er zit te veel vertraging op." ,"Gebruik threads om vertraging op te lossen.")

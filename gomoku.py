@@ -384,7 +384,7 @@ def run(instance, game_number, train, record_replay=False, moves:dict=None):#mai
                                 int(i[1])
 
                             except:
-                                raise Exception("geen getallen")
+                                raise Exception("De coordinaten moeten getallen zijn. Controleer de coordinaten in de beeldherkenning. (x,y)")
                         try:
                             if len(zetten_mens)==0:
                                 raise Exception("Er werd geen zet gedetecteerd.")
