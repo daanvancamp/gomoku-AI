@@ -315,7 +315,7 @@ class GomokuAI:
         else:
             print("normal moves")
             return valid_moves'''
-        log_info_overruling("function get_valid_moves called")
+        log_info_overruling("function get_valid_moves called\n")
         valid_moves = [] 
         if allow_overrule is None:
             allow_overrule = self.determine_bool_allow_overrule()
