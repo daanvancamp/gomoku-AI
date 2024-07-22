@@ -162,11 +162,10 @@ class GomokuAI:
             raise Exception("rewrite this function, this is wrong")
      
     def check_own_chances(self,board,opponent_winning)->bool:
-        
         directions = [(0, 1), (1, 0), (1, 1), (1, -1)]
         player=self.determine_current_player(board)
         for row in range(len(board)):
-            for col in range(len(board[0])):
+            for col in range(len(board)):#origineel: board
                 if board[row][col] == player:  # Speler heeft hier een stuk
                     for drow, dcol in directions:
                         count = 1
@@ -311,7 +310,6 @@ class GomokuAI:
             print("normal moves")
             return valid_moves'''
         
-
         valid_moves = [] 
         if allow_overrule is None:
             allow_overrule = self.determine_bool_allow_overrule()
@@ -325,13 +323,11 @@ class GomokuAI:
                 if board[row][col] == 0:  # Lege cel
                     valid_moves.append((row, col))
         
-                    # Controleer op dreigende situaties
                     for drow, dcol in directions:
                         count = 0  
                         open_ends = 0
-                        adjacent_two = 0  # Teller voor aangrenzende twee-op-een-rij
+                        adjacent_two = 0 
             
-                        # Controleer in positieve richting
                         for i in range(1, 5):
                             r, c = row + i * drow, col + i * dcol
                             if 0 <= r < len(board) and 0 <= c < len(board):
@@ -347,7 +343,6 @@ class GomokuAI:
                             else:
                                 break
             
-                        # Controleer in negatieve richting
                         for i in range(1, 5):
                             r, c = row - i * drow, col - i * dcol
                             if 0 <= r < len(board) and 0 <= c < len(board):
@@ -378,7 +373,6 @@ class GomokuAI:
         else:
             print("a normal move is executed by the AI")
             return valid_moves
-
 
     def id_to_move(self, move_id, valid_moves):
         if move_id < len(valid_moves):
