@@ -164,7 +164,7 @@ class GomokuAI:
             raise Exception("rewrite this function, this is wrong")
      
     def check_own_chances(self,board,opponent_winning)->bool:
-        log_info_overruling("function check_own_chances called")
+        log_info_overruling("function check_own_chances called\n")
         directions = [(0, 1), (1, 0), (1, 1), (1, -1)]
         player=self.determine_current_player(board)
         for row in range(len(board)):
