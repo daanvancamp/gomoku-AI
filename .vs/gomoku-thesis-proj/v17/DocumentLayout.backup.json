@@ -3,24 +3,12 @@
   "WorkspaceRootPath": "C:\\Users\\daanv\\source\\repos\\daanvancamp\\gomoku-thesis-proj\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\daanv\\source\\repos\\daanvancamp\\gomoku-thesis-proj\\mainmenu.py||{8B382828-6202-11D1-8870-0000F87579D2}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:mainmenu.py||{8B382828-6202-11D1-8870-0000F87579D2}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\daanv\\source\\repos\\daanvancamp\\gomoku-thesis-proj\\testai.py||{8B382828-6202-11D1-8870-0000F87579D2}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:testai.py||{8B382828-6202-11D1-8870-0000F87579D2}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\daanv\\source\\repos\\daanvancamp\\gomoku-thesis-proj\\gomoku.py||{8B382828-6202-11D1-8870-0000F87579D2}",
       "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:gomoku.py||{8B382828-6202-11D1-8870-0000F87579D2}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\daanv\\source\\repos\\daanvancamp\\gomoku-thesis-proj\\ai.py||{8B382828-6202-11D1-8870-0000F87579D2}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:ai.py||{8B382828-6202-11D1-8870-0000F87579D2}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\daanv\\source\\repos\\daanvancamp\\gomoku-thesis-proj\\filereader.py||{8B382828-6202-11D1-8870-0000F87579D2}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:filereader.py||{8B382828-6202-11D1-8870-0000F87579D2}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\daanv\\source\\repos\\daanvancamp\\gomoku-thesis-proj\\mainmenu.py||{8B382828-6202-11D1-8870-0000F87579D2}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:mainmenu.py||{8B382828-6202-11D1-8870-0000F87579D2}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\daanv\\source\\repos\\daanvancamp\\gomoku-thesis-proj\\lezen_stukken_en_trivia.py||{8B382828-6202-11D1-8870-0000F87579D2}",
@@ -29,6 +17,18 @@
     {
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\daanv\\source\\repos\\daanvancamp\\gomoku-thesis-proj\\GUI_timer.py||{8B382828-6202-11D1-8870-0000F87579D2}",
       "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:GUI_timer.py||{8B382828-6202-11D1-8870-0000F87579D2}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\daanv\\source\\repos\\daanvancamp\\gomoku-thesis-proj\\ai.py||{8B382828-6202-11D1-8870-0000F87579D2}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:ai.py||{8B382828-6202-11D1-8870-0000F87579D2}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\daanv\\source\\repos\\daanvancamp\\gomoku-thesis-proj\\testai.py||{8B382828-6202-11D1-8870-0000F87579D2}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:testai.py||{8B382828-6202-11D1-8870-0000F87579D2}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\daanv\\source\\repos\\daanvancamp\\gomoku-thesis-proj\\filereader.py||{8B382828-6202-11D1-8870-0000F87579D2}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:filereader.py||{8B382828-6202-11D1-8870-0000F87579D2}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\daanv\\source\\repos\\daanvancamp\\gomoku-thesis-proj\\README.md||{EFC0BB08-EA7D-40C6-A696-C870411A895B}",
@@ -54,17 +54,17 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 4,
+          "SelectedChildIndex": 0,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 0,
               "Title": "gomoku.py",
               "DocumentMoniker": "C:\\Users\\daanv\\source\\repos\\daanvancamp\\gomoku-thesis-proj\\gomoku.py",
               "RelativeDocumentMoniker": "gomoku.py",
               "ToolTip": "C:\\Users\\daanv\\source\\repos\\daanvancamp\\gomoku-thesis-proj\\gomoku.py",
               "RelativeToolTip": "gomoku.py",
-              "ViewState": "AgIAAMUBAAAAAAAAAAApwOIBAAAcAAAAAAAAAA==",
+              "ViewState": "AgIAALEBAAAAAAAAAAAAAMQBAAAiAAAAAAAAAA==",
               "Icon": "00000000-0000-0000-0000-000000000000.000000|iVBORw0KGgoAAAANSUhEUgAAABwAAAAcCAYAAAByDd\u002BUAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAUqSURBVEhLvZbRb1RVHsc/5947l3ZaZ6YtbUkVOwxMmlpWhGhCspIASVfTZPvgCxsxGn0xGUkMpvKyf8AmbLJRnzS8sESiWfABE6xEgmsq6mIt6KYpBYemFtthWqaUTtuZe\u002B85v30YatrLOBgf9pt8c3N/55zfJ7/fvefcC/9PiYgKxwCi0ejDjuNEw/EHSAO5u3fvLocH1qoqsK\u002Bv7/zevXv3O44THqqqfD5PsVic9Tzv7\u002BfOnXtvcnJyMTxnVb8KPHbs2P5EIhEeqqqzZ8\u002BysLBwJ5/P356YmDg\u002BNDT01vj4\u002BFJ4HoAVDvxebd26NdHf39\u002BcTCYP7t69e6Cnp6chPAfADgcA0un0i/39/Vtc1\u002BXq1avMzc3d50KhQHNzM0oprl\u002B/TjQapaenpz6VSm2Ynp7e6Lpuu9b60uzsrL829wMrTCaTVd3Z2YlS9z\u002BRTZs2PXTw4MGuVCrVl0gkMuHxmkClFK7r/qpXZVkWp06d4siRIwwMDHD06NGGXC63C0itSwjUfA1FhNHR0XAYANu26e7uRilFb28v\u002B/btWzeezWY5fPjwuhi/pcLt27dXdXd3N7ZtY1B4YlEWB48IOC7RaHRdB9aqJhBgZmamqktlj7HcMh9fzvHBNz9x4ssJTgxlef/LLJ9euYknNi0tLeF0tYEiguM4VR0oh9PDU0zNLzF8Y47PfrjJ4Mgkp7/6kffO/Zeh7AKP79gRTlkbqJSira2tqsvGYqawTGpjA/E6B6M1YgKM1iwUVxifWeSFl16xDxw4sG7r1QSKCCMjI1Xta0NufpETX1xjbOo2Wmt0YDBao41GB5q29k1WR0fHOuD9G2nN0RaPxzHGwL1qA6PI3i4xM7\u002BMrw0rZR9jNMYIN3J3uDg6xd3lEkZrHn80xj9e7iIWKYDTfhu3828bWzvefiCwWCziOA6\u002Bcvnw25/5fDRH2Qsw2icIKi3U2scEGq0DdKAxQcCOznreeUloMN\u002BBWBA7oIk\u002B2ffAlt66dYtCocDoVIEfJucpez7G\u002BGgdVKrTq9DK1egAIwG2Mth4YDToZSh\u002BYQOv1gQqpUilUmzevJlFX1FYXKkkDHQl\u002BWqFq/daY4wmXu\u002BypzuKa26CLlVcugqin67Z0lgsRjabJR6P8/W04fi/r6O1jw4ClAi7kg\u002BxJw0b7DIics\u002BGeN0Sf2idJGZNgCmDeKA9SP5TalZI5TAmkUhgK1AYTGAw2pBur\u002BPN3jx96a/o3fotf9o2zDPp73h22yX\u002B\u002BPAwMSsLegXMvQp1GVRE1QQqpWhsbKSuro6maIRG10JLpW19O1tojVzGYQFLFrHMAlYwhxXMgj8fgpUg0gEqcq0mUES4cuUKY2NjtNYLyZYGlA7QOqApalAYEKm8GMGa5LpUAepSJW40NO41KPV\u002BTaBlWezcuZOuri66O9t5bvcW9jzWwa5UK/GGDSAGjA9mBRBQDaBiYMXAaYUNXVC/HeLPlmh6ZuTChQvv1vw8rZXWml1bWnhqWxsAjuRgtlwBag\u002BsOrCbwIpU4M5GaHnhGnbDxcHBwdzk5L9OZzKZuZoVhmWMwfd9fN\u002BvnIprW\u002BjloTgMlgtOK7L0PSLBxTNnzrx26NChv2YymcvU\u002BgCfPHmSWr\u002BJz//lz7TZreDfAOOB9kHKUJ6DCBjnkfmzn1wYfeONgdLExMQv66ruw9/yIzw7m38iYm6\u002By53BJoqXwJsGDLhpJL5fTOO\u002B/xw7/tHLmUxmPLz2d6m5uVmJSFpE3haRH0XEE5ElEflaRF4/f/58LLwG4H9\u002BJsjcTp8b4QAAAABJRU5ErkJggg==",
               "WhenOpened": "2024-07-17T15:47:16.627Z",
               "IsPinned": true,
@@ -72,13 +72,13 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 3,
               "Title": "GUI_timer.py",
               "DocumentMoniker": "C:\\Users\\daanv\\source\\repos\\daanvancamp\\gomoku-thesis-proj\\GUI_timer.py",
               "RelativeDocumentMoniker": "GUI_timer.py",
               "ToolTip": "C:\\Users\\daanv\\source\\repos\\daanvancamp\\gomoku-thesis-proj\\GUI_timer.py",
               "RelativeToolTip": "GUI_timer.py",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAATAAAAAAAAAA==",
+              "ViewState": "AgIAAAkAAAAAAAAAAAAAAA0AAAATAAAAAAAAAA==",
               "Icon": "00000000-0000-0000-0000-000000000000.000000|iVBORw0KGgoAAAANSUhEUgAAABwAAAAcCAYAAAByDd\u002BUAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAUqSURBVEhLvZbRb1RVHsc/5947l3ZaZ6YtbUkVOwxMmlpWhGhCspIASVfTZPvgCxsxGn0xGUkMpvKyf8AmbLJRnzS8sESiWfABE6xEgmsq6mIt6KYpBYemFtthWqaUTtuZe\u002B85v30YatrLOBgf9pt8c3N/55zfJ7/fvefcC/9PiYgKxwCi0ejDjuNEw/EHSAO5u3fvLocH1qoqsK\u002Bv7/zevXv3O44THqqqfD5PsVic9Tzv7\u002BfOnXtvcnJyMTxnVb8KPHbs2P5EIhEeqqqzZ8\u002BysLBwJ5/P356YmDg\u002BNDT01vj4\u002BFJ4HoAVDvxebd26NdHf39\u002BcTCYP7t69e6Cnp6chPAfADgcA0un0i/39/Vtc1\u002BXq1avMzc3d50KhQHNzM0oprl\u002B/TjQapaenpz6VSm2Ynp7e6Lpuu9b60uzsrL829wMrTCaTVd3Z2YlS9z\u002BRTZs2PXTw4MGuVCrVl0gkMuHxmkClFK7r/qpXZVkWp06d4siRIwwMDHD06NGGXC63C0itSwjUfA1FhNHR0XAYANu26e7uRilFb28v\u002B/btWzeezWY5fPjwuhi/pcLt27dXdXd3N7ZtY1B4YlEWB48IOC7RaHRdB9aqJhBgZmamqktlj7HcMh9fzvHBNz9x4ssJTgxlef/LLJ9euYknNi0tLeF0tYEiguM4VR0oh9PDU0zNLzF8Y47PfrjJ4Mgkp7/6kffO/Zeh7AKP79gRTlkbqJSira2tqsvGYqawTGpjA/E6B6M1YgKM1iwUVxifWeSFl16xDxw4sG7r1QSKCCMjI1Xta0NufpETX1xjbOo2Wmt0YDBao41GB5q29k1WR0fHOuD9G2nN0RaPxzHGwL1qA6PI3i4xM7\u002BMrw0rZR9jNMYIN3J3uDg6xd3lEkZrHn80xj9e7iIWKYDTfhu3828bWzvefiCwWCziOA6\u002Bcvnw25/5fDRH2Qsw2icIKi3U2scEGq0DdKAxQcCOznreeUloMN\u002BBWBA7oIk\u002B2ffAlt66dYtCocDoVIEfJucpez7G\u002BGgdVKrTq9DK1egAIwG2Mth4YDToZSh\u002BYQOv1gQqpUilUmzevJlFX1FYXKkkDHQl\u002BWqFq/daY4wmXu\u002BypzuKa26CLlVcugqin67Z0lgsRjabJR6P8/W04fi/r6O1jw4ClAi7kg\u002BxJw0b7DIics\u002BGeN0Sf2idJGZNgCmDeKA9SP5TalZI5TAmkUhgK1AYTGAw2pBur\u002BPN3jx96a/o3fotf9o2zDPp73h22yX\u002B\u002BPAwMSsLegXMvQp1GVRE1QQqpWhsbKSuro6maIRG10JLpW19O1tojVzGYQFLFrHMAlYwhxXMgj8fgpUg0gEqcq0mUES4cuUKY2NjtNYLyZYGlA7QOqApalAYEKm8GMGa5LpUAepSJW40NO41KPV\u002BTaBlWezcuZOuri66O9t5bvcW9jzWwa5UK/GGDSAGjA9mBRBQDaBiYMXAaYUNXVC/HeLPlmh6ZuTChQvv1vw8rZXWml1bWnhqWxsAjuRgtlwBag\u002BsOrCbwIpU4M5GaHnhGnbDxcHBwdzk5L9OZzKZuZoVhmWMwfd9fN\u002BvnIprW\u002BjloTgMlgtOK7L0PSLBxTNnzrx26NChv2YymcvU\u002BgCfPHmSWr\u002BJz//lz7TZreDfAOOB9kHKUJ6DCBjnkfmzn1wYfeONgdLExMQv66ruw9/yIzw7m38iYm6\u002By53BJoqXwJsGDLhpJL5fTOO\u002B/xw7/tHLmUxmPLz2d6m5uVmJSFpE3haRH0XEE5ElEflaRF4/f/58LLwG4H9\u002BJsjcTp8b4QAAAABJRU5ErkJggg==",
               "WhenOpened": "2024-07-17T15:46:45.76Z",
               "IsPinned": true,
@@ -86,60 +86,79 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 4,
               "Title": "ai.py",
               "DocumentMoniker": "C:\\Users\\daanv\\source\\repos\\daanvancamp\\gomoku-thesis-proj\\ai.py",
               "RelativeDocumentMoniker": "ai.py",
               "ToolTip": "C:\\Users\\daanv\\source\\repos\\daanvancamp\\gomoku-thesis-proj\\ai.py",
               "RelativeToolTip": "ai.py",
-              "ViewState": "AgIAAHkAAAAAAAAAAAApwJEAAAAiAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAANoAAAAEAAAAAAAAAA==",
               "Icon": "00000000-0000-0000-0000-000000000000.000000|iVBORw0KGgoAAAANSUhEUgAAABwAAAAcCAYAAAByDd\u002BUAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAUqSURBVEhLvZbRb1RVHsc/5947l3ZaZ6YtbUkVOwxMmlpWhGhCspIASVfTZPvgCxsxGn0xGUkMpvKyf8AmbLJRnzS8sESiWfABE6xEgmsq6mIt6KYpBYemFtthWqaUTtuZe\u002B85v30YatrLOBgf9pt8c3N/55zfJ7/fvefcC/9PiYgKxwCi0ejDjuNEw/EHSAO5u3fvLocH1qoqsK\u002Bv7/zevXv3O44THqqqfD5PsVic9Tzv7\u002BfOnXtvcnJyMTxnVb8KPHbs2P5EIhEeqqqzZ8\u002BysLBwJ5/P356YmDg\u002BNDT01vj4\u002BFJ4HoAVDvxebd26NdHf39\u002BcTCYP7t69e6Cnp6chPAfADgcA0un0i/39/Vtc1\u002BXq1avMzc3d50KhQHNzM0oprl\u002B/TjQapaenpz6VSm2Ynp7e6Lpuu9b60uzsrL829wMrTCaTVd3Z2YlS9z\u002BRTZs2PXTw4MGuVCrVl0gkMuHxmkClFK7r/qpXZVkWp06d4siRIwwMDHD06NGGXC63C0itSwjUfA1FhNHR0XAYANu26e7uRilFb28v\u002B/btWzeezWY5fPjwuhi/pcLt27dXdXd3N7ZtY1B4YlEWB48IOC7RaHRdB9aqJhBgZmamqktlj7HcMh9fzvHBNz9x4ssJTgxlef/LLJ9euYknNi0tLeF0tYEiguM4VR0oh9PDU0zNLzF8Y47PfrjJ4Mgkp7/6kffO/Zeh7AKP79gRTlkbqJSira2tqsvGYqawTGpjA/E6B6M1YgKM1iwUVxifWeSFl16xDxw4sG7r1QSKCCMjI1Xta0NufpETX1xjbOo2Wmt0YDBao41GB5q29k1WR0fHOuD9G2nN0RaPxzHGwL1qA6PI3i4xM7\u002BMrw0rZR9jNMYIN3J3uDg6xd3lEkZrHn80xj9e7iIWKYDTfhu3828bWzvefiCwWCziOA6\u002Bcvnw25/5fDRH2Qsw2icIKi3U2scEGq0DdKAxQcCOznreeUloMN\u002BBWBA7oIk\u002B2ffAlt66dYtCocDoVIEfJucpez7G\u002BGgdVKrTq9DK1egAIwG2Mth4YDToZSh\u002BYQOv1gQqpUilUmzevJlFX1FYXKkkDHQl\u002BWqFq/daY4wmXu\u002BypzuKa26CLlVcugqin67Z0lgsRjabJR6P8/W04fi/r6O1jw4ClAi7kg\u002BxJw0b7DIics\u002BGeN0Sf2idJGZNgCmDeKA9SP5TalZI5TAmkUhgK1AYTGAw2pBur\u002BPN3jx96a/o3fotf9o2zDPp73h22yX\u002B\u002BPAwMSsLegXMvQp1GVRE1QQqpWhsbKSuro6maIRG10JLpW19O1tojVzGYQFLFrHMAlYwhxXMgj8fgpUg0gEqcq0mUES4cuUKY2NjtNYLyZYGlA7QOqApalAYEKm8GMGa5LpUAepSJW40NO41KPV\u002BTaBlWezcuZOuri66O9t5bvcW9jzWwa5UK/GGDSAGjA9mBRBQDaBiYMXAaYUNXVC/HeLPlmh6ZuTChQvv1vw8rZXWml1bWnhqWxsAjuRgtlwBag\u002BsOrCbwIpU4M5GaHnhGnbDxcHBwdzk5L9OZzKZuZoVhmWMwfd9fN\u002BvnIprW\u002BjloTgMlgtOK7L0PSLBxTNnzrx26NChv2YymcvU\u002BgCfPHmSWr\u002BJz//lz7TZreDfAOOB9kHKUJ6DCBjnkfmzn1wYfeONgdLExMQv66ruw9/yIzw7m38iYm6\u002By53BJoqXwJsGDLhpJL5fTOO\u002B/xw7/tHLmUxmPLz2d6m5uVmJSFpE3haRH0XEE5ElEflaRF4/f/58LLwG4H9\u002BJsjcTp8b4QAAAABJRU5ErkJggg==",
               "WhenOpened": "2024-07-17T15:46:53.308Z",
               "IsPinned": true,
               "EditorCaption": ""
             },
             {
+              "$type": "Bookmark",
+              "Name": "ST:1:0:{e8b06f52-6d01-11d2-aa7d-00c04f990343}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{aa2115a1-9712-457b-9047-dbb71ca2cdd2}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:128:0:{13b12e3e-c1b4-4539-9371-4fe9a0d523fc}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:128:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
+            {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 2,
               "Title": "lezen_stukken_en_trivia.py",
               "DocumentMoniker": "C:\\Users\\daanv\\source\\repos\\daanvancamp\\gomoku-thesis-proj\\lezen_stukken_en_trivia.py",
               "RelativeDocumentMoniker": "lezen_stukken_en_trivia.py",
               "ToolTip": "C:\\Users\\daanv\\source\\repos\\daanvancamp\\gomoku-thesis-proj\\lezen_stukken_en_trivia.py",
               "RelativeToolTip": "lezen_stukken_en_trivia.py",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAtAAAAAAAAAA==",
+              "ViewState": "AgIAAFcAAAAAAAAAAAAAAAsAAAAtAAAAAAAAAA==",
               "Icon": "00000000-0000-0000-0000-000000000000.000000|iVBORw0KGgoAAAANSUhEUgAAABwAAAAcCAYAAAByDd\u002BUAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAUqSURBVEhLvZbRb1RVHsc/5947l3ZaZ6YtbUkVOwxMmlpWhGhCspIASVfTZPvgCxsxGn0xGUkMpvKyf8AmbLJRnzS8sESiWfABE6xEgmsq6mIt6KYpBYemFtthWqaUTtuZe\u002B85v30YatrLOBgf9pt8c3N/55zfJ7/fvefcC/9PiYgKxwCi0ejDjuNEw/EHSAO5u3fvLocH1qoqsK\u002Bv7/zevXv3O44THqqqfD5PsVic9Tzv7\u002BfOnXtvcnJyMTxnVb8KPHbs2P5EIhEeqqqzZ8\u002BysLBwJ5/P356YmDg\u002BNDT01vj4\u002BFJ4HoAVDvxebd26NdHf39\u002BcTCYP7t69e6Cnp6chPAfADgcA0un0i/39/Vtc1\u002BXq1avMzc3d50KhQHNzM0oprl\u002B/TjQapaenpz6VSm2Ynp7e6Lpuu9b60uzsrL829wMrTCaTVd3Z2YlS9z\u002BRTZs2PXTw4MGuVCrVl0gkMuHxmkClFK7r/qpXZVkWp06d4siRIwwMDHD06NGGXC63C0itSwjUfA1FhNHR0XAYANu26e7uRilFb28v\u002B/btWzeezWY5fPjwuhi/pcLt27dXdXd3N7ZtY1B4YlEWB48IOC7RaHRdB9aqJhBgZmamqktlj7HcMh9fzvHBNz9x4ssJTgxlef/LLJ9euYknNi0tLeF0tYEiguM4VR0oh9PDU0zNLzF8Y47PfrjJ4Mgkp7/6kffO/Zeh7AKP79gRTlkbqJSira2tqsvGYqawTGpjA/E6B6M1YgKM1iwUVxifWeSFl16xDxw4sG7r1QSKCCMjI1Xta0NufpETX1xjbOo2Wmt0YDBao41GB5q29k1WR0fHOuD9G2nN0RaPxzHGwL1qA6PI3i4xM7\u002BMrw0rZR9jNMYIN3J3uDg6xd3lEkZrHn80xj9e7iIWKYDTfhu3828bWzvefiCwWCziOA6\u002Bcvnw25/5fDRH2Qsw2icIKi3U2scEGq0DdKAxQcCOznreeUloMN\u002BBWBA7oIk\u002B2ffAlt66dYtCocDoVIEfJucpez7G\u002BGgdVKrTq9DK1egAIwG2Mth4YDToZSh\u002BYQOv1gQqpUilUmzevJlFX1FYXKkkDHQl\u002BWqFq/daY4wmXu\u002BypzuKa26CLlVcugqin67Z0lgsRjabJR6P8/W04fi/r6O1jw4ClAi7kg\u002BxJw0b7DIics\u002BGeN0Sf2idJGZNgCmDeKA9SP5TalZI5TAmkUhgK1AYTGAw2pBur\u002BPN3jx96a/o3fotf9o2zDPp73h22yX\u002B\u002BPAwMSsLegXMvQp1GVRE1QQqpWhsbKSuro6maIRG10JLpW19O1tojVzGYQFLFrHMAlYwhxXMgj8fgpUg0gEqcq0mUES4cuUKY2NjtNYLyZYGlA7QOqApalAYEKm8GMGa5LpUAepSJW40NO41KPV\u002BTaBlWezcuZOuri66O9t5bvcW9jzWwa5UK/GGDSAGjA9mBRBQDaBiYMXAaYUNXVC/HeLPlmh6ZuTChQvv1vw8rZXWml1bWnhqWxsAjuRgtlwBag\u002BsOrCbwIpU4M5GaHnhGnbDxcHBwdzk5L9OZzKZuZoVhmWMwfd9fN\u002BvnIprW\u002BjloTgMlgtOK7L0PSLBxTNnzrx26NChv2YymcvU\u002BgCfPHmSWr\u002BJz//lz7TZreDfAOOB9kHKUJ6DCBjnkfmzn1wYfeONgdLExMQv66ruw9/yIzw7m38iYm6\u002By53BJoqXwJsGDLhpJL5fTOO\u002B/xw7/tHLmUxmPLz2d6m5uVmJSFpE3haRH0XEE5ElEflaRF4/f/58LLwG4H9\u002BJsjcTp8b4QAAAABJRU5ErkJggg==",
               "WhenOpened": "2024-07-17T15:47:19.875Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
               "Title": "mainmenu.py",
               "DocumentMoniker": "C:\\Users\\daanv\\source\\repos\\daanvancamp\\gomoku-thesis-proj\\mainmenu.py",
               "RelativeDocumentMoniker": "mainmenu.py",
               "ToolTip": "C:\\Users\\daanv\\source\\repos\\daanvancamp\\gomoku-thesis-proj\\mainmenu.py",
               "RelativeToolTip": "mainmenu.py",
-              "ViewState": "AgIAAGsAAAAAAAAAAAAAAHoAAAAkAAAAAAAAAA==",
+              "ViewState": "AgIAAIcAAAAAAAAAAAAYwJwAAAAQAAAAAAAAAA==",
               "Icon": "00000000-0000-0000-0000-000000000000.000000|iVBORw0KGgoAAAANSUhEUgAAABwAAAAcCAYAAAByDd\u002BUAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAUqSURBVEhLvZbRb1RVHsc/5947l3ZaZ6YtbUkVOwxMmlpWhGhCspIASVfTZPvgCxsxGn0xGUkMpvKyf8AmbLJRnzS8sESiWfABE6xEgmsq6mIt6KYpBYemFtthWqaUTtuZe\u002B85v30YatrLOBgf9pt8c3N/55zfJ7/fvefcC/9PiYgKxwCi0ejDjuNEw/EHSAO5u3fvLocH1qoqsK\u002Bv7/zevXv3O44THqqqfD5PsVic9Tzv7\u002BfOnXtvcnJyMTxnVb8KPHbs2P5EIhEeqqqzZ8\u002BysLBwJ5/P356YmDg\u002BNDT01vj4\u002BFJ4HoAVDvxebd26NdHf39\u002BcTCYP7t69e6Cnp6chPAfADgcA0un0i/39/Vtc1\u002BXq1avMzc3d50KhQHNzM0oprl\u002B/TjQapaenpz6VSm2Ynp7e6Lpuu9b60uzsrL829wMrTCaTVd3Z2YlS9z\u002BRTZs2PXTw4MGuVCrVl0gkMuHxmkClFK7r/qpXZVkWp06d4siRIwwMDHD06NGGXC63C0itSwjUfA1FhNHR0XAYANu26e7uRilFb28v\u002B/btWzeezWY5fPjwuhi/pcLt27dXdXd3N7ZtY1B4YlEWB48IOC7RaHRdB9aqJhBgZmamqktlj7HcMh9fzvHBNz9x4ssJTgxlef/LLJ9euYknNi0tLeF0tYEiguM4VR0oh9PDU0zNLzF8Y47PfrjJ4Mgkp7/6kffO/Zeh7AKP79gRTlkbqJSira2tqsvGYqawTGpjA/E6B6M1YgKM1iwUVxifWeSFl16xDxw4sG7r1QSKCCMjI1Xta0NufpETX1xjbOo2Wmt0YDBao41GB5q29k1WR0fHOuD9G2nN0RaPxzHGwL1qA6PI3i4xM7\u002BMrw0rZR9jNMYIN3J3uDg6xd3lEkZrHn80xj9e7iIWKYDTfhu3828bWzvefiCwWCziOA6\u002Bcvnw25/5fDRH2Qsw2icIKi3U2scEGq0DdKAxQcCOznreeUloMN\u002BBWBA7oIk\u002B2ffAlt66dYtCocDoVIEfJucpez7G\u002BGgdVKrTq9DK1egAIwG2Mth4YDToZSh\u002BYQOv1gQqpUilUmzevJlFX1FYXKkkDHQl\u002BWqFq/daY4wmXu\u002BypzuKa26CLlVcugqin67Z0lgsRjabJR6P8/W04fi/r6O1jw4ClAi7kg\u002BxJw0b7DIics\u002BGeN0Sf2idJGZNgCmDeKA9SP5TalZI5TAmkUhgK1AYTGAw2pBur\u002BPN3jx96a/o3fotf9o2zDPp73h22yX\u002B\u002BPAwMSsLegXMvQp1GVRE1QQqpWhsbKSuro6maIRG10JLpW19O1tojVzGYQFLFrHMAlYwhxXMgj8fgpUg0gEqcq0mUES4cuUKY2NjtNYLyZYGlA7QOqApalAYEKm8GMGa5LpUAepSJW40NO41KPV\u002BTaBlWezcuZOuri66O9t5bvcW9jzWwa5UK/GGDSAGjA9mBRBQDaBiYMXAaYUNXVC/HeLPlmh6ZuTChQvv1vw8rZXWml1bWnhqWxsAjuRgtlwBag\u002BsOrCbwIpU4M5GaHnhGnbDxcHBwdzk5L9OZzKZuZoVhmWMwfd9fN\u002BvnIprW\u002BjloTgMlgtOK7L0PSLBxTNnzrx26NChv2YymcvU\u002BgCfPHmSWr\u002BJz//lz7TZreDfAOOB9kHKUJ6DCBjnkfmzn1wYfeONgdLExMQv66ruw9/yIzw7m38iYm6\u002By53BJoqXwJsGDLhpJL5fTOO\u002B/xw7/tHLmUxmPLz2d6m5uVmJSFpE3haRH0XEE5ElEflaRF4/f/58LLwG4H9\u002BJsjcTp8b4QAAAABJRU5ErkJggg==",
               "WhenOpened": "2024-07-17T15:47:21.425Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 5,
               "Title": "testai.py",
               "DocumentMoniker": "C:\\Users\\daanv\\source\\repos\\daanvancamp\\gomoku-thesis-proj\\testai.py",
               "RelativeDocumentMoniker": "testai.py",
               "ToolTip": "C:\\Users\\daanv\\source\\repos\\daanvancamp\\gomoku-thesis-proj\\testai.py",
               "RelativeToolTip": "testai.py",
-              "ViewState": "AgIAAFkAAAAAAAAAAAAAAG8AAAATAAAAAAAAAA==",
+              "ViewState": "AgIAAFkAAAAAAAAAAAAAAGoAAAAuAAAAAAAAAA==",
               "Icon": "00000000-0000-0000-0000-000000000000.000000|iVBORw0KGgoAAAANSUhEUgAAABwAAAAcCAYAAAByDd\u002BUAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAUqSURBVEhLvZbRb1RVHsc/5947l3ZaZ6YtbUkVOwxMmlpWhGhCspIASVfTZPvgCxsxGn0xGUkMpvKyf8AmbLJRnzS8sESiWfABE6xEgmsq6mIt6KYpBYemFtthWqaUTtuZe\u002B85v30YatrLOBgf9pt8c3N/55zfJ7/fvefcC/9PiYgKxwCi0ejDjuNEw/EHSAO5u3fvLocH1qoqsK\u002Bv7/zevXv3O44THqqqfD5PsVic9Tzv7\u002BfOnXtvcnJyMTxnVb8KPHbs2P5EIhEeqqqzZ8\u002BysLBwJ5/P356YmDg\u002BNDT01vj4\u002BFJ4HoAVDvxebd26NdHf39\u002BcTCYP7t69e6Cnp6chPAfADgcA0un0i/39/Vtc1\u002BXq1avMzc3d50KhQHNzM0oprl\u002B/TjQapaenpz6VSm2Ynp7e6Lpuu9b60uzsrL829wMrTCaTVd3Z2YlS9z\u002BRTZs2PXTw4MGuVCrVl0gkMuHxmkClFK7r/qpXZVkWp06d4siRIwwMDHD06NGGXC63C0itSwjUfA1FhNHR0XAYANu26e7uRilFb28v\u002B/btWzeezWY5fPjwuhi/pcLt27dXdXd3N7ZtY1B4YlEWB48IOC7RaHRdB9aqJhBgZmamqktlj7HcMh9fzvHBNz9x4ssJTgxlef/LLJ9euYknNi0tLeF0tYEiguM4VR0oh9PDU0zNLzF8Y47PfrjJ4Mgkp7/6kffO/Zeh7AKP79gRTlkbqJSira2tqsvGYqawTGpjA/E6B6M1YgKM1iwUVxifWeSFl16xDxw4sG7r1QSKCCMjI1Xta0NufpETX1xjbOo2Wmt0YDBao41GB5q29k1WR0fHOuD9G2nN0RaPxzHGwL1qA6PI3i4xM7\u002BMrw0rZR9jNMYIN3J3uDg6xd3lEkZrHn80xj9e7iIWKYDTfhu3828bWzvefiCwWCziOA6\u002Bcvnw25/5fDRH2Qsw2icIKi3U2scEGq0DdKAxQcCOznreeUloMN\u002BBWBA7oIk\u002B2ffAlt66dYtCocDoVIEfJucpez7G\u002BGgdVKrTq9DK1egAIwG2Mth4YDToZSh\u002BYQOv1gQqpUilUmzevJlFX1FYXKkkDHQl\u002BWqFq/daY4wmXu\u002BypzuKa26CLlVcugqin67Z0lgsRjabJR6P8/W04fi/r6O1jw4ClAi7kg\u002BxJw0b7DIics\u002BGeN0Sf2idJGZNgCmDeKA9SP5TalZI5TAmkUhgK1AYTGAw2pBur\u002BPN3jx96a/o3fotf9o2zDPp73h22yX\u002B\u002BPAwMSsLegXMvQp1GVRE1QQqpWhsbKSuro6maIRG10JLpW19O1tojVzGYQFLFrHMAlYwhxXMgj8fgpUg0gEqcq0mUES4cuUKY2NjtNYLyZYGlA7QOqApalAYEKm8GMGa5LpUAepSJW40NO41KPV\u002BTaBlWezcuZOuri66O9t5bvcW9jzWwa5UK/GGDSAGjA9mBRBQDaBiYMXAaYUNXVC/HeLPlmh6ZuTChQvv1vw8rZXWml1bWnhqWxsAjuRgtlwBag\u002BsOrCbwIpU4M5GaHnhGnbDxcHBwdzk5L9OZzKZuZoVhmWMwfd9fN\u002BvnIprW\u002BjloTgMlgtOK7L0PSLBxTNnzrx26NChv2YymcvU\u002BgCfPHmSWr\u002BJz//lz7TZreDfAOOB9kHKUJ6DCBjnkfmzn1wYfeONgdLExMQv66ruw9/yIzw7m38iYm6\u002By53BJoqXwJsGDLhpJL5fTOO\u002B/xw7/tHLmUxmPLz2d6m5uVmJSFpE3haRH0XEE5ElEflaRF4/f/58LLwG4H9\u002BJsjcTp8b4QAAAABJRU5ErkJggg==",
-              "WhenOpened": "2024-07-17T15:47:25.896Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-07-17T15:47:25.896Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 6,
               "Title": "filereader.py",
               "DocumentMoniker": "C:\\Users\\daanv\\source\\repos\\daanvancamp\\gomoku-thesis-proj\\filereader.py",
               "RelativeDocumentMoniker": "filereader.py",
@@ -147,8 +166,7 @@
               "RelativeToolTip": "filereader.py",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAEsAAAALAAAAAAAAAA==",
               "Icon": "00000000-0000-0000-0000-000000000000.000000|iVBORw0KGgoAAAANSUhEUgAAABwAAAAcCAYAAAByDd\u002BUAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAUqSURBVEhLvZbRb1RVHsc/5947l3ZaZ6YtbUkVOwxMmlpWhGhCspIASVfTZPvgCxsxGn0xGUkMpvKyf8AmbLJRnzS8sESiWfABE6xEgmsq6mIt6KYpBYemFtthWqaUTtuZe\u002B85v30YatrLOBgf9pt8c3N/55zfJ7/fvefcC/9PiYgKxwCi0ejDjuNEw/EHSAO5u3fvLocH1qoqsK\u002Bv7/zevXv3O44THqqqfD5PsVic9Tzv7\u002BfOnXtvcnJyMTxnVb8KPHbs2P5EIhEeqqqzZ8\u002BysLBwJ5/P356YmDg\u002BNDT01vj4\u002BFJ4HoAVDvxebd26NdHf39\u002BcTCYP7t69e6Cnp6chPAfADgcA0un0i/39/Vtc1\u002BXq1avMzc3d50KhQHNzM0oprl\u002B/TjQapaenpz6VSm2Ynp7e6Lpuu9b60uzsrL829wMrTCaTVd3Z2YlS9z\u002BRTZs2PXTw4MGuVCrVl0gkMuHxmkClFK7r/qpXZVkWp06d4siRIwwMDHD06NGGXC63C0itSwjUfA1FhNHR0XAYANu26e7uRilFb28v\u002B/btWzeezWY5fPjwuhi/pcLt27dXdXd3N7ZtY1B4YlEWB48IOC7RaHRdB9aqJhBgZmamqktlj7HcMh9fzvHBNz9x4ssJTgxlef/LLJ9euYknNi0tLeF0tYEiguM4VR0oh9PDU0zNLzF8Y47PfrjJ4Mgkp7/6kffO/Zeh7AKP79gRTlkbqJSira2tqsvGYqawTGpjA/E6B6M1YgKM1iwUVxifWeSFl16xDxw4sG7r1QSKCCMjI1Xta0NufpETX1xjbOo2Wmt0YDBao41GB5q29k1WR0fHOuD9G2nN0RaPxzHGwL1qA6PI3i4xM7\u002BMrw0rZR9jNMYIN3J3uDg6xd3lEkZrHn80xj9e7iIWKYDTfhu3828bWzvefiCwWCziOA6\u002Bcvnw25/5fDRH2Qsw2icIKi3U2scEGq0DdKAxQcCOznreeUloMN\u002BBWBA7oIk\u002B2ffAlt66dYtCocDoVIEfJucpez7G\u002BGgdVKrTq9DK1egAIwG2Mth4YDToZSh\u002BYQOv1gQqpUilUmzevJlFX1FYXKkkDHQl\u002BWqFq/daY4wmXu\u002BypzuKa26CLlVcugqin67Z0lgsRjabJR6P8/W04fi/r6O1jw4ClAi7kg\u002BxJw0b7DIics\u002BGeN0Sf2idJGZNgCmDeKA9SP5TalZI5TAmkUhgK1AYTGAw2pBur\u002BPN3jx96a/o3fotf9o2zDPp73h22yX\u002B\u002BPAwMSsLegXMvQp1GVRE1QQqpWhsbKSuro6maIRG10JLpW19O1tojVzGYQFLFrHMAlYwhxXMgj8fgpUg0gEqcq0mUES4cuUKY2NjtNYLyZYGlA7QOqApalAYEKm8GMGa5LpUAepSJW40NO41KPV\u002BTaBlWezcuZOuri66O9t5bvcW9jzWwa5UK/GGDSAGjA9mBRBQDaBiYMXAaYUNXVC/HeLPlmh6ZuTChQvv1vw8rZXWml1bWnhqWxsAjuRgtlwBag\u002BsOrCbwIpU4M5GaHnhGnbDxcHBwdzk5L9OZzKZuZoVhmWMwfd9fN\u002BvnIprW\u002BjloTgMlgtOK7L0PSLBxTNnzrx26NChv2YymcvU\u002BgCfPHmSWr\u002BJz//lz7TZreDfAOOB9kHKUJ6DCBjnkfmzn1wYfeONgdLExMQv66ruw9/yIzw7m38iYm6\u002By53BJoqXwJsGDLhpJL5fTOO\u002B/xw7/tHLmUxmPLz2d6m5uVmJSFpE3haRH0XEE5ElEflaRF4/f/58LLwG4H9\u002BJsjcTp8b4QAAAABJRU5ErkJggg==",
-              "WhenOpened": "2024-07-17T15:46:48.089Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-07-17T15:46:48.089Z"
             },
             {
               "$type": "Document",
@@ -160,8 +178,7 @@
               "RelativeToolTip": "main.py",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAAAAAAAAAAAA==",
               "Icon": "00000000-0000-0000-0000-000000000000.000000|iVBORw0KGgoAAAANSUhEUgAAABwAAAAcCAYAAAByDd\u002BUAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAUqSURBVEhLvZbRb1RVHsc/5947l3ZaZ6YtbUkVOwxMmlpWhGhCspIASVfTZPvgCxsxGn0xGUkMpvKyf8AmbLJRnzS8sESiWfABE6xEgmsq6mIt6KYpBYemFtthWqaUTtuZe\u002B85v30YatrLOBgf9pt8c3N/55zfJ7/fvefcC/9PiYgKxwCi0ejDjuNEw/EHSAO5u3fvLocH1qoqsK\u002Bv7/zevXv3O44THqqqfD5PsVic9Tzv7\u002BfOnXtvcnJyMTxnVb8KPHbs2P5EIhEeqqqzZ8\u002BysLBwJ5/P356YmDg\u002BNDT01vj4\u002BFJ4HoAVDvxebd26NdHf39\u002BcTCYP7t69e6Cnp6chPAfADgcA0un0i/39/Vtc1\u002BXq1avMzc3d50KhQHNzM0oprl\u002B/TjQapaenpz6VSm2Ynp7e6Lpuu9b60uzsrL829wMrTCaTVd3Z2YlS9z\u002BRTZs2PXTw4MGuVCrVl0gkMuHxmkClFK7r/qpXZVkWp06d4siRIwwMDHD06NGGXC63C0itSwjUfA1FhNHR0XAYANu26e7uRilFb28v\u002B/btWzeezWY5fPjwuhi/pcLt27dXdXd3N7ZtY1B4YlEWB48IOC7RaHRdB9aqJhBgZmamqktlj7HcMh9fzvHBNz9x4ssJTgxlef/LLJ9euYknNi0tLeF0tYEiguM4VR0oh9PDU0zNLzF8Y47PfrjJ4Mgkp7/6kffO/Zeh7AKP79gRTlkbqJSira2tqsvGYqawTGpjA/E6B6M1YgKM1iwUVxifWeSFl16xDxw4sG7r1QSKCCMjI1Xta0NufpETX1xjbOo2Wmt0YDBao41GB5q29k1WR0fHOuD9G2nN0RaPxzHGwL1qA6PI3i4xM7\u002BMrw0rZR9jNMYIN3J3uDg6xd3lEkZrHn80xj9e7iIWKYDTfhu3828bWzvefiCwWCziOA6\u002Bcvnw25/5fDRH2Qsw2icIKi3U2scEGq0DdKAxQcCOznreeUloMN\u002BBWBA7oIk\u002B2ffAlt66dYtCocDoVIEfJucpez7G\u002BGgdVKrTq9DK1egAIwG2Mth4YDToZSh\u002BYQOv1gQqpUilUmzevJlFX1FYXKkkDHQl\u002BWqFq/daY4wmXu\u002BypzuKa26CLlVcugqin67Z0lgsRjabJR6P8/W04fi/r6O1jw4ClAi7kg\u002BxJw0b7DIics\u002BGeN0Sf2idJGZNgCmDeKA9SP5TalZI5TAmkUhgK1AYTGAw2pBur\u002BPN3jx96a/o3fotf9o2zDPp73h22yX\u002B\u002BPAwMSsLegXMvQp1GVRE1QQqpWhsbKSuro6maIRG10JLpW19O1tojVzGYQFLFrHMAlYwhxXMgj8fgpUg0gEqcq0mUES4cuUKY2NjtNYLyZYGlA7QOqApalAYEKm8GMGa5LpUAepSJW40NO41KPV\u002BTaBlWezcuZOuri66O9t5bvcW9jzWwa5UK/GGDSAGjA9mBRBQDaBiYMXAaYUNXVC/HeLPlmh6ZuTChQvv1vw8rZXWml1bWnhqWxsAjuRgtlwBag\u002BsOrCbwIpU4M5GaHnhGnbDxcHBwdzk5L9OZzKZuZoVhmWMwfd9fN\u002BvnIprW\u002BjloTgMlgtOK7L0PSLBxTNnzrx26NChv2YymcvU\u002BgCfPHmSWr\u002BJz//lz7TZreDfAOOB9kHKUJ6DCBjnkfmzn1wYfeONgdLExMQv66ruw9/yIzw7m38iYm6\u002By53BJoqXwJsGDLhpJL5fTOO\u002B/xw7/tHLmUxmPLz2d6m5uVmJSFpE3haRH0XEE5ElEflaRF4/f/58LLwG4H9\u002BJsjcTp8b4QAAAABJRU5ErkJggg==",
-              "WhenOpened": "2024-07-19T13:44:53.753Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-07-19T13:44:53.753Z"
             },
             {
               "$type": "Document",
@@ -173,8 +190,7 @@
               "RelativeToolTip": "README.md",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAA+AgAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001818|",
-              "WhenOpened": "2024-07-17T15:47:23.899Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-07-17T15:47:23.899Z"
             },
             {
               "$type": "Document",
@@ -186,8 +202,7 @@
               "RelativeToolTip": "model.py",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAAAAAAAAAAAAA==",
               "Icon": "00000000-0000-0000-0000-000000000000.000000|iVBORw0KGgoAAAANSUhEUgAAABwAAAAcCAYAAAByDd\u002BUAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAUqSURBVEhLvZbRb1RVHsc/5947l3ZaZ6YtbUkVOwxMmlpWhGhCspIASVfTZPvgCxsxGn0xGUkMpvKyf8AmbLJRnzS8sESiWfABE6xEgmsq6mIt6KYpBYemFtthWqaUTtuZe\u002B85v30YatrLOBgf9pt8c3N/55zfJ7/fvefcC/9PiYgKxwCi0ejDjuNEw/EHSAO5u3fvLocH1qoqsK\u002Bv7/zevXv3O44THqqqfD5PsVic9Tzv7\u002BfOnXtvcnJyMTxnVb8KPHbs2P5EIhEeqqqzZ8\u002BysLBwJ5/P356YmDg\u002BNDT01vj4\u002BFJ4HoAVDvxebd26NdHf39\u002BcTCYP7t69e6Cnp6chPAfADgcA0un0i/39/Vtc1\u002BXq1avMzc3d50KhQHNzM0oprl\u002B/TjQapaenpz6VSm2Ynp7e6Lpuu9b60uzsrL829wMrTCaTVd3Z2YlS9z\u002BRTZs2PXTw4MGuVCrVl0gkMuHxmkClFK7r/qpXZVkWp06d4siRIwwMDHD06NGGXC63C0itSwjUfA1FhNHR0XAYANu26e7uRilFb28v\u002B/btWzeezWY5fPjwuhi/pcLt27dXdXd3N7ZtY1B4YlEWB48IOC7RaHRdB9aqJhBgZmamqktlj7HcMh9fzvHBNz9x4ssJTgxlef/LLJ9euYknNi0tLeF0tYEiguM4VR0oh9PDU0zNLzF8Y47PfrjJ4Mgkp7/6kffO/Zeh7AKP79gRTlkbqJSira2tqsvGYqawTGpjA/E6B6M1YgKM1iwUVxifWeSFl16xDxw4sG7r1QSKCCMjI1Xta0NufpETX1xjbOo2Wmt0YDBao41GB5q29k1WR0fHOuD9G2nN0RaPxzHGwL1qA6PI3i4xM7\u002BMrw0rZR9jNMYIN3J3uDg6xd3lEkZrHn80xj9e7iIWKYDTfhu3828bWzvefiCwWCziOA6\u002Bcvnw25/5fDRH2Qsw2icIKi3U2scEGq0DdKAxQcCOznreeUloMN\u002BBWBA7oIk\u002B2ffAlt66dYtCocDoVIEfJucpez7G\u002BGgdVKrTq9DK1egAIwG2Mth4YDToZSh\u002BYQOv1gQqpUilUmzevJlFX1FYXKkkDHQl\u002BWqFq/daY4wmXu\u002BypzuKa26CLlVcugqin67Z0lgsRjabJR6P8/W04fi/r6O1jw4ClAi7kg\u002BxJw0b7DIics\u002BGeN0Sf2idJGZNgCmDeKA9SP5TalZI5TAmkUhgK1AYTGAw2pBur\u002BPN3jx96a/o3fotf9o2zDPp73h22yX\u002B\u002BPAwMSsLegXMvQp1GVRE1QQqpWhsbKSuro6maIRG10JLpW19O1tojVzGYQFLFrHMAlYwhxXMgj8fgpUg0gEqcq0mUES4cuUKY2NjtNYLyZYGlA7QOqApalAYEKm8GMGa5LpUAepSJW40NO41KPV\u002BTaBlWezcuZOuri66O9t5bvcW9jzWwa5UK/GGDSAGjA9mBRBQDaBiYMXAaYUNXVC/HeLPlmh6ZuTChQvv1vw8rZXWml1bWnhqWxsAjuRgtlwBag\u002BsOrCbwIpU4M5GaHnhGnbDxcHBwdzk5L9OZzKZuZoVhmWMwfd9fN\u002BvnIprW\u002BjloTgMlgtOK7L0PSLBxTNnzrx26NChv2YymcvU\u002BgCfPHmSWr\u002BJz//lz7TZreDfAOOB9kHKUJ6DCBjnkfmzn1wYfeONgdLExMQv66ruw9/yIzw7m38iYm6\u002By53BJoqXwJsGDLhpJL5fTOO\u002B/xw7/tHLmUxmPLz2d6m5uVmJSFpE3haRH0XEE5ElEflaRF4/f/58LLwG4H9\u002BJsjcTp8b4QAAAABJRU5ErkJggg==",
-              "WhenOpened": "2024-07-17T15:47:23.152Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-07-17T15:47:23.152Z"
             },
             {
               "$type": "Document",
@@ -199,8 +214,7 @@
               "RelativeToolTip": "stats.py",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAAaAAAAAAAAAA==",
               "Icon": "00000000-0000-0000-0000-000000000000.000000|iVBORw0KGgoAAAANSUhEUgAAABwAAAAcCAYAAAByDd\u002BUAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAUqSURBVEhLvZbRb1RVHsc/5947l3ZaZ6YtbUkVOwxMmlpWhGhCspIASVfTZPvgCxsxGn0xGUkMpvKyf8AmbLJRnzS8sESiWfABE6xEgmsq6mIt6KYpBYemFtthWqaUTtuZe\u002B85v30YatrLOBgf9pt8c3N/55zfJ7/fvefcC/9PiYgKxwCi0ejDjuNEw/EHSAO5u3fvLocH1qoqsK\u002Bv7/zevXv3O44THqqqfD5PsVic9Tzv7\u002BfOnXtvcnJyMTxnVb8KPHbs2P5EIhEeqqqzZ8\u002BysLBwJ5/P356YmDg\u002BNDT01vj4\u002BFJ4HoAVDvxebd26NdHf39\u002BcTCYP7t69e6Cnp6chPAfADgcA0un0i/39/Vtc1\u002BXq1avMzc3d50KhQHNzM0oprl\u002B/TjQapaenpz6VSm2Ynp7e6Lpuu9b60uzsrL829wMrTCaTVd3Z2YlS9z\u002BRTZs2PXTw4MGuVCrVl0gkMuHxmkClFK7r/qpXZVkWp06d4siRIwwMDHD06NGGXC63C0itSwjUfA1FhNHR0XAYANu26e7uRilFb28v\u002B/btWzeezWY5fPjwuhi/pcLt27dXdXd3N7ZtY1B4YlEWB48IOC7RaHRdB9aqJhBgZmamqktlj7HcMh9fzvHBNz9x4ssJTgxlef/LLJ9euYknNi0tLeF0tYEiguM4VR0oh9PDU0zNLzF8Y47PfrjJ4Mgkp7/6kffO/Zeh7AKP79gRTlkbqJSira2tqsvGYqawTGpjA/E6B6M1YgKM1iwUVxifWeSFl16xDxw4sG7r1QSKCCMjI1Xta0NufpETX1xjbOo2Wmt0YDBao41GB5q29k1WR0fHOuD9G2nN0RaPxzHGwL1qA6PI3i4xM7\u002BMrw0rZR9jNMYIN3J3uDg6xd3lEkZrHn80xj9e7iIWKYDTfhu3828bWzvefiCwWCziOA6\u002Bcvnw25/5fDRH2Qsw2icIKi3U2scEGq0DdKAxQcCOznreeUloMN\u002BBWBA7oIk\u002B2ffAlt66dYtCocDoVIEfJucpez7G\u002BGgdVKrTq9DK1egAIwG2Mth4YDToZSh\u002BYQOv1gQqpUilUmzevJlFX1FYXKkkDHQl\u002BWqFq/daY4wmXu\u002BypzuKa26CLlVcugqin67Z0lgsRjabJR6P8/W04fi/r6O1jw4ClAi7kg\u002BxJw0b7DIics\u002BGeN0Sf2idJGZNgCmDeKA9SP5TalZI5TAmkUhgK1AYTGAw2pBur\u002BPN3jx96a/o3fotf9o2zDPp73h22yX\u002B\u002BPAwMSsLegXMvQp1GVRE1QQqpWhsbKSuro6maIRG10JLpW19O1tojVzGYQFLFrHMAlYwhxXMgj8fgpUg0gEqcq0mUES4cuUKY2NjtNYLyZYGlA7QOqApalAYEKm8GMGa5LpUAepSJW40NO41KPV\u002BTaBlWezcuZOuri66O9t5bvcW9jzWwa5UK/GGDSAGjA9mBRBQDaBiYMXAaYUNXVC/HeLPlmh6ZuTChQvv1vw8rZXWml1bWnhqWxsAjuRgtlwBag\u002BsOrCbwIpU4M5GaHnhGnbDxcHBwdzk5L9OZzKZuZoVhmWMwfd9fN\u002BvnIprW\u002BjloTgMlgtOK7L0PSLBxTNnzrx26NChv2YymcvU\u002BgCfPHmSWr\u002BJz//lz7TZreDfAOOB9kHKUJ6DCBjnkfmzn1wYfeONgdLExMQv66ruw9/yIzw7m38iYm6\u002By53BJoqXwJsGDLhpJL5fTOO\u002B/xw7/tHLmUxmPLz2d6m5uVmJSFpE3haRH0XEE5ElEflaRF4/f/58LLwG4H9\u002BJsjcTp8b4QAAAABJRU5ErkJggg==",
-              "WhenOpened": "2024-07-19T21:07:41.806Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-07-19T21:07:41.806Z"
             }
           ]
         }

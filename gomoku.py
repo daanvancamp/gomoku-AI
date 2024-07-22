@@ -338,9 +338,12 @@ def convert_to_one_hot(board, player_id):#vermijd dat ai denkt dat de getallen i
         one_hot_board[2] = (board == 1).astype(np.float32)
     return one_hot_board
 
+
 def run(instance, game_number, train, record_replay=False, moves:dict=None):#main function
     # Main game loop
     global window_name, victory_text, current_player
+
+
     for p in players: #players=[Human, AI]
         if p.TYPE == "MM-AI":
             p.ai.model.load_model()
@@ -351,6 +354,7 @@ def run(instance, game_number, train, record_replay=False, moves:dict=None):#mai
     pygame.display.set_caption(window_name)
     instance.winning_cells = []
     running = True
+
     if record_replay:
         p1_moves = []
         p2_moves = []
@@ -367,7 +371,7 @@ def run(instance, game_number, train, record_replay=False, moves:dict=None):#mai
                     if event.type == pygame.QUIT:
                         running = False 
                         #druk op linkermuisknop om te zetten
-                    elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 1: #kan zo gelaten worden. Wanneer op de muis wordt gedrukt,wordt de zet gelezen van het besstand
+                    elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 1: #kan zo gelaten worden. Wanneer op de muis wordt gedrukt,wordt de zet gelezen van het bestand
                         print("muis ingedrukt")
                         pygame.mixer.music.fadeout(1000)
                         print("muziek gestopt")
@@ -430,7 +434,25 @@ def run(instance, game_number, train, record_replay=False, moves:dict=None):#mai
                                 #initialiseer_timer()
 
                                 
-                                print("muziek gestart")            
+                                print("muziek gestart")   
+
+
+                ## add hover effects to cells when mouse hovers over them
+                mouse_pos = pygame.mouse.get_pos()
+                x,y = mouse_pos
+                col = x // instance.CELL_SIZE
+                row = y // instance.CELL_SIZE
+                HOVER_COLOR = (211, 211, 211)
+                if instance.GRID_SIZE > row >= 0 == instance.board[row][col] and 0 <= col < instance.GRID_SIZE:
+                    if instance.board[row][col] == 0:#cell is empty
+                        cell_size = instance.CELL_SIZE
+                        print("teken hover")
+                        
+                        pygame.draw.circle(instance.screen, HOVER_COLOR, (col * cell_size + cell_size // 2, row * cell_size + cell_size // 2), cell_size // 2 - 5)
+                        pygame.display.flip()
+                        sleep(0.15)
+
+
 
             # TestAI move
             elif players[current_player-1].TYPE == "AI" and not testai.check_game_over(instance):
