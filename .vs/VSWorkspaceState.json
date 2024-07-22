@@ -1,8 +1,8 @@
 {
   "ExpandedNodes": [
     "",
-    "\\data"
+    "\\data\\replays"
   ],
-  "SelectedNode": "\\bool_overrule.txt",
+  "SelectedNode": "\\__pycache__",
   "PreviewInSolutionExplorer": false
 }

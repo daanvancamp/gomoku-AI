@@ -161,7 +161,7 @@ class GomokuAI:
         else:
             raise Exception("rewrite this function, this is wrong")
      
-    def check_own_chances(self,board)->bool:
+    def check_own_chances(self,board,opponent_winning)->bool:
         
         directions = [(0, 1), (1, 0), (1, 1), (1, -1)]
         player=self.determine_current_player(board)
@@ -243,14 +243,15 @@ class GomokuAI:
                                             if count==4 and open_ends>=1: #play defensive instead of offensive if the opponent can win
                                                 print("opponent has 4 in a row, defensive move found")
                                                 return False
-                            print("better offensive move found")
-                            return True #better #als je 3 op een rij hebt en de tegenstander geen vier op een rij heeft.
-        print("No offensive move found")
+                            if not opponent_winning:
+                                print("better offensive move found")#We know that there is one, but we let the model choose
+                                return True #better #als je 3 op een rij hebt en de tegenstander geen vier op een rij 2 keer 2 op een rij heeft.
+        print("No offensive move found,maybe a defensive move instead")
         return False
 
 
     def get_valid_moves(self, board,allow_overrule=None):#voeg de nodige parameters toe. #returns list of valid moves (overroelen ai kan hier gebeuren door de lijst met lengte 1 te maken.)
-        valid_moves = [] 
+        '''valid_moves = [] 
         if allow_overrule is None:
             allow_overrule=self.determine_bool_allow_overrule()
         
@@ -308,7 +309,76 @@ class GomokuAI:
             return threat_moves
         else:
             print("normal moves")
+            return valid_moves'''
+        
+
+        valid_moves = [] 
+        if allow_overrule is None:
+            allow_overrule = self.determine_bool_allow_overrule()
+        opponent = 3 - self.determine_current_player(board)  # 3-2=1 and 3-1=2 Player 1 is a one in the list and player 2 is a 2 in the list.
+        threat_moves = []
+        opponent_winning=False
+        directions = [(0, 1), (1, 0), (1, 1), (1, -1)]
+    
+        for row in range(len(board)):
+            for col in range(len(board)):
+                if board[row][col] == 0:  # Lege cel
+                    valid_moves.append((row, col))
+        
+                    # Controleer op dreigende situaties
+                    for drow, dcol in directions:
+                        count = 0  
+                        open_ends = 0
+                        adjacent_two = 0  # Teller voor aangrenzende twee-op-een-rij
+            
+                        # Controleer in positieve richting
+                        for i in range(1, 5):
+                            r, c = row + i * drow, col + i * dcol
+                            if 0 <= r < len(board) and 0 <= c < len(board):
+                                if board[r][c] == opponent:
+                                    count += 1
+                                    if count == 2 and i == 2:
+                                        adjacent_two += 1
+                                elif board[r][c] == 0:
+                                    open_ends += 1
+                                    break
+                                else:
+                                    break
+                            else:
+                                break
+            
+                        # Controleer in negatieve richting
+                        for i in range(1, 5):
+                            r, c = row - i * drow, col - i * dcol
+                            if 0 <= r < len(board) and 0 <= c < len(board):
+                                if board[r][c] == opponent:
+                                    count += 1
+                                    if count == 2 and i == 2:
+                                        adjacent_two += 1
+                                elif board[r][c] == 0:
+                                    open_ends += 1
+                                    break
+                                else:
+                                    break
+                            else:
+                                break
+            
+                        # Controleer op dreigende situaties
+                        if (count == 3 and open_ends == 2) or (count == 4 and open_ends >= 1) or adjacent_two == 2:
+                            threat_moves.append((row, col))
+                            if adjacent_two==2 or (count == 4 and open_ends >= 1):
+                                opponent_winning=True
+
+                            break  # We hoeven niet verder te zoeken voor deze cel
+    
+        # Bepaal welke zetten te retourneren op basis van allow_overrule
+        if allow_overrule and threat_moves and not self.check_own_chances(board,opponent_winning) :  # when the current player can win, don't overrule of course, winning is better than defending
+            print("overruled:", threat_moves)
+            return threat_moves
+        else:
+            print("a normal move is executed by the AI")
             return valid_moves
+
 
     def id_to_move(self, move_id, valid_moves):
         if move_id < len(valid_moves):
@@ -355,7 +425,7 @@ class GomokuAI:
                  
             # if no action, switch to exploration
             else:
-                print("Exploration")
+                #print("Exploration") #this is the one that I commented out, the rest should be commented out. ###
                 action = self.id_to_move(self.get_random_action(state), valid_moves)
         # Decay Epsilon Over Time
         self.adjust_epsilon()

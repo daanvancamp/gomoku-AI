@@ -301,7 +301,8 @@ def check_win(row, col, player, instance):
                 winning_direction = (drow, dcol)
             else:
                 break
-        if count >= 5:  # Victory condition #todo: verander naar =5 om het moeilijker te maken.
+        if count >= 5:  # Victory condition 
+            #todo: verander naar =5 om het moeilijker te maken.
             match winning_direction:    # sort the array so that a strike can be drawn correctly
                 case (1, 0): #if winning_direction==(1,0):
                     winning_cells.sort()
