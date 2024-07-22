@@ -14,6 +14,7 @@ from PIL import Image, ImageTk
 from lezen_stukken_en_trivia import TE_DETECTEREN_KLEUR, initialiseer_spelbord_json_bestanden
 from filereader import log_info_overruling
 #todo: make it look nice
+#add sound effects
 
 WIDTH = 240 #origineel 230
 HEIGHT = 315 #origineel 315

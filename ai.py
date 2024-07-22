@@ -139,6 +139,8 @@ class GomokuAI:
         self.optimizer.step()
         self.optimizer.zero_grad(set_to_none=False)
     
+    def can_win_in_one_move(self, board, current_player,valid_moves):
+        pass #todo: complete this function
 
     def determine_bool_allow_overrule(self):
         file_name = 'bool_overrule.txt'#same directory as this file
@@ -345,7 +347,10 @@ class GomokuAI:
                 file.write("\n")
                 file.write("opponent_winning: " + str(opponent_winning))
                 file.write("\n")
-                
+
+            #valid_moves = self.can_win_in_one_move(board,self.determine_current_player(board),valid_moves)#check if the current player can win in one move and adjust valid_moves if so
+
+
             return valid_moves
 
     def id_to_move(self, move_id, valid_moves):
