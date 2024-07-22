@@ -1,3 +1,4 @@
+from math import log
 import os.path
 import torch
 import torch.nn as nn
@@ -11,10 +12,8 @@ MAX_MEMORY = 1_000_0000          # origineel 1_000_000
 BATCH_SIZE = 10_000
 MIN_EPSILON = 0.01
 EPSILON_DECAY_RATE = 0.999
+from filereader import log_info_overruling
 
-def log_message(message):
-    with open("logging_overruling.txt", "a") as file:
-        file.write(message)
 #todo: Verbeteringen aanbrengen in het model door een complexere neurale netwerkarchitectuur te implementeren.:zeer moeilijk
 
 class ConvNet(nn.Module):
@@ -165,6 +164,7 @@ class GomokuAI:
             raise Exception("rewrite this function, this is wrong")
      
     def check_own_chances(self,board,opponent_winning)->bool:
+        log_info_overruling("function check_own_chances called")
         directions = [(0, 1), (1, 0), (1, 1), (1, -1)]
         player=self.determine_current_player(board)
         for row in range(len(board)):
@@ -244,11 +244,14 @@ class GomokuAI:
 
                                             if count==4 and open_ends>=1: #play defensive instead of offensive if the opponent can win
                                                 print("opponent has 4 in a row, defensive move found")
+                                                log_info_overruling("opponent has 4 in a row, defensive move found")
                                                 return False
                             if not opponent_winning:
                                 print("better offensive move found")#We know that there is one, but we let the model choose
+                                log_info_overruling("better offensive move found, the model will decide from the list of valid moves(=all empty cells)")
                                 return True #better #als je 3 op een rij hebt en de tegenstander geen vier op een rij 2 keer 2 op een rij heeft.
-        print("No offensive move found,maybe a defensive move instead")
+        print("No good offensive move found,maybe a defensive move instead")
+        log_info_overruling("No good offensive move found, maybe a defensive move instead")
         return False
 
 
@@ -312,7 +315,7 @@ class GomokuAI:
         else:
             print("normal moves")
             return valid_moves'''
-        
+        log_info_overruling("function get_valid_moves called")
         valid_moves = [] 
         if allow_overrule is None:
             allow_overrule = self.determine_bool_allow_overrule()
@@ -364,11 +367,11 @@ class GomokuAI:
                         # Controleer op dreigende situaties
                         if (count == 3 and open_ends == 2) or (count == 4 and open_ends >= 1) or adjacent_two == 2:
                             threat_moves.append((row, col))
-                            log_message("player " + str(opponent) + " has a threat at " + str(row) + ", " + str(col))
+                            log_info_overruling("player " + str(opponent) + " has a threat at " + str(row) + ", " + str(col))
                                
                             if adjacent_two==2 or (count == 4 and open_ends >= 1):
-                                log_message("player " + str(opponent) + " has a winning threat at " + str(row) + ", " + str(col))
-                                log_message("player " + str(opponent) + " has 2 times xx_xx"if adjacent_two==2 else "player " + str(opponent) + " has 4 in a row")
+                                log_info_overruling("player " + str(opponent) + " has a winning threat at " + str(row) + ", " + str(col))
+                                log_info_overruling("player " + str(opponent) + " has 2 times 2 in a row: xx_xx"if adjacent_two==2 else "player " + str(opponent) + " has 4 in a row: _xxxx_")
                                 opponent_winning=True
 
                             break  # We hoeven niet verder te zoeken voor deze cel

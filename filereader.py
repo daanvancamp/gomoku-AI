@@ -2,6 +2,10 @@ import json
 import datetime
 import os
 
+def log_info_overruling(message):
+    with open("logging_overruling.txt", "a") as file:
+        file.write(message)
+
 def create_gomoku_game(filename):
     with open(filename, 'r') as file:
         data = json.load(file)

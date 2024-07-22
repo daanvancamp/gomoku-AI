@@ -12,7 +12,7 @@ import filereader
 import stats
 from PIL import Image, ImageTk
 from lezen_stukken_en_trivia import TE_DETECTEREN_KLEUR, initialiseer_spelbord_json_bestanden
-
+from filereader import log_info_overruling
 #todo: make it look nice
 
 WIDTH = 240 #origineel 230
@@ -152,8 +152,7 @@ def start_new_game(is_training=False, moves:dict=None):
         stats.setup_logging(p1.get(), p2.get())
         root.wm_state('iconic')
         for i in range(runs):
-            with open("logging_overruling.txt", "a") as file:
-                file.write("run " + str(i+1) + ":\n")
+            log_info_overruling("run "+str(i+1)+"begins:")
             try:
                 initialiseer_spelbord_json_bestanden()#geen stukken op bord
             except:
