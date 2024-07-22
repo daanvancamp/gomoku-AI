@@ -2,7 +2,8 @@
 https://github.com/Mig26/gomoku-thesis-proj
 
 I added support for physical boards via webcam, but it can still be used perfectly fine without a webcam. That's because of a built-in condition. If the program doesn't detect a difference between the two json files, then it will just take the mouse position. I also optimized a few things. The code for the webcam can be found here. You need to run both programs simultaneously, otherwise, it won't work as expected. The information is transfered via a json file. A file is used to save system resources; a thread is more hardware intensive.  https://github.com/daanvancamp/vijf_op_een_rij_beeldherkenning
-I want to start with the following: "please don't hesitate to report any bugs". There are probably many of those.
+
+I also want to mention the following: "please don't hesitate to report any bugs". There are probably many undiscovered bugs. Please check if your bug if listed below before reporting it, because then it's a known issue/bug. Feature suggestions are also more than welcome.
 
 A few of the optimizations I have done and some added features:
 
@@ -17,5 +18,7 @@ I implemented a way to overrule the model. When the opponent has 4 in a row with
 I added an on-screen hover effect when the mouse hovers over the board to make it look better and to prevent misclicks.
 I added a checkbox to train the model against yourself. (human vs MM-AI)
 There's a known issue. Like you see on the image. It's the turn of Black.  ![image](https://github.com/user-attachments/assets/46c63a9a-af7f-4f0a-9cf3-2bf9f56af9ac) You can always win when you start from the ends and make your way to the middle. The model sometimes won't block it, but no one plays like that. If a 100 people (who have never played the game) would play the game, then they all wouldn't find out about this bug. Someone who knows all the existing bugs and vulnerabilities (and takes 30 seconds to think about each move), will never lose against the model.
+
+Another known issue is that the 'human training' checkbox isn't fully showed in the GUI.
 
 Note: the project is still under development. Some added features aren't stable as of right now.
