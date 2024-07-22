@@ -1,7 +1,7 @@
 # adapted from gomoku-thesis-proj
 https://github.com/Mig26/gomoku-thesis-proj
 
-I added support for physical boards via webcam, but it can still be used perfectly fine without a webcam. That's because of a built-in condition. If the program doesn't detect a difference between the two json files, then it will just take the mouse position. I also optimized a few things. The code for the webcam can be found here. You need to run both programs simultaneously, otherwise, it won't work as expected. The information is transfered via a json file. A file is used to save system resources; a thread is more hardware intensive.  https://github.com/daanvancamp/vijf_op_een_rij_beeldherkenning
+I added support for physical boards via webcam, but it can still be used perfectly fine without a webcam. That's because of a built-in if-statement that checks if the other program changes the json file. If the program doesn't detect a difference between the two json files, then it will just take the mouse position. I also optimized a few things. The code for the webcam can be found here. You need to run both programs simultaneously, otherwise, it won't work as expected. The information is transfered via a json file. A file is used to save system resources; a thread is more hardware intensive.  https://github.com/daanvancamp/vijf_op_een_rij_beeldherkenning
 
 I also want to mention the following: "please don't hesitate to report any bugs". There are probably many undiscovered bugs. Please check if your bug if listed below before reporting it, because then it's a known issue/bug. Feature suggestions are also more than welcome.
 
