@@ -381,7 +381,7 @@ class GomokuAI:
             print("overruled:", threat_moves)
             with open("logging_overruling.txt", "a") as file:
                 for row in board:
-                    file.write(row)
+                    file.write(str(row))
                 for i in range(2):
                     file.write("\n")#newline
                 file.write("status: an overruled move is executed by the AI")
@@ -395,7 +395,7 @@ class GomokuAI:
             print("a normal move is executed by the AI")
             with open("logging_overruling.txt", "a") as file:
                 for row in board:
-                    file.write(str(row)+"\n")
+                    file.write(str(row))
                 for i in range(2):
                     file.write("\n")#newline
                 file.write("status: a normal move is executed by the AI")
