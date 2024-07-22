@@ -12,6 +12,9 @@ BATCH_SIZE = 10_000
 MIN_EPSILON = 0.01
 EPSILON_DECAY_RATE = 0.999
 
+def log_message(message):
+    with open("logging_overruling.txt", "a") as file:
+        file.write(message)
 #todo: Verbeteringen aanbrengen in het model door een complexere neurale netwerkarchitectuur te implementeren.:zeer moeilijk
 
 class ConvNet(nn.Module):
@@ -361,7 +364,11 @@ class GomokuAI:
                         # Controleer op dreigende situaties
                         if (count == 3 and open_ends == 2) or (count == 4 and open_ends >= 1) or adjacent_two == 2:
                             threat_moves.append((row, col))
+                            log_message("player " + str(opponent) + " has a threat at " + str(row) + ", " + str(col))
+                               
                             if adjacent_two==2 or (count == 4 and open_ends >= 1):
+                                log_message("player " + str(opponent) + " has a winning threat at " + str(row) + ", " + str(col))
+                                log_message("player " + str(opponent) + " has 2 times xx_xx"if adjacent_two==2 else "player " + str(opponent) + " has 4 in a row")
                                 opponent_winning=True
 
                             break  # We hoeven niet verder te zoeken voor deze cel
