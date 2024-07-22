@@ -12,7 +12,7 @@ import numpy as np
 import filereader
 from lezen_stukken_en_trivia import *
 from time import sleep
-#todo: Voeg hover-effecten toe om te laten zien waar een steen geplaatst zal worden
+
 #instructie: druk op de linkermuisknop wanneer je een zet hebt gedaan op het fysiek bord.
 
 class GomokuGame:
@@ -338,12 +338,9 @@ def convert_to_one_hot(board, player_id):#vermijd dat ai denkt dat de getallen i
         one_hot_board[2] = (board == 1).astype(np.float32)
     return one_hot_board
 
-
 def run(instance, game_number, train, record_replay=False, moves:dict=None):#main function
     # Main game loop
     global window_name, victory_text, current_player
-
-
     for p in players: #players=[Human, AI]
         if p.TYPE == "MM-AI":
             p.ai.model.load_model()
@@ -371,7 +368,7 @@ def run(instance, game_number, train, record_replay=False, moves:dict=None):#mai
                     if event.type == pygame.QUIT:
                         running = False 
                         #druk op linkermuisknop om te zetten
-                    elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 1: #kan zo gelaten worden. Wanneer op de muis wordt gedrukt,wordt de zet gelezen van het bestand
+                    elif (event.type == pygame.MOUSEBUTTONDOWN or event.type == pygame.K_UP or event.type == pygame.K_RIGHT) and event.button == 1: #kan zo gelaten worden. Wanneer op de muis wordt gedrukt,wordt de zet gelezen van het bestand
                         print("muis ingedrukt")
                         pygame.mixer.music.fadeout(1000)
                         print("muziek gestopt")
@@ -406,7 +403,7 @@ def run(instance, game_number, train, record_replay=False, moves:dict=None):#mai
                                 pass
                             else:
                                 raise Exception("Als u het denkt, waarde wordt op de normale manier ingesteld.")
-                        except Exception as e:#todo: haal ook op termijn weg. Dit kan het beste door een knop vervangen worden.
+                        except Exception as e:
                             x,y=event.pos # dit mag er niet meer staan.
                             print("normale waarde ingesteld(pos muis)",e)
                         
@@ -427,15 +424,12 @@ def run(instance, game_number, train, record_replay=False, moves:dict=None):#mai
                             else:
                                 # Switch player if neither player have won
                                 current_player = 3 - current_player #current_player kan 2 zijn of 1, maar in beide gevallen zal er van speler gewisseld worden.
-                              
+                                
                                 thread_start_muziek=Thread(target=start_muziek_vertraagd) #wordt iedere keer opnieuw aangemaakt aangezien threads moeilijk te stoppen zijn.
                                 thread_start_muziek.start() #vertraging simuleert de tijd dat de zet van het model duurt
                                 
                                 #initialiseer_timer()
-
-                                
-                                print("muziek gestart")   
-
+                                print("muziek gestart")
 
                 ## add hover effects to cells when mouse hovers over them
                 mouse_pos = pygame.mouse.get_pos()
@@ -446,13 +440,9 @@ def run(instance, game_number, train, record_replay=False, moves:dict=None):#mai
                 if instance.GRID_SIZE > row >= 0 == instance.board[row][col] and 0 <= col < instance.GRID_SIZE:
                     if instance.board[row][col] == 0:#cell is empty
                         cell_size = instance.CELL_SIZE
-                        print("teken hover")
-                        
                         pygame.draw.circle(instance.screen, HOVER_COLOR, (col * cell_size + cell_size // 2, row * cell_size + cell_size // 2), cell_size // 2 - 5)
                         pygame.display.flip()
                         sleep(0.15)
-
-
 
             # TestAI move
             elif players[current_player-1].TYPE == "AI" and not testai.check_game_over(instance):
@@ -567,7 +557,5 @@ def run(instance, game_number, train, record_replay=False, moves:dict=None):#mai
         stats.plot_graph(move_loss_data, 'loss data')
     time.sleep(instance.SLEEP_BEFORE_END)#sleep before closing for SLEEP_BEFORE_END seconds
     reset_game(instance)
-    #todo: verklein µ rate na iedere trainloop
-    #learning_rate = learning_rate * 0.99 #todo: test dit
 
 pygame.quit()

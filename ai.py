@@ -1,5 +1,4 @@
 import os.path
-from math import isclose
 import torch
 import torch.nn as nn
 import torch.optim as optim
@@ -7,7 +6,6 @@ import torch.nn.functional as F
 import numpy as np
 import random
 from collections import deque
-import operator
 
 MAX_MEMORY = 1_000_0000          # origineel 1_000_000
 BATCH_SIZE = 10_000
@@ -243,9 +241,11 @@ class GomokuAI:
                                                     break
 
                                             if count==4 and open_ends>=1: #play defensive instead of offensive if the opponent can win
+                                                print("opponent has 4 in a row, defensive move found")
                                                 return False
                             print("better offensive move found")
                             return True #better #als je 3 op een rij hebt en de tegenstander geen vier op een rij heeft.
+        print("No offensive move found")
         return False
 
 
@@ -344,7 +344,7 @@ class GomokuAI:
             else:
                 action = None
         attempts=0#initialiseer
-        max_attempts=70 #todo:test dit
+        max_attempts=70
         while action is None:#Het programma blijft hier hangen!!!
             attempts+=1
             if attempts>max_attempts:
