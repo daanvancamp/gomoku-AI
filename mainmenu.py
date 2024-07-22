@@ -123,6 +123,10 @@ def schrijf_bool_naar_tekstbestand():
 
 def start_new_game(is_training=False, moves:dict=None):
     schrijf_bool_naar_tekstbestand()
+    with open("logging_overruling.txt", "a") as file:
+        for i in range(5):
+            file.write("\n")
+        file.write("new session:")
     try:
         initialiseer_spelbord_json_bestanden()
     except:
@@ -148,6 +152,8 @@ def start_new_game(is_training=False, moves:dict=None):
         stats.setup_logging(p1.get(), p2.get())
         root.wm_state('iconic')
         for i in range(runs):
+            with open("logging_overruling.txt", "a") as file:
+                file.write("run " + str(i+1) + ":\n")
             try:
                 initialiseer_spelbord_json_bestanden()#geen stukken op bord
             except:

@@ -369,9 +369,32 @@ class GomokuAI:
         # Bepaal welke zetten te retourneren op basis van allow_overrule
         if allow_overrule and threat_moves and not self.check_own_chances(board,opponent_winning) :  # when the current player can win, don't overrule of course, winning is better than defending
             print("overruled:", threat_moves)
+            with open("logging_overruling.txt", "a") as file:
+                for row in board:
+                    file.write(row)
+                for i in range(2):
+                    file.write("\n")#newline
+                file.write("status: an overruled move is executed by the AI")
+                file.write("\n")
+                file.write("allow_overrule: " + str(allow_overrule))
+                file.write("\n")
+                file.write("opponent_winning: " + str(opponent_winning))
+                file.write("\n")
             return threat_moves
         else:
             print("a normal move is executed by the AI")
+            with open("logging_overruling.txt", "a") as file:
+                for row in board:
+                    file.write(str(row)+"\n")
+                for i in range(2):
+                    file.write("\n")#newline
+                file.write("status: a normal move is executed by the AI")
+                file.write("\n")
+                file.write("allow_overrule: " + str(allow_overrule))
+                file.write("\n")
+                file.write("opponent_winning: " + str(opponent_winning))
+                file.write("\n")
+                
             return valid_moves
 
     def id_to_move(self, move_id, valid_moves):
