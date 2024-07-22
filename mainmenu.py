@@ -77,6 +77,8 @@ replay_path = StringVar()
 replay_path.set("")
 var_allow_overrule=BooleanVar()
 var_allow_overrule.set(True)
+var_human_training=BooleanVar()
+var_human_training.set(False)
 
 def set_player_type(playerid):
     if playerid == 0:
@@ -127,8 +129,12 @@ def start_new_game(is_training=False, moves:dict=None):
         raise Exception("Fout in functie: initialiseer_spelbord_json_bestanden")
     try:
         if is_training:
-            p1.set("MM-AI")
-            set_player_type(0)
+            if not var_human_training.get():
+                p1.set("MM-AI")
+                set_player_type(0)
+            else:
+                p1.set("Human")
+                set_player_type(0)
         valid_number = False
         while not valid_number:
             try:
@@ -235,6 +241,8 @@ replaybutton2 = ttk.Checkbutton(tab2, text="Save replays", variable=repvar,style
 replaybutton2.grid(row=6, column=0, sticky="w")
 overrule_button=ttk.Checkbutton(tab2, text="Allow overrule", variable=var_allow_overrule,style="TCheckbutton")
 overrule_button.grid(row=7, column=0, sticky="w")
+human_training_button=ttk.Checkbutton(tab2, text="training against human", variable=var_human_training,style="TCheckbutton")
+human_training_button.grid(row=6, column=1)
 train_description = Label(tab2, text="It is recommended to run at least 3 000 games per training session.", font=(style_numbers[0], style_numbers[1]), wraplength=WIDTH-5, justify=LEFT)
 train_description.grid(row=8, column=0, sticky="w")
 

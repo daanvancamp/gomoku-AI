@@ -53,7 +53,6 @@ class Player:
     def __init__(self, player_type, player_id):
                 
             #Initialize a Player object with the given player type and ID.
-
         self.TYPE = str(player_type) #type can be human, testai or MM-ai
         self.ID = int(player_id) #id can be 1 or 2
         self.moves = 0
