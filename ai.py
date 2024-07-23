@@ -139,9 +139,62 @@ class GomokuAI:
         self.optimizer.step()
         self.optimizer.zero_grad(set_to_none=False)
     
-    def can_win_in_one_move(self, board, current_player,valid_moves):
-        pass #todo: complete this function
+    def can_win_in_one_move(self, board, current_player,valid_moves)->list:
+         #todo: complete this function
+         log_info_overruling("function can_win_in_one_move called\n")
 
+         winning_moves=[]
+         directions = [(0, 1), (1, 0), (1, 1), (1, -1)]
+         current_player=self.determine_current_player(board)
+         for row in range(len(board)):
+            for col in range(len(board)):
+                if board[row][col] == 0:  # Lege cel
+        
+                    for drow, dcol in directions:
+                        count = 0  
+                        open_ends = 0
+                        adjacent_two = 0 
+            
+                        for i in range(1, 5):
+                            r, c = row + i * drow, col + i * dcol
+                            if 0 <= r < len(board) and 0 <= c < len(board):
+                                if board[r][c] == current_player:
+                                    count += 1
+                                    if count == 2 and i == 2:
+                                        adjacent_two += 1
+                                elif board[r][c] == 0:
+                                    open_ends += 1
+                                    break
+                                else:
+                                    break
+                            else:
+                                break
+            
+                        for i in range(1, 5):
+                            r, c = row - i * drow, col - i * dcol
+                            if 0 <= r < len(board) and 0 <= c < len(board):
+                                if board[r][c] == current_player:
+                                    count += 1
+                                    if count == 2 and i == 2:
+                                        adjacent_two += 1
+                                elif board[r][c] == 0:
+                                    open_ends += 1
+                                    break
+                                else:
+                                    break
+                            else:
+                                break
+            
+                        # Controleer op dreigende situaties
+                        if  (count == 4 and open_ends >= 1) or adjacent_two == 2:
+                            winning_moves.append((row, col))
+                            break  # We hoeven niet verder te zoeken voor deze cel
+         if winning_moves:
+            log_info_overruling(f"winning moves: {winning_moves}")
+            return winning_moves
+         else:
+            log_info_overruling(f"no winning moves found, the model will fully choose on its own")
+            return valid_moves
     def determine_bool_allow_overrule(self):
         file_name = 'bool_overrule.txt'#same directory as this file
         with open(file_name, 'r') as file:
@@ -149,7 +202,7 @@ class GomokuAI:
 
         return line == 'True'
 
-    def determine_current_player(self,board):
+    def determine_current_player(self,board)->int:
         pieces_player1=0
         pieces_player2=0
         for i in range(len(board)):
@@ -257,7 +310,7 @@ class GomokuAI:
         return False
 
 
-    def get_valid_moves(self, board,allow_overrule=None):#voeg de nodige parameters toe. #returns list of valid moves (overroelen ai kan hier gebeuren door de lijst met lengte 1 te maken.)
+    def get_valid_moves(self, board,allow_overrule=None)->list:#voeg de nodige parameters toe. #returns list of valid moves (overroelen ai kan hier gebeuren door de lijst met lengte 1 te maken.)
         log_info_overruling("function get_valid_moves called\n")
         valid_moves = [] 
         if allow_overrule is None:
@@ -348,8 +401,8 @@ class GomokuAI:
                 file.write("opponent_winning: " + str(opponent_winning))
                 file.write("\n")
 
-            #valid_moves = self.can_win_in_one_move(board,self.determine_current_player(board),valid_moves)#check if the current player can win in one move and adjust valid_moves if so
-
+            valid_moves = self.can_win_in_one_move(board,self.determine_current_player(board),valid_moves)#check if the current player can win in one move and adjust valid_moves if so
+            #returns a list of moves: when the plyer can win in one move, then it will return winning moves otherwise, it will return all valid moves (=input)
 
             return valid_moves
 
@@ -359,7 +412,7 @@ class GomokuAI:
         else:
             return None
 
-    def get_action(self, state, one_hot_board, scores):
+    def get_action(self, state, one_hot_board, scores)->tuple:
         valid_moves = self.get_valid_moves(state)
         np_scores = np.array(scores).reshape(15, 15)
         current_state = torch.tensor(self.get_state(one_hot_board), dtype=torch.float)
