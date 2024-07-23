@@ -24,3 +24,7 @@ There's a known issue. Like you see on the image. It's the turn of Black.  ![ima
 Another known issue is that the 'human training' checkbox isn't fully showed in the GUI.
 
 Note: the project is still under development. Some added features aren't stable as of right now.
+
+developped by:
+daanvancamp & wimnevelsteen
+
