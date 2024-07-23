@@ -82,7 +82,8 @@ var_allow_overrule=BooleanVar()
 var_allow_overrule.set(True)
 var_human_training=BooleanVar()
 var_human_training.set(False)
-load_situation_path=StringVar()
+load_situation_path=StringVar()#todo: add full functionality
+load_situation_path.set(None)
 
 def set_player_type(playerid):
     if playerid == 0:
@@ -103,10 +104,7 @@ def browse_files():
     replay_path.set(file_path)
 
 def load_situation():
-    p1.set("load_situation")
-    set_player_type(0)
-    p2.set("load_situation")
-    set_player_type(1)
+    load_situation=True
 def replay():
     p1.set("replay")
     set_player_type(0)
@@ -121,7 +119,9 @@ def replay():
 def run():
     gomoku.run(game_instance)
 
-
+def load_board_from_file():
+    with open("", "r")as file:
+        return file.read()
 import json
 def schrijf_bool_naar_tekstbestand():
     with open("bool_overrule.txt", "w") as f:
@@ -134,6 +134,11 @@ def schrijf_bool_naar_tekstbestand():
 def start_new_game(is_training=False, moves:dict=None):
     schrijf_bool_naar_tekstbestand()
     log_info_overruling("\n\n\nnew session begins:")
+    if load_situation:
+        board=[]#todo:implement further #board=...
+        board=load_board=
+
+   
     try:
         initialiseer_spelbord_json_bestanden()
     except:
@@ -270,7 +275,7 @@ delaybutton2.grid(row=2, column=0, sticky="w")
 button_5 = ttk.Button(tab3, text="Play", style="TButton", command=lambda: replay())
 button_5.grid(row=3, column=0)
 
-ttk.Label(tab4)
+ttk.Label(tab4) #todo: implement further functionality
 label_load_situation=ttk.Label(tab3, text="Choose the file from which to load a situation: ",style="TLabel")
 label_load_situation.grid(row=0, column=0, sticky="w")
 load_situation_entry = ttk.Entry(tab3, textvariable=load_situation_path, width=30,style="TEntry")
