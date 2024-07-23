@@ -311,7 +311,7 @@ class GomokuAI:
 
 
     def get_valid_moves(self, board,allow_overrule=None)->list:#voeg de nodige parameters toe. #returns list of valid moves (overroelen ai kan hier gebeuren door de lijst met lengte 1 te maken.)
-        log_info_overruling("function get_valid_moves called")
+        log_info_overruling("\n\nfunction get_valid_moves called")
         valid_moves = [] 
         if allow_overrule is None:
             allow_overrule = self.determine_bool_allow_overrule()
