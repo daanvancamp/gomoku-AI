@@ -135,9 +135,10 @@ def schrijf_bool_naar_tekstbestand():
 def start_new_game(is_training=False, moves:dict=None):
     schrijf_bool_naar_tekstbestand()
     log_info_overruling("\n\n\nnew session begins:")
-    if load_situation:
-        board=[]#todo:implement further #board=...
-        board=load_board=
+    #if load_situation:
+        #board=[]
+        #todo:implement further #board=...
+      #  board=load_board=
         
 
    
@@ -279,13 +280,13 @@ button_5 = ttk.Button(tab3, text="Play", style="TButton", command=lambda: replay
 button_5.grid(row=3, column=0)
 
 ttk.Label(tab4) #todo: implement further functionality
-label_load_situation=ttk.Label(tab3, text="Choose the file from which to load a situation: ",style="TLabel")
+label_load_situation=ttk.Label(tab4, text="Choose the file from which to load a situation: ",style="TLabel")
 label_load_situation.grid(row=0, column=0, sticky="w")
-load_situation_entry = ttk.Entry(tab3, textvariable=load_situation_path, width=30,style="TEntry")
+load_situation_entry = ttk.Entry(tab4, textvariable=load_situation_path, width=30,style="TEntry")
 load_situation_entry.grid(row=1, column=0, sticky="w")
-button_6 = ttk.Button(tab3, text="...",style="TButton", command=lambda: browes_files_load_situation())
+button_6 = ttk.Button(tab4, text="...",style="TButton", command=lambda: browes_files_load_situation())
 button_6.grid(row=1, column=1, sticky="w")
-button_7 = ttk.Button(tab3, text="Load Situation", style="TButton", command=lambda: load_situation())
+button_7 = ttk.Button(tab4, text="Load Situation", style="TButton", command=lambda: load_situation())
 button_7.grid(row=3, column=0)
 
 def mainmenu_run():
