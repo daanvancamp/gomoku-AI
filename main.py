@@ -1,6 +1,8 @@
 
+from datetime import datetime
 import os
 from threading import Thread
+from filereader import log_info_overruling
 import mainmenu
 from lezen_stukken_en_trivia import initialiseer_muziek
 
@@ -11,6 +13,9 @@ def controleer_bestandspaden():
     for bestandspad in paden:
         if not os.path.exists(bestandspad):
             raise Exception("The file doesn't exist",bestandspad)
+def log_new_run():
+    log_info_overruling("\n\n\n\n\n\ndate and time:",datetime.datetime.now())
+    log_info_overruling("\nnew run of the code begins:")
 
 if __name__ == '__main__':
     controleer_bestandspaden()

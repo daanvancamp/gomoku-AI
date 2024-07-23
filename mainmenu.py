@@ -124,10 +124,7 @@ def schrijf_bool_naar_tekstbestand():
 
 def start_new_game(is_training=False, moves:dict=None):
     schrijf_bool_naar_tekstbestand()
-    with open("logging_overruling.txt", "a") as file:
-        for i in range(5):
-            file.write("\n")
-        file.write("new session:")
+    log_info_overruling("\n\n\nnew session begins:")
     try:
         initialiseer_spelbord_json_bestanden()
     except:

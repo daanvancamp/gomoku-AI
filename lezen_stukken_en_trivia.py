@@ -113,7 +113,7 @@ def bepaal_relevante_zet () -> List[Tuple[int, int]]:
 def schrijf_relevante_stukken_weg(pad)->None:
     relevante_stukken = []
     data=lees_gedetecteerde_stukken()
-    print(data)
+    print("huidige_stukken:",data)
     
     if data:
         alle_stukken = set((stuk['color'], stuk['coordinates'][0], stuk['coordinates'][1]) for stuk in data['pieces'])#bevat alle unieke zetten

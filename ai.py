@@ -7,12 +7,13 @@ import torch.nn.functional as F
 import numpy as np
 import random
 from collections import deque
+from filereader import log_info_overruling
+
 
 MAX_MEMORY = 1_000_0000          # origineel 1_000_000
 BATCH_SIZE = 10_000
 MIN_EPSILON = 0.01
 EPSILON_DECAY_RATE = 0.999
-from filereader import log_info_overruling
 
 #todo: Verbeteringen aanbrengen in het model door een complexere neurale netwerkarchitectuur te implementeren.:zeer moeilijk
 
@@ -140,9 +141,8 @@ class GomokuAI:
         self.optimizer.zero_grad(set_to_none=False)
     
     def can_win_in_one_move(self, board, current_player,valid_moves)->list:
-         #todo: complete this function
-         log_info_overruling("function can_win_in_one_move called\n")
 
+         log_info_overruling("function can_win_in_one_move called\n")
          winning_moves=[]
          directions = [(0, 1), (1, 0), (1, 1), (1, -1)]
          current_player=self.determine_current_player(board)
