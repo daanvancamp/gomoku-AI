@@ -5,6 +5,7 @@ from tkinter import ttk
 from tkinter import filedialog
 
 from numpy import var
+from pygame import draw
 import gomoku
 from ai import GomokuAI
 gomoku_ai=GomokuAI(15)#board_size
@@ -137,6 +138,7 @@ def start_new_game(is_training=False, moves:dict=None):
     if load_situation:
         board=[]#todo:implement further #board=...
         board=load_board=
+        
 
    
     try:
@@ -173,6 +175,7 @@ def start_new_game(is_training=False, moves:dict=None):
             stats.log_message(f"Game  {i+1} begins.")
             game_instance.current_game = i+1
             game_instance.last_round = (i+1 == runs)
+            #todo: add code here #draw_board
             try:
                 gomoku.run(game_instance, i, is_training, repvar.get(), moves) #kan als hoofdprogramma beschouwd worden (��n spel is ��n run)
             except Exception as e:
