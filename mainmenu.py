@@ -16,7 +16,7 @@ from filereader import log_info_overruling
 #todo: make it look nice
 #add sound effects
 
-WIDTH = 240 #origineel 230
+WIDTH = 340 #origineel 230
 HEIGHT = 315 #origineel 315
 game_instance = gomoku.GomokuGame(filereader.create_gomoku_game("consts.json"))
 
@@ -52,10 +52,12 @@ tabControl = ttk.Notebook(root)
 tab1 = ttk.Frame(tabControl)
 tab2 = ttk.Frame(tabControl)
 tab3 = ttk.Frame(tabControl)
+tab4 = ttk.Frame(tabControl)
 
 tabControl.add(tab1, text='Play gomoku')
 tabControl.add(tab2, text='Train')
 tabControl.add(tab3, text='Replay old games')
+tabControl.add(tab4, text='load a situation')
 tabControl.grid(row=0, sticky="w")
 
 style_numbers = ["georgia", 10, "white", 12, 2]#font, size, color, bold, underline
@@ -80,6 +82,7 @@ var_allow_overrule=BooleanVar()
 var_allow_overrule.set(True)
 var_human_training=BooleanVar()
 var_human_training.set(False)
+load_situation_path=StringVar()
 
 def set_player_type(playerid):
     if playerid == 0:
@@ -92,12 +95,18 @@ def set_game_instance(new_instance):
     global game_instance
     game_instance = new_instance
 
+def browes_files_load_situation():
+    file_path = filedialog.askopenfilename(filetypes=[("txt File", "*.txt")])
 
 def browse_files():
     file_path = filedialog.askopenfilename(filetypes=[("Json File", "*.json")])
     replay_path.set(file_path)
 
-
+def load_situation():
+    p1.set("load_situation")
+    set_player_type(0)
+    p2.set("load_situation")
+    set_player_type(1)
 def replay():
     p1.set("replay")
     set_player_type(0)
@@ -245,7 +254,7 @@ overrule_button=ttk.Checkbutton(tab2, text="Allow overrule", variable=var_allow_
 overrule_button.grid(row=7, column=0, sticky="w")
 human_training_button=ttk.Checkbutton(tab2, text="training against human", variable=var_human_training,style="TCheckbutton")
 human_training_button.grid(row=6, column=1,sticky="w")
-train_description = Label(tab2, text="It is recommended to run at least 3 000 games per training session.", font=(style_numbers[0], style_numbers[1]), wraplength=WIDTH-5, justify=LEFT)
+train_description = Label(tab2, text="It is recommended to run at least 3 000 games per training session.", font=(style_numbers[0], style_numbers[1]), wraplength=WIDTH-5, justify=LEFT)#origineel width-5
 train_description.grid(row=8, column=0, sticky="w")
 
 
@@ -260,6 +269,16 @@ delaybutton2 = ttk.Checkbutton(tab3, text="Use AI Delay", variable=delayvar, sty
 delaybutton2.grid(row=2, column=0, sticky="w")
 button_5 = ttk.Button(tab3, text="Play", style="TButton", command=lambda: replay())
 button_5.grid(row=3, column=0)
+
+ttk.Label(tab4)
+label_load_situation=ttk.Label(tab3, text="Choose the file from which to load a situation: ",style="TLabel")
+label_load_situation.grid(row=0, column=0, sticky="w")
+load_situation_entry = ttk.Entry(tab3, textvariable=load_situation_path, width=30,style="TEntry")
+load_situation_entry.grid(row=1, column=0, sticky="w")
+button_6 = ttk.Button(tab3, text="...",style="TButton", command=lambda: browes_files_load_situation())
+button_6.grid(row=1, column=1, sticky="w")
+button_7 = ttk.Button(tab3, text="Load Situation", style="TButton", command=lambda: load_situation())
+button_7.grid(row=3, column=0)
 
 def mainmenu_run():
     root.mainloop()
