@@ -190,10 +190,11 @@ class GomokuAI:
                             winning_moves.append((row, col))
                             break  # We hoeven niet verder te zoeken voor deze cel
          if winning_moves:
+            log_info_overruling("the model will be overruled because of a possible winning move")
             log_info_overruling(f"winning moves: {winning_moves}")
             return winning_moves
          else:
-            log_info_overruling(f"no winning moves found, the model will fully choose on its own")
+            log_info_overruling("no winning moves found, the model will fully choose a move on its own out of all possible moves:")
             return valid_moves
     def determine_bool_allow_overrule(self):
         file_name = 'bool_overrule.txt'#same directory as this file
@@ -311,25 +312,28 @@ class GomokuAI:
 
 
     def get_valid_moves(self, board,allow_overrule=None)->list:#voeg de nodige parameters toe. #returns list of valid moves (overroelen ai kan hier gebeuren door de lijst met lengte 1 te maken.)
+        
         log_info_overruling("\n\nfunction get_valid_moves called")
         valid_moves = [] 
         if allow_overrule is None:
             allow_overrule = self.determine_bool_allow_overrule()
         opponent = 3 - self.determine_current_player(board)  # 3-2=1 and 3-1=2 Player 1 is a one in the list and player 2 is a 2 in the list.
         threat_moves = []
-        opponent_winning=False
+        opponent_winning = False
         directions = [(0, 1), (1, 0), (1, 1), (1, -1)]
     
         for row in range(len(board)):
             for col in range(len(board)):
                 if board[row][col] == 0:  # Lege cel
                     valid_moves.append((row, col))
-        
+
                     for drow, dcol in directions:
                         count = 0  
                         open_ends = 0
                         adjacent_two = 0 
-            
+                        three_and_one_pattern = False
+    
+                        # Check in positive direction
                         for i in range(1, 5):
                             r, c = row + i * drow, col + i * dcol
                             if 0 <= r < len(board) and 0 <= c < len(board):
@@ -339,12 +343,20 @@ class GomokuAI:
                                         adjacent_two += 1
                                 elif board[r][c] == 0:
                                     open_ends += 1
+                                    # Check for xxx_x pattern
+                                    if count == 3:
+                                        for j in range(1, 3):
+                                            rr, cc = r + j * drow, c + j * dcol
+                                            if 0 <= rr < len(board) and 0 <= cc < len(board) and board[rr][cc] == opponent:
+                                                three_and_one_pattern = True
+                                                break
                                     break
                                 else:
                                     break
                             else:
                                 break
-            
+    
+                        # Check in negative direction
                         for i in range(1, 5):
                             r, c = row - i * drow, col - i * dcol
                             if 0 <= r < len(board) and 0 <= c < len(board):
@@ -354,26 +366,38 @@ class GomokuAI:
                                         adjacent_two += 1
                                 elif board[r][c] == 0:
                                     open_ends += 1
+                                    # Check for x_xxx pattern
+                                    if count == 3:
+                                        for j in range(1, 3):
+                                            rr, cc = r - j * drow, c - j * dcol
+                                            if 0 <= rr < len(board) and 0 <= cc < len(board) and board[rr][cc] == opponent:
+                                                three_and_one_pattern = True
+                                                break
                                     break
                                 else:
                                     break
                             else:
                                 break
-            
+    
                         # Controleer op dreigende situaties
-                        if (count == 3 and open_ends == 2) or (count == 4 and open_ends >= 1) or adjacent_two == 2:
+                        if (count == 3 and open_ends == 2) or (count == 4 and open_ends >= 1) or adjacent_two == 2 or three_and_one_pattern:
                             threat_moves.append((row, col))
-                            log_info_overruling("player " + str(opponent) + " has a threat at " + str(row) + ", " + str(col))
-                               
-                            if adjacent_two==2 or (count == 4 and open_ends >= 1):
-                                log_info_overruling("player " + str(opponent) + " has a winning threat at " + str(row) + ", " + str(col))
-                                log_info_overruling("player " + str(opponent) + " has 2 times 2 in a row: xx_xx"if adjacent_two==2 else "player " + str(opponent) + " has 4 in a row: _xxxx_")
-                                opponent_winning=True
+                            log_info_overruling(f"player {opponent} has a threat at {row}, {col}")
+                       
+                            if adjacent_two == 2 or (count == 4 and open_ends >= 1) or three_and_one_pattern:
+                                log_info_overruling(f"player {opponent} has a winning threat at {row}, {col}")
+                                if adjacent_two == 2:
+                                    log_info_overruling(f"player {opponent} has 2 times 2 in a row: xx_xx")
+                                elif count == 4 and open_ends >= 1:
+                                    log_info_overruling(f"player {opponent} has 4 in a row: _xxxx_")
+                                elif three_and_one_pattern:
+                                    log_info_overruling(f"player {opponent} has 3 in a row and 1 nearby: xxx_x or x_xxx")
+                                opponent_winning = True
 
                             break  # We hoeven niet verder te zoeken voor deze cel
     
         # Bepaal welke zetten te retourneren op basis van allow_overrule
-        if allow_overrule and threat_moves and not self.check_own_chances(board,opponent_winning) :  # when the current player can win, don't overrule of course, winning is better than defending
+        if allow_overrule and threat_moves and not self.check_own_chances(board, opponent_winning):
             print("overruled:", threat_moves)
             log_info_overruling("overruled: " + str(threat_moves))
             for row in board:
@@ -390,9 +414,7 @@ class GomokuAI:
             log_info_overruling("allow_overrule: " + str(allow_overrule))
             log_info_overruling("opponent_winning: " + str(opponent_winning))
 
-            valid_moves = self.can_win_in_one_move(board,self.determine_current_player(board),valid_moves)#check if the current player can win in one move and adjust valid_moves if so
-            #returns a list of moves: when the plyer can win in one move, then it will return winning moves otherwise, it will return all valid moves (=input)
-
+            valid_moves = self.can_win_in_one_move(board, self.determine_current_player(board), valid_moves)
             return valid_moves
 
     def id_to_move(self, move_id, valid_moves):

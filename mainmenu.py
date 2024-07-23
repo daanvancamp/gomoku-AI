@@ -156,7 +156,7 @@ def start_new_game(is_training=False, moves:dict=None):
             except:
                 raise Exception("Fout in functie: initialiseer_spelbord_json_bestanden")
             
-            stats.log_message(f"Game {i+1} begins.")
+            stats.log_message(f"Game  {i+1} begins.")
             game_instance.current_game = i+1
             game_instance.last_round = (i+1 == runs)
             try:
