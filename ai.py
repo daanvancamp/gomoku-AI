@@ -142,7 +142,7 @@ class GomokuAI:
     
     def can_win_in_one_move(self, board, current_player,valid_moves)->list:
 
-         log_info_overruling("function can_win_in_one_move called\n")
+         log_info_overruling("function can_win_in_one_move called")
          winning_moves=[]
          directions = [(0, 1), (1, 0), (1, 1), (1, -1)]
          current_player=self.determine_current_player(board)
@@ -219,7 +219,7 @@ class GomokuAI:
             raise Exception("rewrite this function, this is wrong")
      
     def check_own_chances(self,board,opponent_winning)->bool:
-        log_info_overruling("function check_own_chances called\n")
+        log_info_overruling("function check_own_chances called")
         directions = [(0, 1), (1, 0), (1, 1), (1, -1)]
         player=self.determine_current_player(board)
         for row in range(len(board)):
@@ -311,7 +311,7 @@ class GomokuAI:
 
 
     def get_valid_moves(self, board,allow_overrule=None)->list:#voeg de nodige parameters toe. #returns list of valid moves (overroelen ai kan hier gebeuren door de lijst met lengte 1 te maken.)
-        log_info_overruling("function get_valid_moves called\n")
+        log_info_overruling("function get_valid_moves called")
         valid_moves = [] 
         if allow_overrule is None:
             allow_overrule = self.determine_bool_allow_overrule()
@@ -375,31 +375,20 @@ class GomokuAI:
         # Bepaal welke zetten te retourneren op basis van allow_overrule
         if allow_overrule and threat_moves and not self.check_own_chances(board,opponent_winning) :  # when the current player can win, don't overrule of course, winning is better than defending
             print("overruled:", threat_moves)
-            with open("logging_overruling.txt", "a") as file:
-                for row in board:
-                    file.write(str(row))
-                for i in range(2):
-                    file.write("\n")#newline
-                file.write("status: an overruled move is executed by the AI")
-                file.write("\n")
-                file.write("allow_overrule: " + str(allow_overrule))
-                file.write("\n")
-                file.write("opponent_winning: " + str(opponent_winning))
-                file.write("\n")
+            log_info_overruling("overruled: " + str(threat_moves))
+            for row in board:
+                log_info_overruling(str(row))
+            log_info_overruling("status: an overruled move is executed by the AI")
+            log_info_overruling("allow_overrule: " + str(allow_overrule))
+            log_info_overruling("opponent_winning: " + str(opponent_winning))
             return threat_moves
         else:
-            print("a normal move is executed by the AI")
-            with open("logging_overruling.txt", "a") as file:
-                for row in board:
-                    file.write(str(row))
-                for i in range(2):
-                    file.write("\n")#newline
-                file.write("status: a normal move is executed by the AI")
-                file.write("\n")
-                file.write("allow_overrule: " + str(allow_overrule))
-                file.write("\n")
-                file.write("opponent_winning: " + str(opponent_winning))
-                file.write("\n")
+            print("a normal move is executed by the AI if it can't win in one move")
+            for row in board:
+                log_info_overruling(str(row))
+            log_info_overruling("status: a normal move is executed by the AI if it can't win in one move")
+            log_info_overruling("allow_overrule: " + str(allow_overrule))
+            log_info_overruling("opponent_winning: " + str(opponent_winning))
 
             valid_moves = self.can_win_in_one_move(board,self.determine_current_player(board),valid_moves)#check if the current player can win in one move and adjust valid_moves if so
             #returns a list of moves: when the plyer can win in one move, then it will return winning moves otherwise, it will return all valid moves (=input)
