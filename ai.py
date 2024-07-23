@@ -112,7 +112,7 @@ class GomokuAI:
             mini_batch = random.sample(self.memory, BATCH_SIZE)
         states, actions, rewards, next_states, dones = zip(*mini_batch)
         # Convert to tensors
-        states = torch.tensor(states, dtype=torch.float).unsqueeze(0)  # .unsqueeze(0)
+        states = torch.tensor(states, dtype=torch.float).unsqueeze(0) 
         rewards = torch.tensor(rewards, dtype=torch.float)
         q_pred = rewards
         q_target = rewards + (self.gamma * (~torch.tensor(dones)))

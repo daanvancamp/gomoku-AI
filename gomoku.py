@@ -48,7 +48,6 @@ class GomokuGame:
         self.last_round = False
         self.ai_delay = False
 
-
 class Player:
     def __init__(self, player_type, player_id):
                 
@@ -186,7 +185,6 @@ def draw_board(instance):
         pygame.draw.line(instance.screen, (0, 255, 0),
                          (start_col * cell_size + cell_size // 2, start_row * cell_size + cell_size // 2),
                          (end_col * cell_size + cell_size // 2, end_row * cell_size + cell_size // 2), 5)
-
 
 def reset_game(instance):
     global current_player

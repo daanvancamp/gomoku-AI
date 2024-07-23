@@ -150,7 +150,7 @@ def start_new_game(is_training=False, moves:dict=None):
         stats.setup_logging(p1.get(), p2.get())
         root.wm_state('iconic')
         for i in range(runs):
-            log_info_overruling("run "+str(i+1)+"begins:")
+            log_info_overruling("run "+str(i+1)+" begins:")
             try:
                 initialiseer_spelbord_json_bestanden()#geen stukken op bord
             except:
@@ -171,7 +171,6 @@ def start_new_game(is_training=False, moves:dict=None):
         print("Most likely: Game runs value invalid, try again.")
     
     game_over()
-
 
 def game_over():
     root.wm_state('normal')
@@ -245,7 +244,7 @@ replaybutton2.grid(row=6, column=0, sticky="w")
 overrule_button=ttk.Checkbutton(tab2, text="Allow overrule", variable=var_allow_overrule,style="TCheckbutton")
 overrule_button.grid(row=7, column=0, sticky="w")
 human_training_button=ttk.Checkbutton(tab2, text="training against human", variable=var_human_training,style="TCheckbutton")
-human_training_button.grid(row=6, column=1)
+human_training_button.grid(row=6, column=1,sticky="w")
 train_description = Label(tab2, text="It is recommended to run at least 3 000 games per training session.", font=(style_numbers[0], style_numbers[1]), wraplength=WIDTH-5, justify=LEFT)
 train_description.grid(row=8, column=0, sticky="w")
 
@@ -260,7 +259,7 @@ button_4.grid(row=1, column=1, sticky="w")
 delaybutton2 = ttk.Checkbutton(tab3, text="Use AI Delay", variable=delayvar, style="TCheckbutton")
 delaybutton2.grid(row=2, column=0, sticky="w")
 button_5 = ttk.Button(tab3, text="Play", style="TButton", command=lambda: replay())
-button_5.grid(row=3, column=0, sticky="w")
+button_5.grid(row=3, column=0)
 
 def mainmenu_run():
     root.mainloop()
