@@ -12,7 +12,7 @@ import numpy as np
 import filereader
 from lezen_stukken_en_trivia import *
 from time import sleep
-
+ 
 #instructie: druk op de linkermuisknop wanneer je een zet hebt gedaan op het fysiek bord.
 
 class GomokuGame:
@@ -25,7 +25,7 @@ class GomokuGame:
         self.BOARD_COL = values[4]
         self.LINE_COL = values[5]
         self.SLEEP_BEFORE_END = values[6]
-        #if not load_situation: 
+        #if not load_situation:
             #todo: finish this
         self.board = [[0] * self.GRID_SIZE for _ in range(self.GRID_SIZE)] # 0 = empty, 1 = player 1, 2 = player 2. De waarden corresponderen aan de kleuren.
         #[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]

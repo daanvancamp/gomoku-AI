@@ -6,6 +6,7 @@ from filereader import log_info_overruling
 import mainmenu
 from lezen_stukken_en_trivia import initialiseer_muziek
 import glob
+from mainmenu import load_board_from_file
 
 def main():
     mainmenu.mainmenu_run()
@@ -22,6 +23,7 @@ def log_new_run():
     log_info_overruling("\nnew run of the code begins:")
 
 if __name__ == '__main__':
+    load_board_from_file()
     log_new_run()
     controleer_bestandspaden()
     initialiseer_muziek()

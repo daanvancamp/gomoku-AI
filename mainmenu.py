@@ -1,11 +1,7 @@
-from ssl import OPENSSL_VERSION
 import sys
 from tkinter import *
 from tkinter import ttk
 from tkinter import filedialog
-
-from numpy import var
-from pygame import draw
 import gomoku
 from ai import GomokuAI
 gomoku_ai=GomokuAI(15)#board_size
@@ -23,8 +19,6 @@ game_instance = gomoku.GomokuGame(filereader.create_gomoku_game("consts.json"))
 
 root = Tk()
 root.geometry(str(WIDTH) + "x" + str(HEIGHT))
-root.minsize(WIDTH, HEIGHT)
-root.maxsize(WIDTH, HEIGHT)
 root.title("Gomoku -- Main Menu")
 if TE_DETECTEREN_KLEUR=="Blauw":
     root.configure(bg="blue")
@@ -120,10 +114,21 @@ def replay():
 def run():
     gomoku.run(game_instance)
 
-def load_board_from_file():
-    with open("", "r")as file:
-        return file.read()
-import json
+def load_board_from_file(): #todo: add full functionality (load board from file)
+    with open("specific_situation.txt", "r") as file:
+        board = [[0] * 15 for _ in range(15)] # 0 = empty, 1 = player 1, 2 = player 2. De waarden corresponderen aan de kleuren.
+        for rij in range(15):
+            print(rij)
+            line = file.readline()
+            print(line)
+            for kolom in range(15): # idx=1, i=eerste karakter van de lijn
+                
+                board[rij][kolom]=int(line[kolom])
+
+
+
+        for row in board:
+            print(row)
 def schrijf_bool_naar_tekstbestand():
     with open("bool_overrule.txt", "w") as f:
         f.write(str(var_allow_overrule.get()))
