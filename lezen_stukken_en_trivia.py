@@ -1,3 +1,4 @@
+from glob import glob
 import json
 from time import sleep
 from typing import List, Tuple, Dict, Any
@@ -142,7 +143,7 @@ def schrijf_relevante_stukken_na_zet_weg () :#kunnen er ook meer zijn (tot (15*1
 
 
 def lees_gedetecteerde_stukken() -> Dict[str, Any]:#retourneert alle stukken op het bord (leest json bestand)
-    bestandspad = r'..\vijf_op_een_rij_beeldherkenning\vijf_op_een_rij_beeldherkenning\detected_pieces.json'
+    bestandspad = glob(r'..\vijf_op_een_rij_beeldherkenning\**\detected_pieces.json',recursive=True)[0]
     try:
         with open(bestandspad, 'r') as json_file:
             return json.load(json_file)
