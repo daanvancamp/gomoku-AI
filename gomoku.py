@@ -54,7 +54,7 @@ class Player:
     def __init__(self, player_type, player_id):
                 
             #Initialize a Player object with the given player type and ID.
-        self.TYPE = str(player_type) #type can be human, testai or MM-ai
+        self.TYPE = str(player_type) #type can be human, testai or DVC-AI
         self.ID = int(player_id) #id can be 1 or 2
         self.moves = 0
         self.wins = 0
@@ -75,7 +75,7 @@ class Player:
         self.final_action = None
 
     def set_player(self, player_type, player_id):
-        self.TYPE = str(player_type)#type can be human, testai or MM-ai
+        self.TYPE = str(player_type)#type can be human, testai or DVC-AI
         self.ID = int(player_id)#id can be 1 or 2 corresponding to human or AI
         #if self.ID == 2:
             #self.ai = ai.GomokuAI()
@@ -129,7 +129,7 @@ class Player:
 
 # Set default player types. Can be changed on runtime (buttons in GUI)
 player1 = Player("Human", 0)
-player2 = Player("MM-AI", 1)
+player2 = Player("DVC-AI", 1)
 players = [player1, player2]
 
 
@@ -342,7 +342,7 @@ def run(instance, game_number, train, record_replay=False, moves:dict=None):#mai
     # Main game loop
     global window_name, victory_text, current_player
     for p in players: #players=[Human, AI]
-        if p.TYPE == "MM-AI":
+        if p.TYPE == "DVC-AI":
             p.ai.model.load_model()
             p.ai.train = train
     # Initialize Pygame
@@ -460,8 +460,8 @@ def run(instance, game_number, train, record_replay=False, moves:dict=None):#mai
                     running = False
                 else:
                     current_player = 3 - current_player
-            # MM-AI move
-            elif players[current_player-1].TYPE == "MM-AI":
+            # DVC-AI move
+            elif players[current_player-1].TYPE == "DVC-AI":
                 if instance.ai_delay:
                     time.sleep(random.uniform(0.25, 1.0))   # randomize AI "thinking" time
                 one_hot_board = convert_to_one_hot(instance.board, players[current_player-1].ID)
@@ -493,7 +493,7 @@ def run(instance, game_number, train, record_replay=False, moves:dict=None):#mai
                 players[current_player-1].final_action = action
                 players[current_player - 1].moves += 1
                 if game_over:
-                    victory_text = f"MM-AI {players[current_player - 1].ID} wins!"
+                    victory_text = f"DVC-AI {players[current_player - 1].ID} wins!"
                     running = False
                 else:
                     current_player = 3 - current_player
@@ -524,12 +524,12 @@ def run(instance, game_number, train, record_replay=False, moves:dict=None):#mai
     update_player_stats(instance, current_player-1)
     if record_replay:
         filereader.save_replay(p1_moves, p2_moves)
-    # For any MM-AI, train for long memory and save model
+    # For any DVC-AI, train for long memory and save model
     data = {}
     loss_data = {}
     move_loss_data = {}
     for p in players:
-        if p.TYPE == "MM-AI" and train:
+        if p.TYPE == "DVC-AI" and train:
             p.ai.remember(instance.board, p.final_action, p.score, instance.board, True)
             p.ai.train_long_memory()
             p.score_loss.append(p.ai.loss)
@@ -541,7 +541,7 @@ def run(instance, game_number, train, record_replay=False, moves:dict=None):#mai
             stats.log_message(f"{p.TYPE} {p.ID}: move loss: {sum(p.move_loss)/len(p.move_loss)}")
         p.reset_score()
         if instance.last_round:
-            if p.TYPE == "MM-AI" and train:
+            if p.TYPE == "DVC-AI" and train:
                 data[f"{p.TYPE} {p.ID}: game accuracy"] = p.weighed_scores
                 data[f"{p.TYPE} {p.ID}: move accuracy"] = p.final_move_scores
                 loss_data[f"{p.TYPE} {p.ID}: score loss"] = [float(val) for val in p.score_loss]
