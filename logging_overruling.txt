@@ -26076,3 +26076,12 @@ allow_overrule: True
 opponent_winning: False
 function can_win_in_one_move called
 no winning moves found, the model will fully choose a move on its own out of all possible moves:
+
+
+
+
+
+
+date and time: 2024-07-24T12:31:53.579198
+
+new run of the code begins:
