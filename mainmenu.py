@@ -124,11 +124,8 @@ def load_board_from_file(): #todo: add full functionality (load board from file)
             for kolom in range(15): # idx=1, i=eerste karakter van de lijn
                 
                 board[rij][kolom]=int(line[kolom])
+                return board
 
-
-
-        for row in board:
-            print(row)
 def schrijf_bool_naar_tekstbestand():
     with open("bool_overrule.txt", "w") as f:
         f.write(str(var_allow_overrule.get()))
