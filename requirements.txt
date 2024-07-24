@@ -1,8 +1,6 @@
 pygame
-random
 numpy
 tkthread
-queue
 datetime
 torch
 datetime
