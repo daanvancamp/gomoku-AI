@@ -2,6 +2,7 @@
 https://github.com/Mig26/gomoku-thesis-proj
 
 I added support for physical boards via webcam, but it can still be used perfectly fine without a webcam. That's because of a built-in if-statement that checks if the other program changes the json file. If the program doesn't detect a difference between the two json files, then it will just take the mouse position. I also optimized a few things. The code for the webcam can be found here. You need to run both programs simultaneously, otherwise, it won't work as expected. The information is transfered via a json file. A file is used to save system resources; a thread puts more strain on the hardware. A constant connection with the webcam is also recommended because it takes about 5 seconds to connect to the webcam. The program should run perfectly fine on a relatively low-spec computer. Threads also aren't usable in this case because the data needs to be accesible from everywhere in the code. You could use a variable (list) to save the pieces on the board, but that would be more complicated than necessary and again, would slow down the program. https://github.com/daanvancamp/vijf_op_een_rij_beeldherkenning
+Make sure to clone that repository before continuing, otherwise, it won't work.
 
 I also want to mention the following: "please don't hesitate to report any bugs". There are probably many undiscovered bugs. Please check if your bug if listed below before reporting it, because then it's a known issue/bug. Feature suggestions are also more than welcome.
 
