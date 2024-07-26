@@ -28407,3 +28407,12 @@ winning moves: [(3, 7), (8, 7)]
 date and time: 2024-07-24T18:07:41.063476
 
 new run of the code begins:
+
+
+
+
+
+
+date and time: 2024-07-26T12:40:27.194708
+
+new run of the code begins:
