@@ -84,7 +84,7 @@ var_allow_overrule.set(True)
 var_human_training=BooleanVar()
 var_human_training.set(False)
 state_board_path=StringVar()
-state_board_path.set(".\specific_situation.txt")
+state_board_path.set(r".\specific_situation.txt")
 name_model=StringVar()
 
 def set_player_type(playerid):
