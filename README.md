@@ -8,6 +8,7 @@ I also want to mention the following: "please don't hesitate to report any bugs"
 
 A few of the optimizations I have done and some added features:
 These improvements are more extensively described in the commits, read them if you want to know the improvements/solutions in detail. Some small improvements/solutions are left out below.
+
 June 2024:
   added support for webcams
 july 2024:
