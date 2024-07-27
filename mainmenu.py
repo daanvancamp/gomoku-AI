@@ -78,7 +78,7 @@ var_allow_overrule.set(True)
 var_human_training=BooleanVar()
 var_human_training.set(False)
 state_board_path=StringVar()
-state_board_path.set("C:\\development\\gomoku-thesis-proj\\specific_situation.txt")
+state_board_path.set(r".\specific_situation.txt")
 
 def set_player_type(playerid):
     if playerid == 0:
@@ -320,7 +320,7 @@ delaybutton2.grid(row=2, column=0, sticky="w")
 button_5 = ttk.Button(tab3, text="Play", style="TButton", command=lambda: replay())
 button_5.grid(row=3, column=0)
 
-ttk.Label(tab4) #todo: implement further functionality
+ttk.Label(tab4)
 label_load_state=ttk.Label(tab4, text="Choose file board state: ",style="TLabel")
 label_load_state.grid(row=0, column=0, sticky="w")
 load_state_entry = ttk.Entry(tab4, textvariable=state_board_path, width=30,style="TEntry")
