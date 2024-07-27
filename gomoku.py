@@ -9,7 +9,7 @@ import random
 import stats
 import numpy as np
 import filereader
-from lezen_stukken_en_trivia import *
+from lezen_stukken_en_muziek import *
 from time import sleep
  
 #instructie: druk op de linkermuisknop wanneer je een zet hebt gedaan op het fysiek bord.

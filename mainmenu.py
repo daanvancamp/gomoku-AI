@@ -8,7 +8,7 @@ gomoku_ai=GomokuAI(15)#board_size
 import filereader
 import stats
 from PIL import Image, ImageTk
-from lezen_stukken_en_trivia import TE_DETECTEREN_KLEUR, initialiseer_spelbord_json_bestanden
+from lezen_stukken_en_muziek import TE_DETECTEREN_KLEUR, initialiseer_spelbord_json_bestanden
 from filereader import log_info_overruling
 import os
 # import module
