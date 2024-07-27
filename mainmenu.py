@@ -78,7 +78,7 @@ var_allow_overrule.set(True)
 var_human_training=BooleanVar()
 var_human_training.set(False)
 state_board_path=StringVar()
-state_board_path.set("C:\\development\\gomoku-thesis-proj\\specific_situation.txt")
+state_board_path.set(r".\specific_situation.txt")
 
 def set_player_type(playerid):
     if playerid == 0:
@@ -137,10 +137,7 @@ def schrijf_bool_naar_tekstbestand():
 def start_new_game(is_training=False, moves:dict=None):
     schrijf_bool_naar_tekstbestand()
     log_info_overruling("\n\n\nnew session begins:")
-    #if load_situation:
-        #board=[]
-        #todo:implement further #board=...
-      #  board=load_board=
+
     try:
         initialiseer_spelbord_json_bestanden()
     except:
@@ -175,7 +172,6 @@ def start_new_game(is_training=False, moves:dict=None):
             stats.log_message(f"Game  {i+1} begins.")
             game_instance.current_game = i+1
             game_instance.last_round = (i+1 == runs)
-            #todo: add code here #draw_board
             try:
                 gomoku.run(game_instance, i, is_training, repvar.get(), moves) #kan als hoofdprogramma beschouwd worden (��n spel is ��n run)
             except Exception as e:
@@ -213,7 +209,6 @@ def start_new_game_from_state_file(is_training=False, moves:dict=None):
             stats.log_message(f"Game  {i+1} begins.")
             game_instance.current_game = i+1
             game_instance.last_round = (i+1 == runs)
-            #todo: add code here #draw_board
             try:
                 board = load_board_from_file()
                 print("Bord geladen")
@@ -320,7 +315,7 @@ delaybutton2.grid(row=2, column=0, sticky="w")
 button_5 = ttk.Button(tab3, text="Play", style="TButton", command=lambda: replay())
 button_5.grid(row=3, column=0)
 
-ttk.Label(tab4) #todo: implement further functionality
+ttk.Label(tab4)
 label_load_state=ttk.Label(tab4, text="Choose file board state: ",style="TLabel")
 label_load_state.grid(row=0, column=0, sticky="w")
 load_state_entry = ttk.Entry(tab4, textvariable=state_board_path, width=30,style="TEntry")
