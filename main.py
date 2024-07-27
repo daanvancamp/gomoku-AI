@@ -5,7 +5,6 @@ from threading import Thread
 from filereader import log_info_overruling
 import mainmenu
 from lezen_stukken_en_trivia import initialiseer_muziek
-from mainmenu import load_board_from_file
 
 def main():
     mainmenu.mainmenu_run()
