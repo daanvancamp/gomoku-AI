@@ -14,13 +14,10 @@ import os
 # import module
 import shutil
 
-
-
-
 #todo: make it look nice
 #add sound effects
 
-WIDTH = 340 #origineel 230
+WIDTH = 390 #origineel 230
 HEIGHT = 315 #origineel 315
 game_instance = gomoku.GomokuGame(filereader.create_gomoku_game("consts.json"))
 
