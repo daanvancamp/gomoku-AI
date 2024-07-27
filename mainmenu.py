@@ -10,6 +10,13 @@ import stats
 from PIL import Image, ImageTk
 from lezen_stukken_en_trivia import TE_DETECTEREN_KLEUR, initialiseer_spelbord_json_bestanden
 from filereader import log_info_overruling
+import os
+# import module
+import shutil
+
+
+
+
 #todo: make it look nice
 #add sound effects
 
@@ -48,11 +55,13 @@ tab1 = ttk.Frame(tabControl)
 tab2 = ttk.Frame(tabControl)
 tab3 = ttk.Frame(tabControl)
 tab4 = ttk.Frame(tabControl)
+tab5 = ttk.Frame(tabControl)
 
 tabControl.add(tab1, text='Play gomoku')
 tabControl.add(tab2, text='Train')
 tabControl.add(tab3, text='Replay old games')
-tabControl.add(tab4, text='load a situation')
+tabControl.add(tab4, text='Load a situation')
+tabControl.add(tab5, text='Define model')
 tabControl.grid(row=0, sticky="w")
 
 style_numbers = ["georgia", 10, "white", 12, 2]#font, size, color, bold, underline
@@ -78,7 +87,8 @@ var_allow_overrule.set(True)
 var_human_training=BooleanVar()
 var_human_training.set(False)
 state_board_path=StringVar()
-state_board_path.set(r".\specific_situation.txt")
+state_board_path.set("C:\\development\\gomoku-thesis-proj\\specific_situation.txt")
+name_model=StringVar()
 
 def set_player_type(playerid):
     if playerid == 0:
@@ -116,14 +126,14 @@ def replay():
 def run():
     gomoku.run(game_instance)
 
-def load_board_from_file()->list[list[int,int,int]]:
-    print("Laden in bord " + state_board_path.get())
+def load_board_from_file(): 
+    print("Load " + state_board_path.get())
     with open(state_board_path.get(), "r") as file:
         board = [[0] * 15 for _ in range(15)] # 0 = empty, 1 = player 1, 2 = player 2.
-        for rij in range(15):
+        for row in range(15):
             line = file.readline()
-            for kolom in range(15):
-                board[rij][kolom]=int(line[kolom])
+            for col in range(15):      
+                board[row][col]=int(line[col])
     return board
 
 def schrijf_bool_naar_tekstbestand():
@@ -227,6 +237,27 @@ def start_new_game_from_state_file(is_training=False, moves:dict=None):
 
 
 
+def create_new_model():
+    # Directory 
+    directory = name_model.get()
+  
+    # Parent Directory path 
+    parent_dir = "data/models"
+  
+    # Path 
+    path = os.path.join(parent_dir, directory) 
+  
+    # Create the directory 
+    # 'GeeksForGeeks' in 
+    # '/home / User / Documents' 
+    os.mkdir(path) 
+    print("Directory '% s' created" % path) 
+    
+    # copy the contents of the demo.py file to  a new file called demo1.py
+    shutil.copyfile('./data/templatemodel/model.pth', path + "/model.pth")
+
+
+
 def game_over():
     root.wm_state('normal')
     game_instance.current_game = 0
@@ -324,6 +355,22 @@ button_6 = ttk.Button(tab4, text="...",style="TButton", command=lambda: browse_s
 button_6.grid(row=1, column=1, sticky="w")
 button_7 = ttk.Button(tab4, text="Start game", style="TButton", command=lambda: start_new_game_from_state_file())
 button_7.grid(row=3, column=0)
+
+ttk.Label(tab5) 
+subfolders = [ f.path for f in os.scandir('data/models') if f.is_dir() ]
+Lb1 = Listbox(tab5)
+i = 0
+for model in subfolders:
+    Lb1.insert(i, model.split('\\')[-1])
+    i+=1
+Lb1.grid(row=1, column=1)
+
+nameModelLabel = ttk.Label(tab5, text="Name of model: ",style="TLabel")
+nameModelLabel.grid(row=2, column=0, sticky="w")
+nameModelEntry = ttk.Entry(tab5, textvariable=name_model,style="TEntry")
+nameModelEntry.grid(row=2, column=1, sticky="w")
+button_NewModel = ttk.Button(tab5, text="Make New Model", style="TButton", command=lambda: create_new_model())
+button_NewModel.grid(row=3, column=0)
 
 def mainmenu_run():
     root.mainloop()
