@@ -117,21 +117,15 @@ def run():
     gomoku.run(game_instance)
 
 def load_board_from_file(): 
-    print("Bord in " + state_board_path.get() + "geladen.")
-    
+    print("Laden in bord " + state_board_path.get())
     with open(state_board_path.get(), "r") as file:
         board = [[0] * 15 for _ in range(15)] # 0 = empty, 1 = player 1, 2 = player 2.
         for row in range(15):
             line = file.readline()
-            print(line)
-            for kolom in range(15): # idx=1, i=eerste karakter van de lijn
-                
+            for kolom in range(15): # idx=1, i=eerste karakter van de lijn     
                 board[rij][kolom]=int(line[kolom])
+    return board
 
-
-
-        for row in board:
-            print(row)
 def schrijf_bool_naar_tekstbestand():
     with open("bool_overrule.txt", "w") as f:
         f.write(str(var_allow_overrule.get()))
@@ -200,10 +194,6 @@ def start_new_game_from_state_file(is_training=False, moves:dict=None):
     global game_instance
     schrijf_bool_naar_tekstbestand()
     log_info_overruling("\n\n\nnew session begins:")
-    #if load_situation:
-        #board=[]
-        #todo:implement further #board=...
-      #  board=load_board=
     try:
         initialiseer_spelbord_json_bestanden()
     except:
@@ -225,7 +215,6 @@ def start_new_game_from_state_file(is_training=False, moves:dict=None):
             game_instance.last_round = (i+1 == runs)
             #todo: add code here #draw_board
             try:
-                print("we proberen het bord te laden")
                 board = load_board_from_file()
                 print("Bord geladen")
                 for row in board:
@@ -235,14 +224,11 @@ def start_new_game_from_state_file(is_training=False, moves:dict=None):
             except Exception as e:
                 print("error in gomoku.run, herschrijf die functie.")
                 raise Exception("De error is waarschijnlijk te wijten aan een foute zet, controleer het lezen van de json bestanden die het bord opslaan." , str(e))
-            
             gomoku_ai.decrease_learning_rate()
-
     except ValueError:
         print("Most likely: Game runs value invalid, try again.")
     
     game_over()
-
 
 
 
@@ -321,7 +307,6 @@ human_training_button=ttk.Checkbutton(tab2, text="training against human", varia
 human_training_button.grid(row=6, column=1,sticky="w")
 train_description = Label(tab2, text="It is recommended to run at least 3 000 games per training session.", font=(style_numbers[0], style_numbers[1]), wraplength=WIDTH-5, justify=LEFT)#origineel width-5
 train_description.grid(row=8, column=0, sticky="w")
-
 
 ttk.Label(tab3)
 replaylabel = ttk.Label(tab3, text="Choose the replay file: ",style="TLabel")
