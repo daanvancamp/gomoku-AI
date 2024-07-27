@@ -116,13 +116,13 @@ def replay():
 def run():
     gomoku.run(game_instance)
 
-def load_board_from_file(): 
+def load_board_from_file()->list[list[int,int,int]]:
     print("Laden in bord " + state_board_path.get())
     with open(state_board_path.get(), "r") as file:
         board = [[0] * 15 for _ in range(15)] # 0 = empty, 1 = player 1, 2 = player 2.
         for rij in range(15):
             line = file.readline()
-            for kolom in range(15): # idx=1, i=eerste karakter van de lijn     
+            for kolom in range(15):
                 board[rij][kolom]=int(line[kolom])
     return board
 
@@ -177,8 +177,8 @@ def start_new_game(is_training=False, moves:dict=None):
             except Exception as e:
                 print("error in gomoku.run, herschrijf die functie.")
                 raise Exception("De error is waarschijnlijk te wijten aan een foute zet, controleer het lezen van de json bestanden die het bord opslaan." , str(e))
-            
-            gomoku_ai.decrease_learning_rate()
+            if is_training:
+                gomoku_ai.decrease_learning_rate()#todo: calculate decrease rate based on number of training rounds
 
     except ValueError:
         print("Most likely: Game runs value invalid, try again.")
@@ -215,11 +215,11 @@ def start_new_game_from_state_file(is_training=False, moves:dict=None):
                 for row in board:
                     print(row)
                 game_instance.set_board(board)
-                gomoku.run(game_instance, i, is_training, repvar.get(), moves) #kan als hoofdprogramma beschouwd worden (��n spel is ��n run)
+                gomoku.run(game_instance, i, is_training, repvar.get(), moves) #kan als hoofdprogramma beschouwd worden
             except Exception as e:
                 print("error in gomoku.run, herschrijf die functie.")
                 raise Exception("De error is waarschijnlijk te wijten aan een foute zet, controleer het lezen van de json bestanden die het bord opslaan." , str(e))
-            gomoku_ai.decrease_learning_rate()
+            #gomoku_ai.decrease_learning_rate()
     except ValueError:
         print("Most likely: Game runs value invalid, try again.")
     

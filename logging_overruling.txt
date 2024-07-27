@@ -28499,3 +28499,531 @@ new run of the code begins:
 date and time: 2024-07-27T14:16:00.298236
 
 new run of the code begins:
+
+
+
+
+
+
+date and time: 2024-07-27T14:18:49.183371
+
+new run of the code begins:
+
+
+
+new session begins:
+run 1 begins:
+
+
+function get_valid_moves called
+player 1 has a threat at 5, 4
+player 1 has a winning threat at 5, 4
+player 1 has 4 in a row: _xxxx_
+player 1 has a threat at 8, 9
+player 1 has a threat at 10, 9
+player 1 has a winning threat at 10, 9
+player 1 has 4 in a row: _xxxx_
+player 1 has a threat at 12, 5
+function check_own_chances called
+No good offensive move found, maybe a defensive move instead
+overruled: [(5, 4), (8, 9), (10, 9), (12, 5)]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 1, 2, 2, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 2, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+status: an overruled move is executed by the AI
+allow_overrule: True
+opponent_winning: True
+
+
+function get_valid_moves called
+player 1 has a threat at 8, 9
+player 1 has a threat at 9, 7
+player 1 has a threat at 10, 6
+player 1 has a winning threat at 10, 6
+player 1 has 3 in a row and 1 nearby: xxx_x or x_xxx
+player 1 has a threat at 10, 9
+player 1 has a winning threat at 10, 9
+player 1 has 4 in a row: _xxxx_
+player 1 has a threat at 12, 5
+function check_own_chances called
+No good offensive move found, maybe a defensive move instead
+overruled: [(8, 9), (9, 7), (10, 6), (10, 9), (12, 5)]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 2, 0, 0, 0, 2, 2, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 1, 2, 2, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 2, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 1, 1, 0, 1, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+status: an overruled move is executed by the AI
+allow_overrule: True
+opponent_winning: True
+
+
+function get_valid_moves called
+player 1 has a threat at 8, 9
+player 1 has a threat at 9, 7
+player 1 has a threat at 10, 6
+player 1 has a winning threat at 10, 6
+player 1 has 3 in a row and 1 nearby: xxx_x or x_xxx
+player 1 has a threat at 12, 5
+function check_own_chances called
+No good offensive move found, maybe a defensive move instead
+overruled: [(8, 9), (9, 7), (10, 6), (12, 5)]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 2, 0, 0, 0, 2, 2, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 1, 2, 2, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 2, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 1, 1, 0, 1, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 1, 0, 2, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+status: an overruled move is executed by the AI
+allow_overrule: True
+opponent_winning: True
+
+
+function get_valid_moves called
+player 1 has a threat at 8, 4
+player 1 has a threat at 8, 8
+player 1 has a threat at 8, 9
+player 1 has a threat at 12, 5
+function check_own_chances called
+No good offensive move found, maybe a defensive move instead
+overruled: [(8, 4), (8, 8), (8, 9), (12, 5)]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 2, 0, 0, 0, 2, 2, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 1, 2, 2, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 2, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 1, 1, 2, 1, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 1, 0, 2, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+status: an overruled move is executed by the AI
+allow_overrule: True
+opponent_winning: False
+
+
+function get_valid_moves called
+player 1 has a threat at 8, 9
+player 1 has a winning threat at 8, 9
+player 1 has 4 in a row: _xxxx_
+player 1 has a threat at 12, 5
+function check_own_chances called
+opponent has 4 in a row, defensive move found
+overruled: [(8, 9), (12, 5)]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 2, 0, 0, 0, 2, 2, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 1, 2, 2, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 2, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 2, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 1, 1, 2, 1, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 1, 0, 2, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+status: an overruled move is executed by the AI
+allow_overrule: True
+opponent_winning: True
+
+
+function get_valid_moves called
+player 1 has a threat at 6, 9
+player 1 has a threat at 10, 5
+player 1 has a threat at 10, 8
+function check_own_chances called
+better offensive move found, the model will decide from the list of valid moves(=all empty cells)
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 2, 0, 0, 0, 2, 2, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 1, 2, 2, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 2, 2, 1, 0, 1, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 2, 1, 1, 1, 1, 2, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 1, 1, 2, 1, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 1, 0, 2, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+status: a normal move is executed by the AI if it can't win in one move
+allow_overrule: True
+opponent_winning: False
+function can_win_in_one_move called
+no winning moves found, the model will fully choose a move on its own out of all possible moves:
+
+
+function get_valid_moves called
+player 1 has a threat at 6, 9
+player 1 has a threat at 10, 4
+player 1 has a threat at 10, 5
+player 1 has a threat at 10, 8
+function check_own_chances called
+better offensive move found, the model will decide from the list of valid moves(=all empty cells)
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 2, 0, 0, 2, 2, 2, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 1, 2, 2, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 2, 2, 1, 1, 1, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 2, 1, 1, 1, 1, 2, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 1, 1, 2, 1, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 1, 0, 2, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+status: a normal move is executed by the AI if it can't win in one move
+allow_overrule: True
+opponent_winning: False
+function can_win_in_one_move called
+the model will be overruled because of a possible winning move
+winning moves: [(4, 8), (9, 3)]
+
+
+
+new session begins:
+run 1 begins:
+
+
+function get_valid_moves called
+player 1 has a threat at 5, 4
+player 1 has a winning threat at 5, 4
+player 1 has 4 in a row: _xxxx_
+player 1 has a threat at 8, 9
+player 1 has a threat at 10, 9
+player 1 has a winning threat at 10, 9
+player 1 has 4 in a row: _xxxx_
+player 1 has a threat at 12, 5
+function check_own_chances called
+No good offensive move found, maybe a defensive move instead
+overruled: [(5, 4), (8, 9), (10, 9), (12, 5)]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 1, 2, 2, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 2, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+status: an overruled move is executed by the AI
+allow_overrule: True
+opponent_winning: True
+
+
+function get_valid_moves called
+player 1 has a threat at 8, 4
+player 1 has a threat at 8, 8
+player 1 has a threat at 8, 9
+player 1 has a threat at 10, 9
+player 1 has a winning threat at 10, 9
+player 1 has 4 in a row: _xxxx_
+player 1 has a threat at 12, 5
+function check_own_chances called
+No good offensive move found, maybe a defensive move instead
+overruled: [(8, 4), (8, 8), (8, 9), (10, 9), (12, 5)]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 2, 0, 0, 0, 2, 2, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 1, 2, 2, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 2, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+status: an overruled move is executed by the AI
+allow_overrule: True
+opponent_winning: True
+
+
+function get_valid_moves called
+player 1 has a threat at 8, 4
+player 1 has a threat at 8, 8
+player 1 has a threat at 8, 9
+player 1 has a threat at 12, 5
+function check_own_chances called
+No good offensive move found, maybe a defensive move instead
+overruled: [(8, 4), (8, 8), (8, 9), (12, 5)]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 2, 0, 0, 0, 2, 2, 0, 0, 0, 0, 0]
+[0, 0, 0, 1, 0, 1, 2, 2, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 2, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 1, 0, 2, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+status: an overruled move is executed by the AI
+allow_overrule: True
+opponent_winning: False
+
+
+function get_valid_moves called
+player 1 has a threat at 8, 9
+player 1 has a threat at 12, 5
+function check_own_chances called
+better offensive move found, the model will decide from the list of valid moves(=all empty cells)
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 2, 0, 0, 0, 2, 2, 0, 0, 0, 0, 0]
+[0, 0, 0, 1, 1, 1, 2, 2, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 2, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 2, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 1, 0, 2, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+status: a normal move is executed by the AI if it can't win in one move
+allow_overrule: True
+opponent_winning: False
+function can_win_in_one_move called
+no winning moves found, the model will fully choose a move on its own out of all possible moves:
+
+
+function get_valid_moves called
+player 1 has a threat at 8, 9
+player 1 has a threat at 12, 5
+function check_own_chances called
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 2, 0, 1, 2, 2, 2, 0, 0, 0, 0, 0]
+[0, 0, 0, 1, 1, 1, 2, 2, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 2, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 2, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 1, 0, 2, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+status: a normal move is executed by the AI if it can't win in one move
+allow_overrule: True
+opponent_winning: False
+function can_win_in_one_move called
+the model will be overruled because of a possible winning move
+winning moves: [(4, 8), (9, 3)]
+
+
+
+new session begins:
+run 1 begins:
+
+
+function get_valid_moves called
+player 1 has a threat at 5, 4
+player 1 has a winning threat at 5, 4
+player 1 has 4 in a row: _xxxx_
+player 1 has a threat at 8, 9
+player 1 has a threat at 10, 9
+player 1 has a winning threat at 10, 9
+player 1 has 4 in a row: _xxxx_
+player 1 has a threat at 12, 5
+function check_own_chances called
+No good offensive move found, maybe a defensive move instead
+overruled: [(5, 4), (8, 9), (10, 9), (12, 5)]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 1, 1, 2, 2, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 2, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+status: an overruled move is executed by the AI
+allow_overrule: True
+opponent_winning: True
+
+
+
+
+
+
+date and time: 2024-07-27T14:34:56.423566
+
+new run of the code begins:
+
+
+
+new session begins:
+run 1 begins:
+
+
+function get_valid_moves called
+player 1 has a threat at 5, 4
+player 1 has a winning threat at 5, 4
+player 1 has 4 in a row: _xxxx_
+player 1 has a threat at 8, 9
+player 1 has a threat at 10, 6
+player 1 has a winning threat at 10, 6
+player 1 has 3 in a row and 1 nearby: xxx_x or x_xxx
+player 1 has a threat at 10, 9
+player 1 has a winning threat at 10, 9
+player 1 has 4 in a row: _xxxx_
+player 1 has a threat at 12, 5
+function check_own_chances called
+No good offensive move found, maybe a defensive move instead
+overruled: [(5, 4), (8, 9), (10, 6), (10, 9), (12, 5)]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 1, 2, 2, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 2, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+status: an overruled move is executed by the AI
+allow_overrule: True
+opponent_winning: True
+
+
+function get_valid_moves called
+player 1 has a threat at 8, 9
+player 1 has a threat at 10, 9
+player 1 has a winning threat at 10, 9
+player 1 has 4 in a row: _xxxx_
+player 1 has a threat at 12, 5
+function check_own_chances called
+No good offensive move found, maybe a defensive move instead
+overruled: [(8, 9), (10, 9), (12, 5)]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 2, 0, 0, 0, 2, 2, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 1, 2, 2, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 2, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+status: an overruled move is executed by the AI
+allow_overrule: True
+opponent_winning: True
+
+
+function get_valid_moves called
+player 1 has a threat at 8, 9
+player 1 has a threat at 12, 5
+function check_own_chances called
+No good offensive move found, maybe a defensive move instead
+overruled: [(8, 9), (12, 5)]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 2, 0, 0, 0, 2, 2, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 1, 2, 2, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 2, 2, 1, 1, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 1, 0, 2, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+status: an overruled move is executed by the AI
+allow_overrule: True
+opponent_winning: False
+
+
+
+
+
+
+date and time: 2024-07-27T14:35:41.924956
+
+new run of the code begins:
+
+
+
+new session begins:
+run 1 begins:
