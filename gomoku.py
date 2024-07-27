@@ -157,17 +157,34 @@ window_name = "Gomoku"
 victory_text = ""
 current_player = 1
 
+def is_move_model(row,col,last_move_model) -> bool:
+    if (row,col)==last_move_model:
+        return True
+    else:
+        return False
+
 # Function to draw the game board
-def draw_board(instance):
+def draw_board(instance,last_move_model=None):
     instance.screen.fill(instance.BOARD_COL)#background color
     cell_size = instance.CELL_SIZE#cell_size=30
     for row in range(instance.GRID_SIZE):#grid_size=15
         for col in range(instance.GRID_SIZE):
             pygame.draw.rect(instance.screen, instance.LINE_COL, (col * cell_size, row * cell_size, cell_size, cell_size), 1)
             if instance.board[row][col] == 1:
-                pygame.draw.circle(instance.screen, instance.P1COL, (col * cell_size + cell_size // 2, row * cell_size + cell_size // 2), cell_size // 2 - 5)
+                if is_move_model(row,col,last_move_model):
+                    #red (R,G,B)
+                    pygame.draw.circle(instance.screen, (255,0,0), (col * cell_size + cell_size // 2, row * cell_size + cell_size // 2), cell_size // 2 - 5)
+                else:
+                    pygame.draw.circle(instance.screen, instance.P1COL, (col * cell_size + cell_size // 2, row * cell_size + cell_size // 2), cell_size // 2 - 5)
+
             elif instance.board[row][col] == 2:
                 pygame.draw.circle(instance.screen, instance.P2COL, (col * cell_size + cell_size // 2, row * cell_size + cell_size // 2), cell_size // 2 - 5)
+                if is_move_model(row,col,last_move_model):
+                    #red (R,G,B)
+                    pygame.draw.circle(instance.screen, (255,0,0), (col * cell_size + cell_size // 2, row * cell_size + cell_size // 2), cell_size // 2 - 5)
+                else:
+                    pygame.draw.circle(instance.screen, instance.P2COL, (col * cell_size + cell_size // 2, row * cell_size + cell_size // 2), cell_size // 2 - 5)
+
     # Draw the winning line
     if instance.winning_cells:
         start_row, start_col = instance.winning_cells[0]#start_cell=(0,0)
@@ -337,11 +354,11 @@ def run(instance, game_number, train, record_replay=False, moves:dict=None,playe
         for index,p in enumerate(players):
             if p.TYPE=="DVC-AI":
                 current_player=index+1 #simuleer dat het aan een mens was.
-                print(index)
-
+                
     pygame.display.set_icon(pygame.image.load('res/ico.png'))
     pygame.init()
     pygame.display.set_caption(window_name)
+    mark_last_move_model=True #todo:maybe add an option in the GUI to turn this off.
     instance.winning_cells = []
     running = True
 
@@ -460,6 +477,10 @@ def run(instance, game_number, train, record_replay=False, moves:dict=None,playe
                 old_state = instance.board
                 max_score, scores, scores_normalized = calculate_score(instance.board)
                 action = mm_ai.get_action(instance.board, one_hot_board, scores_normalized)
+                if mark_last_move_model:
+                    last_move=action #=last move for example :(3,6)
+                else:
+                    last_move=None
                 np_scores = np.array(scores).reshape(15, 15)
                 short_score = np_scores[action[0]][action[1]]
                 if max_score <= 0:
@@ -498,7 +519,10 @@ def run(instance, game_number, train, record_replay=False, moves:dict=None,playe
                 else:
                     current_player = 3 - current_player
                     move_id += 1
-            draw_board(instance)
+            try:
+                draw_board(instance,last_move)
+            except:
+                draw_board(instance)
             pygame.display.flip()#refresh
             window_name = "Gomoku - Game: " + str(game_number) + " - Player " + str(current_player) #beurt start
             pygame.display.set_caption(window_name)
