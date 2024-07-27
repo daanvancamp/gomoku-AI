@@ -325,7 +325,7 @@ def convert_to_one_hot(board, player_id):#vermijd dat ai denkt dat de getallen i
         one_hot_board[2] = (board == 1).astype(np.float32)
     return one_hot_board
 
-def run(instance, game_number, train, record_replay=False, moves:dict=None):#main function
+def run(instance, game_number, train, record_replay=False, moves:dict=None,player_first_move=None):#main function
     # Main game loop
     global window_name, victory_text, current_player
     for p in players: #players=[Human, AI]
@@ -333,6 +333,11 @@ def run(instance, game_number, train, record_replay=False, moves:dict=None):#mai
             p.ai.model.load_model()
             p.ai.train = train
     # Initialize Pygame
+    if player_first_move is not None:
+        print(players)
+        
+        #current_player=
+
     pygame.display.set_icon(pygame.image.load('res/ico.png'))
     pygame.init()
     pygame.display.set_caption(window_name)

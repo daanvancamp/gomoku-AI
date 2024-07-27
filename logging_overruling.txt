@@ -29027,3 +29027,77 @@ new run of the code begins:
 
 new session begins:
 run 1 begins:
+
+
+
+
+
+
+date and time: 2024-07-27T16:39:26.665404
+
+new run of the code begins:
+
+
+
+new session begins:
+run 1 begins:
+
+
+
+
+
+
+date and time: 2024-07-27T16:40:41.256039
+
+new run of the code begins:
+
+
+
+new session begins:
+run 1 begins:
+
+
+function get_valid_moves called
+player 1 has a threat at 5, 4
+player 1 has a winning threat at 5, 4
+player 1 has 4 in a row: _xxxx_
+player 1 has a threat at 8, 9
+player 1 has a threat at 10, 9
+player 1 has a winning threat at 10, 9
+player 1 has 4 in a row: _xxxx_
+player 1 has a threat at 12, 5
+function check_own_chances called
+No good offensive move found, maybe a defensive move instead
+overruled: [(5, 4), (8, 9), (10, 9), (12, 5)]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 1, 2, 2, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 2, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+status: an overruled move is executed by the AI
+allow_overrule: True
+opponent_winning: True
+
+
+
+
+
+
+date and time: 2024-07-27T16:41:39.603544
+
+new run of the code begins:
+
+
+
+new session begins:
+run 1 begins:

@@ -7,7 +7,6 @@ import pygame
 #belangrijk: dit programma wordt nooit zelf uitgevoerd. De functies worden enkel geimporteerd vanuit gomuku.py en main.py
 
 board: List[List[int]] = []
-old_board: List[List[int]] = []
 zet: Tuple[int, int] = (0, 0)
 lijst_stukken: List[Tuple[str, int, int]] = []
 relevante_stukken: List[Tuple[int, int]] = []
@@ -137,7 +136,7 @@ def schrijf_relevante_stukken_voor_zet_weg () :
     schrijf_relevante_stukken_weg(pad_relevante_stukken_voor_zet)
 
 def schrijf_relevante_stukken_na_zet_weg () :#kunnen er ook meer zijn (tot (15*15)/2 stukken)
-    global board, old_board
+    global board
     pad_relevante_stukken_na_zet=r".\bord_gomoku\bord_na_zet.json"
     schrijf_relevante_stukken_weg(pad_relevante_stukken_na_zet)
 

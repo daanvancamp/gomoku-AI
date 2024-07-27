@@ -215,7 +215,7 @@ def start_new_game_from_state_file(is_training=False, moves:dict=None):
                 for row in board:
                     print(row)
                 game_instance.set_board(board)
-                gomoku.run(game_instance, i, is_training, repvar.get(), moves) #kan als hoofdprogramma beschouwd worden
+                gomoku.run(game_instance, i, is_training, repvar.get(), moves,1) #kan als hoofdprogramma beschouwd worden
             except Exception as e:
                 print("error in gomoku.run, herschrijf die functie.")
                 raise Exception("De error is waarschijnlijk te wijten aan een foute zet, controleer het lezen van de json bestanden die het bord opslaan." , str(e))
