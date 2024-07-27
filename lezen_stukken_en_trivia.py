@@ -143,7 +143,7 @@ def schrijf_relevante_stukken_na_zet_weg () :#kunnen er ook meer zijn (tot (15*1
 
 
 def lees_gedetecteerde_stukken() -> Dict[str, Any]:#retourneert alle stukken op het bord (leest json bestand)
-    bestandspad = glob(r'..\vijf_op_een_rij_beeldherkenning\**\detected_pieces.json',recursive=True)[0]
+    bestandspad = r'..\vijf_op_een_rij_beeldherkenning\detected_pieces.json'
     try:
         with open(bestandspad, 'r') as json_file:
             return json.load(json_file)

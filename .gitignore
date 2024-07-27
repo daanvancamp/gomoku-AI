@@ -12,3 +12,14 @@ logs/
 /.vs/gomoku-thesis-proj/v17/DocumentLayout.json
 /.vs/slnx.sqlite
 /.vs/VSWorkspaceState.json
+/.vs/PythonSettings.json
+/.vs/gomoku-thesis-proj/v17/Preview/Browse.VC.db
+*.db-shm
+/.vs/gomoku-thesis-proj/v17/Preview/Browse.VC.db-wal
+/.vs/gomoku-thesis-proj/v17/Preview/Browse.VC.opendb
+/.vs/ProjectSettings.json
+/.vs/PythonSettings.json
+/.vs/gomoku-thesis-proj/v17/workspaceFileList.bin
+/.vs/gomoku-thesis-proj/config/applicationhost.config
+/.vs/gomoku-thesis-proj/v17/Preview/Solution.VC.db
+.vs/

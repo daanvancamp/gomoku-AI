@@ -1,0 +1,7 @@
+pygame
+numpy
+tkthread
+datetime
+torch
+datetime
+matplotlib

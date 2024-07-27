@@ -62,7 +62,7 @@ input_canvas.grid(row=1, padx=2, pady=2)
 p1 = StringVar()
 p2 = StringVar()
 p1.set("Human")
-p2.set("MM-AI")
+p2.set("DVC-AI")
 game_runs = StringVar()
 game_runs.set("1")
 delayvar = BooleanVar()
@@ -123,11 +123,15 @@ def load_board_from_file():
         board = [[0] * 15 for _ in range(15)] # 0 = empty, 1 = player 1, 2 = player 2.
         for row in range(15):
             line = file.readline()
-            for col in range(15): 
-                board[row][col]=int(line[col])
-    return board
-     
-            
+            print(line)
+            for kolom in range(15): # idx=1, i=eerste karakter van de lijn
+                
+                board[rij][kolom]=int(line[kolom])
+
+
+
+        for row in board:
+            print(row)
 def schrijf_bool_naar_tekstbestand():
     with open("bool_overrule.txt", "w") as f:
         f.write(str(var_allow_overrule.get()))
@@ -150,7 +154,7 @@ def start_new_game(is_training=False, moves:dict=None):
     try:
         if is_training:
             if not var_human_training.get():
-                p1.set("MM-AI")
+                p1.set("DVC-AI")
                 set_player_type(0)
             else:
                 p1.set("Human")
@@ -270,13 +274,13 @@ radiobutton1 = ttk.Radiobutton(tab1, text="Human", variable=p1, value="Human", c
 radiobutton1.grid(row=3, column=0, sticky="w")
 radiobutton2 = ttk.Radiobutton(tab1, text="TestAI", variable=p1, value="AI", command=lambda: set_player_type(0),style="TRadiobutton")
 radiobutton2.grid(row=4, column=0, sticky="w")
-radiobutton3 = ttk.Radiobutton(tab1, text="MM-AI", variable=p1, value="MM-AI", command=lambda: set_player_type(0),style="TRadiobutton")
+radiobutton3 = ttk.Radiobutton(tab1, text="DVC-AI", variable=p1, value="DVC-AI", command=lambda: set_player_type(0),style="TRadiobutton")
 radiobutton3.grid(row=5, column=0, sticky="w")
 radiobutton4 = ttk.Radiobutton(tab1, text="Human", variable=p2, value="Human", command=lambda: set_player_type(1),style="TRadiobutton")
 radiobutton4.grid(row=3, column=1, sticky="w")
 radiobutton5 = ttk.Radiobutton(tab1, text="TestAI", variable=p2, value="AI", command=lambda: set_player_type(1),style="TRadiobutton")
 radiobutton5.grid(row=4, column=1, sticky="w")
-radiobutton6 = ttk.Radiobutton(tab1, text="MM-AI", variable=p2, value="MM-AI", command=lambda: set_player_type(1),style="TRadiobutton")
+radiobutton6 = ttk.Radiobutton(tab1, text="DVC-AI", variable=p2, value="DVC-AI", command=lambda: set_player_type(1),style="TRadiobutton")
 radiobutton6.grid(row=5, column=1, sticky="w")
 
 gamerunslabel = ttk.Label(tab1, text="Number of games: ",style="TLabel")
@@ -301,7 +305,7 @@ button_2 = ttk.Button(tab2, text="Train", style="TButton", command=lambda: start
 button_2.grid(row=0, column=0, sticky="w")
 train_opponent_label = ttk.Label(tab2, text="Train against:", style="TLabel")
 train_opponent_label.grid(row=1, column=0, sticky="w")
-radiobutton7 = ttk.Radiobutton(tab2, text="MM-AI", variable=p2, value="MM-AI", command=lambda: set_player_type(1),style="TRadiobutton")
+radiobutton7 = ttk.Radiobutton(tab2, text="DVC-AI", variable=p2, value="DVC-AI", command=lambda: set_player_type(1),style="TRadiobutton")
 radiobutton7.grid(row=2, column=0, sticky="w")
 radiobutton8 = ttk.Radiobutton(tab2, text="TestAI", variable=p2, value="AI", command=lambda: set_player_type(1),style="TRadiobutton")
 radiobutton8.grid(row=3, column=0, sticky="w")
