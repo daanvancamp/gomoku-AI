@@ -355,6 +355,7 @@ def run(instance, game_number, train, record_replay=False, moves:dict=None,playe
             if p.TYPE=="DVC-AI":
                 current_player=index+1 #simuleer dat het aan een mens was.
                 
+
     pygame.display.set_icon(pygame.image.load('res/ico.png'))
     pygame.init()
     pygame.display.set_caption(window_name)
