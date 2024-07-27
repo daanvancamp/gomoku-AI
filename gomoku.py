@@ -49,6 +49,13 @@ class GomokuGame:
         self.current_game = 0
         self.last_round = False
         self.ai_delay = False
+        
+    def set_board(self, board):
+        self.board = board
+
+
+
+
 
 class Player:
     def __init__(self, player_type, player_id):

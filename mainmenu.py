@@ -77,8 +77,8 @@ var_allow_overrule=BooleanVar()
 var_allow_overrule.set(True)
 var_human_training=BooleanVar()
 var_human_training.set(False)
-load_situation_path=StringVar()#todo: add full functionality
-load_situation_path.set(None)
+state_board_path=StringVar()
+state_board_path.set("C:\\development\\gomoku-thesis-proj\\specific_situation.txt")
 
 def set_player_type(playerid):
     if playerid == 0:
@@ -91,8 +91,9 @@ def set_game_instance(new_instance):
     global game_instance
     game_instance = new_instance
 
-def browes_files_load_situation():
+def browse_state_files():
     file_path = filedialog.askopenfilename(filetypes=[("txt File", "*.txt")])
+    state_board_path.set(file_path)
 
 def browse_files():
     file_path = filedialog.askopenfilename(filetypes=[("Json File", "*.json")])
@@ -100,6 +101,7 @@ def browse_files():
 
 def load_situation():
     load_situation=True
+    
 def replay():
     p1.set("replay")
     set_player_type(0)
@@ -114,21 +116,18 @@ def replay():
 def run():
     gomoku.run(game_instance)
 
-def load_board_from_file(): #todo: add full functionality (load board from file)
-    with open("specific_situation.txt", "r") as file:
-        board = [[0] * 15 for _ in range(15)] # 0 = empty, 1 = player 1, 2 = player 2. De waarden corresponderen aan de kleuren.
-        for rij in range(15):
-            print(rij)
+def load_board_from_file(): 
+    print("Bord in " + state_board_path.get() + "geladen.")
+    
+    with open(state_board_path.get(), "r") as file:
+        board = [[0] * 15 for _ in range(15)] # 0 = empty, 1 = player 1, 2 = player 2.
+        for row in range(15):
             line = file.readline()
-            print(line)
-            for kolom in range(15): # idx=1, i=eerste karakter van de lijn
-                
-                board[rij][kolom]=int(line[kolom])
-
-
-
-        for row in board:
-            print(row)
+            for col in range(15): 
+                board[row][col]=int(line[col])
+    return board
+     
+            
 def schrijf_bool_naar_tekstbestand():
     with open("bool_overrule.txt", "w") as f:
         f.write(str(var_allow_overrule.get()))
@@ -144,9 +143,6 @@ def start_new_game(is_training=False, moves:dict=None):
         #board=[]
         #todo:implement further #board=...
       #  board=load_board=
-        
-
-   
     try:
         initialiseer_spelbord_json_bestanden()
     except:
@@ -194,6 +190,57 @@ def start_new_game(is_training=False, moves:dict=None):
         print("Most likely: Game runs value invalid, try again.")
     
     game_over()
+
+
+def start_new_game_from_state_file(is_training=False, moves:dict=None):
+    global game_instance
+    schrijf_bool_naar_tekstbestand()
+    log_info_overruling("\n\n\nnew session begins:")
+    #if load_situation:
+        #board=[]
+        #todo:implement further #board=...
+      #  board=load_board=
+    try:
+        initialiseer_spelbord_json_bestanden()
+    except:
+        raise Exception("Fout in functie: initialiseer_spelbord_json_bestanden")
+    try:
+        runs = 1;
+
+        stats.should_log = logvar.get()
+        stats.setup_logging(p1.get(), p2.get())
+        root.wm_state('iconic')
+        for i in range(runs):
+            log_info_overruling("run "+str(i+1)+" begins:")
+            
+            game_instance = gomoku.GomokuGame(filereader.create_gomoku_game("consts.json"))
+            game_instance.ai_delay = delayvar.get()
+            
+            stats.log_message(f"Game  {i+1} begins.")
+            game_instance.current_game = i+1
+            game_instance.last_round = (i+1 == runs)
+            #todo: add code here #draw_board
+            try:
+                print("we proberen het bord te laden")
+                board = load_board_from_file()
+                print("Bord geladen")
+                for row in board:
+                    print(row)
+                game_instance.set_board(board)
+                gomoku.run(game_instance, i, is_training, repvar.get(), moves) #kan als hoofdprogramma beschouwd worden (��n spel is ��n run)
+            except Exception as e:
+                print("error in gomoku.run, herschrijf die functie.")
+                raise Exception("De error is waarschijnlijk te wijten aan een foute zet, controleer het lezen van de json bestanden die het bord opslaan." , str(e))
+            
+            gomoku_ai.decrease_learning_rate()
+
+    except ValueError:
+        print("Most likely: Game runs value invalid, try again.")
+    
+    game_over()
+
+
+
 
 def game_over():
     root.wm_state('normal')
@@ -285,13 +332,13 @@ button_5 = ttk.Button(tab3, text="Play", style="TButton", command=lambda: replay
 button_5.grid(row=3, column=0)
 
 ttk.Label(tab4) #todo: implement further functionality
-label_load_situation=ttk.Label(tab4, text="Choose the file from which to load a situation: ",style="TLabel")
-label_load_situation.grid(row=0, column=0, sticky="w")
-load_situation_entry = ttk.Entry(tab4, textvariable=load_situation_path, width=30,style="TEntry")
-load_situation_entry.grid(row=1, column=0, sticky="w")
-button_6 = ttk.Button(tab4, text="...",style="TButton", command=lambda: browes_files_load_situation())
+label_load_state=ttk.Label(tab4, text="Choose file board state: ",style="TLabel")
+label_load_state.grid(row=0, column=0, sticky="w")
+load_state_entry = ttk.Entry(tab4, textvariable=state_board_path, width=30,style="TEntry")
+load_state_entry.grid(row=1, column=0, sticky="w")
+button_6 = ttk.Button(tab4, text="...",style="TButton", command=lambda: browse_state_files())
 button_6.grid(row=1, column=1, sticky="w")
-button_7 = ttk.Button(tab4, text="Load Situation", style="TButton", command=lambda: load_situation())
+button_7 = ttk.Button(tab4, text="Start game", style="TButton", command=lambda: start_new_game_from_state_file())
 button_7.grid(row=3, column=0)
 
 def mainmenu_run():
