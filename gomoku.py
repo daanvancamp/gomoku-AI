@@ -25,25 +25,7 @@ class GomokuGame:
         self.BOARD_COL = values[4]
         self.LINE_COL = values[5]
         self.SLEEP_BEFORE_END = values[6]
-        #if not load_situation:
-            #todo: finish this
         self.board = [[0] * self.GRID_SIZE for _ in range(self.GRID_SIZE)] # 0 = empty, 1 = player 1, 2 = player 2. De waarden corresponderen aan de kleuren.
-        #[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-        #[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-        #[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-        #[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-        #[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-        #[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-        #[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-        #[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-        #[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-        #[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-        #[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-        #[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-        #[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-        #[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-        #[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-
         self.screen = pygame.display.set_mode((self.WIDTH, self.HEIGHT))
         self.winning_cells = []
         self.current_game = 0
@@ -309,7 +291,6 @@ def check_win(row, col, player, instance):
             else:
                 break
         if count >= 5:  # Victory condition 
-            #todo: verander naar =5 om het moeilijker te maken.
             match winning_direction:    # sort the array so that a strike can be drawn correctly
                 case (1, 0): #if winning_direction==(1,0):
                     winning_cells.sort()
