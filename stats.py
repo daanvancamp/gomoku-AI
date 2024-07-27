@@ -7,7 +7,7 @@ import matplotlib
 import matplotlib.pyplot as plt
 
 should_log = True
-#todo: verwijder optionele logs indien nodig om prestaties te verbeteren
+
 #purely for testing purposes
 def setup_logging(player0_type, player1_type):
     #print("setup logging")
