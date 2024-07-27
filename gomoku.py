@@ -334,9 +334,10 @@ def run(instance, game_number, train, record_replay=False, moves:dict=None,playe
             p.ai.train = train
     # Initialize Pygame
     if player_first_move is not None:
-        print(players)
-        
-        #current_player=
+        for index,p in enumerate(players):
+            if p.TYPE=="DVC-AI":
+                current_player=index+1 #simuleer dat het aan een mens was.
+                print(index)
 
     pygame.display.set_icon(pygame.image.load('res/ico.png'))
     pygame.init()

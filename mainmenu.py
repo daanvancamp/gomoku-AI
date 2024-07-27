@@ -17,7 +17,7 @@ import shutil
 #todo: make it look nice
 #add sound effects
 
-WIDTH = 390 #origineel 230
+WIDTH = 415 #origineel 230
 HEIGHT = 315 #origineel 315
 game_instance = gomoku.GomokuGame(filereader.create_gomoku_game("consts.json"))
 
@@ -84,7 +84,7 @@ var_allow_overrule.set(True)
 var_human_training=BooleanVar()
 var_human_training.set(False)
 state_board_path=StringVar()
-state_board_path.set("C:\\development\\gomoku-thesis-proj\\specific_situation.txt")
+state_board_path.set(".\specific_situation.txt")
 name_model=StringVar()
 
 def set_player_type(playerid):

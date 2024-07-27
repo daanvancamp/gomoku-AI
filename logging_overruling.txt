@@ -29101,3 +29101,44 @@ new run of the code begins:
 
 new session begins:
 run 1 begins:
+
+
+
+
+
+
+date and time: 2024-07-27T16:53:44.470981
+
+new run of the code begins:
+
+
+
+
+
+
+date and time: 2024-07-27T16:55:24.263716
+
+new run of the code begins:
+
+
+
+
+
+
+date and time: 2024-07-27T16:55:51.271681
+
+new run of the code begins:
+
+
+
+
+
+
+date and time: 2024-07-27T16:57:18.057120
+
+new run of the code begins:
+
+
+
+new session begins:
+run 1 begins:
