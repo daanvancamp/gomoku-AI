@@ -120,7 +120,7 @@ def load_board_from_file():
     print("Laden in bord " + state_board_path.get())
     with open(state_board_path.get(), "r") as file:
         board = [[0] * 15 for _ in range(15)] # 0 = empty, 1 = player 1, 2 = player 2.
-        for row in range(15):
+        for rij in range(15):
             line = file.readline()
             for kolom in range(15): # idx=1, i=eerste karakter van de lijn     
                 board[rij][kolom]=int(line[kolom])
