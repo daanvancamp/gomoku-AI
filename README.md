@@ -11,6 +11,7 @@ These improvements are more extensively described in the commits, read them if y
 
 June 2024:
   added support for webcams
+  
 july 2024:
   **Changed optimizer from Adam to SGD.**
   **Fixed a bug where the training kept repeating the exploration phase: it couldn't choose a move. Now, it is completely random after 30 tries instead of using the function "choose_action". This doesn't have a significant         impact on the training process because it happens approximately one in a 1000 times.**
@@ -24,6 +25,8 @@ july 2024:
   I added a checkbox to train the model against yourself. (human vs DVC-AI) My name is Daan Van Camp, so my initials are DVC.
   Wim added a way to load a situation, so it's easier to find the weaknesses of the model.
   The last move of the model is now red so it's easier to find the last move and anticipate upon it.
+
+  
   
   
 
