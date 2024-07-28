@@ -1,5 +1,6 @@
 import sys
 from threading import Thread
+from time import sleep
 from tkinter import *
 from tkinter import ttk
 from tkinter import filedialog
@@ -276,11 +277,14 @@ ttk.Label(tab1)
 def toggle_visibility():
     print("busy")
     while True:
+        sleep(0.2)#save resources
         if p1.get()=="DVC-AI":
             CbModel1.grid(row=6,column=0)
 
         else:
             CbModel1.grid_remove()
+        if p2.get()=="DVC-AI":
+            pass
 
 button_1 = ttk.Button(tab1, text="New Game", command=lambda: start_new_game(False), style="TButton")
 button_1.grid(row=0, column=0, sticky="w")
@@ -309,8 +313,8 @@ CbModel2 = ttk.Combobox(tab1, state="readonly", values=list_models)
 CbModel1.grid(row=6, column=0)
 CbModel2.grid(row=6, column=1)
 
-#Thread_visibility=Thread(target=toggle_visibility())
-#Thread_visibility.start()
+Thread_visibility=Thread(target=toggle_visibility)
+Thread_visibility.start()
 
 gamerunslabel = ttk.Label(tab1, text="Number of games: ",style="TLabel")
 gamerunslabel.grid(row=7, column=0, sticky="w")
