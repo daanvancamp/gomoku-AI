@@ -34,10 +34,12 @@ class ModelManager(metaclass=ModelManagerMeta):
         path = os.path.join(parent_dir, directory) 
         
         if not os.path.isdir(path):
-            os.mkdir(path) 
+            os.mkdir(path)
             
-        print("Directory '% s' created" % path) 
-    
+        if not directory=="" and directory is not None:
+            print("Directory '% s' created" % path) 
+        else:
+            print("Directory '% s' not created" % path,"please specify a valid name")
         # copy the contents of the demo.py file to  a new file called demo1.py
         shutil.copyfile('./data/templatemodel/model.pth', path + "/model.pth")
         

@@ -157,8 +157,6 @@ def start_new_game(is_training=False, moves:dict=None):
             p1.set("DVC-AI")
             set_player_type(0)
         else:
-            #p1.set("Human")
-            #set_player_type(0)
             pass
         valid_number = False
         while not valid_number:
