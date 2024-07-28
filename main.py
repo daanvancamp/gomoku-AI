@@ -19,6 +19,9 @@ def controleer_bestandspaden():
     #        raise Exception("The file doesn't exist",bestandspad)
     print("even verwijderd")
 
+def start_recognition():
+    pass
+
 def log_new_run():
     log_info_overruling("\n\n\n\n\n\ndate and time: "+datetime.now().isoformat())
     log_info_overruling("\nnew run of the code begins:")

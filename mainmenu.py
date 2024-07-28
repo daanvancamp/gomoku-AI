@@ -126,7 +126,7 @@ def replay():
 def run():
     gomoku.run(game_instance)
 
-def load_board_from_file(): 
+def load_board_from_file():
     print("Load " + state_board_path.get())
     with open(state_board_path.get(), "r") as file:
         board = [[0] * 15 for _ in range(15)] # 0 = empty, 1 = player 1, 2 = player 2.
@@ -234,7 +234,6 @@ def start_new_game_from_state_file(is_training=False, moves:dict=None):
         print("Most likely: Game runs value invalid, try again.")
     
     game_over()
-
 
 
 def create_new_model():

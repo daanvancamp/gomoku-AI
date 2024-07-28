@@ -1,4 +1,3 @@
-from math import log
 import os.path
 import torch
 import torch.nn as nn
