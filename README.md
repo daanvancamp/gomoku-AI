@@ -1,10 +1,10 @@
 # adapted from gomoku-thesis-proj
 https://github.com/Mig26/gomoku-thesis-proj
 
-I added support for physical boards via webcam, but it can still be used perfectly fine without a webcam. That's because of a built-in if-statement that checks if the other program changes the json file. If the program doesn't detect a difference between the two json files, then it will just take the mouse position. I also optimized a few things. The code for the webcam can be found here. You need to run both programs simultaneously, otherwise, it won't work as expected. The information is transfered via a json file. A file is used to save system resources; a thread puts more strain on the hardware. A constant connection with the webcam is also recommended because it takes about 5 seconds to connect to the webcam. The program should run perfectly fine on a relatively low-spec computer. Threads also aren't usable in this case because the data needs to be accesible from everywhere in the code. You could use a variable (list) to save the pieces on the board, but that would be more complicated than necessary and again, would slow down the program. https://github.com/daanvancamp/vijf_op_een_rij_beeldherkenning
+I added support for physical boards via webcam, but it can still be used perfectly fine without a webcam. That's because of a built-in if-statement that checks if the other program changes the json file. If the program doesn't detect a difference between the two json files, then it will just take the mouse position. I also optimized a few things. The code for the webcam can be found here. You need to run both programs simultaneously, otherwise, it won't work as expected. The information is transfered via a json file. A file is used to save system resources; a thread puts more strain on the hardware. A constant connection with the webcam is also recommended because it takes about 5 seconds to connect to the webcam. The program should run perfectly fine on a relatively low-spec computer. Threads also aren't usable in this case because the data needs to be accesible from everywhere in the code. You could use a variable (list) to save the pieces on the board, but that would be more complicated than necessary and again, would slow down the program. https://github.com/daanvancamp/vijf_op_een_rij_beeldherkenning The usage of the recognition feature will be controlled via a checkbox from 29/7 or 30/7.
 Make sure to clone that repository before continuing, otherwise, it won't work.
 
-I also want to mention the following: "please don't hesitate to report any bugs". There are probably many undiscovered bugs. Please check if your bug if listed below before reporting it, because then it's a known issue/bug. Feature suggestions are also more than welcome.
+I also want to mention the following: "please don't hesitate to report any bugs". There are probably many undiscovered bugs. Please check if your bug if listed below before reporting it, because then it's a known issue/bug. Feature suggestions are also more than welcome, because they can help to develop a better, versatile program.
 
 A few of the optimizations I have done and some added features:
 
@@ -20,7 +20,7 @@ july 2024:
   **Changed optimizer from Adam to SGD.**
   **Fixed a bug where the training kept repeating the exploration phase: it couldn't choose a move. Now, it is completely random after 30 tries instead of using the function "choose_action". This doesn't have a significant         impact on the training process because it happens approximately one in a 1000 times.**
   The GUI is now more modern and looks better than ever/before.
-  I also added exception handling in some functions.
+  I also added exception handling in some functions. The involved functions are now more stable.
   2 functions in filereader.py were defined twice, now they are defined just once. That's a small error of Mikko.
   **I added a function in the gomoku class to decrease the learning rate after each training round. By doing so, the model explores more specific patterns. The learning rate is multiplied by 0.9999 after each round, in other       words, the learning rate declines by 0,01% after each training round. Like Mikko described in the conclusion of his thesis : It can improve the performance of the model because the model learns more specific patterns.
   I implemented a way to overrule the model. When the opponent has 4 in a row with one open end, then he will never be able to win. When an opponent has 3 in a row with 2 open ends, the function that overrules the model will     
@@ -31,8 +31,9 @@ july 2024:
   The last move of the model is now red so it's easier to find the last move and anticipate upon it.
   Human training checkbox has now moved to a more appropriate place.
   **You can now train multiple models using this program.**
+  There's now a checkbox in the GUI so you can turn the recognition on. (The checkbox will work from 29/7 or 30/7, it is there, but it doesn't do anything as of right now.)
   
-  august:
+  august 2024:
 
   ...
   
@@ -47,8 +48,11 @@ roadmap:
 
 -We are trying to make using multiple models more stable.
 
--solving the issues mentioned above
-Note: the project is still under development. Some added features aren't stable as of right now, but overall it works better than the program of Mikki (from which I started).
+-I am further developping the feature to turn the recognition on and off.
+
+-solving the issues mentioned above, including the issue with the overruling
+
+Note: the project is still under development. Some added features aren't stable as of right now, but overall it works better than the program of Mikko (from which I started). The project will hopefully be finished in april of 2025, so you can expect the stable and complete version ultimately then, but it could be done earlier.
+
 developped by:
 daanvancamp & wimnevelsteen
-
