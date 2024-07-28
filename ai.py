@@ -187,7 +187,7 @@ class GomokuAI:
                                 break
             
                         # Controleer op dreigende situaties
-                        if  (count == 4 and open_ends >= 1) or adjacent_two == 2:
+                        if  (count == 4 and open_ends >= 0) or adjacent_two == 2:
                             winning_moves.append((row, col))
                             break  # We hoeven niet verder te zoeken voor deze cel
          if winning_moves:
@@ -259,7 +259,7 @@ class GomokuAI:
                             else:
                                 break
 
-                        if (count == 4 and open_ends >= 1): #speel niet defensief
+                        if (count == 4 and open_ends >= 0): #speel niet defensief
                             print("better offensive move found")
                             return True
                         elif (count==3 and open_ends == 2):#afhankelijk van tegenstander
@@ -299,7 +299,7 @@ class GomokuAI:
                                                 else:
                                                     break
 
-                                            if count==4 and open_ends>=1: #play defensive instead of offensive if the opponent can win
+                                            if count==4 and open_ends>=0: #play defensive instead of offensive if the opponent can win
                                                 print("opponent has 4 in a row, defensive move found")
                                                 log_info_overruling("opponent has 4 in a row, defensive move found")
                                                 return False
@@ -391,6 +391,8 @@ class GomokuAI:
                                     log_info_overruling(f"player {opponent} has 2 times 2 in a row: xx_xx")
                                 elif count == 4 and open_ends >= 1:
                                     log_info_overruling(f"player {opponent} has 4 in a row: _xxxx_")
+                                elif count == 4 and open_ends >= 0:
+                                    log_info_overruling(f"player {opponent} has 3 in a row and 1 nearby: xxx_x or x_xxx")
                                 elif three_and_one_pattern:
                                     log_info_overruling(f"player {opponent} has 3 in a row and 1 nearby: xxx_x or x_xxx")
                                 opponent_winning = True
