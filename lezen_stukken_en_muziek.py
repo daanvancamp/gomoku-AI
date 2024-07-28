@@ -126,9 +126,9 @@ def schrijf_relevante_stukken_weg(pad)->None:
                 json.dump({'stukken': relevante_stukken}, json_file)#zie lees_van_json
 
         if relevante_stukken is None:
-            raise Exception("Geen stukken van de relevante kleur gevonden")
+            print("Geen stukken van de relevante kleur gevonden")
     else:
-        raise Exception("Geen stukken van de relevante kleur gevonden")
+        print("Geen stukken van de relevante kleur gevonden")
 
 def schrijf_relevante_stukken_voor_zet_weg () :
     pad_relevante_stukken_voor_zet=r".\bord_gomoku\bord_voor_zet.json"
