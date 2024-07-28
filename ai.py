@@ -381,7 +381,7 @@ class GomokuAI:
                                 break
     
                         # Controleer op dreigende situaties
-                        if (count == 3 and open_ends == 2) or (count == 4 and open_ends >= 1) or adjacent_two == 2 or three_and_one_pattern:
+                        if (count == 3 and open_ends == 2) or (count == 4) or adjacent_two == 2 or three_and_one_pattern:
                             threat_moves.append((row, col))
                             log_info_overruling(f"player {opponent} has a threat at {row}, {col}")
                        
