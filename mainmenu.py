@@ -4,6 +4,8 @@ from time import sleep
 from tkinter import *
 from tkinter import ttk
 from tkinter import filedialog
+
+from torch import t
 import gomoku
 from ai import GomokuAI
 gomoku_ai=GomokuAI(15)#board_size
@@ -89,7 +91,8 @@ var_allow_overrule.set(True)
 state_board_path=StringVar()
 state_board_path.set(r".\specific_situation.txt")
 name_model=StringVar()
-
+model_player1=StringVar()
+model_player2=StringVar()
 def set_player_type(playerid):
     if playerid == 0:
         newtype = p1.get()
@@ -275,6 +278,13 @@ def toggle_visibility():
     print("busy")
     while True:
         sleep(0.1)#save resources
+        try:
+            current_tab = tabControl.index(tabControl.select())
+            tab_text = tabControl.tab(current_tab, "text")
+            #print(tab_text)
+        except Exception as e:
+            print(e)
+            
 
         ##TAB 1##
         if p1.get()=="DVC-AI":
@@ -318,8 +328,8 @@ radiobutton6 = ttk.Radiobutton(tab1, text="AI-Model", variable=p2, value="DVC-AI
 radiobutton6.grid(row=5, column=1, sticky="w")
 
 list_models = modelmanager_instance.get_list_models()
-CbModel1 = ttk.Combobox(tab1, state="readonly", values=list_models)
-CbModel2 = ttk.Combobox(tab1, state="readonly", values=list_models)
+CbModel1 = ttk.Combobox(tab1, state="readonly", values=list_models,textvariable=model_player1)
+CbModel2 = ttk.Combobox(tab1, state="readonly", values=list_models,textvariable=model_player2)
 
 CbModel1.grid(row=6, column=0)
 CbModel2.grid(row=6, column=1)
@@ -346,11 +356,11 @@ button_3.grid(row=1, column=0, sticky="e")
 
 ttk.Label(tab2)
 list_models = modelmanager_instance.get_list_models()
-CbModelTrain1 = ttk.Combobox(tab2, state="readonly", values=list_models)
+CbModelTrain1 = ttk.Combobox(tab2, state="readonly", values=list_models,textvariable=model_player1)
 CbModelTrain1.grid(row=0, column=0, sticky="w")
 button_2 = ttk.Button(tab2, text="Train", style="TButton", command=lambda: start_new_game(True))
 button_2.grid(row=1, column=0, sticky="w")
-train_opponent_label = ttk.Label(tab2, text="Train against:", style="TLabel")
+train_opponent_label = ttk.Label(tab2, text="Train model against:", style="TLabel")
 train_opponent_label.grid(row=2, column=0, sticky="w")
 radiobutton7 = ttk.Radiobutton(tab2, text="TestAI", variable=p2, value="AI", command=lambda: set_player_type(1),style="TRadiobutton")
 radiobutton7.grid(row=3, column=0, sticky="w")
@@ -358,7 +368,7 @@ radiobutton8 = ttk.Radiobutton(tab2, text="AI-Model", variable=p2, value="DVC-AI
 radiobutton8.grid(row=4, column=0, sticky="w")
 human_training_button=ttk.Radiobutton(tab2, text="Human", variable=p2, value="Human", command=lambda: set_player_type(1),style="TRadiobutton")
 human_training_button.grid(row=5, column=0,sticky="w")
-CbModelTrain2 = ttk.Combobox(tab2, state="readonly", values=list_models)
+CbModelTrain2 = ttk.Combobox(tab2, state="readonly", values=list_models,textvariable=model_player2)
 CbModelTrain2.grid(row=6, column=0, sticky="w")
 gamerunslabel = ttk.Label(tab2, text="Number of games: ",style="TLabel")
 gamerunslabel.grid(row=7, column=0, sticky="w")
@@ -394,7 +404,7 @@ button_6 = ttk.Button(tab4, text="...",style="TButton", command=lambda: browse_s
 button_6.grid(row=1, column=1, sticky="w")
 button_7 = ttk.Button(tab4, text="Start game", style="TButton", command=lambda: start_new_game_from_state_file())
 button_7.grid(row=3, column=0)
-CbModelload1 = ttk.Combobox(tab4, state="readonly", values=list_models)
+CbModelload1 = ttk.Combobox(tab4, state="readonly", values=list_models,textvariable=model_player2)#todo: double check if this is correct
 CbModelload1.grid(row=5, column=0, sticky="w")
 
 
@@ -411,6 +421,7 @@ nameModelLabel = ttk.Label(tab5, text="Name of model: ",style="TLabel")
 nameModelLabel.grid(row=2, column=0, sticky="w")
 nameModelEntry = ttk.Entry(tab5, textvariable=name_model,style="TEntry")
 nameModelEntry.grid(row=2, column=1, sticky="w")
+nameModelEntry.bind("<Return>",lambda event: create_new_model())#push enter to make a new model
 button_NewModel = ttk.Button(tab5, text="Make New Model", style="TButton", command=lambda: create_new_model())
 button_NewModel.grid(row=3, column=0)
 button_DeleteModel = ttk.Button(tab5, text="Delete Model", style="TButton", command=lambda: delete_model())
