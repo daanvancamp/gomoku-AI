@@ -1,2 +1,2 @@
 model_player_0:
-model_player_1:
+model_player_1:Daan

@@ -220,7 +220,7 @@ def start_new_game_from_state_file(is_training=False, moves:dict=None):
     filereader.write_model_name_to_file("models_players.txt", model_player1.get(), 0)
     filereader.write_model_name_to_file("models_players.txt", model_player2.get(), 1)
 
-    schrijf_bool_naar_tekstbestand()
+    schrijf_bool_naar_tekstbestand(var_allow_overrule)
     log_info_overruling("\n\n\nnew session begins:")
     try:
         initialiseer_spelbord_json_bestanden()
