@@ -48,8 +48,12 @@ class ModelManager(metaclass=ModelManagerMeta):
        
     def get_list_models(self):
         subfolders = [ f.path for f in os.scandir('data/models') if f.is_dir() ]
-        return subfolders
-    
+        models = []
+        for folder in subfolders:
+            # Adding an integer to the list
+            models.append(folder.split('\\')[-1])        
+        return models
+
     def delete_model(self, modelName):
         # Parent Directory path 
         parent_dir = "data/models"

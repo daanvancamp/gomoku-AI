@@ -13,13 +13,16 @@ from filereader import log_info_overruling
 import os
 # import module
 import shutil
+import modelmanager
 
 #todo: make it look nice
 #add sound effects
 
 WIDTH = 415 #origineel 230
 HEIGHT = 315 #origineel 315
+
 game_instance = gomoku.GomokuGame(filereader.create_gomoku_game("consts.json"))
+modelmanager_instance = modelmanager.ModelManager()
 
 root = Tk()
 root.geometry(str(WIDTH) + "x" + str(HEIGHT))
@@ -235,25 +238,23 @@ def start_new_game_from_state_file(is_training=False, moves:dict=None):
 
 
 def create_new_model():
-    # Directory 
-    directory = name_model.get()
-  
-    # Parent Directory path 
-    parent_dir = "data/models"
-  
-    # Path 
-    path = os.path.join(parent_dir, directory) 
-  
-    # Create the directory 
-    # 'GeeksForGeeks' in 
-    # '/home / User / Documents' 
-    os.mkdir(path) 
-    print("Directory '% s' created" % path) 
-    
-    # copy the contents of the demo.py file to  a new file called demo1.py
-    shutil.copyfile('./data/templatemodel/model.pth', path + "/model.pth")
+    modelmanager_instance.create_new_model(name_model.get())
+    refresh_models()
 
-
+def delete_model():
+    for i in Lb1.curselection():
+        modelmanager_instance.delete_model(Lb1.get(i))
+    refresh_models()
+        
+def refresh_models():
+    Lb1.delete(0,END)
+    i = 0
+    models = modelmanager_instance.get_list_models()
+    for model in models:
+        Lb1.insert(i, model)
+        i+=1
+    CbModel1.configure(values=models)
+    CbModel2.configure(values=models)
 
 def game_over():
     root.wm_state('normal')
@@ -283,53 +284,65 @@ radiobutton1 = ttk.Radiobutton(tab1, text="Human", variable=p1, value="Human", c
 radiobutton1.grid(row=3, column=0, sticky="w")
 radiobutton2 = ttk.Radiobutton(tab1, text="TestAI", variable=p1, value="AI", command=lambda: set_player_type(0),style="TRadiobutton")
 radiobutton2.grid(row=4, column=0, sticky="w")
-radiobutton3 = ttk.Radiobutton(tab1, text="DVC-AI", variable=p1, value="DVC-AI", command=lambda: set_player_type(0),style="TRadiobutton")
+radiobutton3 = ttk.Radiobutton(tab1, text="AI-Model", variable=p1, value="DVC-AI", command=lambda: set_player_type(0),style="TRadiobutton")
 radiobutton3.grid(row=5, column=0, sticky="w")
 radiobutton4 = ttk.Radiobutton(tab1, text="Human", variable=p2, value="Human", command=lambda: set_player_type(1),style="TRadiobutton")
 radiobutton4.grid(row=3, column=1, sticky="w")
 radiobutton5 = ttk.Radiobutton(tab1, text="TestAI", variable=p2, value="AI", command=lambda: set_player_type(1),style="TRadiobutton")
 radiobutton5.grid(row=4, column=1, sticky="w")
-radiobutton6 = ttk.Radiobutton(tab1, text="DVC-AI", variable=p2, value="DVC-AI", command=lambda: set_player_type(1),style="TRadiobutton")
+radiobutton6 = ttk.Radiobutton(tab1, text="AI-Model", variable=p2, value="DVC-AI", command=lambda: set_player_type(1),style="TRadiobutton")
 radiobutton6.grid(row=5, column=1, sticky="w")
 
+list_models = modelmanager_instance.get_list_models()
+CbModel1 = ttk.Combobox(tab1, state="readonly", values=list_models)
+CbModel2 = ttk.Combobox(tab1, state="readonly", values=list_models)
+
+CbModel1.grid(row=6, column=0)
+CbModel2.grid(row=6, column=1)
+
 gamerunslabel = ttk.Label(tab1, text="Number of games: ",style="TLabel")
-gamerunslabel.grid(row=6, column=0, sticky="w")
+gamerunslabel.grid(row=7, column=0, sticky="w")
 gamerunsentry = ttk.Entry(tab1, textvariable=game_runs,style="TEntry")
-gamerunsentry.grid(row=6, column=1, sticky="w")
+gamerunsentry.grid(row=7, column=1, sticky="w")
 
 delaybutton = ttk.Checkbutton(tab1, text="Use AI Delay", variable=delayvar,style="TCheckbutton")
-delaybutton.grid(row=7, column=0, sticky="w")
+delaybutton.grid(row=8, column=0, sticky="w")
 logbutton = ttk.Checkbutton(tab1, text="Create log file", variable=logvar,style="TCheckbutton") 
-logbutton.grid(row=8, column=0, sticky="w")
+logbutton.grid(row=9, column=0, sticky="w")
 replaybutton = ttk.Checkbutton(tab1, text="Save replays", variable=repvar,style="TCheckbutton") 
-replaybutton.grid(row=9, column=0, sticky="w")
+replaybutton.grid(row=10, column=0, sticky="w")
 overrule_button=ttk.Checkbutton(tab1, text="Allow overrule", variable=var_allow_overrule,style="TCheckbutton")
-overrule_button.grid(row=10, column=0, sticky="w")
+overrule_button.grid(row=11, column=0, sticky="w")
 button_3 = ttk.Button(input_canvas, text="Quit Game", style="TButton", command=lambda: quit_game())
 button_3.grid(row=1, column=0, sticky="e")
 
 
 ttk.Label(tab2)
+list_models = modelmanager_instance.get_list_models()
+CbModelTrain1 = ttk.Combobox(tab2, state="readonly", values=list_models)
+CbModelTrain1.grid(row=0, column=0, sticky="w")
 button_2 = ttk.Button(tab2, text="Train", style="TButton", command=lambda: start_new_game(True))
-button_2.grid(row=0, column=0, sticky="w")
+button_2.grid(row=1, column=0, sticky="w")
 train_opponent_label = ttk.Label(tab2, text="Train against:", style="TLabel")
-train_opponent_label.grid(row=1, column=0, sticky="w")
-radiobutton7 = ttk.Radiobutton(tab2, text="DVC-AI", variable=p2, value="DVC-AI", command=lambda: set_player_type(1),style="TRadiobutton")
-radiobutton7.grid(row=2, column=0, sticky="w")
-radiobutton8 = ttk.Radiobutton(tab2, text="TestAI", variable=p2, value="AI", command=lambda: set_player_type(1),style="TRadiobutton")
-radiobutton8.grid(row=3, column=0, sticky="w")
+train_opponent_label.grid(row=2, column=0, sticky="w")
+radiobutton7 = ttk.Radiobutton(tab2, text="TestAI", variable=p2, value="DVC-AI", command=lambda: set_player_type(1),style="TRadiobutton")
+radiobutton7.grid(row=3, column=0, sticky="w")
+radiobutton8 = ttk.Radiobutton(tab2, text="AI-Model", variable=p2, value="AI", command=lambda: set_player_type(1),style="TRadiobutton")
+radiobutton8.grid(row=4, column=0, sticky="w")
+CbModelTrain2 = ttk.Combobox(tab2, state="readonly", values=list_models)
+CbModelTrain2.grid(row=5, column=0, sticky="w")
 gamerunslabel = ttk.Label(tab2, text="Number of games: ",style="TLabel")
-gamerunslabel.grid(row=4, column=0, sticky="w")
+gamerunslabel.grid(row=6, column=0, sticky="w")
 gamerunsentry2 = ttk.Entry(tab2, textvariable=game_runs,style="TEntry")
-gamerunsentry2.grid(row=5, column=0, sticky="w")
+gamerunsentry2.grid(row=7, column=0, sticky="w")
 replaybutton2 = ttk.Checkbutton(tab2, text="Save replays", variable=repvar,style="TCheckbutton")
-replaybutton2.grid(row=6, column=0, sticky="w")
+replaybutton2.grid(row=8, column=0, sticky="w")
 overrule_button=ttk.Checkbutton(tab2, text="Allow overrule", variable=var_allow_overrule,style="TCheckbutton")
-overrule_button.grid(row=7, column=0, sticky="w")
+overrule_button.grid(row=9, column=0, sticky="w")
 human_training_button=ttk.Checkbutton(tab2, text="training against human", variable=var_human_training,style="TCheckbutton")
-human_training_button.grid(row=6, column=1,sticky="w")
+human_training_button.grid(row=10, column=1,sticky="w")
 train_description = Label(tab2, text="It is recommended to run at least 3 000 games per training session.", font=(style_numbers[0], style_numbers[1]), wraplength=WIDTH-5, justify=LEFT)#origineel width-5
-train_description.grid(row=8, column=0, sticky="w")
+train_description.grid(row=11, column=0, sticky="w")
 
 ttk.Label(tab3)
 replaylabel = ttk.Label(tab3, text="Choose the replay file: ",style="TLabel")
@@ -354,10 +367,10 @@ button_7 = ttk.Button(tab4, text="Start game", style="TButton", command=lambda: 
 button_7.grid(row=3, column=0)
 
 ttk.Label(tab5) 
-subfolders = [ f.path for f in os.scandir('data/models') if f.is_dir() ]
 Lb1 = Listbox(tab5)
-i = 0
-for model in subfolders:
+models = modelmanager_instance.get_list_models()
+i  = 0
+for model in models:
     Lb1.insert(i, model.split('\\')[-1])
     i+=1
 Lb1.grid(row=1, column=1)
@@ -368,6 +381,8 @@ nameModelEntry = ttk.Entry(tab5, textvariable=name_model,style="TEntry")
 nameModelEntry.grid(row=2, column=1, sticky="w")
 button_NewModel = ttk.Button(tab5, text="Make New Model", style="TButton", command=lambda: create_new_model())
 button_NewModel.grid(row=3, column=0)
+button_DeleteModel = ttk.Button(tab5, text="Delete Model", style="TButton", command=lambda: delete_model())
+button_DeleteModel.grid(row=3, column=1)
 
 def mainmenu_run():
     root.mainloop()
