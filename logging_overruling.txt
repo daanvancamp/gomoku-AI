@@ -36313,3 +36313,57 @@ new run of the code begins:
 
 new session begins:
 run 1 begins:
+
+
+
+
+
+
+date and time: 2024-07-28T10:19:17.425091
+
+new run of the code begins:
+
+
+
+
+
+
+date and time: 2024-07-28T10:20:46.553098
+
+new run of the code begins:
+
+
+
+
+
+
+date and time: 2024-07-28T10:25:08.968142
+
+new run of the code begins:
+
+
+
+
+
+
+date and time: 2024-07-28T10:32:12.813358
+
+new run of the code begins:
+
+
+
+
+
+
+date and time: 2024-07-28T10:33:06.686868
+
+new run of the code begins:
+
+
+
+
+
+
+date and time: 2024-07-28T10:35:54.587624
+
+new run of the code begins:

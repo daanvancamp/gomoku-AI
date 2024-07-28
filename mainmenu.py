@@ -1,4 +1,5 @@
 import sys
+from threading import Thread
 from tkinter import *
 from tkinter import ttk
 from tkinter import filedialog
@@ -272,6 +273,15 @@ style2.configure("TCheckbutton", font=(style_numbers[0], style_numbers[1]),fg="w
 
 ### TABS ###
 ttk.Label(tab1)
+def toggle_visibility():
+    print("busy")
+    while True:
+        if p1.get()=="DVC-AI":
+            CbModel1.grid(row=6,column=0)
+
+        else:
+            CbModel1.grid_remove()
+
 button_1 = ttk.Button(tab1, text="New Game", command=lambda: start_new_game(False), style="TButton")
 button_1.grid(row=0, column=0, sticky="w")
 player1typelabel = ttk.Label(tab1,style="TLabel", text="Player 1")
@@ -298,6 +308,9 @@ CbModel2 = ttk.Combobox(tab1, state="readonly", values=list_models)
 
 CbModel1.grid(row=6, column=0)
 CbModel2.grid(row=6, column=1)
+
+#Thread_visibility=Thread(target=toggle_visibility())
+#Thread_visibility.start()
 
 gamerunslabel = ttk.Label(tab1, text="Number of games: ",style="TLabel")
 gamerunslabel.grid(row=7, column=0, sticky="w")
@@ -356,6 +369,7 @@ button_5 = ttk.Button(tab3, text="Play", style="TButton", command=lambda: replay
 button_5.grid(row=3, column=0)
 
 ttk.Label(tab4)
+
 label_load_state=ttk.Label(tab4, text="Choose file board state: ",style="TLabel")
 label_load_state.grid(row=0, column=0, sticky="w")
 load_state_entry = ttk.Entry(tab4, textvariable=state_board_path, width=30,style="TEntry")
@@ -364,6 +378,9 @@ button_6 = ttk.Button(tab4, text="...",style="TButton", command=lambda: browse_s
 button_6.grid(row=1, column=1, sticky="w")
 button_7 = ttk.Button(tab4, text="Start game", style="TButton", command=lambda: start_new_game_from_state_file())
 button_7.grid(row=3, column=0)
+CbModelload1 = ttk.Combobox(tab4, state="readonly", values=list_models)
+CbModelload1.grid(row=5, column=0, sticky="w")
+
 
 ttk.Label(tab5) 
 Lb1 = Listbox(tab5)

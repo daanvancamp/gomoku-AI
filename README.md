@@ -36,7 +36,7 @@ There's a known issue/weakness. Like you see on the image. It's the turn of Blac
 Another known issue is that the 'human training' checkbox isn't fully showed in the GUI.
 
 roadmap:
--adding support for multiple models so you can choose which model you want to use before you play
+-adding support for multiple models so you can choose which model you want to use before you play or load a situation
 -solving the issues mentioned above
 Note: the project is still under development. Some added features aren't stable as of right now, but overall it works better than the program of Mikki (from which I started).
 developped by:
