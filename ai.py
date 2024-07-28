@@ -385,7 +385,7 @@ class GomokuAI:
                             threat_moves.append((row, col))
                             log_info_overruling(f"player {opponent} has a threat at {row}, {col}")
                        
-                            if adjacent_two == 2 or (count == 4 and open_ends >= 1) or three_and_one_pattern:
+                            if adjacent_two == 2 or (count == 4) or three_and_one_pattern:
                                 log_info_overruling(f"player {opponent} has a winning threat at {row}, {col}")
                                 if adjacent_two == 2:
                                     log_info_overruling(f"player {opponent} has 2 times 2 in a row: xx_xx")
