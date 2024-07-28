@@ -141,6 +141,12 @@ class GomokuAI:
         self.optimizer.step()
         self.optimizer.zero_grad(set_to_none=False)
     
+    def remove_unvalid_moves(self,threat_moves,valid_moves):
+        for move in threat_moves:
+            if move not in valid_moves:
+                threat_moves.remove(move)#remove unvalid moves
+        return threat_moves
+
     def can_win_in_one_move(self, board, current_player,valid_moves)->list:
 
          log_info_overruling("function can_win_in_one_move called")
@@ -408,6 +414,7 @@ class GomokuAI:
             log_info_overruling("status: an overruled move is executed by the AI")
             log_info_overruling("allow_overrule: " + str(allow_overrule))
             log_info_overruling("opponent_winning: " + str(opponent_winning))
+            threat_moves=self.remove_unvalid_moves(threat_moves, valid_moves)
             return threat_moves
         else:
             print("a normal move is executed by the AI if it can't win in one move")
