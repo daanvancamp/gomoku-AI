@@ -14,7 +14,6 @@ from PIL import Image, ImageTk
 from lezen_stukken_en_muziek import TE_DETECTEREN_KLEUR, initialiseer_spelbord_json_bestanden
 from filereader import log_info_overruling
 import os
-# import module
 import shutil
 import modelmanager
 

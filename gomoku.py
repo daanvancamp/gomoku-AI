@@ -413,7 +413,7 @@ def run(instance, game_number, train, record_replay=False, moves:dict=None,playe
 
                             antwoord=input("Klopt deze zet? (ja/nee) :",x,y)#todo: haal op termijn weg, wanneer de code betrouwbaar genoeg is.
                             #=debugging
-                            if antwoord=="ja":
+                            if antwoord.strip().lower()=="ja":
                                 pass
                             else:
                                 raise Exception("Als u het denkt, waarde wordt op de normale manier ingesteld.")
@@ -454,7 +454,7 @@ def run(instance, game_number, train, record_replay=False, moves:dict=None,playe
                         cell_size = instance.CELL_SIZE
                         pygame.draw.circle(instance.screen, HOVER_COLOR, (col * cell_size + cell_size // 2, row * cell_size + cell_size // 2), cell_size // 2 - 5)
                         pygame.display.flip()
-                        sleep(0.15)
+                        sleep(0.05)
 
             # TestAI move
             elif players[current_player-1].TYPE == "AI" and not testai.check_game_over(instance):
