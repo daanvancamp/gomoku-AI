@@ -5,7 +5,6 @@ from tkinter import *
 from tkinter import ttk
 from tkinter import filedialog
 
-from torch import t
 import gomoku
 from ai import GomokuAI
 gomoku_ai=GomokuAI(15)#board_size
@@ -161,6 +160,7 @@ def start_new_game(is_training=False, moves:dict=None):
         raise Exception("Fout in functie: initialiseer_spelbord_json_bestanden")
     try:
         if is_training:
+            print("training mode")
             p1.set("DVC-AI")
             set_player_type(0)
         else:
@@ -192,9 +192,20 @@ def start_new_game(is_training=False, moves:dict=None):
             except Exception as e:
                 print("error in gomoku.run, herschrijf die functie.")
                 raise Exception("De error is waarschijnlijk te wijten aan een foute zet, controleer het lezen van de json bestanden die het bord opslaan." , str(e))
+            print("voor if")
             if is_training:
+                for i in range(10):
+                    print("training round done...")
                 gomoku_ai.decrease_learning_rate()#todo: calculate decrease rate based on number of training rounds
-
+                print("players:",p1,p2)
+                if p1.get() == "DVC-AI":
+                    modelmanager_instance.log_number_of_training_loops(model_player1.get(), 1)#add one to the number of training loops
+                elif p2.get() == "DVC-AI":
+                    modelmanager_instance.log_number_of_training_loops(model_player2.get(), 1)#add one to the number of training loops
+                    
+                else:
+                    pass
+                    
     except ValueError:
         print("Most likely: Game runs value invalid, try again.")
     
