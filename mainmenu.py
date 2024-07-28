@@ -91,6 +91,8 @@ state_board_path.set(r".\specific_situation.txt")
 name_model=StringVar()
 model_player1=StringVar()
 model_player2=StringVar()
+use_recognition=BooleanVar()
+use_recognition.set(False)
 def set_player_type(playerid):
     if playerid == 0:
         newtype = p1.get()
@@ -137,20 +139,21 @@ def load_board_from_file():
                 board[row][col]=int(line[col])
     return board
 
-def schrijf_bool_naar_tekstbestand():
-    with open("bool_overrule.txt", "w") as f:
-        f.write(str(var_allow_overrule.get()))
-        if var_allow_overrule.get():
-            print("overruling of the model is turned on")
-        else:
-            print("overruling of the model is turned off")
+def schrijf_bool_naar_tekstbestand(boolean):
+    pad=r".\bool_overrule_and_recognition.txt"
+    with open(pad, "a") as f:
+        f.write(str(boolean.get())+"\n")
+    print(boolean.get())
 
 def start_new_game(is_training=False, moves:dict=None):
     filereader.empty_file("models_players.txt")
     filereader.write_model_name_to_file("models_players.txt", model_player1.get(), 0)
     filereader.write_model_name_to_file("models_players.txt", model_player2.get(), 1)
 
-    schrijf_bool_naar_tekstbestand()
+    with open(r".\bool_overrule_and_recognition.txt", "w") as f:
+        f.write("")
+    schrijf_bool_naar_tekstbestand(var_allow_overrule)
+    schrijf_bool_naar_tekstbestand(use_recognition)
     log_info_overruling("\n\n\nnew session begins:")
 
     try:
@@ -293,9 +296,8 @@ style2.configure("TCheckbutton", font=(style_numbers[0], style_numbers[1]),fg="w
 ttk.Label(tab1)
 
 def toggle_visibility():
-    print("busy")
     while True:
-        sleep(0.1)#save resources
+        sleep(0.1)#save resources, you can delete this if you have a high-performance computer
         try:
             current_tab = tabControl.index(tabControl.select())
             tab_text = tabControl.tab(current_tab, "text")
@@ -368,6 +370,8 @@ replaybutton = ttk.Checkbutton(tab1, text="Save replays", variable=repvar,style=
 replaybutton.grid(row=10, column=0, sticky="w")
 overrule_button=ttk.Checkbutton(tab1, text="Allow overrule", variable=var_allow_overrule,style="TCheckbutton")
 overrule_button.grid(row=11, column=0, sticky="w")
+recognition_button=ttk.Checkbutton(tab1, text="use recognition*", variable=use_recognition,style="TCheckbutton")
+recognition_button.grid(row=12, column=0, sticky="w")
 button_3 = ttk.Button(input_canvas, text="Quit Game", style="TButton", command=lambda: quit_game())
 button_3.grid(row=1, column=0, sticky="e")
 

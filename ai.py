@@ -198,7 +198,7 @@ class GomokuAI:
             log_info_overruling("no winning moves found, the model will fully choose a move on its own out of all possible moves:")
             return valid_moves
     def determine_bool_allow_overrule(self):
-        file_name = 'bool_overrule.txt'#same directory as this file
+        file_name = 'bool_overrule_and_recognition.txt'#same directory as this file
         with open(file_name, 'r') as file:
             line = file.readline()
 
