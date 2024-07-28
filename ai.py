@@ -198,7 +198,7 @@ class GomokuAI:
             log_info_overruling("no winning moves found, the model will fully choose a move on its own out of all possible moves:")
             return valid_moves
     def determine_bool_allow_overrule(self):
-        file_name = 'bool_overrule_and_recognition.txt'#same directory as this file
+        file_name = 'bool_overrule.txt'#same directory as this file
         with open(file_name, 'r') as file:
             line = file.readline()
 
@@ -381,11 +381,11 @@ class GomokuAI:
                                 break
     
                         # Controleer op dreigende situaties
-                        if (count == 3 and open_ends == 2) or (count == 4 and open_ends >= 0) or adjacent_two == 2 or three_and_one_pattern:
+                        if (count == 3 and open_ends == 2) or (count == 4) or adjacent_two == 2 or three_and_one_pattern:
                             threat_moves.append((row, col))
                             log_info_overruling(f"player {opponent} has a threat at {row}, {col}")
                        
-                            if adjacent_two == 2 or (count == 4 and open_ends >= 0) or three_and_one_pattern:
+                            if adjacent_two == 2 or (count == 4) or three_and_one_pattern:
                                 log_info_overruling(f"player {opponent} has a winning threat at {row}, {col}")
                                 if adjacent_two == 2:
                                     log_info_overruling(f"player {opponent} has 2 times 2 in a row: xx_xx")

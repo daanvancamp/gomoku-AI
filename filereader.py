@@ -2,14 +2,7 @@ import json
 import datetime
 import os
 
-def determine_value_use_recognition():
-    with open("bool_overrule_and_recognition.txt", "r") as file:
-        file.readline()#skip one line
-        line2=file.readline().strip()
-        if line2=="True":
-            return True
-        else:
-            return False
+
 def empty_file(filename):
     with open(filename, 'w') as file:
         file.write("")
