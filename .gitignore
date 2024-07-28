@@ -23,3 +23,4 @@ logs/
 /.vs/gomoku-thesis-proj/config/applicationhost.config
 /.vs/gomoku-thesis-proj/v17/Preview/Solution.VC.db
 .vs/
+._pycache_/
