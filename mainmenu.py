@@ -274,17 +274,32 @@ style2.configure("TCheckbutton", font=(style_numbers[0], style_numbers[1]),fg="w
 
 ### TABS ###
 ttk.Label(tab1)
+
 def toggle_visibility():
     print("busy")
     while True:
-        sleep(0.2)#save resources
+        sleep(0.1)#save resources
+
+        ##TAB 1##
         if p1.get()=="DVC-AI":
             CbModel1.grid(row=6,column=0)
 
         else:
             CbModel1.grid_remove()
         if p2.get()=="DVC-AI":
-            pass
+            CbModel2.grid(row=6,column=1)
+        else:
+            CbModel2.grid_remove()
+
+        ##tab 2##
+        if p2.get()=="DVC-AI":
+            CbModelTrain2.grid(row=5, column=0, sticky="w")
+        else:
+            CbModelTrain2.grid_remove()
+
+        ##tab 4##
+        #todo:finish this
+
 
 button_1 = ttk.Button(tab1, text="New Game", command=lambda: start_new_game(False), style="TButton")
 button_1.grid(row=0, column=0, sticky="w")
@@ -341,9 +356,9 @@ button_2 = ttk.Button(tab2, text="Train", style="TButton", command=lambda: start
 button_2.grid(row=1, column=0, sticky="w")
 train_opponent_label = ttk.Label(tab2, text="Train against:", style="TLabel")
 train_opponent_label.grid(row=2, column=0, sticky="w")
-radiobutton7 = ttk.Radiobutton(tab2, text="TestAI", variable=p2, value="DVC-AI", command=lambda: set_player_type(1),style="TRadiobutton")
+radiobutton7 = ttk.Radiobutton(tab2, text="TestAI", variable=p2, value="AI", command=lambda: set_player_type(1),style="TRadiobutton")
 radiobutton7.grid(row=3, column=0, sticky="w")
-radiobutton8 = ttk.Radiobutton(tab2, text="AI-Model", variable=p2, value="AI", command=lambda: set_player_type(1),style="TRadiobutton")
+radiobutton8 = ttk.Radiobutton(tab2, text="AI-Model", variable=p2, value="DVC-AI", command=lambda: set_player_type(1),style="TRadiobutton")
 radiobutton8.grid(row=4, column=0, sticky="w")
 CbModelTrain2 = ttk.Combobox(tab2, state="readonly", values=list_models)
 CbModelTrain2.grid(row=5, column=0, sticky="w")
