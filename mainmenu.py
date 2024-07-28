@@ -194,7 +194,12 @@ def start_new_game(is_training=False, moves:dict=None):
                 raise Exception("De error is waarschijnlijk te wijten aan een foute zet, controleer het lezen van de json bestanden die het bord opslaan." , str(e))
             if is_training:
                 gomoku_ai.decrease_learning_rate()#todo: calculate decrease rate based on number of training rounds
-
+                if p1.get() == "DVC-AI":
+                    modelmanager_instance.log_number_of_training_loops(model_player1.get(), 1)#add one to the number of training loops
+                elif p2.get() == "DVC-AI":
+                    modelmanager_instance.log_number_of_training_loops(model_player2.get(), 1)#add one to the number of training loops
+                else:
+                    pass
     except ValueError:
         print("Most likely: Game runs value invalid, try again.")
     

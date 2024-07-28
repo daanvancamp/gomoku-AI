@@ -23,6 +23,14 @@ class ModelManagerMeta(type):
 
 
 class ModelManager(metaclass=ModelManagerMeta):
+    def log_number_of_training_loops(self, modelname,number_of_additonal_training_loops):
+        print("log tr loops...")
+        with open("data/models/" + modelname + "/modelconfig.json", "r") as file:
+            data = json.load(file)
+            data["training loops:"] += number_of_additonal_training_loops
+            with open("data/models/" + modelname + "/modelconfig.json", "w") as file:
+                json.dump(data, file, sort_keys = True, indent = 4, ensure_ascii = False)
+
     def create_new_model(self, modelName):
         # Directory 
         directory = modelName
@@ -43,9 +51,9 @@ class ModelManager(metaclass=ModelManagerMeta):
         # copy the contents of the demo.py file to  a new file called demo1.py
         shutil.copyfile('./data/templatemodel/model.pth', path + "/model.pth")
         
-        json_data = {'parameter': 10}
+        json_data = {'training loops:': 0}
 
-        with open(path + "/modelconfig.txt", 'w') as out_file:
+        with open(path + "/modelconfig.json", 'w') as out_file:
             json.dump(json_data, out_file, sort_keys = True, indent = 4, ensure_ascii = False)
        
     def get_list_models(self):
