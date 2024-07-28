@@ -2,6 +2,17 @@ import json
 import datetime
 import os
 
+
+def empty_file(filename):
+    with open(filename, 'w') as file:
+        file.write("")
+def write_model_name_to_file(filename, model_name,player):
+    with open(filename, 'a') as file:
+        file.write("model_player_" + str(player)+": " + model_name+".pth\n")
+def read_model_name(filename,line):
+    with open(filename, 'r') as file:
+        data = file.readlines()
+        return data[line].split(":")[1]
 def log_info_overruling(message):
     with open("logging_overruling.txt", "a") as file:
         file.write(message+"\n")

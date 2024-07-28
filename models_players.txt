@@ -1,0 +1,2 @@
+model_player_0: Daan.pth
+model_player_1: kobe.pth
