@@ -148,6 +148,10 @@ def schrijf_bool_naar_tekstbestand():
             print("overruling of the model is turned off")
 
 def start_new_game(is_training=False, moves:dict=None):
+    filereader.empty_file("models_players.txt")
+    filereader.write_model_name_to_file("models_players.txt", model_player1.get(), 0)
+    filereader.write_model_name_to_file("models_players.txt", model_player2.get(), 1)
+
     schrijf_bool_naar_tekstbestand()
     log_info_overruling("\n\n\nnew session begins:")
 
@@ -199,6 +203,10 @@ def start_new_game(is_training=False, moves:dict=None):
 
 def start_new_game_from_state_file(is_training=False, moves:dict=None):
     global game_instance
+    filereader.empty_file("models_players.txt")
+    filereader.write_model_name_to_file("models_players.txt", model_player1.get(), 0)
+    filereader.write_model_name_to_file("models_players.txt", model_player2.get(), 1)
+
     schrijf_bool_naar_tekstbestand()
     log_info_overruling("\n\n\nnew session begins:")
     try:

@@ -46,9 +46,10 @@ class ConvNet(nn.Module):
         out = F.relu(self.layer3(out))
         return out
 
-    def load_model(self, file_name='model.pth'):
-        model_folder = './data/'
+    def load_model(self, folder,file_name='model.pth'):
+        model_folder = './data/models/'+folder.split("\n")[0]
         full_path = os.path.join(model_folder, file_name)
+        print(full_path)
         if os.path.isfile(full_path):
             print("A model already exists, loading model...")
             print("Wanneer je het model traint, wordt het model bijgewerkt.")
@@ -56,8 +57,9 @@ class ConvNet(nn.Module):
         else:
             print("No model exists. Creating a new model.")
 
-    def save_model(self, file_name='model.pth'):
-        model_folder = './data/'
+    def save_model(self, folder,file_name='model.pth'):
+        model_folder = './data/models/'+folder.split("\n")[0]
+        file_name=file_name.split("\n")[0]#remove \n from filename
         if not os.path.exists(model_folder):
             os.makedirs(model_folder)
         full_path = os.path.join(model_folder, file_name)

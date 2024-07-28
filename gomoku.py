@@ -347,7 +347,11 @@ def run(instance, game_number, train, record_replay=False, moves:dict=None,playe
     global window_name, victory_text, current_player
     for p in players: #players=[Human, AI]
         if p.TYPE == "DVC-AI":
-            p.ai.model.load_model()
+            if p==player1:
+                p.ai.model.load_model(filereader.read_model_name("models_players.txt",0))
+            else:
+                p.ai.model.load_model(filereader.read_model_name("models_players.txt",1))
+
             p.ai.train = train
     # Initialize Pygame
     if player_first_move is not None:
@@ -550,7 +554,14 @@ def run(instance, game_number, train, record_replay=False, moves:dict=None,playe
             p.score_loss.append(p.ai.loss)
             move_loss = [float(val) for val in p.move_loss]
             p.final_move_loss.append(sum(move_loss)/len(move_loss))
-            p.ai.model.save_model()#model saves after each round
+
+            pad=r"models_players.txt"
+            if p==player1:
+                print("model saving")
+                p.ai.model.save_model(filereader.read_model_name(pad,0)) #only saves after each round
+            else:
+                p.ai.model.save_model(filereader.read_model_name(pad,1)) #only saves after each round
+                #todo:finish this
             p.final_move_scores.append(sum(p.weighed_moves)/len(p.weighed_moves))
             stats.log_message(f"{p.TYPE} {p.ID}: score loss: {float(p.ai.loss)}")
             stats.log_message(f"{p.TYPE} {p.ID}: move loss: {sum(p.move_loss)/len(p.move_loss)}")
