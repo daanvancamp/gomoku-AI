@@ -39825,3 +39825,2538 @@ new run of the code begins:
 date and time: 2024-07-28T13:33:58.269244
 
 new run of the code begins:
+
+
+
+
+
+
+date and time: 2024-07-28T13:35:13.376030
+
+new run of the code begins:
+
+
+
+
+
+
+date and time: 2024-07-28T13:40:17.722280
+
+new run of the code begins:
+
+
+
+
+
+
+date and time: 2024-07-28T13:41:56.544052
+
+new run of the code begins:
+
+
+
+
+
+
+date and time: 2024-07-28T13:42:51.742464
+
+new run of the code begins:
+
+
+
+
+
+
+date and time: 2024-07-28T13:45:28.869404
+
+new run of the code begins:
+
+
+
+new session begins:
+run 1 begins:
+
+
+function get_valid_moves called
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+status: a normal move is executed by the AI if it can't win in one move
+allow_overrule: True
+opponent_winning: False
+function can_win_in_one_move called
+no winning moves found, the model will fully choose a move on its own out of all possible moves:
+
+
+function get_valid_moves called
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+status: a normal move is executed by the AI if it can't win in one move
+allow_overrule: True
+opponent_winning: False
+function can_win_in_one_move called
+no winning moves found, the model will fully choose a move on its own out of all possible moves:
+
+
+function get_valid_moves called
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 2, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+status: a normal move is executed by the AI if it can't win in one move
+allow_overrule: True
+opponent_winning: False
+function can_win_in_one_move called
+no winning moves found, the model will fully choose a move on its own out of all possible moves:
+
+
+function get_valid_moves called
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 2, 1, 1, 1, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+status: a normal move is executed by the AI if it can't win in one move
+allow_overrule: True
+opponent_winning: False
+function can_win_in_one_move called
+no winning moves found, the model will fully choose a move on its own out of all possible moves:
+
+
+function get_valid_moves called
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 2, 1, 1, 1, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+status: a normal move is executed by the AI if it can't win in one move
+allow_overrule: True
+opponent_winning: False
+function can_win_in_one_move called
+no winning moves found, the model will fully choose a move on its own out of all possible moves:
+
+
+function get_valid_moves called
+player 1 has a threat at 6, 3
+player 1 has a threat at 10, 3
+function check_own_chances called
+No good offensive move found, maybe a defensive move instead
+overruled: [(6, 3), (10, 3)]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 2, 1, 1, 1, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+status: an overruled move is executed by the AI
+allow_overrule: True
+opponent_winning: False
+
+
+function get_valid_moves called
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 2, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 2, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 2, 1, 1, 1, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+status: a normal move is executed by the AI if it can't win in one move
+allow_overrule: True
+opponent_winning: False
+function can_win_in_one_move called
+no winning moves found, the model will fully choose a move on its own out of all possible moves:
+
+
+function get_valid_moves called
+player 1 has a threat at 6, 5
+player 1 has a threat at 9, 1
+player 1 has a threat at 9, 5
+player 1 has a threat at 10, 1
+function check_own_chances called
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 2, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 2, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 2, 1, 1, 1, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+status: a normal move is executed by the AI if it can't win in one move
+allow_overrule: True
+opponent_winning: False
+function can_win_in_one_move called
+the model will be overruled because of a possible winning move
+winning moves: [(4, 5)]
+
+
+
+
+
+
+date and time: 2024-07-28T13:58:26.488181
+
+new run of the code begins:
+
+
+
+
+
+
+date and time: 2024-07-28T14:00:38.705564
+
+new run of the code begins:
+
+
+
+
+
+
+date and time: 2024-07-28T14:04:57.669169
+
+new run of the code begins:
+
+
+
+
+
+
+date and time: 2024-07-28T14:09:44.509565
+
+new run of the code begins:
+
+
+
+
+
+
+date and time: 2024-07-28T14:10:33.760313
+
+new run of the code begins:
+
+
+
+
+
+
+date and time: 2024-07-28T14:10:59.617718
+
+new run of the code begins:
+
+
+
+
+
+
+date and time: 2024-07-28T14:11:46.795049
+
+new run of the code begins:
+
+
+
+
+
+
+date and time: 2024-07-28T14:12:54.284077
+
+new run of the code begins:
+
+
+
+
+
+
+date and time: 2024-07-28T14:13:56.703890
+
+new run of the code begins:
+
+
+
+
+
+
+date and time: 2024-07-28T14:15:34.828577
+
+new run of the code begins:
+
+
+
+
+
+
+date and time: 2024-07-28T14:16:11.168426
+
+new run of the code begins:
+
+
+
+
+
+
+date and time: 2024-07-28T14:17:38.911622
+
+new run of the code begins:
+
+
+
+
+
+
+date and time: 2024-07-28T14:22:09.515682
+
+new run of the code begins:
+
+
+
+new session begins:
+run 1 begins:
+
+
+function get_valid_moves called
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+status: a normal move is executed by the AI if it can't win in one move
+allow_overrule: True
+opponent_winning: False
+function can_win_in_one_move called
+no winning moves found, the model will fully choose a move on its own out of all possible moves:
+
+
+function get_valid_moves called
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+status: a normal move is executed by the AI if it can't win in one move
+allow_overrule: True
+opponent_winning: False
+function can_win_in_one_move called
+no winning moves found, the model will fully choose a move on its own out of all possible moves:
+
+
+function get_valid_moves called
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+status: a normal move is executed by the AI if it can't win in one move
+allow_overrule: True
+opponent_winning: False
+function can_win_in_one_move called
+no winning moves found, the model will fully choose a move on its own out of all possible moves:
+
+
+function get_valid_moves called
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+status: a normal move is executed by the AI if it can't win in one move
+allow_overrule: True
+opponent_winning: False
+function can_win_in_one_move called
+no winning moves found, the model will fully choose a move on its own out of all possible moves:
+
+
+function get_valid_moves called
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0]
+[0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+status: a normal move is executed by the AI if it can't win in one move
+allow_overrule: True
+opponent_winning: False
+function can_win_in_one_move called
+no winning moves found, the model will fully choose a move on its own out of all possible moves:
+
+
+function get_valid_moves called
+player 1 has a threat at 7, 5
+player 1 has a threat at 11, 1
+function check_own_chances called
+No good offensive move found, maybe a defensive move instead
+overruled: [(7, 5), (11, 1)]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0]
+[0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+status: an overruled move is executed by the AI
+allow_overrule: True
+opponent_winning: False
+
+
+function get_valid_moves called
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0]
+[0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+status: a normal move is executed by the AI if it can't win in one move
+allow_overrule: True
+opponent_winning: False
+function can_win_in_one_move called
+no winning moves found, the model will fully choose a move on its own out of all possible moves:
+
+
+function get_valid_moves called
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0]
+[0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+status: a normal move is executed by the AI if it can't win in one move
+allow_overrule: True
+opponent_winning: False
+function can_win_in_one_move called
+no winning moves found, the model will fully choose a move on its own out of all possible moves:
+
+
+function get_valid_moves called
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0]
+[0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+status: a normal move is executed by the AI if it can't win in one move
+allow_overrule: True
+opponent_winning: False
+function can_win_in_one_move called
+no winning moves found, the model will fully choose a move on its own out of all possible moves:
+
+
+function get_valid_moves called
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0]
+[0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+status: a normal move is executed by the AI if it can't win in one move
+allow_overrule: True
+opponent_winning: False
+function can_win_in_one_move called
+no winning moves found, the model will fully choose a move on its own out of all possible moves:
+
+
+function get_valid_moves called
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0]
+[0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+status: a normal move is executed by the AI if it can't win in one move
+allow_overrule: True
+opponent_winning: False
+function can_win_in_one_move called
+no winning moves found, the model will fully choose a move on its own out of all possible moves:
+
+
+function get_valid_moves called
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0]
+[0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+status: a normal move is executed by the AI if it can't win in one move
+allow_overrule: True
+opponent_winning: False
+function can_win_in_one_move called
+no winning moves found, the model will fully choose a move on its own out of all possible moves:
+
+
+function get_valid_moves called
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0]
+[0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+status: a normal move is executed by the AI if it can't win in one move
+allow_overrule: True
+opponent_winning: False
+function can_win_in_one_move called
+no winning moves found, the model will fully choose a move on its own out of all possible moves:
+
+
+function get_valid_moves called
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0]
+[0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 1, 2, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+status: a normal move is executed by the AI if it can't win in one move
+allow_overrule: True
+opponent_winning: False
+function can_win_in_one_move called
+no winning moves found, the model will fully choose a move on its own out of all possible moves:
+
+
+function get_valid_moves called
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 2, 0, 0, 0]
+[0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 1, 2, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+status: a normal move is executed by the AI if it can't win in one move
+allow_overrule: True
+opponent_winning: False
+function can_win_in_one_move called
+no winning moves found, the model will fully choose a move on its own out of all possible moves:
+
+
+function get_valid_moves called
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 2, 0, 0, 0]
+[0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 1, 2, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1]
+status: a normal move is executed by the AI if it can't win in one move
+allow_overrule: True
+opponent_winning: False
+function can_win_in_one_move called
+no winning moves found, the model will fully choose a move on its own out of all possible moves:
+
+
+function get_valid_moves called
+player 2 has a threat at 0, 8
+player 2 has a threat at 0, 12
+function check_own_chances called
+No good offensive move found, maybe a defensive move instead
+overruled: [(0, 8), (0, 12)]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 0, 0, 0]
+[0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 1, 2, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1]
+status: an overruled move is executed by the AI
+allow_overrule: True
+opponent_winning: False
+
+
+function get_valid_moves called
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 1, 0, 0]
+[0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 1, 2, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1]
+status: a normal move is executed by the AI if it can't win in one move
+allow_overrule: True
+opponent_winning: False
+function can_win_in_one_move called
+no winning moves found, the model will fully choose a move on its own out of all possible moves:
+
+
+function get_valid_moves called
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 1, 0, 0]
+[0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 1, 2, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1]
+status: a normal move is executed by the AI if it can't win in one move
+allow_overrule: True
+opponent_winning: False
+function can_win_in_one_move called
+no winning moves found, the model will fully choose a move on its own out of all possible moves:
+
+
+function get_valid_moves called
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 1, 0, 0]
+[0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 1, 2, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1]
+status: a normal move is executed by the AI if it can't win in one move
+allow_overrule: True
+opponent_winning: False
+function can_win_in_one_move called
+no winning moves found, the model will fully choose a move on its own out of all possible moves:
+
+
+function get_valid_moves called
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 1, 0, 0]
+[0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 1, 2, 2, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1]
+status: a normal move is executed by the AI if it can't win in one move
+allow_overrule: True
+opponent_winning: False
+function can_win_in_one_move called
+no winning moves found, the model will fully choose a move on its own out of all possible moves:
+
+
+function get_valid_moves called
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 1, 0, 0]
+[0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 1, 2, 2, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 1, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1]
+status: a normal move is executed by the AI if it can't win in one move
+allow_overrule: True
+opponent_winning: False
+function can_win_in_one_move called
+no winning moves found, the model will fully choose a move on its own out of all possible moves:
+
+
+function get_valid_moves called
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 1, 0, 0]
+[0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 1, 2, 2, 2, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 1, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1]
+status: a normal move is executed by the AI if it can't win in one move
+allow_overrule: True
+opponent_winning: False
+function can_win_in_one_move called
+no winning moves found, the model will fully choose a move on its own out of all possible moves:
+
+
+function get_valid_moves called
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 1, 0, 0]
+[0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 1, 2, 2, 2, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 1, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1]
+status: a normal move is executed by the AI if it can't win in one move
+allow_overrule: True
+opponent_winning: False
+function can_win_in_one_move called
+no winning moves found, the model will fully choose a move on its own out of all possible moves:
+
+
+function get_valid_moves called
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 1, 0, 0]
+[0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 1, 2, 2, 2, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 1, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1]
+status: a normal move is executed by the AI if it can't win in one move
+allow_overrule: True
+opponent_winning: False
+function can_win_in_one_move called
+no winning moves found, the model will fully choose a move on its own out of all possible moves:
+
+
+function get_valid_moves called
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 1, 0, 0]
+[0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 1, 2, 2, 2, 1]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 1, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1]
+status: a normal move is executed by the AI if it can't win in one move
+allow_overrule: True
+opponent_winning: False
+function can_win_in_one_move called
+no winning moves found, the model will fully choose a move on its own out of all possible moves:
+
+
+function get_valid_moves called
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 1, 0, 0]
+[0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 1, 2, 2, 2, 1]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 1, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 1, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1]
+status: a normal move is executed by the AI if it can't win in one move
+allow_overrule: True
+opponent_winning: False
+function can_win_in_one_move called
+no winning moves found, the model will fully choose a move on its own out of all possible moves:
+
+
+function get_valid_moves called
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 1, 0, 0]
+[0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 1, 2, 2, 2, 1]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 1, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 1, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1]
+status: a normal move is executed by the AI if it can't win in one move
+allow_overrule: True
+opponent_winning: False
+function can_win_in_one_move called
+no winning moves found, the model will fully choose a move on its own out of all possible moves:
+
+
+function get_valid_moves called
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 1, 0, 0]
+[0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 1, 2, 2, 2, 1]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 1, 2]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 1, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1]
+status: a normal move is executed by the AI if it can't win in one move
+allow_overrule: True
+opponent_winning: False
+function can_win_in_one_move called
+no winning moves found, the model will fully choose a move on its own out of all possible moves:
+
+
+function get_valid_moves called
+player 1 has a threat at 2, 10
+function check_own_chances called
+No good offensive move found, maybe a defensive move instead
+overruled: [(2, 10)]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 1, 0, 0]
+[0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 1, 2, 2, 2, 1]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 1, 2]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 1, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1]
+status: an overruled move is executed by the AI
+allow_overrule: True
+opponent_winning: False
+
+
+function get_valid_moves called
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 1, 0, 0]
+[0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 1, 2, 2, 2, 1]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 1, 2, 1, 2]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 1, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1]
+status: a normal move is executed by the AI if it can't win in one move
+allow_overrule: True
+opponent_winning: False
+function can_win_in_one_move called
+no winning moves found, the model will fully choose a move on its own out of all possible moves:
+
+
+function get_valid_moves called
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 1, 0, 0]
+[0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 1, 2, 2, 2, 1]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 1, 2, 1, 2]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 1, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[1, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1]
+status: a normal move is executed by the AI if it can't win in one move
+allow_overrule: True
+opponent_winning: False
+function can_win_in_one_move called
+no winning moves found, the model will fully choose a move on its own out of all possible moves:
+
+
+function get_valid_moves called
+player 2 has a threat at 0, 7
+player 2 has a winning threat at 0, 7
+player 2 has 4 in a row: _xxxx_
+function check_own_chances called
+No good offensive move found, maybe a defensive move instead
+overruled: [(0, 7)]
+[0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 2, 1, 0, 0]
+[0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 1, 2, 2, 2, 1]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 1, 2, 1, 2]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 1, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[1, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1]
+status: an overruled move is executed by the AI
+allow_overrule: True
+opponent_winning: True
+
+
+function get_valid_moves called
+[0, 0, 0, 0, 0, 0, 0, 1, 2, 2, 2, 2, 1, 0, 0]
+[0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 1, 2, 2, 2, 1]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 1, 2, 1, 2]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 1, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[1, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1]
+status: a normal move is executed by the AI if it can't win in one move
+allow_overrule: True
+opponent_winning: False
+function can_win_in_one_move called
+no winning moves found, the model will fully choose a move on its own out of all possible moves:
+
+
+function get_valid_moves called
+[0, 0, 0, 0, 0, 0, 0, 1, 2, 2, 2, 2, 1, 0, 0]
+[0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 1, 2, 2, 2, 1]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 1, 2, 1, 2]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 1, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2]
+[1, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1]
+status: a normal move is executed by the AI if it can't win in one move
+allow_overrule: True
+opponent_winning: False
+function can_win_in_one_move called
+no winning moves found, the model will fully choose a move on its own out of all possible moves:
+
+
+function get_valid_moves called
+[0, 0, 0, 0, 0, 0, 0, 1, 2, 2, 2, 2, 1, 0, 0]
+[0, 0, 0, 2, 0, 0, 0, 0, 0, 1, 1, 2, 2, 2, 1]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 1, 2, 1, 2]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 1, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2]
+[1, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1]
+status: a normal move is executed by the AI if it can't win in one move
+allow_overrule: True
+opponent_winning: False
+function can_win_in_one_move called
+no winning moves found, the model will fully choose a move on its own out of all possible moves:
+
+
+function get_valid_moves called
+[0, 0, 0, 0, 0, 0, 0, 1, 2, 2, 2, 2, 1, 0, 0]
+[2, 0, 0, 2, 0, 0, 0, 0, 0, 1, 1, 2, 2, 2, 1]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 1, 2, 1, 2]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 1, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2]
+[1, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1]
+status: a normal move is executed by the AI if it can't win in one move
+allow_overrule: True
+opponent_winning: False
+function can_win_in_one_move called
+no winning moves found, the model will fully choose a move on its own out of all possible moves:
+
+
+function get_valid_moves called
+[0, 0, 0, 0, 0, 0, 0, 1, 2, 2, 2, 2, 1, 0, 0]
+[2, 0, 0, 2, 0, 0, 0, 0, 0, 1, 1, 2, 2, 2, 1]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 1, 2, 1, 2]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 1, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2]
+[1, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1]
+status: a normal move is executed by the AI if it can't win in one move
+allow_overrule: True
+opponent_winning: False
+function can_win_in_one_move called
+no winning moves found, the model will fully choose a move on its own out of all possible moves:
+
+
+function get_valid_moves called
+[0, 0, 0, 0, 0, 0, 0, 1, 2, 2, 2, 2, 1, 0, 0]
+[2, 0, 0, 2, 0, 0, 0, 0, 0, 1, 1, 2, 2, 2, 1]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 1, 2, 1, 2]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 1, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2]
+[1, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[1, 1, 1, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1]
+status: a normal move is executed by the AI if it can't win in one move
+allow_overrule: True
+opponent_winning: False
+function can_win_in_one_move called
+no winning moves found, the model will fully choose a move on its own out of all possible moves:
+
+
+function get_valid_moves called
+[0, 0, 0, 0, 0, 0, 0, 1, 2, 2, 2, 2, 1, 0, 0]
+[2, 0, 0, 2, 0, 0, 0, 0, 0, 1, 1, 2, 2, 2, 1]
+[0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 2, 1, 2, 1, 2]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 1, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2]
+[1, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[1, 1, 1, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1]
+status: a normal move is executed by the AI if it can't win in one move
+allow_overrule: True
+opponent_winning: False
+function can_win_in_one_move called
+no winning moves found, the model will fully choose a move on its own out of all possible moves:
+
+
+function get_valid_moves called
+[0, 0, 0, 0, 0, 0, 0, 1, 2, 2, 2, 2, 1, 0, 0]
+[2, 0, 0, 2, 0, 0, 0, 0, 2, 1, 1, 2, 2, 2, 1]
+[0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 2, 1, 2, 1, 2]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 1, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2]
+[1, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[1, 1, 1, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1]
+status: a normal move is executed by the AI if it can't win in one move
+allow_overrule: True
+opponent_winning: False
+function can_win_in_one_move called
+no winning moves found, the model will fully choose a move on its own out of all possible moves:
+
+
+function get_valid_moves called
+[0, 0, 0, 0, 0, 0, 0, 1, 2, 2, 2, 2, 1, 0, 0]
+[2, 0, 0, 2, 0, 0, 0, 0, 2, 1, 1, 2, 2, 2, 1]
+[0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 2, 1, 2, 1, 2]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 1, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2]
+[1, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[1, 1, 1, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1]
+status: a normal move is executed by the AI if it can't win in one move
+allow_overrule: True
+opponent_winning: False
+function can_win_in_one_move called
+no winning moves found, the model will fully choose a move on its own out of all possible moves:
+
+
+function get_valid_moves called
+[0, 0, 0, 0, 0, 0, 0, 1, 2, 2, 2, 2, 1, 0, 0]
+[2, 0, 0, 2, 0, 0, 0, 0, 2, 1, 1, 2, 2, 2, 1]
+[0, 0, 0, 1, 0, 0, 0, 2, 1, 0, 2, 1, 2, 1, 2]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 1, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2]
+[1, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[1, 1, 1, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1]
+status: a normal move is executed by the AI if it can't win in one move
+allow_overrule: True
+opponent_winning: False
+function can_win_in_one_move called
+no winning moves found, the model will fully choose a move on its own out of all possible moves:
+
+
+function get_valid_moves called
+[0, 0, 0, 0, 0, 0, 0, 1, 2, 2, 2, 2, 1, 0, 0]
+[2, 0, 0, 2, 0, 0, 0, 0, 2, 1, 1, 2, 2, 2, 1]
+[0, 0, 0, 1, 0, 0, 0, 2, 1, 0, 2, 1, 2, 1, 2]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 1, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2]
+[1, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[1, 0, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[1, 1, 1, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1]
+status: a normal move is executed by the AI if it can't win in one move
+allow_overrule: True
+opponent_winning: False
+function can_win_in_one_move called
+no winning moves found, the model will fully choose a move on its own out of all possible moves:
+
+
+function get_valid_moves called
+[0, 0, 0, 0, 0, 0, 0, 1, 2, 2, 2, 2, 1, 0, 0]
+[2, 0, 0, 2, 0, 0, 2, 0, 2, 1, 1, 2, 2, 2, 1]
+[0, 0, 0, 1, 0, 0, 0, 2, 1, 0, 2, 1, 2, 1, 2]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 1, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2]
+[1, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[1, 0, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[1, 1, 1, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1]
+status: a normal move is executed by the AI if it can't win in one move
+allow_overrule: True
+opponent_winning: False
+function can_win_in_one_move called
+no winning moves found, the model will fully choose a move on its own out of all possible moves:
+
+
+function get_valid_moves called
+[0, 0, 0, 0, 0, 0, 0, 1, 2, 2, 2, 2, 1, 0, 0]
+[2, 0, 0, 2, 0, 0, 2, 0, 2, 1, 1, 2, 2, 2, 1]
+[0, 0, 0, 1, 0, 0, 0, 2, 1, 0, 2, 1, 2, 1, 2]
+[0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 2, 1, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2]
+[1, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[1, 0, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[1, 1, 1, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1]
+status: a normal move is executed by the AI if it can't win in one move
+allow_overrule: True
+opponent_winning: False
+function can_win_in_one_move called
+no winning moves found, the model will fully choose a move on its own out of all possible moves:
+
+
+function get_valid_moves called
+player 2 has a threat at 4, 9
+function check_own_chances called
+No good offensive move found, maybe a defensive move instead
+overruled: [(4, 9)]
+[0, 0, 0, 0, 0, 0, 0, 1, 2, 2, 2, 2, 1, 0, 0]
+[2, 0, 0, 2, 0, 0, 2, 0, 2, 1, 1, 2, 2, 2, 1]
+[0, 0, 0, 1, 0, 0, 0, 2, 1, 0, 2, 1, 2, 1, 2]
+[0, 0, 0, 0, 0, 0, 1, 0, 2, 0, 0, 1, 2, 1, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2]
+[1, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[1, 0, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[1, 1, 1, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1]
+status: an overruled move is executed by the AI
+allow_overrule: True
+opponent_winning: False
+
+
+function get_valid_moves called
+[0, 0, 0, 0, 0, 0, 0, 1, 2, 2, 2, 2, 1, 0, 0]
+[2, 0, 0, 2, 0, 0, 2, 0, 2, 1, 1, 2, 2, 2, 1]
+[0, 0, 0, 1, 0, 0, 0, 2, 1, 0, 2, 1, 2, 1, 2]
+[0, 0, 0, 0, 0, 0, 1, 0, 2, 0, 0, 1, 2, 1, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2]
+[1, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[1, 0, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[1, 1, 1, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1]
+status: a normal move is executed by the AI if it can't win in one move
+allow_overrule: True
+opponent_winning: False
+function can_win_in_one_move called
+no winning moves found, the model will fully choose a move on its own out of all possible moves:
+
+
+function get_valid_moves called
+player 2 has a threat at 1, 5
+player 2 has a winning threat at 1, 5
+player 2 has 3 in a row and 1 nearby: xxx_x or x_xxx
+function check_own_chances called
+No good offensive move found, maybe a defensive move instead
+overruled: [(1, 5)]
+[0, 0, 0, 0, 0, 0, 0, 1, 2, 2, 2, 2, 1, 0, 0]
+[2, 0, 0, 2, 0, 0, 2, 2, 2, 1, 1, 2, 2, 2, 1]
+[0, 0, 0, 1, 0, 0, 0, 2, 1, 0, 2, 1, 2, 1, 2]
+[0, 0, 0, 0, 0, 0, 1, 0, 2, 0, 0, 1, 2, 1, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2]
+[1, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[1, 0, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[1, 1, 1, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1]
+status: an overruled move is executed by the AI
+allow_overrule: True
+opponent_winning: True
+
+
+function get_valid_moves called
+[0, 0, 0, 0, 0, 0, 0, 1, 2, 2, 2, 2, 1, 0, 0]
+[2, 0, 0, 2, 0, 1, 2, 2, 2, 1, 1, 2, 2, 2, 1]
+[0, 0, 0, 1, 0, 0, 0, 2, 1, 0, 2, 1, 2, 1, 2]
+[0, 0, 0, 0, 0, 0, 1, 0, 2, 0, 0, 1, 2, 1, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2]
+[1, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[1, 0, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[1, 1, 1, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1]
+status: a normal move is executed by the AI if it can't win in one move
+allow_overrule: True
+opponent_winning: False
+function can_win_in_one_move called
+no winning moves found, the model will fully choose a move on its own out of all possible moves:
+
+
+function get_valid_moves called
+[0, 0, 0, 0, 0, 0, 0, 1, 2, 2, 2, 2, 1, 0, 0]
+[2, 0, 0, 2, 0, 1, 2, 2, 2, 1, 1, 2, 2, 2, 1]
+[0, 0, 0, 1, 0, 0, 2, 2, 1, 0, 2, 1, 2, 1, 2]
+[0, 0, 0, 0, 0, 0, 1, 0, 2, 0, 0, 1, 2, 1, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2]
+[1, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[1, 0, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[1, 1, 1, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1]
+status: a normal move is executed by the AI if it can't win in one move
+allow_overrule: True
+opponent_winning: False
+function can_win_in_one_move called
+no winning moves found, the model will fully choose a move on its own out of all possible moves:
+
+
+function get_valid_moves called
+[0, 0, 0, 0, 0, 0, 0, 1, 2, 2, 2, 2, 1, 0, 0]
+[2, 0, 0, 2, 0, 1, 2, 2, 2, 1, 1, 2, 2, 2, 1]
+[0, 0, 0, 1, 0, 0, 2, 2, 1, 0, 2, 1, 2, 1, 2]
+[0, 0, 0, 0, 0, 1, 1, 0, 2, 0, 0, 1, 2, 1, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2]
+[1, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[1, 0, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[1, 1, 1, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1]
+status: a normal move is executed by the AI if it can't win in one move
+allow_overrule: True
+opponent_winning: False
+function can_win_in_one_move called
+no winning moves found, the model will fully choose a move on its own out of all possible moves:
+
+
+function get_valid_moves called
+[0, 0, 0, 0, 0, 0, 0, 1, 2, 2, 2, 2, 1, 0, 0]
+[2, 0, 0, 2, 0, 1, 2, 2, 2, 1, 1, 2, 2, 2, 1]
+[0, 0, 0, 1, 0, 0, 2, 2, 1, 0, 2, 1, 2, 1, 2]
+[0, 0, 0, 0, 0, 1, 1, 2, 2, 0, 0, 1, 2, 1, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2]
+[1, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[1, 0, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[1, 1, 1, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1]
+status: a normal move is executed by the AI if it can't win in one move
+allow_overrule: True
+opponent_winning: False
+function can_win_in_one_move called
+no winning moves found, the model will fully choose a move on its own out of all possible moves:
+
+
+function get_valid_moves called
+[0, 0, 0, 0, 0, 1, 0, 1, 2, 2, 2, 2, 1, 0, 0]
+[2, 0, 0, 2, 0, 1, 2, 2, 2, 1, 1, 2, 2, 2, 1]
+[0, 0, 0, 1, 0, 0, 2, 2, 1, 0, 2, 1, 2, 1, 2]
+[0, 0, 0, 0, 0, 1, 1, 2, 2, 0, 0, 1, 2, 1, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2]
+[1, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[1, 0, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[1, 1, 1, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1]
+status: a normal move is executed by the AI if it can't win in one move
+allow_overrule: True
+opponent_winning: False
+function can_win_in_one_move called
+no winning moves found, the model will fully choose a move on its own out of all possible moves:
+
+
+function get_valid_moves called
+[0, 0, 0, 0, 0, 1, 0, 1, 2, 2, 2, 2, 1, 0, 0]
+[2, 0, 0, 2, 0, 1, 2, 2, 2, 1, 1, 2, 2, 2, 1]
+[0, 0, 0, 1, 0, 0, 2, 2, 1, 0, 2, 1, 2, 1, 2]
+[0, 0, 0, 0, 0, 1, 1, 2, 2, 0, 0, 1, 2, 1, 0]
+[0, 0, 0, 0, 0, 2, 0, 0, 0, 1, 0, 0, 1, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2]
+[1, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[1, 0, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[1, 1, 1, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1]
+status: a normal move is executed by the AI if it can't win in one move
+allow_overrule: True
+opponent_winning: False
+function can_win_in_one_move called
+no winning moves found, the model will fully choose a move on its own out of all possible moves:
+
+
+function get_valid_moves called
+[0, 0, 0, 0, 0, 1, 0, 1, 2, 2, 2, 2, 1, 0, 0]
+[2, 0, 0, 2, 0, 1, 2, 2, 2, 1, 1, 2, 2, 2, 1]
+[0, 0, 0, 1, 0, 1, 2, 2, 1, 0, 2, 1, 2, 1, 2]
+[0, 0, 0, 0, 0, 1, 1, 2, 2, 0, 0, 1, 2, 1, 0]
+[0, 0, 0, 0, 0, 2, 0, 0, 0, 1, 0, 0, 1, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2]
+[1, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[1, 0, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[1, 1, 1, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1]
+status: a normal move is executed by the AI if it can't win in one move
+allow_overrule: True
+opponent_winning: False
+function can_win_in_one_move called
+no winning moves found, the model will fully choose a move on its own out of all possible moves:
+
+
+function get_valid_moves called
+player 2 has a threat at 5, 7
+player 2 has a winning threat at 5, 7
+player 2 has 4 in a row: _xxxx_
+function check_own_chances called
+No good offensive move found, maybe a defensive move instead
+overruled: [(5, 7)]
+[0, 0, 0, 0, 0, 1, 0, 1, 2, 2, 2, 2, 1, 0, 0]
+[2, 0, 0, 2, 0, 1, 2, 2, 2, 1, 1, 2, 2, 2, 1]
+[0, 0, 0, 1, 0, 1, 2, 2, 1, 0, 2, 1, 2, 1, 2]
+[0, 0, 0, 0, 0, 1, 1, 2, 2, 0, 0, 1, 2, 1, 0]
+[0, 0, 0, 0, 0, 2, 0, 2, 0, 1, 0, 0, 1, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2]
+[1, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[1, 0, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[1, 1, 1, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1]
+status: an overruled move is executed by the AI
+allow_overrule: True
+opponent_winning: True
+
+
+function get_valid_moves called
+[0, 0, 0, 0, 0, 1, 0, 1, 2, 2, 2, 2, 1, 0, 0]
+[2, 0, 0, 2, 0, 1, 2, 2, 2, 1, 1, 2, 2, 2, 1]
+[0, 0, 0, 1, 0, 1, 2, 2, 1, 0, 2, 1, 2, 1, 2]
+[0, 0, 0, 0, 0, 1, 1, 2, 2, 0, 0, 1, 2, 1, 0]
+[0, 0, 0, 0, 0, 2, 0, 2, 0, 1, 0, 0, 1, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2]
+[1, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[1, 0, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[1, 1, 1, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1]
+status: a normal move is executed by the AI if it can't win in one move
+allow_overrule: True
+opponent_winning: False
+function can_win_in_one_move called
+no winning moves found, the model will fully choose a move on its own out of all possible moves:
+
+
+function get_valid_moves called
+[0, 0, 0, 0, 0, 1, 0, 1, 2, 2, 2, 2, 1, 0, 0]
+[2, 0, 0, 2, 0, 1, 2, 2, 2, 1, 1, 2, 2, 2, 1]
+[0, 0, 0, 1, 0, 1, 2, 2, 1, 2, 2, 1, 2, 1, 2]
+[0, 0, 0, 0, 0, 1, 1, 2, 2, 0, 0, 1, 2, 1, 0]
+[0, 0, 0, 0, 0, 2, 0, 2, 0, 1, 0, 0, 1, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2]
+[1, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[1, 0, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[1, 1, 1, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1]
+status: a normal move is executed by the AI if it can't win in one move
+allow_overrule: True
+opponent_winning: False
+function can_win_in_one_move called
+no winning moves found, the model will fully choose a move on its own out of all possible moves:
+
+
+function get_valid_moves called
+[0, 0, 0, 0, 0, 1, 0, 1, 2, 2, 2, 2, 1, 0, 0]
+[2, 0, 0, 2, 1, 1, 2, 2, 2, 1, 1, 2, 2, 2, 1]
+[0, 0, 0, 1, 0, 1, 2, 2, 1, 2, 2, 1, 2, 1, 2]
+[0, 0, 0, 0, 0, 1, 1, 2, 2, 0, 0, 1, 2, 1, 0]
+[0, 0, 0, 0, 0, 2, 0, 2, 0, 1, 0, 0, 1, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2]
+[1, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[1, 0, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[1, 1, 1, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1]
+status: a normal move is executed by the AI if it can't win in one move
+allow_overrule: True
+opponent_winning: False
+function can_win_in_one_move called
+no winning moves found, the model will fully choose a move on its own out of all possible moves:
+
+
+function get_valid_moves called
+[0, 0, 0, 0, 0, 1, 0, 1, 2, 2, 2, 2, 1, 0, 0]
+[2, 0, 0, 2, 1, 1, 2, 2, 2, 1, 1, 2, 2, 2, 1]
+[0, 0, 0, 1, 0, 1, 2, 2, 1, 2, 2, 1, 2, 1, 2]
+[0, 0, 0, 0, 0, 1, 1, 2, 2, 0, 0, 1, 2, 1, 0]
+[0, 0, 0, 0, 0, 2, 0, 2, 0, 1, 0, 0, 1, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2]
+[1, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[1, 0, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[1, 1, 1, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1]
+status: a normal move is executed by the AI if it can't win in one move
+allow_overrule: True
+opponent_winning: False
+function can_win_in_one_move called
+no winning moves found, the model will fully choose a move on its own out of all possible moves:
+
+
+function get_valid_moves called
+player 1 has a threat at 4, 1
+player 1 has a winning threat at 4, 1
+player 1 has 4 in a row: _xxxx_
+function check_own_chances called
+No good offensive move found, maybe a defensive move instead
+overruled: [(4, 1)]
+[0, 0, 0, 0, 0, 1, 0, 1, 2, 2, 2, 2, 1, 0, 0]
+[2, 0, 0, 2, 1, 1, 2, 2, 2, 1, 1, 2, 2, 2, 1]
+[0, 0, 0, 1, 0, 1, 2, 2, 1, 2, 2, 1, 2, 1, 2]
+[0, 0, 1, 0, 0, 1, 1, 2, 2, 0, 0, 1, 2, 1, 0]
+[0, 0, 0, 0, 0, 2, 0, 2, 0, 1, 0, 0, 1, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2]
+[1, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[1, 0, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[1, 1, 1, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1]
+status: an overruled move is executed by the AI
+allow_overrule: True
+opponent_winning: True
+
+
+function get_valid_moves called
+[0, 0, 0, 0, 0, 1, 0, 1, 2, 2, 2, 2, 1, 0, 0]
+[2, 0, 0, 2, 1, 1, 2, 2, 2, 1, 1, 2, 2, 2, 1]
+[0, 0, 0, 1, 0, 1, 2, 2, 1, 2, 2, 1, 2, 1, 2]
+[0, 0, 1, 0, 0, 1, 1, 2, 2, 0, 0, 1, 2, 1, 0]
+[0, 2, 0, 0, 0, 2, 0, 2, 0, 1, 0, 0, 1, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2]
+[1, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[1, 0, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[1, 1, 1, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1]
+status: a normal move is executed by the AI if it can't win in one move
+allow_overrule: True
+opponent_winning: False
+function can_win_in_one_move called
+no winning moves found, the model will fully choose a move on its own out of all possible moves:
+
+
+function get_valid_moves called
+[0, 0, 0, 0, 0, 1, 0, 1, 2, 2, 2, 2, 1, 0, 0]
+[2, 0, 0, 2, 1, 1, 2, 2, 2, 1, 1, 2, 2, 2, 1]
+[0, 0, 0, 1, 0, 1, 2, 2, 1, 2, 2, 1, 2, 1, 2]
+[0, 0, 1, 0, 0, 1, 1, 2, 2, 0, 0, 1, 2, 1, 0]
+[0, 2, 0, 0, 0, 2, 0, 2, 0, 1, 0, 0, 1, 0, 0]
+[0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 1, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2]
+[1, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[1, 0, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[1, 1, 1, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1]
+status: a normal move is executed by the AI if it can't win in one move
+allow_overrule: True
+opponent_winning: False
+function can_win_in_one_move called
+no winning moves found, the model will fully choose a move on its own out of all possible moves:
+
+
+function get_valid_moves called
+[0, 0, 0, 0, 0, 1, 0, 1, 2, 2, 2, 2, 1, 0, 0]
+[2, 0, 0, 2, 1, 1, 2, 2, 2, 1, 1, 2, 2, 2, 1]
+[0, 0, 0, 1, 0, 1, 2, 2, 1, 2, 2, 1, 2, 1, 2]
+[0, 0, 1, 0, 0, 1, 1, 2, 2, 0, 0, 1, 2, 1, 0]
+[0, 2, 0, 0, 0, 2, 0, 2, 0, 1, 0, 0, 1, 0, 0]
+[0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 1, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2]
+[1, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[1, 0, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0]
+[0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[1, 1, 1, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1]
+status: a normal move is executed by the AI if it can't win in one move
+allow_overrule: True
+opponent_winning: False
+function can_win_in_one_move called
+no winning moves found, the model will fully choose a move on its own out of all possible moves:
+
+
+function get_valid_moves called
+[0, 0, 0, 1, 0, 1, 0, 1, 2, 2, 2, 2, 1, 0, 0]
+[2, 0, 0, 2, 1, 1, 2, 2, 2, 1, 1, 2, 2, 2, 1]
+[0, 0, 0, 1, 0, 1, 2, 2, 1, 2, 2, 1, 2, 1, 2]
+[0, 0, 1, 0, 0, 1, 1, 2, 2, 0, 0, 1, 2, 1, 0]
+[0, 2, 0, 0, 0, 2, 0, 2, 0, 1, 0, 0, 1, 0, 0]
+[0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 1, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2]
+[1, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[1, 0, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0]
+[0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[1, 1, 1, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1]
+status: a normal move is executed by the AI if it can't win in one move
+allow_overrule: True
+opponent_winning: False
+function can_win_in_one_move called
+no winning moves found, the model will fully choose a move on its own out of all possible moves:
+
+
+function get_valid_moves called
+[0, 0, 0, 1, 0, 1, 0, 1, 2, 2, 2, 2, 1, 0, 0]
+[2, 0, 0, 2, 1, 1, 2, 2, 2, 1, 1, 2, 2, 2, 1]
+[0, 0, 0, 1, 0, 1, 2, 2, 1, 2, 2, 1, 2, 1, 2]
+[0, 0, 1, 0, 0, 1, 1, 2, 2, 0, 0, 1, 2, 1, 0]
+[0, 2, 0, 0, 0, 2, 0, 2, 0, 1, 0, 0, 1, 0, 0]
+[0, 0, 0, 0, 0, 2, 1, 1, 0, 0, 0, 0, 0, 1, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2]
+[1, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[1, 0, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0]
+[0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[1, 1, 1, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1]
+status: a normal move is executed by the AI if it can't win in one move
+allow_overrule: True
+opponent_winning: False
+function can_win_in_one_move called
+no winning moves found, the model will fully choose a move on its own out of all possible moves:
+
+
+function get_valid_moves called
+[0, 0, 0, 1, 0, 1, 0, 1, 2, 2, 2, 2, 1, 0, 0]
+[2, 0, 0, 2, 1, 1, 2, 2, 2, 1, 1, 2, 2, 2, 1]
+[0, 0, 0, 1, 0, 1, 2, 2, 1, 2, 2, 1, 2, 1, 2]
+[0, 0, 1, 0, 0, 1, 1, 2, 2, 0, 0, 1, 2, 1, 0]
+[0, 2, 0, 0, 0, 2, 0, 2, 1, 1, 0, 0, 1, 0, 0]
+[0, 0, 0, 0, 0, 2, 1, 1, 0, 0, 0, 0, 0, 1, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2]
+[1, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[1, 0, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0]
+[0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[1, 1, 1, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1]
+status: a normal move is executed by the AI if it can't win in one move
+allow_overrule: True
+opponent_winning: False
+function can_win_in_one_move called
+no winning moves found, the model will fully choose a move on its own out of all possible moves:
+
+
+function get_valid_moves called
+[0, 0, 0, 1, 0, 1, 0, 1, 2, 2, 2, 2, 1, 0, 0]
+[2, 0, 0, 2, 1, 1, 2, 2, 2, 1, 1, 2, 2, 2, 1]
+[0, 0, 0, 1, 0, 1, 2, 2, 1, 2, 2, 1, 2, 1, 2]
+[0, 0, 1, 0, 0, 1, 1, 2, 2, 0, 0, 1, 2, 1, 0]
+[0, 2, 0, 0, 0, 2, 0, 2, 1, 1, 0, 0, 1, 0, 0]
+[0, 0, 0, 0, 0, 2, 1, 1, 0, 0, 0, 0, 0, 1, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2]
+[1, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[1, 0, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0]
+[0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[1, 1, 1, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 2, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1]
+status: a normal move is executed by the AI if it can't win in one move
+allow_overrule: True
+opponent_winning: False
+function can_win_in_one_move called
+no winning moves found, the model will fully choose a move on its own out of all possible moves:
+
+
+function get_valid_moves called
+[0, 0, 0, 1, 0, 1, 0, 1, 2, 2, 2, 2, 1, 0, 0]
+[2, 0, 0, 2, 1, 1, 2, 2, 2, 1, 1, 2, 2, 2, 1]
+[0, 0, 0, 1, 0, 1, 2, 2, 1, 2, 2, 1, 2, 1, 2]
+[0, 0, 1, 0, 0, 1, 1, 2, 2, 0, 0, 1, 2, 1, 0]
+[0, 2, 0, 0, 0, 2, 0, 2, 1, 1, 0, 0, 1, 0, 0]
+[0, 0, 0, 0, 0, 2, 1, 1, 0, 0, 0, 0, 0, 1, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2]
+[1, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[1, 0, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0]
+[0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 2, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[1, 1, 1, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 2, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1]
+status: a normal move is executed by the AI if it can't win in one move
+allow_overrule: True
+opponent_winning: False
+function can_win_in_one_move called
+no winning moves found, the model will fully choose a move on its own out of all possible moves:
+
+
+function get_valid_moves called
+[0, 0, 0, 1, 0, 1, 0, 1, 2, 2, 2, 2, 1, 0, 0]
+[2, 0, 0, 2, 1, 1, 2, 2, 2, 1, 1, 2, 2, 2, 1]
+[0, 0, 0, 1, 0, 1, 2, 2, 1, 2, 2, 1, 2, 1, 2]
+[0, 0, 1, 0, 0, 1, 1, 2, 2, 0, 0, 1, 2, 1, 0]
+[0, 2, 0, 0, 0, 2, 0, 2, 1, 1, 0, 0, 1, 0, 0]
+[0, 0, 0, 0, 0, 2, 1, 1, 0, 0, 0, 0, 0, 1, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2]
+[1, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[1, 0, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0]
+[0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 2, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[1, 1, 1, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 2, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1]
+status: a normal move is executed by the AI if it can't win in one move
+allow_overrule: True
+opponent_winning: False
+function can_win_in_one_move called
+no winning moves found, the model will fully choose a move on its own out of all possible moves:
+
+
+function get_valid_moves called
+player 1 has a threat at 0, 2
+player 1 has a winning threat at 0, 2
+player 1 has 3 in a row and 1 nearby: xxx_x or x_xxx
+player 1 has a threat at 0, 6
+player 1 has a winning threat at 0, 6
+player 1 has 4 in a row: _xxxx_
+function check_own_chances called
+No good offensive move found, maybe a defensive move instead
+overruled: [(0, 2), (0, 6)]
+[0, 0, 0, 1, 1, 1, 0, 1, 2, 2, 2, 2, 1, 0, 0]
+[2, 0, 0, 2, 1, 1, 2, 2, 2, 1, 1, 2, 2, 2, 1]
+[0, 0, 0, 1, 0, 1, 2, 2, 1, 2, 2, 1, 2, 1, 2]
+[0, 0, 1, 0, 0, 1, 1, 2, 2, 0, 0, 1, 2, 1, 0]
+[0, 2, 0, 0, 0, 2, 0, 2, 1, 1, 0, 0, 1, 0, 0]
+[0, 0, 0, 0, 0, 2, 1, 1, 0, 0, 0, 0, 0, 1, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2]
+[1, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[1, 0, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0]
+[0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 2, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[1, 1, 1, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 2, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1]
+status: an overruled move is executed by the AI
+allow_overrule: True
+opponent_winning: True
+
+
+function get_valid_moves called
+[0, 0, 0, 1, 1, 1, 2, 1, 2, 2, 2, 2, 1, 0, 0]
+[2, 0, 0, 2, 1, 1, 2, 2, 2, 1, 1, 2, 2, 2, 1]
+[0, 0, 0, 1, 0, 1, 2, 2, 1, 2, 2, 1, 2, 1, 2]
+[0, 0, 1, 0, 0, 1, 1, 2, 2, 0, 0, 1, 2, 1, 0]
+[0, 2, 0, 0, 0, 2, 0, 2, 1, 1, 0, 0, 1, 0, 0]
+[0, 0, 0, 0, 0, 2, 1, 1, 0, 0, 0, 0, 0, 1, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2]
+[1, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[1, 0, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0]
+[0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 2, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[1, 1, 1, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 2, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1]
+status: a normal move is executed by the AI if it can't win in one move
+allow_overrule: True
+opponent_winning: False
+function can_win_in_one_move called
+no winning moves found, the model will fully choose a move on its own out of all possible moves:
+
+
+function get_valid_moves called
+player 1 has a threat at 0, 1
+player 1 has a winning threat at 0, 1
+player 1 has 4 in a row: _xxxx_
+function check_own_chances called
+No good offensive move found, maybe a defensive move instead
+overruled: [(0, 1)]
+[0, 0, 1, 1, 1, 1, 2, 1, 2, 2, 2, 2, 1, 0, 0]
+[2, 0, 0, 2, 1, 1, 2, 2, 2, 1, 1, 2, 2, 2, 1]
+[0, 0, 0, 1, 0, 1, 2, 2, 1, 2, 2, 1, 2, 1, 2]
+[0, 0, 1, 0, 0, 1, 1, 2, 2, 0, 0, 1, 2, 1, 0]
+[0, 2, 0, 0, 0, 2, 0, 2, 1, 1, 0, 0, 1, 0, 0]
+[0, 0, 0, 0, 0, 2, 1, 1, 0, 0, 0, 0, 0, 1, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2]
+[1, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[1, 0, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0]
+[0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 2, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[1, 1, 1, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 2, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1]
+status: an overruled move is executed by the AI
+allow_overrule: True
+opponent_winning: True
+
+
+function get_valid_moves called
+[0, 2, 1, 1, 1, 1, 2, 1, 2, 2, 2, 2, 1, 0, 0]
+[2, 0, 0, 2, 1, 1, 2, 2, 2, 1, 1, 2, 2, 2, 1]
+[0, 0, 0, 1, 0, 1, 2, 2, 1, 2, 2, 1, 2, 1, 2]
+[0, 0, 1, 0, 0, 1, 1, 2, 2, 0, 0, 1, 2, 1, 0]
+[0, 2, 0, 0, 0, 2, 0, 2, 1, 1, 0, 0, 1, 0, 0]
+[0, 0, 0, 0, 0, 2, 1, 1, 0, 0, 0, 0, 0, 1, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2]
+[1, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[1, 0, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0]
+[0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 2, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[1, 1, 1, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 2, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1]
+status: a normal move is executed by the AI if it can't win in one move
+allow_overrule: True
+opponent_winning: False
+function can_win_in_one_move called
+no winning moves found, the model will fully choose a move on its own out of all possible moves:
+
+
+function get_valid_moves called
+player 1 has a threat at 9, 5
+player 1 has a threat at 13, 1
+function check_own_chances called
+No good offensive move found, maybe a defensive move instead
+overruled: [(9, 5), (13, 1)]
+[0, 2, 1, 1, 1, 1, 2, 1, 2, 2, 2, 2, 1, 0, 0]
+[2, 0, 0, 2, 1, 1, 2, 2, 2, 1, 1, 2, 2, 2, 1]
+[0, 0, 0, 1, 0, 1, 2, 2, 1, 2, 2, 1, 2, 1, 2]
+[0, 0, 1, 0, 0, 1, 1, 2, 2, 0, 0, 1, 2, 1, 0]
+[0, 2, 0, 0, 0, 2, 0, 2, 1, 1, 0, 0, 1, 0, 0]
+[0, 0, 0, 0, 0, 2, 1, 1, 0, 0, 0, 0, 0, 1, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2]
+[1, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[1, 0, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0]
+[0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 2, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[1, 1, 1, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 2, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1]
+status: an overruled move is executed by the AI
+allow_overrule: True
+opponent_winning: False
+
+
+function get_valid_moves called
+[0, 2, 1, 1, 1, 1, 2, 1, 2, 2, 2, 2, 1, 0, 0]
+[2, 0, 0, 2, 1, 1, 2, 2, 2, 1, 1, 2, 2, 2, 1]
+[0, 0, 0, 1, 0, 1, 2, 2, 1, 2, 2, 1, 2, 1, 2]
+[0, 0, 1, 0, 0, 1, 1, 2, 2, 0, 0, 1, 2, 1, 0]
+[0, 2, 0, 0, 0, 2, 0, 2, 1, 1, 0, 0, 1, 0, 0]
+[0, 0, 0, 0, 0, 2, 1, 1, 0, 0, 0, 0, 0, 1, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2]
+[1, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[1, 0, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0]
+[0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 2, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[1, 1, 1, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 2, 0, 2, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1]
+status: a normal move is executed by the AI if it can't win in one move
+allow_overrule: True
+opponent_winning: False
+function can_win_in_one_move called
+no winning moves found, the model will fully choose a move on its own out of all possible moves:
+
+
+function get_valid_moves called
+player 1 has a threat at 8, 2
+player 1 has a threat at 12, 6
+function check_own_chances called
+No good offensive move found, maybe a defensive move instead
+overruled: [(8, 2), (12, 6)]
+[0, 2, 1, 1, 1, 1, 2, 1, 2, 2, 2, 2, 1, 0, 0]
+[2, 0, 0, 2, 1, 1, 2, 2, 2, 1, 1, 2, 2, 2, 1]
+[0, 0, 0, 1, 0, 1, 2, 2, 1, 2, 2, 1, 2, 1, 2]
+[0, 0, 1, 0, 0, 1, 1, 2, 2, 0, 0, 1, 2, 1, 0]
+[0, 2, 0, 0, 0, 2, 0, 2, 1, 1, 0, 0, 1, 0, 0]
+[0, 0, 0, 0, 0, 2, 1, 1, 0, 0, 0, 0, 0, 1, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2]
+[1, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[1, 0, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0]
+[0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 2, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[1, 1, 1, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 2, 0, 2, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1]
+status: an overruled move is executed by the AI
+allow_overrule: True
+opponent_winning: False
+
+
+function get_valid_moves called
+[0, 2, 1, 1, 1, 1, 2, 1, 2, 2, 2, 2, 1, 0, 0]
+[2, 0, 0, 2, 1, 1, 2, 2, 2, 1, 1, 2, 2, 2, 1]
+[0, 0, 0, 1, 0, 1, 2, 2, 1, 2, 2, 1, 2, 1, 2]
+[0, 0, 1, 0, 0, 1, 1, 2, 2, 0, 0, 1, 2, 1, 0]
+[0, 2, 0, 0, 0, 2, 0, 2, 1, 1, 0, 0, 1, 0, 0]
+[0, 0, 0, 0, 0, 2, 1, 1, 0, 0, 0, 0, 0, 1, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2]
+[1, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[1, 0, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0]
+[0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 2, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[1, 1, 1, 2, 2, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 2, 0, 2, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1]
+status: a normal move is executed by the AI if it can't win in one move
+allow_overrule: True
+opponent_winning: False
+function can_win_in_one_move called
+no winning moves found, the model will fully choose a move on its own out of all possible moves:
+
+
+function get_valid_moves called
+[0, 2, 1, 1, 1, 1, 2, 1, 2, 2, 2, 2, 1, 0, 0]
+[2, 0, 0, 2, 1, 1, 2, 2, 2, 1, 1, 2, 2, 2, 1]
+[0, 0, 0, 1, 1, 1, 2, 2, 1, 2, 2, 1, 2, 1, 2]
+[0, 0, 1, 0, 0, 1, 1, 2, 2, 0, 0, 1, 2, 1, 0]
+[0, 2, 0, 0, 0, 2, 0, 2, 1, 1, 0, 0, 1, 0, 0]
+[0, 0, 0, 0, 0, 2, 1, 1, 0, 0, 0, 0, 0, 1, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2]
+[1, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[1, 0, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0]
+[0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 2, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[1, 1, 1, 2, 2, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 2, 0, 2, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1]
+status: a normal move is executed by the AI if it can't win in one move
+allow_overrule: True
+opponent_winning: False
+function can_win_in_one_move called
+no winning moves found, the model will fully choose a move on its own out of all possible moves:
+
+
+function get_valid_moves called
+[0, 2, 1, 1, 1, 1, 2, 1, 2, 2, 2, 2, 1, 0, 0]
+[2, 0, 0, 2, 1, 1, 2, 2, 2, 1, 1, 2, 2, 2, 1]
+[0, 0, 0, 1, 1, 1, 2, 2, 1, 2, 2, 1, 2, 1, 2]
+[0, 0, 1, 0, 2, 1, 1, 2, 2, 0, 0, 1, 2, 1, 0]
+[0, 2, 0, 0, 0, 2, 0, 2, 1, 1, 0, 0, 1, 0, 0]
+[0, 0, 0, 0, 0, 2, 1, 1, 0, 0, 0, 0, 0, 1, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2]
+[1, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[1, 0, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0]
+[0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 2, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[1, 1, 1, 2, 2, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 2, 0, 2, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1]
+status: a normal move is executed by the AI if it can't win in one move
+allow_overrule: True
+opponent_winning: False
+function can_win_in_one_move called
+no winning moves found, the model will fully choose a move on its own out of all possible moves:
+
+
+function get_valid_moves called
+[0, 2, 1, 1, 1, 1, 2, 1, 2, 2, 2, 2, 1, 0, 0]
+[2, 0, 0, 2, 1, 1, 2, 2, 2, 1, 1, 2, 2, 2, 1]
+[0, 0, 0, 1, 1, 1, 2, 2, 1, 2, 2, 1, 2, 1, 2]
+[0, 0, 1, 0, 2, 1, 1, 2, 2, 0, 0, 1, 2, 1, 0]
+[0, 2, 0, 0, 0, 2, 0, 2, 1, 1, 0, 0, 1, 0, 0]
+[0, 0, 0, 0, 0, 2, 1, 1, 0, 0, 0, 0, 0, 1, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2]
+[1, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[1, 0, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0]
+[0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 2, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[1, 1, 1, 2, 2, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0]
+[1, 2, 0, 2, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1]
+status: a normal move is executed by the AI if it can't win in one move
+allow_overrule: True
+opponent_winning: False
+function can_win_in_one_move called
+no winning moves found, the model will fully choose a move on its own out of all possible moves:
+
+
+function get_valid_moves called
+player 2 has a threat at 13, 2
+player 2 has a winning threat at 13, 2
+player 2 has 4 in a row: _xxxx_
+player 2 has a threat at 13, 6
+player 2 has a winning threat at 13, 6
+player 2 has 3 in a row and 1 nearby: xxx_x or x_xxx
+function check_own_chances called
+No good offensive move found, maybe a defensive move instead
+overruled: [(13, 2), (13, 6)]
+[0, 2, 1, 1, 1, 1, 2, 1, 2, 2, 2, 2, 1, 0, 0]
+[2, 0, 0, 2, 1, 1, 2, 2, 2, 1, 1, 2, 2, 2, 1]
+[0, 0, 0, 1, 1, 1, 2, 2, 1, 2, 2, 1, 2, 1, 2]
+[0, 0, 1, 0, 2, 1, 1, 2, 2, 0, 0, 1, 2, 1, 0]
+[0, 2, 0, 0, 0, 2, 0, 2, 1, 1, 0, 0, 1, 0, 0]
+[0, 0, 0, 0, 0, 2, 1, 1, 0, 0, 0, 0, 0, 1, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2]
+[1, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[1, 0, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0]
+[0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 2, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[1, 1, 1, 2, 2, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0]
+[1, 2, 0, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1]
+status: an overruled move is executed by the AI
+allow_overrule: True
+opponent_winning: True
+
+
+function get_valid_moves called
+[0, 2, 1, 1, 1, 1, 2, 1, 2, 2, 2, 2, 1, 0, 0]
+[2, 0, 0, 2, 1, 1, 2, 2, 2, 1, 1, 2, 2, 2, 1]
+[0, 0, 0, 1, 1, 1, 2, 2, 1, 2, 2, 1, 2, 1, 2]
+[0, 0, 1, 0, 2, 1, 1, 2, 2, 0, 0, 1, 2, 1, 0]
+[0, 2, 0, 0, 0, 2, 0, 2, 1, 1, 0, 0, 1, 0, 0]
+[0, 0, 0, 0, 0, 2, 1, 1, 0, 0, 0, 0, 0, 1, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2]
+[1, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[1, 0, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0]
+[0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 2, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[1, 1, 1, 2, 2, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0]
+[1, 2, 0, 2, 2, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1]
+status: a normal move is executed by the AI if it can't win in one move
+allow_overrule: True
+opponent_winning: False
+function can_win_in_one_move called
+no winning moves found, the model will fully choose a move on its own out of all possible moves:
+
+
+function get_valid_moves called
+[0, 2, 1, 1, 1, 1, 2, 1, 2, 2, 2, 2, 1, 0, 0]
+[2, 0, 0, 2, 1, 1, 2, 2, 2, 1, 1, 2, 2, 2, 1]
+[0, 0, 0, 1, 1, 1, 2, 2, 1, 2, 2, 1, 2, 1, 2]
+[0, 0, 1, 0, 2, 1, 1, 2, 2, 0, 0, 1, 2, 1, 0]
+[0, 2, 0, 0, 0, 2, 0, 2, 1, 1, 0, 0, 1, 0, 0]
+[0, 0, 0, 0, 0, 2, 1, 1, 0, 0, 0, 0, 0, 1, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2]
+[1, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[1, 0, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0]
+[0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 2, 2, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[1, 1, 1, 2, 2, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0]
+[1, 2, 0, 2, 2, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1]
+status: a normal move is executed by the AI if it can't win in one move
+allow_overrule: True
+opponent_winning: False
+function can_win_in_one_move called
+no winning moves found, the model will fully choose a move on its own out of all possible moves:
+
+
+function get_valid_moves called
+player 1 has a threat at 10, 3
+function check_own_chances called
+No good offensive move found, maybe a defensive move instead
+overruled: [(10, 3)]
+[0, 2, 1, 1, 1, 1, 2, 1, 2, 2, 2, 2, 1, 0, 0]
+[2, 0, 0, 2, 1, 1, 2, 2, 2, 1, 1, 2, 2, 2, 1]
+[0, 0, 0, 1, 1, 1, 2, 2, 1, 2, 2, 1, 2, 1, 2]
+[0, 0, 1, 0, 2, 1, 1, 2, 2, 0, 0, 1, 2, 1, 0]
+[0, 2, 0, 0, 0, 2, 0, 2, 1, 1, 0, 0, 1, 0, 0]
+[0, 0, 0, 0, 0, 2, 1, 1, 0, 0, 0, 0, 0, 1, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2]
+[1, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[1, 0, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0]
+[0, 1, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 2, 2, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[1, 1, 1, 2, 2, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0]
+[1, 2, 0, 2, 2, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1]
+status: an overruled move is executed by the AI
+allow_overrule: True
+opponent_winning: False
+
+
+function get_valid_moves called
+[0, 2, 1, 1, 1, 1, 2, 1, 2, 2, 2, 2, 1, 0, 0]
+[2, 0, 0, 2, 1, 1, 2, 2, 2, 1, 1, 2, 2, 2, 1]
+[0, 0, 0, 1, 1, 1, 2, 2, 1, 2, 2, 1, 2, 1, 2]
+[0, 0, 1, 0, 2, 1, 1, 2, 2, 0, 0, 1, 2, 1, 0]
+[0, 2, 0, 0, 0, 2, 0, 2, 1, 1, 0, 0, 1, 0, 0]
+[0, 0, 0, 0, 0, 2, 1, 1, 0, 0, 0, 0, 0, 1, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2]
+[1, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[1, 0, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0]
+[0, 1, 1, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 2, 2, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[1, 1, 1, 2, 2, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0]
+[1, 2, 0, 2, 2, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1]
+status: a normal move is executed by the AI if it can't win in one move
+allow_overrule: True
+opponent_winning: False
+function can_win_in_one_move called
+no winning moves found, the model will fully choose a move on its own out of all possible moves:
+
+
+function get_valid_moves called
+[0, 2, 1, 1, 1, 1, 2, 1, 2, 2, 2, 2, 1, 0, 0]
+[2, 0, 0, 2, 1, 1, 2, 2, 2, 1, 1, 2, 2, 2, 1]
+[0, 0, 0, 1, 1, 1, 2, 2, 1, 2, 2, 1, 2, 1, 2]
+[0, 0, 1, 0, 2, 1, 1, 2, 2, 0, 0, 1, 2, 1, 0]
+[0, 2, 0, 0, 0, 2, 0, 2, 1, 1, 0, 0, 1, 0, 0]
+[0, 0, 0, 0, 0, 2, 1, 1, 0, 0, 0, 0, 0, 1, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2]
+[1, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[1, 0, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0]
+[0, 1, 1, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 2, 2, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[1, 1, 1, 2, 2, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0]
+[1, 2, 0, 2, 2, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1]
+status: a normal move is executed by the AI if it can't win in one move
+allow_overrule: True
+opponent_winning: False
+function can_win_in_one_move called
+no winning moves found, the model will fully choose a move on its own out of all possible moves:
+
+
+function get_valid_moves called
+player 2 has a threat at 10, 8
+function check_own_chances called
+No good offensive move found, maybe a defensive move instead
+overruled: [(10, 8)]
+[0, 2, 1, 1, 1, 1, 2, 1, 2, 2, 2, 2, 1, 0, 0]
+[2, 0, 0, 2, 1, 1, 2, 2, 2, 1, 1, 2, 2, 2, 1]
+[0, 0, 0, 1, 1, 1, 2, 2, 1, 2, 2, 1, 2, 1, 2]
+[0, 0, 1, 0, 2, 1, 1, 2, 2, 0, 0, 1, 2, 1, 0]
+[0, 2, 0, 0, 0, 2, 0, 2, 1, 1, 0, 0, 1, 0, 0]
+[0, 0, 0, 0, 0, 2, 1, 1, 0, 0, 0, 0, 0, 1, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2]
+[1, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[1, 0, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0]
+[0, 1, 1, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 2, 2, 1, 1, 1, 0, 2, 0, 0, 0, 0, 0, 0, 0]
+[1, 1, 1, 2, 2, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0]
+[1, 2, 0, 2, 2, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1]
+status: an overruled move is executed by the AI
+allow_overrule: True
+opponent_winning: False
+
+
+function get_valid_moves called
+[0, 2, 1, 1, 1, 1, 2, 1, 2, 2, 2, 2, 1, 0, 0]
+[2, 0, 0, 2, 1, 1, 2, 2, 2, 1, 1, 2, 2, 2, 1]
+[0, 0, 0, 1, 1, 1, 2, 2, 1, 2, 2, 1, 2, 1, 2]
+[0, 0, 1, 0, 2, 1, 1, 2, 2, 0, 0, 1, 2, 1, 0]
+[0, 2, 0, 0, 0, 2, 0, 2, 1, 1, 0, 0, 1, 0, 0]
+[0, 0, 0, 0, 0, 2, 1, 1, 0, 0, 0, 0, 0, 1, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2]
+[1, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[1, 0, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0]
+[0, 1, 1, 2, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0]
+[0, 2, 2, 1, 1, 1, 0, 2, 0, 0, 0, 0, 0, 0, 0]
+[1, 1, 1, 2, 2, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0]
+[1, 2, 0, 2, 2, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1]
+status: a normal move is executed by the AI if it can't win in one move
+allow_overrule: True
+opponent_winning: False
+function can_win_in_one_move called
+no winning moves found, the model will fully choose a move on its own out of all possible moves:
+
+
+function get_valid_moves called
+[0, 2, 1, 1, 1, 1, 2, 1, 2, 2, 2, 2, 1, 0, 0]
+[2, 0, 0, 2, 1, 1, 2, 2, 2, 1, 1, 2, 2, 2, 1]
+[0, 0, 0, 1, 1, 1, 2, 2, 1, 2, 2, 1, 2, 1, 2]
+[0, 0, 1, 0, 2, 1, 1, 2, 2, 0, 0, 1, 2, 1, 0]
+[0, 2, 0, 0, 0, 2, 0, 2, 1, 1, 0, 0, 1, 0, 0]
+[0, 0, 0, 0, 0, 2, 1, 1, 0, 0, 0, 0, 0, 1, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2]
+[1, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[1, 0, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0]
+[0, 1, 1, 2, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0]
+[0, 2, 2, 1, 1, 1, 0, 2, 0, 2, 0, 0, 0, 0, 0]
+[1, 1, 1, 2, 2, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0]
+[1, 2, 0, 2, 2, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1]
+status: a normal move is executed by the AI if it can't win in one move
+allow_overrule: True
+opponent_winning: False
+function can_win_in_one_move called
+no winning moves found, the model will fully choose a move on its own out of all possible moves:
+
+
+function get_valid_moves called
+[0, 2, 1, 1, 1, 1, 2, 1, 2, 2, 2, 2, 1, 0, 0]
+[2, 0, 0, 2, 1, 1, 2, 2, 2, 1, 1, 2, 2, 2, 1]
+[0, 0, 0, 1, 1, 1, 2, 2, 1, 2, 2, 1, 2, 1, 2]
+[0, 0, 1, 0, 2, 1, 1, 2, 2, 0, 0, 1, 2, 1, 0]
+[0, 2, 0, 0, 0, 2, 0, 2, 1, 1, 0, 0, 1, 0, 0]
+[0, 0, 0, 0, 0, 2, 1, 1, 0, 0, 0, 0, 0, 1, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2]
+[1, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[1, 0, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0]
+[0, 1, 1, 2, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0]
+[0, 2, 2, 1, 1, 1, 0, 2, 0, 2, 0, 0, 0, 0, 0]
+[1, 1, 1, 2, 2, 1, 2, 0, 0, 0, 0, 0, 0, 0, 0]
+[1, 2, 0, 2, 2, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1]
+status: a normal move is executed by the AI if it can't win in one move
+allow_overrule: True
+opponent_winning: False
+function can_win_in_one_move called
+no winning moves found, the model will fully choose a move on its own out of all possible moves:
