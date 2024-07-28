@@ -86,8 +86,6 @@ replay_path = StringVar()
 replay_path.set("")
 var_allow_overrule=BooleanVar()
 var_allow_overrule.set(True)
-var_human_training=BooleanVar()
-var_human_training.set(False)
 state_board_path=StringVar()
 state_board_path.set(r".\specific_situation.txt")
 name_model=StringVar()
@@ -156,12 +154,12 @@ def start_new_game(is_training=False, moves:dict=None):
         raise Exception("Fout in functie: initialiseer_spelbord_json_bestanden")
     try:
         if is_training:
-            if not var_human_training.get():
-                p1.set("DVC-AI")
-                set_player_type(0)
-            else:
-                p1.set("Human")
-                set_player_type(0)
+            p1.set("DVC-AI")
+            set_player_type(0)
+        else:
+            #p1.set("Human")
+            #set_player_type(0)
+            pass
         valid_number = False
         while not valid_number:
             try:
@@ -293,7 +291,7 @@ def toggle_visibility():
 
         ##tab 2##
         if p2.get()=="DVC-AI":
-            CbModelTrain2.grid(row=5, column=0, sticky="w")
+            CbModelTrain2.grid(row=6, column=0, sticky="w")
         else:
             CbModelTrain2.grid_remove()
 
@@ -360,18 +358,19 @@ radiobutton7 = ttk.Radiobutton(tab2, text="TestAI", variable=p2, value="AI", com
 radiobutton7.grid(row=3, column=0, sticky="w")
 radiobutton8 = ttk.Radiobutton(tab2, text="AI-Model", variable=p2, value="DVC-AI", command=lambda: set_player_type(1),style="TRadiobutton")
 radiobutton8.grid(row=4, column=0, sticky="w")
+human_training_button=ttk.Radiobutton(tab2, text="Human", variable=p2, value="Human", command=lambda: set_player_type(1),style="TRadiobutton")
+human_training_button.grid(row=5, column=0,sticky="w")
 CbModelTrain2 = ttk.Combobox(tab2, state="readonly", values=list_models)
-CbModelTrain2.grid(row=5, column=0, sticky="w")
+CbModelTrain2.grid(row=6, column=0, sticky="w")
 gamerunslabel = ttk.Label(tab2, text="Number of games: ",style="TLabel")
-gamerunslabel.grid(row=6, column=0, sticky="w")
+gamerunslabel.grid(row=7, column=0, sticky="w")
 gamerunsentry2 = ttk.Entry(tab2, textvariable=game_runs,style="TEntry")
-gamerunsentry2.grid(row=7, column=0, sticky="w")
+gamerunsentry2.grid(row=8, column=0, sticky="w")
 replaybutton2 = ttk.Checkbutton(tab2, text="Save replays", variable=repvar,style="TCheckbutton")
-replaybutton2.grid(row=8, column=0, sticky="w")
+replaybutton2.grid(row=9, column=0, sticky="w")
 overrule_button=ttk.Checkbutton(tab2, text="Allow overrule", variable=var_allow_overrule,style="TCheckbutton")
-overrule_button.grid(row=9, column=0, sticky="w")
-human_training_button=ttk.Checkbutton(tab2, text="training against human", variable=var_human_training,style="TCheckbutton")
-human_training_button.grid(row=10, column=1,sticky="w")
+overrule_button.grid(row=10, column=0, sticky="w")
+
 train_description = Label(tab2, text="It is recommended to run at least 3 000 games per training session.", font=(style_numbers[0], style_numbers[1]), wraplength=WIDTH-5, justify=LEFT)#origineel width-5
 train_description.grid(row=11, column=0, sticky="w")
 
