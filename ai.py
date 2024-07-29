@@ -145,7 +145,10 @@ class GomokuAI:
         for move in threat_moves:
             if move not in valid_moves:
                 threat_moves.remove(move)#remove unvalid moves
-        return threat_moves
+        if threat_moves:#if not threat_moves==[]
+            return threat_moves
+        else:
+            return valid_moves
 
     def can_win_in_one_move(self, board, current_player,valid_moves)->list:
 
