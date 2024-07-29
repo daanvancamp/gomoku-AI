@@ -2,6 +2,17 @@ import json
 import datetime
 import os
 
+def read_value_from_textfile(filename,line):
+    with open(filename, 'r') as file:
+        data = file.readlines()
+        boolean_value=data[line].strip()
+        if boolean_value=="True":
+            return True
+        elif boolean_value=="False":
+            return False
+        else:
+            raise Exception("Error reading boolean from file")
+        
 
 def empty_file(filename):
     with open(filename, 'w') as file:
