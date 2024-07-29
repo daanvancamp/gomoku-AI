@@ -203,12 +203,6 @@ class GomokuAI:
          else:
             log_info_overruling("no winning moves found, the model will fully choose a move on its own out of all possible moves:")
             return valid_moves
-    def determine_bool_allow_overrule(self):
-        file_name = 'bool_overrule_and_recognition.txt'#same directory as this file
-        with open(file_name, 'r') as file:
-            line = file.readline()
-
-        return line == 'True'
 
     def determine_current_player(self,board)->int:
         pieces_player1=0
@@ -323,7 +317,7 @@ class GomokuAI:
         log_info_overruling("\n\nfunction get_valid_moves called")
         valid_moves = [] 
         if allow_overrule is None:
-            allow_overrule = read_value_from_textfile("bool_overrule_and_recognition.txt",0)
+            allow_overrule = read_value_from_textfile("vars.txt",0)
         opponent = 3 - self.determine_current_player(board)  # 3-2=1 and 3-1=2 Player 1 is a one in the list and player 2 is a 2 in the list.
         threat_moves = []
         opponent_winning = False

@@ -127,7 +127,7 @@ def replay():
 def run():
     gomoku.run(game_instance)
 
-def load_board_from_file():
+def load_board_from_file()->list[list[int]]:
     print("Load " + state_board_path.get())
     with open(state_board_path.get(), "r") as file:
         board = [[0] * 15 for _ in range(15)] # 0 = empty, 1 = player 1, 2 = player 2.
@@ -138,7 +138,7 @@ def load_board_from_file():
     return board
 
 def schrijf_bool_naar_tekstbestand(boolean):
-    with open("bool_overrule_and_recognition.txt", "a") as f:
+    with open("vars.txt", "a") as f:
         f.write(str(boolean.get())+"\n") #.strip will remove this when reading
 
 def start_new_game(is_training=False, moves:dict=None):
@@ -146,7 +146,7 @@ def start_new_game(is_training=False, moves:dict=None):
     filereader.write_model_name_to_file("models_players.txt", model_player1.get(), 0)
     filereader.write_model_name_to_file("models_players.txt", model_player2.get(), 1)
 
-    filereader.empty_file("bool_overrule_and_recognition.txt")
+    filereader.empty_file("vars.txt")
     schrijf_bool_naar_tekstbestand(var_allow_overrule)
     schrijf_bool_naar_tekstbestand(use_recognition)
 
@@ -216,7 +216,7 @@ def start_new_game_from_state_file(is_training=False, moves:dict=None):
     filereader.write_model_name_to_file("models_players.txt", model_player1.get(), 0)
     filereader.write_model_name_to_file("models_players.txt", model_player2.get(), 1)
 
-    filereader.empty_file("bool_overrule_and_recognition.txt")
+    filereader.empty_file("vars.txt")
     schrijf_bool_naar_tekstbestand(var_allow_overrule)
     use_recognition.set(False) #never use recognition in state files
     schrijf_bool_naar_tekstbestand(use_recognition)
@@ -302,7 +302,7 @@ def toggle_visibility():
         try:
             current_tab = tabControl.index(tabControl.select())
             tab_text = tabControl.tab(current_tab, "text")
-            #print(tab_text)
+            filereader.write_last_active_tab_to_file(tab_text)
         except Exception as e:
             print(e)
             

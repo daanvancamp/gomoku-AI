@@ -345,9 +345,7 @@ def convert_to_one_hot(board, player_id):#vermijd dat ai denkt dat de getallen i
 def run(instance, game_number, train, record_replay=False, moves:dict=None,player_first_move=None):#main function
     # Main game loop
     global window_name, victory_text, current_player
-    use_recognition=filereader.read_value_from_textfile("bool_overrule_and_recognition.txt",1)#second line
-    print(use_recognition)
-    print(type(use_recognition))
+    use_recognition=filereader.read_value_from_textfile("vars.txt",1)#second line
     if use_recognition:
         print("using recognition")
     else:

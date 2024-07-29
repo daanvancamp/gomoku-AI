@@ -2,6 +2,11 @@ import json
 import datetime
 import os
 
+def write_last_active_tab_to_file(tab_text):
+    with open("vars.txt", "w") as file:
+        file.write(tab_text+"\n")
+
+
 def read_value_from_textfile(filename,line):
     with open(filename, 'r') as file:
         data = file.readlines()
