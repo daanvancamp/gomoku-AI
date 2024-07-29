@@ -346,6 +346,8 @@ def run(instance, game_number, train, record_replay=False, moves:dict=None,playe
     # Main game loop
     global window_name, victory_text, current_player
     use_recognition=filereader.read_value_from_textfile("bool_overrule_and_recognition.txt",1)#second line
+    print(use_recognition)
+    print(type(use_recognition))
     if use_recognition:
         print("using recognition")
     else:
