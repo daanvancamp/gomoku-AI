@@ -149,12 +149,13 @@ class GomokuAI:
             if move not in valid_moves:
                 threat_moves.remove(move)#remove unvalid moves
         if threat_moves:#if not threat_moves==[]
+            print("no threat moves were valid moves, returning valid moves","the model will choose on its own")
+            log_info_overruling("no threat moves were valid moves, returning valid moves:","the model will choose on its own")
             return threat_moves
         else:
             return valid_moves
 
     def can_win_in_one_move(self, board, current_player,valid_moves)->list:
-
          log_info_overruling("function can_win_in_one_move called")
          winning_moves=[]
          directions = [(0, 1), (1, 0), (1, 1), (1, -1)]
