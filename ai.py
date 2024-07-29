@@ -222,98 +222,6 @@ class GomokuAI:
             return 1 #player one hasn't done his move yet, so he has one piece less than player2#this is also the case if the board is full or empty
         else:
             raise Exception("rewrite this function, this is wrong")
-     
-    def check_own_chances(self,board,opponent_winning)->bool:
-        log_info_overruling("function check_own_chances called")
-        directions = [(0, 1), (1, 0), (1, 1), (1, -1)]
-        player=self.determine_current_player(board)
-        for row in range(len(board)):
-            for col in range(len(board)):#origineel: board
-                if board[row][col] == player:  # Speler heeft hier een stuk
-                    for drow, dcol in directions:
-                        count = 1
-                        open_ends = 0
-
-                        # Controleer in positieve richting
-                        for i in range(1, 5):
-                            r, c = row + i * drow, col + i * dcol
-                            if 0 <= r < len(board) and 0 <= c < len(board[0]):
-                                if board[r][c] == player:
-                                    count += 1
-                                elif board[r][c] == 0:
-                                    open_ends += 1
-                                    break
-                                else:
-                                    break
-                            else:
-                                break
-
-                        # Controleer in negatieve richting
-                        for i in range(1, 5):
-                            r, c = row - i * drow, col - i * dcol
-                            if 0 <= r < len(board) and 0 <= c < len(board[0]):
-                                if board[r][c] == player:
-                                    count += 1
-                                elif board[r][c] == 0:
-                                    open_ends += 1
-                                    break
-                                else:
-                                    break
-                            else:
-                                break
-
-                        if (count == 4 and open_ends >= 0): #speel niet defensief
-                            print("better offensive move found")
-                            return True
-                        elif (count==3 and open_ends == 2):#afhankelijk van tegenstander
-                            opponent=3-player #3-2=1 and 3-1=2
-                            for row in range(len(board)):
-                                for col in range(len(board[0])):
-                                    if board[row][col] == opponent:  # Speler heeft hier een stuk
-                                        for drow, dcol in directions:
-                                            count = 1
-                                            open_ends = 0
-
-                                            # Controleer in positieve richting
-                                            for i in range(1, 5):
-                                                r, c = row + i * drow, col + i * dcol
-                                                if 0 <= r < len(board) and 0 <= c < len(board[0]):
-                                                    if board[r][c] == opponent:
-                                                        count += 1
-                                                    elif board[r][c] == 0:
-                                                        open_ends += 1
-                                                        break
-                                                    else:
-                                                        break
-                                                else:
-                                                    break
-
-                                            # Controleer in negatieve richting
-                                            for i in range(1, 5):
-                                                r, c = row - i * drow, col - i * dcol
-                                                if 0 <= r < len(board) and 0 <= c < len(board[0]):
-                                                    if board[r][c] == opponent:
-                                                        count += 1
-                                                    elif board[r][c] == 0:
-                                                        open_ends += 1
-                                                        break
-                                                    else:
-                                                        break
-                                                else:
-                                                    break
-
-                                            if count==4 and open_ends>=0: #play defensive instead of offensive if the opponent can win
-                                                print("opponent has 4 in a row, defensive move found")
-                                                log_info_overruling("opponent has 4 in a row, defensive move found")
-                                                return False
-                            if not opponent_winning:
-                                print("better offensive move found")#We know that there is one, but we let the model choose
-                                log_info_overruling("better offensive move found, the model will decide from the list of valid moves(=all empty cells)")
-                                return True #better #als je 3 op een rij hebt en de tegenstander geen vier op een rij 2 keer 2 op een rij heeft.
-        print("No good offensive move found,maybe a defensive move instead")
-        log_info_overruling("No good offensive move found, maybe a defensive move instead")
-        return False
-
 
     def get_valid_moves(self, board,allow_overrule=None)->list:#voeg de nodige parameters toe. #returns list of valid moves (overroelen ai kan hier gebeuren door de lijst met lengte 1 te maken.)
         
@@ -403,7 +311,7 @@ class GomokuAI:
                             break  # We hoeven niet verder te zoeken voor deze cel
     
         # Bepaal welke zetten te retourneren op basis van allow_overrule
-        if allow_overrule and threat_moves and not self.check_own_chances(board, opponent_winning):
+        if allow_overrule and threat_moves : #if threat_moves is not empty
             print("overruled:", threat_moves)
             log_info_overruling("overruled: " + str(threat_moves))
             for row in board:
