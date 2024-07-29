@@ -345,7 +345,12 @@ def convert_to_one_hot(board, player_id):#vermijd dat ai denkt dat de getallen i
 def run(instance, game_number, train, record_replay=False, moves:dict=None,player_first_move=None):#main function
     # Main game loop
     global window_name, victory_text, current_player
-    use_recognition=filereader.read_value_from_textfile("vars.txt",1)#second line
+    last_active_tab=filereader.read_last_active_tab_from_file()
+    if last_active_tab=="Play Gomoku":
+        use_recognition=filereader.read_value_from_textfile("vars.txt",1)#second line
+    else:
+        use_recognition=False #disable recognition if not playing Gomoku (Someone can turn this option on and then switch to another tab and then train or replay or whatever...)
+    
     if use_recognition:
         print("using recognition")
     else:

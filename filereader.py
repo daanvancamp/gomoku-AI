@@ -3,9 +3,12 @@ import datetime
 import os
 
 def write_last_active_tab_to_file(tab_text):
-    with open("vars.txt", "w") as file:
-        file.write(tab_text+"\n")
+    with open("last_active_tab.txt", "w") as file:
+        file.write(tab_text+"\n")#write last active tab
 
+def read_last_active_tab_from_file():
+    with open("last_active_tab.txt", "r") as file:
+        return file.read().strip()
 
 def read_value_from_textfile(filename,line):
     with open(filename, 'r') as file:
