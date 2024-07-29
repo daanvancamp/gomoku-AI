@@ -36,7 +36,8 @@ july 2024:
   
   I added a checkbox to train the model against yourself. (human vs DVC-AI) My name is Daan Van Camp, so my initials are DVC.
   
-  Wim added a way to load a situation, so it's easier to find the weaknesses of the model.
+  Wim added a way to 
+  , so it's easier to find the weaknesses of the model.
   
   The last move of the model is now red so it's easier to find the last move and anticipate upon it.
   

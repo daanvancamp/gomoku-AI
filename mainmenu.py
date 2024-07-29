@@ -328,8 +328,6 @@ def refresh_models():
     CbModel2.configure(values=models)
     CbModelTrain1.configure(values=models)
     CbModelTrain2.configure(values=models)
-    CbModelload1.configure(values=models)
-
 def game_over():
     root.wm_state('normal')
     game_instance.current_game = 0
