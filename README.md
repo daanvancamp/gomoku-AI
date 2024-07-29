@@ -36,8 +36,7 @@ july 2024:
   
   I added a checkbox to train the model against yourself. (human vs DVC-AI) My name is Daan Van Camp, so my initials are DVC.
   
-  Wim added a way to 
-  , so it's easier to find the weaknesses of the model.
+  Wim added a way to load a situation and load from there, so it's easier to find the weaknesses of the model.
   
   The last move of the model is now red so it's easier to find the last move and anticipate upon it.
   
@@ -46,6 +45,13 @@ july 2024:
   **You can now train multiple models using this program.**
   
   There's now a checkbox in the GUI so you can easily turn the recognition on and off.
+  
+  Loading a situation is now integrated into the play game tab.
+  
+  The "global" variables aren't stored in files anymore, now they really are global variables.
+
+  I added more test situation, so the performance of the model can be tested more extensively and the overruling/training can be optimized.
+  
   
   august 2024:
 
