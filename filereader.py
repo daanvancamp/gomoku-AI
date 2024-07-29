@@ -6,6 +6,8 @@ def read_value_from_textfile(filename,line):
     with open(filename, 'r') as file:
         data = file.readlines()
         boolean_value=data[line].strip()
+        print(data[0])
+        print(data[1])
         if boolean_value=="True":
             return True
         elif boolean_value=="False":
@@ -13,7 +15,6 @@ def read_value_from_textfile(filename,line):
         else:
             raise Exception("Error reading boolean from file")
         
-
 def empty_file(filename):
     with open(filename, 'w') as file:
         file.write("")

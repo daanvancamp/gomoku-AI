@@ -390,8 +390,8 @@ def run(instance, game_number, train, record_replay=False, moves:dict=None,playe
                         running = False 
                         #druk op linkermuisknop om te zetten
                     elif (event.type == pygame.MOUSEBUTTONDOWN or event.type == pygame.K_UP or event.type == pygame.K_RIGHT) and event.button == 1: #kan zo gelaten worden. Wanneer op de muis wordt gedrukt,wordt de zet gelezen van het bestand
-                        pygame.mixer.music.fadeout(1000)
-                        
+                        Thread(target=lambda:pygame.mixer.music.fadeout(1000)).start()#don't block the main thread
+
                         if use_recognition:
                             schrijf_relevante_stukken_na_zet_weg()#sla de stukken van de mens op in een bestand.
                             zetten_mens=bepaal_relevante_zet()#vergeet de haakjes niet!!
@@ -425,12 +425,14 @@ def run(instance, game_number, train, record_replay=False, moves:dict=None,playe
                                     raise Exception("Als u het denkt, waarde wordt op de normale manier ingesteld.")
                             except Exception as e:
                                 print("something went wrong with the recognition of the pieces:",e)
+
                         else:
-                            x,y=event.pos # dit mag er niet meer staan.
+                            print("position of mouse",use_recognition)
+                            x,y=event.pos
             
                         if use_recognition:
                             schrijf_relevante_stukken_voor_zet_weg() #sla stukken opnieuw op.
-                        #x, y = event.pos 
+                        
                         col = x // instance.CELL_SIZE 
                         row = y // instance.CELL_SIZE
                         if instance.GRID_SIZE > row >= 0 == instance.board[row][col] and 0 <= col < instance.GRID_SIZE:
@@ -447,10 +449,8 @@ def run(instance, game_number, train, record_replay=False, moves:dict=None,playe
                                 # Switch player if neither player have won
                                 current_player = 3 - current_player #current_player kan 2 zijn of 1, maar in beide gevallen zal er van speler gewisseld worden.
                                 
-                                thread_start_muziek=Thread(target=start_muziek_vertraagd) #wordt iedere keer opnieuw aangemaakt aangezien threads moeilijk te stoppen zijn.
-                                thread_start_muziek.start() #vertraging simuleert de tijd dat de zet van het model duurt
-                                print("muziek gestart")
-
+                                thread_start_muziek=Thread(target=start_muziek_vertraagd).start() #wordt iedere keer opnieuw aangemaakt aangezien threads moeilijk te stoppen zijn.
+                                
                 ## adds hover effects to cells when mouse hovers over them##
                 mouse_pos = pygame.mouse.get_pos()
                 x,y = mouse_pos
