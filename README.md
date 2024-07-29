@@ -55,7 +55,8 @@ july 2024:
 issues:
 
 There's a known issue/weakness. Like you see on the image. It's the turn of Black.
-![image](https://github.com/user-attachments/assets/46c63a9a-af7f-4f0a-9cf3-2bf9f56af9ac) You can always win when you start from the ends and make your way to the middle. The model sometimes won't block it, but no one plays like that. If a 100 people (who have never played the game) would play the game, then they all wouldn't find out about this bug. Someone who knows all the existing bugs and vulnerabilities (and takes 30 seconds to think about each move), will never lose against the model.
+![image](https://github.com/user-attachments/assets/46c63a9a-af7f-4f0a-9cf3-2bf9f56af9ac) 
+You can always win when you start from the ends and make your way to the middle. The model sometimes won't block it, but no one plays like that. If a 100 people (who have never played the game) would play the game, then they all wouldn't find out about this bug. Someone who knows all the existing bugs and vulnerabilities (and takes 30 seconds to think about each move), will never lose against the model.
 
 roadmap:
 
