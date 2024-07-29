@@ -44,7 +44,7 @@ july 2024:
   
   **You can now train multiple models using this program.**
   
-  There's now a checkbox in the GUI so you can turn the recognition on. (The checkbox will work from 29/7 or 30/7, it is there, but it doesn't do anything as of right now.)
+  There's now a checkbox in the GUI so you can easily turn the recognition on and off.
   
   august 2024:
 
