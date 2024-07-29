@@ -377,7 +377,7 @@ overrule_button=ttk.Checkbutton(tab1, text="Allow overrule", variable=var_allow_
 overrule_button.grid(row=11, column=0, sticky="w")
 use_recognition_button=ttk.Checkbutton(tab1, text="use recognition*", variable=use_recognition,style="TCheckbutton")
 use_recognition_button.grid(row=12, column=0, sticky="w")
-label_recognition=ttk.Label(tab1, text="*only turn on when you have a physical board, a webcam and the other repository: ",style="TLabel",wraplength=300,fg="red")
+label_recognition=ttk.Label(tab1, text="*only turn on when you have a physical board, a webcam and the other repository: ",style="TLabel",wraplength=300)
 label_recognition.grid(row=13, column=0, sticky="w",columnspan=2)
 
 button_3 = ttk.Button(input_canvas, text="Quit Game", style="TButton", command=lambda: quit_game())
