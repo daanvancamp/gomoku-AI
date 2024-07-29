@@ -80,9 +80,9 @@ game_runs.set("1")
 delayvar = BooleanVar()
 delayvar.set(False)
 logvar = BooleanVar()
-logvar.set(True)
+logvar.set(False)
 repvar = BooleanVar()
-repvar.set(True)
+repvar.set(False)
 replay_path = StringVar()
 replay_path.set("")
 var_allow_overrule=BooleanVar()
@@ -224,6 +224,7 @@ def start_new_game_from_state_file(is_training=False, moves:dict=None):
     schrijf_bool_naar_tekstbestand(use_recognition)
 
     log_info_overruling("\n\n\nnew session begins:")
+
     try:
         initialiseer_spelbord_json_bestanden()
     except:
@@ -333,12 +334,22 @@ def toggle_visibility_write_last_active_tab_to_file():
         else:
             CbModelTrain2.grid_remove()
 
+        # #tab 4##
+        # if p1.get()=="DVC-AI":
+        #     CbModelload1.grid(row=6, column=0, sticky="w")
+        # else:
+        #     CbModelload1.grid_remove()
+        # if p2.get()=="DVC-AI":
+        #     CbModelload2.grid(row=6, column=1, sticky="w")
+        # else:
+        #     CbModelload2.grid_remove()
+
 
 button_1 = ttk.Button(tab1, text="New Game", command=lambda: start_new_game(False), style="TButton")
 button_1.grid(row=0, column=0, sticky="w")
-player1typelabel = ttk.Label(tab1,style="TLabel", text="Player 1")
+player1typelabel = ttk.Label(tab1,style="TLabel", text="Player 1(black)")
 player1typelabel.grid(row=2, column=0, sticky="w")
-player2typelabel = ttk.Label(tab1, text="Player 2", style="TLabel")
+player2typelabel = ttk.Label(tab1, text="Player 2(white)", style="TLabel")
 player2typelabel.grid(row=2, column=1, sticky="w")
 
 radiobutton1 = ttk.Radiobutton(tab1, text="Human", variable=p1, value="Human", command=lambda: set_player_type(0),style="TRadiobutton")
@@ -431,12 +442,31 @@ label_load_state=ttk.Label(tab4, text="Choose file board state: ",style="TLabel"
 label_load_state.grid(row=0, column=0, sticky="w")
 load_state_entry = ttk.Entry(tab4, textvariable=state_board_path, width=30,style="TEntry")
 load_state_entry.grid(row=1, column=0, sticky="w")
+button_7 = ttk.Button(tab4, text="Start game", style="TButton", command=lambda: start_new_game_from_state_file())
+button_7.grid(row=1, column=3)
 button_6 = ttk.Button(tab4, text="...",style="TButton", command=lambda: browse_state_files())
 button_6.grid(row=1, column=1, sticky="w")
-button_7 = ttk.Button(tab4, text="Start game", style="TButton", command=lambda: start_new_game_from_state_file())
-button_7.grid(row=3, column=0)
-CbModelload1 = ttk.Combobox(tab4, state="readonly", values=list_models,textvariable=model_player2)#todo: double check if this is correct
-CbModelload1.grid(row=5, column=0, sticky="w")
+
+
+
+# player1_label=ttk.Label(tab4, text="Player 1 (black): ",style="TLabel")
+# player1_label.grid(row=2, column=0, sticky="w")
+# player2_label=ttk.Label(tab4, text="Player 2(white): ",style="TLabel")
+# player2_label.grid(row=2, column=1, sticky="w")
+
+# radiobutton1_tab2 = ttk.Radiobutton(tab4, text="Human", variable=p1, value="Human", command=lambda: set_player_type(0),style="TRadiobutton")
+# radiobutton1_tab2.grid(row=3, column=0, sticky="w")
+# radiobutton3_tab2 = ttk.Radiobutton(tab4, text="AI-Model", variable=p1, value="DVC-AI", command=lambda: set_player_type(0),style="TRadiobutton")
+# radiobutton3_tab2.grid(row=5, column=0, sticky="w")
+CbModelload1 = ttk.Combobox(tab4, state="readonly", values=list_models,textvariable=model_player1)#todo: double check if this is correct
+CbModelload1.grid(row=6, column=0, sticky="w")
+# radiobutton4_tab2 = ttk.Radiobutton(tab4, text="Human", variable=p2, value="Human", command=lambda: set_player_type(1),style="TRadiobutton")
+# radiobutton4_tab2.grid(row=3, column=1, sticky="w")
+# radiobutton6_tab2 = ttk.Radiobutton(tab4, text="AI-Model", variable=p2, value="DVC-AI", command=lambda: set_player_type(1),style="TRadiobutton")
+# radiobutton6_tab2.grid(row=5, column=1, sticky="w")
+# CbModelload2 = ttk.Combobox(tab4, state="readonly", values=list_models,textvariable=model_player2)#todo: double check if this is correct
+# CbModelload2.grid(row=6, column=1, sticky="w")
+
 
 
 ttk.Label(tab5) 
