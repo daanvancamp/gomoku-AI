@@ -1,27 +1,14 @@
 import json
 import datetime
 import os
-
-
-def read_value_from_textfile(filename,line):
-    with open(filename, 'r') as file:
-        data = file.readlines()
-        boolean_value=data[line].strip()
-        print(data[0])
-        print(data[1])
-        if boolean_value=="True":
-            return True
-        elif boolean_value=="False":
-            return False
-        else:
-            raise Exception("Error reading boolean from file")
+from globalvariables import path_logging_overruling
         
 def empty_file(filename):
     with open(filename, 'w') as file:
         file.write("")
 
 def log_info_overruling(message):
-    with open("logging_overruling.txt", "a") as file:
+    with open(path_logging_overruling, "a") as file:
         file.write(message+"\n")
         
 def create_gomoku_game(filename):

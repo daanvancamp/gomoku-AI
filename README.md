@@ -67,7 +67,9 @@ roadmap:
 
 -solving the issues mentioned above, including the issue with the overruling
 
--We are working on integrating the two programs. We will integhrate them when they are both stable.
+-We are working on integrating the two programs. We will integrate them when they are both stable.
+
+-coming soon
 
 
 Note: the project is still under development. Some added features aren't stable as of right now, but overall it works better than the program of Mikko (from which I started). The project will hopefully be finished in april of 2025, so you can expect the stable and complete version ultimately then, but it could be done earlier.

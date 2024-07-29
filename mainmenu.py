@@ -11,13 +11,10 @@ import stats
 from PIL import Image, ImageTk
 from lezen_stukken_en_muziek import TE_DETECTEREN_KLEUR, initialiseer_spelbord_json_bestanden
 from filereader import log_info_overruling
-import os
-import shutil
 import modelmanager
-from gomoku import *  
-
-#todo: make it look nice
-#add sound effects
+from gomoku import *
+#todo: make the GUI fullscreen, add webcam view
+#todo: make it look nice, make it bigger
 
 WIDTH = 500 #origineel 230
 HEIGHT = 700 #origineel 315
@@ -140,10 +137,6 @@ def load_board_from_file()->list[list[int]]:
                 board[row][col]=int(line[col])
     return board
 
-def schrijf_bool_naar_tekstbestand(boolean):
-    with open("vars.txt", "a") as f:
-        f.write(str(boolean.get())+"\n") #.strip will remove this when reading
-
 def start_new_game(is_training=False, moves:dict=None):
     global allow_overrule, use_recognition, current_player, player1, player2
     
@@ -226,8 +219,6 @@ def start_new_game(is_training=False, moves:dict=None):
         print("Most likely: Game runs value invalid, try again.")
     
     game_over()
-
-
 
 def start_new_training(moves:dict=None):
     global allow_overrule, use_recognition, current_player, player1, player2
@@ -380,16 +371,6 @@ def toggle_visibility_write_last_active_tab_to_file():
         else:
             CbModelTrain2.grid_remove()
 
-        # #tab 4##
-        # if p1.get()=="DVC-AI":
-        #     CbModelload1.grid(row=6, column=0, sticky="w")
-        # else:
-        #     CbModelload1.grid_remove()
-        # if p2.get()=="DVC-AI":
-        #     CbModelload2.grid(row=6, column=1, sticky="w")
-        # else:
-        #     CbModelload2.grid_remove()
-
 
 button_1 = ttk.Button(tab1, text="New Game", command=lambda: start_new_game(False), style="TButton")
 button_1.grid(row=0, column=0, sticky="w")
@@ -516,7 +497,7 @@ nameModelLabel = ttk.Label(tab4, text="Name of model: ",style="TLabel")
 nameModelLabel.grid(row=2, column=0, sticky="w")
 nameModelEntry = ttk.Entry(tab4, textvariable=name_model,style="TEntry")
 nameModelEntry.grid(row=2, column=1, sticky="w")
-nameModelEntry.bind("<Return>",lambda event: create_new_model())#push enter to make a new model
+nameModelEntry.bind("<Return>",lambda event: create_new_model())#push enter to make a new model (easier)
 button_NewModel = ttk.Button(tab4, text="Make New Model", style="TButton", command=lambda: create_new_model())
 button_NewModel.grid(row=3, column=0)
 button_DeleteModel = ttk.Button(tab4, text="Delete Model", style="TButton", command=lambda: delete_model())

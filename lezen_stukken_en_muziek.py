@@ -2,6 +2,7 @@ import json
 from time import sleep
 from typing import List, Tuple, Dict, Any
 import pygame
+from globalvariables import path_wachten_muziek
 
 #belangrijk: dit programma wordt nooit zelf uitgevoerd. De functies worden enkel geimporteerd vanuit gomuku.py en main.py
 
@@ -16,7 +17,7 @@ TE_DETECTEREN_KLEUR:str = "Blauw"  # Verander dit naar "Rood" om rode zetten te 
 def initialiseer_muziek():
     # Initialiseer pygame mixer
     pygame.mixer.init(buffer=100000,allowedchanges=0) #voorkom haperingen
-    pygame.mixer.music.load(r"wachten_muziek.mp3")#add to memory
+    pygame.mixer.music.load(path_wachten_muziek)#add to memory
 
 def start_muziek_vertraagd(tijd=1):
     sleep(tijd) #blokkeert enkel thread
@@ -25,7 +26,7 @@ def start_muziek_vertraagd(tijd=1):
         pygame.mixer.music.play()
     except:
         try:
-            pygame.mixer.music.load(r"wachten_muziek.mp3")#tijdelijk #todo: werk weg door initialiseer_muziek te verbeteren of een andere wijziging toe te passen
+            pygame.mixer.music.load(path_wachten_muziek)#tijdelijk #todo: werk weg door initialiseer_muziek te verbeteren of een andere wijziging toe te passen
             pygame.mixer.music.fadeout(1000)
 
             pygame.mixer.music.play()
