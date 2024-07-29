@@ -1,8 +1,8 @@
 # adapted from gomoku-thesis-proj
 https://github.com/Mig26/gomoku-thesis-proj
 
-I added support for physical boards via webcam, but it can still be used perfectly fine without a webcam. That's because of a built-in if-statement that checks if the other program changes the json file. If the program doesn't detect a difference between the two json files, then it will just take the mouse position. I also optimized a few things. The code for the webcam can be found here. You need to run both programs simultaneously, otherwise, it won't work as expected. The information is transfered via a json file. A file is used to save system resources; a thread puts more strain on the hardware. A constant connection with the webcam is also recommended because it takes about 5 seconds to connect to the webcam. The program should run perfectly fine on a relatively low-spec computer. Threads also aren't usable in this case because the data needs to be accesible from everywhere in the code. You could use a variable (list) to save the pieces on the board, but that would be more complicated than necessary and again, would slow down the program. https://github.com/daanvancamp/vijf_op_een_rij_beeldherkenning The usage of the recognition feature will be controlled via a checkbox from 29/7 or 30/7.
-Make sure to clone that repository before continuing, otherwise, it won't work.
+I added support for physical boards via webcam, you can easily turn the recogniton via webcam on and off. There's a built-in checkbox fot that. It is turned off by default. I also optimized a few things. The code for the webcam can be found here. You need to run both programs simultaneously if you want to use the recognition, otherwise, it won't work as expected. The data is transfered via a json file. A file is used to save system resources; a thread puts more strain on the hardware. A constant connection with the webcam is also recommended because it takes about 5 seconds to connect to the webcam. The program should run perfectly fine on a relatively low-spec computer. https://github.com/daanvancamp/vijf_op_een_rij_beeldherkenning The usage of the recognition feature can be controlled via a checkbox.
+We are working on integrating the two programs. We will integhrate them when they are both stable.
 
 I also want to mention the following: "please don't hesitate to report any bugs". There are probably many undiscovered bugs. Please check if your bug if listed below before reporting it, because then it's a known issue/bug. Feature suggestions are also more than welcome, because they can help to develop a better, versatile program.
 
@@ -64,6 +64,9 @@ roadmap:
 -I am further developping the feature to turn the recognition on and off.
 
 -solving the issues mentioned above, including the issue with the overruling
+
+-We are working on integrating the two programs. We will integhrate them when they are both stable.
+
 
 Note: the project is still under development. Some added features aren't stable as of right now, but overall it works better than the program of Mikko (from which I started). The project will hopefully be finished in april of 2025, so you can expect the stable and complete version ultimately then, but it could be done earlier.
 

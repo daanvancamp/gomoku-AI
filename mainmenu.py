@@ -22,7 +22,7 @@ import modelmanager
 #add sound effects
 
 WIDTH = 415 #origineel 230
-HEIGHT = 315 #origineel 315
+HEIGHT = 335 #origineel 315
 
 game_instance = gomoku.GomokuGame(filereader.create_gomoku_game("consts.json"))
 modelmanager_instance = modelmanager.ModelManager()
@@ -92,6 +92,8 @@ state_board_path.set(r".\specific_situation.txt")
 name_model=StringVar()
 model_player1=StringVar()
 model_player2=StringVar()
+use_recognition=BooleanVar()
+use_recognition.set(False)
 def set_player_type(playerid):
     if playerid == 0:
         newtype = p1.get()
@@ -138,20 +140,19 @@ def load_board_from_file():
                 board[row][col]=int(line[col])
     return board
 
-def schrijf_bool_naar_tekstbestand():
-    with open("bool_overrule.txt", "w") as f:
-        f.write(str(var_allow_overrule.get()))
-        if var_allow_overrule.get():
-            print("overruling of the model is turned on")
-        else:
-            print("overruling of the model is turned off")
+def schrijf_bool_naar_tekstbestand(boolean):
+    with open("bool_overrule_and_recognition.txt", "a") as f:
+        f.write(str(boolean.get())+"\n") #.strip will remove this when reading
 
 def start_new_game(is_training=False, moves:dict=None):
     filereader.empty_file("models_players.txt")
     filereader.write_model_name_to_file("models_players.txt", model_player1.get(), 0)
     filereader.write_model_name_to_file("models_players.txt", model_player2.get(), 1)
+    with open ("bool_overrule_and_recognition.txt", "w") as f:
+        f.write("")
+    schrijf_bool_naar_tekstbestand(var_allow_overrule)
+    schrijf_bool_naar_tekstbestand(use_recognition)
 
-    schrijf_bool_naar_tekstbestand()
     log_info_overruling("\n\n\nnew session begins:")
 
     try:
@@ -218,7 +219,12 @@ def start_new_game_from_state_file(is_training=False, moves:dict=None):
     filereader.write_model_name_to_file("models_players.txt", model_player1.get(), 0)
     filereader.write_model_name_to_file("models_players.txt", model_player2.get(), 1)
 
-    schrijf_bool_naar_tekstbestand()
+    with open ("bool_overrule_and_recognition.txt", "w") as f:
+        f.write("")#clear file
+    schrijf_bool_naar_tekstbestand(var_allow_overrule)
+    use_recognition.set(False) #never use recognition in state files
+    schrijf_bool_naar_tekstbestand(use_recognition)
+
     log_info_overruling("\n\n\nnew session begins:")
     try:
         initialiseer_spelbord_json_bestanden()
@@ -369,6 +375,11 @@ replaybutton = ttk.Checkbutton(tab1, text="Save replays", variable=repvar,style=
 replaybutton.grid(row=10, column=0, sticky="w")
 overrule_button=ttk.Checkbutton(tab1, text="Allow overrule", variable=var_allow_overrule,style="TCheckbutton")
 overrule_button.grid(row=11, column=0, sticky="w")
+use_recognition_button=ttk.Checkbutton(tab1, text="use recognition*", variable=use_recognition,style="TCheckbutton")
+use_recognition_button.grid(row=12, column=0, sticky="w")
+label_recognition=ttk.Label(tab1, text="*only turn on when you have a physical board, a webcam and the other repository: ",style="TLabel",wraplength=300)
+label_recognition.grid(row=13, column=0, sticky="w")
+
 button_3 = ttk.Button(input_canvas, text="Quit Game", style="TButton", command=lambda: quit_game())
 button_3.grid(row=1, column=0, sticky="e")
 

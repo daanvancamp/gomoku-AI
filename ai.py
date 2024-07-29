@@ -6,7 +6,7 @@ import torch.nn.functional as F
 import numpy as np
 import random
 from collections import deque
-from filereader import log_info_overruling
+from filereader import log_info_overruling, read_value_from_textfile
 
 
 MAX_MEMORY = 1_000_0000          # origineel 1_000_000
@@ -204,7 +204,7 @@ class GomokuAI:
             log_info_overruling("no winning moves found, the model will fully choose a move on its own out of all possible moves:")
             return valid_moves
     def determine_bool_allow_overrule(self):
-        file_name = 'bool_overrule.txt'#same directory as this file
+        file_name = 'bool_overrule_and_recognition.txt'#same directory as this file
         with open(file_name, 'r') as file:
             line = file.readline()
 
@@ -323,7 +323,7 @@ class GomokuAI:
         log_info_overruling("\n\nfunction get_valid_moves called")
         valid_moves = [] 
         if allow_overrule is None:
-            allow_overrule = self.determine_bool_allow_overrule()
+            allow_overrule = read_value_from_textfile("bool_overrule_and_recognition.txt",0)
         opponent = 3 - self.determine_current_player(board)  # 3-2=1 and 3-1=2 Player 1 is a one in the list and player 2 is a 2 in the list.
         threat_moves = []
         opponent_winning = False
