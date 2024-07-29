@@ -80,9 +80,9 @@ game_runs.set("1")
 delayvar = BooleanVar()
 delayvar.set(False)
 logvar = BooleanVar()
-logvar.set(False)
+logvar.set(True)
 repvar = BooleanVar()
-repvar.set(False)
+repvar.set(True)
 replay_path = StringVar()
 replay_path.set("")
 var_allow_overrule=BooleanVar()
@@ -305,17 +305,21 @@ def toggle_visibility_write_last_active_tab_to_file():
         try:
             current_tab = tabControl.index(tabControl.select())
             tab_text = tabControl.tab(current_tab, "text")
+            if tab_text=="Train":
+                game_runs.set("3000")
+            else:
+                game_runs.set("1")
             filereader.write_last_active_tab_to_file(tab_text)
         except Exception as e:
             pass
             
-
         ##TAB 1##
         if p1.get()=="DVC-AI":
             CbModel1.grid(row=6,column=0)
 
         else:
             CbModel1.grid_remove()
+
         if p2.get()=="DVC-AI":
             CbModel2.grid(row=6,column=1)
         else:
@@ -326,9 +330,6 @@ def toggle_visibility_write_last_active_tab_to_file():
             CbModelTrain2.grid(row=6, column=0, sticky="w")
         else:
             CbModelTrain2.grid_remove()
-
-        ##tab 4##
-        #todo:finish this
 
 
 button_1 = ttk.Button(tab1, text="New Game", command=lambda: start_new_game(False), style="TButton")
@@ -376,8 +377,8 @@ overrule_button=ttk.Checkbutton(tab1, text="Allow overrule", variable=var_allow_
 overrule_button.grid(row=11, column=0, sticky="w")
 use_recognition_button=ttk.Checkbutton(tab1, text="use recognition*", variable=use_recognition,style="TCheckbutton")
 use_recognition_button.grid(row=12, column=0, sticky="w")
-label_recognition=ttk.Label(tab1, text="*only turn on when you have a physical board, a webcam and the other repository: ",style="TLabel",wraplength=300)
-label_recognition.grid(row=13, column=0, sticky="w")
+label_recognition=ttk.Label(tab1, text="*only turn on when you have a physical board, a webcam and the other repository: ",style="TLabel",wraplength=300,fg="red")
+label_recognition.grid(row=13, column=0, sticky="w",columnspan=2)
 
 button_3 = ttk.Button(input_canvas, text="Quit Game", style="TButton", command=lambda: quit_game())
 button_3.grid(row=1, column=0, sticky="e")
