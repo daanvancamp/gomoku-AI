@@ -1,0 +1,52 @@
+{
+    "moves": [
+        {
+            "player": "1",
+            "position": "(9, 6)"
+        },
+        {
+            "player": "2",
+            "position": "(9, 4)"
+        },
+        {
+            "player": "1",
+            "position": "(8, 6)"
+        },
+        {
+            "player": "2",
+            "position": "(7, 6)"
+        },
+        {
+            "player": "1",
+            "position": "(8, 5)"
+        },
+        {
+            "player": "2",
+            "position": "(8, 7)"
+        },
+        {
+            "player": "1",
+            "position": "(7, 5)"
+        },
+        {
+            "player": "2",
+            "position": "(6, 5)"
+        },
+        {
+            "player": "1",
+            "position": "(6, 6)"
+        },
+        {
+            "player": "2",
+            "position": "(5, 4)"
+        },
+        {
+            "player": "1",
+            "position": "(6, 8)"
+        },
+        {
+            "player": "2",
+            "position": "(9, 8)"
+        }
+    ]
+}

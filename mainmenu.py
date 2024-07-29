@@ -94,6 +94,8 @@ model_player1=StringVar()
 model_player2=StringVar()
 use_recognition=BooleanVar()
 use_recognition.set(False)
+model_player1.set("standaard")
+model_player2.set("standaard")
 def set_player_type(playerid):
     if playerid == 0:
         newtype = p1.get()

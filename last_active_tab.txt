@@ -1,1 +1,1 @@
-Play gomoku
+Load a situation
