@@ -2,13 +2,6 @@ import json
 import datetime
 import os
 
-def write_last_active_tab_to_file(tab_text):
-    with open("last_active_tab.txt", "w") as file:
-        file.write(tab_text+"\n")#write last active tab
-
-def read_last_active_tab_from_file():
-    with open("last_active_tab.txt", "r") as file:
-        return file.read().strip()
 
 def read_value_from_textfile(filename,line):
     with open(filename, 'r') as file:
@@ -26,16 +19,11 @@ def read_value_from_textfile(filename,line):
 def empty_file(filename):
     with open(filename, 'w') as file:
         file.write("")
-def write_model_name_to_file(filename, model_name,player):
-    with open(filename, 'a') as file:
-        file.write("model_player_" + str(player)+":" + model_name+"\n")
-def read_model_name(filename,line):
-    with open(filename, 'r') as file:
-        data = file.readlines()
-        return data[line].split(":")[1]
+
 def log_info_overruling(message):
     with open("logging_overruling.txt", "a") as file:
         file.write(message+"\n")
+        
 def create_gomoku_game(filename):
     with open(filename, 'r') as file:
         data = json.load(file)
@@ -50,7 +38,6 @@ def create_gomoku_game(filename):
 def load_scores(filename):
     with open(filename, 'r') as file:
         return json.load(file).get("scores", [])
-
 
 def load(filename):
     return json.load(filename)
@@ -84,7 +71,6 @@ def save_replay(p1, p2):
     os.makedirs(os.path.dirname(outfile), exist_ok=True)
     with open(outfile, "w") as of:
         json.dump(moves_sequence, of, indent=4)
-
 
 def load_replay(file):
     try:

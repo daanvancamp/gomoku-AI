@@ -4,26 +4,25 @@ from time import sleep
 from tkinter import *
 from tkinter import ttk
 from tkinter import filedialog
-
 import gomoku
 from ai import GomokuAI
-gomoku_ai=GomokuAI(15)#board_size
 import filereader
 import stats
 from PIL import Image, ImageTk
 from lezen_stukken_en_muziek import TE_DETECTEREN_KLEUR, initialiseer_spelbord_json_bestanden
 from filereader import log_info_overruling
 import os
-# import module
 import shutil
 import modelmanager
+from gomoku import *  
 
 #todo: make it look nice
 #add sound effects
 
-WIDTH = 415 #origineel 230
-HEIGHT = 335 #origineel 315
+WIDTH = 500 #origineel 230
+HEIGHT = 700 #origineel 315
 
+gomoku_ai = GomokuAI(15)#board_size
 game_instance = gomoku.GomokuGame(filereader.create_gomoku_game("consts.json"))
 modelmanager_instance = modelmanager.ModelManager()
 
@@ -48,8 +47,6 @@ except TclError:
 # Maak een Style object aan
 style2 = ttk.Style()
 style2.theme_use('default')
-
-# Configureer de stijl voor de TNotebook.Tab
 style2.configure('TNotebook.Tab', background='green')
 
 tabControl = ttk.Notebook(root)
@@ -58,13 +55,11 @@ tab1 = ttk.Frame(tabControl)
 tab2 = ttk.Frame(tabControl)
 tab3 = ttk.Frame(tabControl)
 tab4 = ttk.Frame(tabControl)
-tab5 = ttk.Frame(tabControl)
 
 tabControl.add(tab1, text='Play gomoku')
 tabControl.add(tab2, text='Train')
 tabControl.add(tab3, text='Replay old games')
-tabControl.add(tab4, text='Load a situation')
-tabControl.add(tab5, text='Define model')
+tabControl.add(tab4, text='Define model')
 tabControl.grid(row=0, sticky="w")
 
 style_numbers = ["georgia", 10, "white", 12, 2]#font, size, color, bold, underline
@@ -87,15 +82,21 @@ replay_path = StringVar()
 replay_path.set("")
 var_allow_overrule=BooleanVar()
 var_allow_overrule.set(True)
+
+var_start_from_file=BooleanVar()
+var_allow_overrule.set(False)
+
 state_board_path=StringVar()
 state_board_path.set(r".\test_situations\specific_situation.txt")
 name_model=StringVar()
 model_player1=StringVar()
 model_player2=StringVar()
-use_recognition=BooleanVar()
-use_recognition.set(False)
+var_use_recognition=BooleanVar()
+var_use_recognition.set(False)
 model_player1.set("standaard")
 model_player2.set("standaard")
+var_startingPlayer=StringVar()
+
 def set_player_type(playerid):
     if playerid == 0:
         newtype = p1.get()
@@ -144,15 +145,18 @@ def schrijf_bool_naar_tekstbestand(boolean):
         f.write(str(boolean.get())+"\n") #.strip will remove this when reading
 
 def start_new_game(is_training=False, moves:dict=None):
-    filereader.empty_file("models_players.txt")
-    filereader.write_model_name_to_file("models_players.txt", model_player1.get(), 0)
-    filereader.write_model_name_to_file("models_players.txt", model_player2.get(), 1)
-
+    global allow_overrule, use_recognition, current_player, player1, player2
+    
     filereader.empty_file("vars.txt")
-    schrijf_bool_naar_tekstbestand(var_allow_overrule)
-    schrijf_bool_naar_tekstbestand(use_recognition)
-
     log_info_overruling("\n\n\nnew session begins:")
+    
+    allow_overrule = var_allow_overrule.get()
+    use_recognition = var_use_recognition.get()
+
+    if var_startingPlayer.get() == "Player 1":
+        current_player = player1
+    else:
+        current_player = player2
 
     try:
         initialiseer_spelbord_json_bestanden()
@@ -187,6 +191,18 @@ def start_new_game(is_training=False, moves:dict=None):
             stats.log_message(f"Game  {i+1} begins.")
             game_instance.current_game = i+1
             game_instance.last_round = (i+1 == runs)
+            
+            if var_start_from_file.get():
+                try:
+                    board = load_board_from_file()
+                    print("Bord geladen")
+                    for row in board:
+                        print(row)
+                    game_instance.set_board(board)
+                except Exception as e:
+                    print("error in gomoku.run, herschrijf die functie.")
+                    raise Exception("De error is waarschijnlijk te wijten aan een foute zet, controleer het lezen van de json bestanden die het bord opslaan." , str(e))
+
             try:
                 gomoku.run(game_instance, i, is_training, repvar.get(), moves) #kan als hoofdprogramma beschouwd worden (��n spel is ��n run)
             except Exception as e:
@@ -212,54 +228,85 @@ def start_new_game(is_training=False, moves:dict=None):
     game_over()
 
 
-def start_new_game_from_state_file(is_training=False, moves:dict=None):
-    global game_instance
-    filereader.empty_file("models_players.txt")
-    filereader.write_model_name_to_file("models_players.txt", model_player1.get(), 0)
-    filereader.write_model_name_to_file("models_players.txt", model_player2.get(), 1)
 
+def start_new_training(moves:dict=None):
+    global allow_overrule, use_recognition, current_player, player1, player2
+    
     filereader.empty_file("vars.txt")
-    schrijf_bool_naar_tekstbestand(var_allow_overrule)
-    use_recognition.set(False) #never use recognition in state files
-    schrijf_bool_naar_tekstbestand(use_recognition)
-
     log_info_overruling("\n\n\nnew session begins:")
+    
+    allow_overrule = var_allow_overrule.get()
+    use_recognition = var_use_recognition.get()
+
+    if var_startingPlayer.get() == "Player 1":
+        current_player = player1
+    else:
+        current_player = player2
 
     try:
         initialiseer_spelbord_json_bestanden()
     except:
         raise Exception("Fout in functie: initialiseer_spelbord_json_bestanden")
     try:
-        runs = 1;
+        print("training mode")
+        p1.set("DVC-AI")
+        set_player_type(0)
+        valid_number = False
+        while not valid_number:
+            try:
+                runs = int(game_runs.get())
+                valid_number=True
+            except:
+                print("invalid number, try again")
 
+        game_instance.ai_delay = delayvar.get()
         stats.should_log = logvar.get()
         stats.setup_logging(p1.get(), p2.get())
         root.wm_state('iconic')
         for i in range(runs):
             log_info_overruling("run "+str(i+1)+" begins:")
-            
-            game_instance = gomoku.GomokuGame(filereader.create_gomoku_game("consts.json"))
-            game_instance.ai_delay = delayvar.get()
+            try:
+                initialiseer_spelbord_json_bestanden()#geen stukken op bord
+            except:
+                raise Exception("Fout in functie: initialiseer_spelbord_json_bestanden")
             
             stats.log_message(f"Game  {i+1} begins.")
             game_instance.current_game = i+1
             game_instance.last_round = (i+1 == runs)
+            
+            if var_start_from_file.get():
+                try:
+                    board = load_board_from_file()
+                    print("Bord geladen")
+                    for row in board:
+                        print(row)
+                    game_instance.set_board(board)
+                except Exception as e:
+                    print("error in gomoku.run, herschrijf die functie.")
+                    raise Exception("De error is waarschijnlijk te wijten aan een foute zet, controleer het lezen van de json bestanden die het bord opslaan." , str(e))
+
             try:
-                board = load_board_from_file()
-                print("Bord geladen")
-                for row in board:
-                    print(row)
-                game_instance.set_board(board)
-                gomoku.run(game_instance, i, is_training, repvar.get(), moves,1) #kan als hoofdprogramma beschouwd worden
+                gomoku.run(game_instance, i, True, repvar.get(), moves) #kan als hoofdprogramma beschouwd worden (��n spel is ��n run)
             except Exception as e:
                 print("error in gomoku.run, herschrijf die functie.")
                 raise Exception("De error is waarschijnlijk te wijten aan een foute zet, controleer het lezen van de json bestanden die het bord opslaan." , str(e))
-            #gomoku_ai.decrease_learning_rate()
+            print("voor if")
+
+            for i in range(10):
+                print("training round done...")
+            gomoku_ai.decrease_learning_rate()#todo: calculate decrease rate based on number of training rounds
+            print("players:",p1,p2)
+            if p1.get() == "DVC-AI":
+                modelmanager_instance.log_number_of_training_loops(model_player1.get(), 1)#add one to the number of training loops
+            elif p2.get() == "DVC-AI":
+                modelmanager_instance.log_number_of_training_loops(model_player2.get(), 1)#add one to the number of training loops
+                    
+            else:
+                pass                   
     except ValueError:
         print("Most likely: Game runs value invalid, try again.")
     
     game_over()
-
 
 def create_new_model():
     modelmanager_instance.create_new_model(name_model.get())
@@ -303,6 +350,7 @@ ttk.Label(tab1)
 
 
 def toggle_visibility_write_last_active_tab_to_file():
+    global last_active_tab
     while True:
         sleep(0.1)#save resources
         try:
@@ -312,7 +360,7 @@ def toggle_visibility_write_last_active_tab_to_file():
                 game_runs.set("3000")
             else:
                 game_runs.set("1")
-            filereader.write_last_active_tab_to_file(tab_text)
+            last_active_tab=tab_text
         except Exception as e:
             pass
             
@@ -380,22 +428,42 @@ gamerunslabel.grid(row=7, column=0, sticky="w")
 gamerunsentry = ttk.Entry(tab1, textvariable=game_runs,style="TEntry")
 gamerunsentry.grid(row=7, column=1, sticky="w")
 
+playerstartLabel = ttk.Label(tab1, text="Player to start: ",style="TLabel")
+playerstartLabel.grid(row=8, column=0, sticky="w")
+
+CbStartingPlayer = ttk.Combobox(tab1, state="readonly", values=["Player 1", "Player 2"], textvariable=var_startingPlayer)
+CbStartingPlayer.current(0)
+CbStartingPlayer.grid(row=8, column=1, sticky="w")
+
 delaybutton = ttk.Checkbutton(tab1, text="Use AI Delay", variable=delayvar,style="TCheckbutton")
-delaybutton.grid(row=8, column=0, sticky="w")
+delaybutton.grid(row=9, column=0, sticky="w")
 logbutton = ttk.Checkbutton(tab1, text="Create log file", variable=logvar,style="TCheckbutton") 
-logbutton.grid(row=9, column=0, sticky="w")
+logbutton.grid(row=10, column=0, sticky="w")
 replaybutton = ttk.Checkbutton(tab1, text="Save replays", variable=repvar,style="TCheckbutton") 
-replaybutton.grid(row=10, column=0, sticky="w")
+replaybutton.grid(row=11, column=0, sticky="w")
 overrule_button=ttk.Checkbutton(tab1, text="Allow overrule", variable=var_allow_overrule,style="TCheckbutton")
-overrule_button.grid(row=11, column=0, sticky="w")
-use_recognition_button=ttk.Checkbutton(tab1, text="use recognition*", variable=use_recognition,style="TCheckbutton")
-use_recognition_button.grid(row=12, column=0, sticky="w")
+overrule_button.grid(row=12, column=0, sticky="w")
+use_recognition_button=ttk.Checkbutton(tab1, text="use recognition*", variable=var_use_recognition,style="TCheckbutton")
+use_recognition_button.grid(row=13, column=0, sticky="w")
 label_recognition=ttk.Label(tab1, text="*only turn on when you have a physical board, a webcam and the other repository: ",style="TLabel",wraplength=300)
-label_recognition.grid(row=13, column=0, sticky="w",columnspan=2)
+label_recognition.grid(row=14, column=0, sticky="w",columnspan=2)
+
+
+bottomframe = Frame(tab1, highlightbackground="blue", highlightthickness=1, borderwidth=1)
+bottomframe.grid(row=16, column=0, sticky="w",columnspan=3)
+
+start_from_file_button=ttk.Checkbutton(bottomframe, text="Load game situation", variable=var_start_from_file,style="TCheckbutton")
+start_from_file_button.grid(row=0, column=0, sticky="w")
+label_load_state=ttk.Label(bottomframe, text="Choose file board state: ",style="TLabel")
+label_load_state.grid(row=1, column=0, sticky="w")
+load_state_entry = ttk.Entry(bottomframe, textvariable=state_board_path, width=30,style="TEntry")
+load_state_entry.grid(row=2, column=0, sticky="w")
+button_browse_state_file = ttk.Button(bottomframe, text="...",style="TButton", command=lambda: browse_state_files())
+button_browse_state_file.grid(row=2, column=1, sticky="w")
+
 
 button_3 = ttk.Button(input_canvas, text="Quit Game", style="TButton", command=lambda: quit_game())
 button_3.grid(row=1, column=0, sticky="e")
-
 
 ttk.Label(tab2)
 CbModelTrain1 = ttk.Combobox(tab2, state="readonly", values=list_models,textvariable=model_player1)
@@ -436,41 +504,9 @@ delaybutton2.grid(row=2, column=0, sticky="w")
 button_5 = ttk.Button(tab3, text="Play", style="TButton", command=lambda: replay())
 button_5.grid(row=3, column=0)
 
-ttk.Label(tab4)
 
-label_load_state=ttk.Label(tab4, text="Choose file board state: ",style="TLabel")
-label_load_state.grid(row=0, column=0, sticky="w")
-load_state_entry = ttk.Entry(tab4, textvariable=state_board_path, width=30,style="TEntry")
-load_state_entry.grid(row=1, column=0, sticky="w")
-button_7 = ttk.Button(tab4, text="Start game", style="TButton", command=lambda: start_new_game_from_state_file())
-button_7.grid(row=1, column=3)
-button_6 = ttk.Button(tab4, text="...",style="TButton", command=lambda: browse_state_files())
-button_6.grid(row=1, column=1, sticky="w")
-
-
-
-# player1_label=ttk.Label(tab4, text="Player 1 (black): ",style="TLabel")
-# player1_label.grid(row=2, column=0, sticky="w")
-# player2_label=ttk.Label(tab4, text="Player 2(white): ",style="TLabel")
-# player2_label.grid(row=2, column=1, sticky="w")
-
-# radiobutton1_tab2 = ttk.Radiobutton(tab4, text="Human", variable=p1, value="Human", command=lambda: set_player_type(0),style="TRadiobutton")
-# radiobutton1_tab2.grid(row=3, column=0, sticky="w")
-# radiobutton3_tab2 = ttk.Radiobutton(tab4, text="AI-Model", variable=p1, value="DVC-AI", command=lambda: set_player_type(0),style="TRadiobutton")
-# radiobutton3_tab2.grid(row=5, column=0, sticky="w")
-CbModelload1 = ttk.Combobox(tab4, state="readonly", values=list_models,textvariable=model_player1)#todo: double check if this is correct
-CbModelload1.grid(row=6, column=0, sticky="w")
-# radiobutton4_tab2 = ttk.Radiobutton(tab4, text="Human", variable=p2, value="Human", command=lambda: set_player_type(1),style="TRadiobutton")
-# radiobutton4_tab2.grid(row=3, column=1, sticky="w")
-# radiobutton6_tab2 = ttk.Radiobutton(tab4, text="AI-Model", variable=p2, value="DVC-AI", command=lambda: set_player_type(1),style="TRadiobutton")
-# radiobutton6_tab2.grid(row=5, column=1, sticky="w")
-# CbModelload2 = ttk.Combobox(tab4, state="readonly", values=list_models,textvariable=model_player2)#todo: double check if this is correct
-# CbModelload2.grid(row=6, column=1, sticky="w")
-
-
-
-ttk.Label(tab5) 
-Lb1 = Listbox(tab5)
+ttk.Label(tab4) 
+Lb1 = Listbox(tab4)
 models = modelmanager_instance.get_list_models()
 i  = 0
 for model in models:
@@ -478,14 +514,14 @@ for model in models:
     i+=1
 Lb1.grid(row=1, column=1)
 
-nameModelLabel = ttk.Label(tab5, text="Name of model: ",style="TLabel")
+nameModelLabel = ttk.Label(tab4, text="Name of model: ",style="TLabel")
 nameModelLabel.grid(row=2, column=0, sticky="w")
-nameModelEntry = ttk.Entry(tab5, textvariable=name_model,style="TEntry")
+nameModelEntry = ttk.Entry(tab4, textvariable=name_model,style="TEntry")
 nameModelEntry.grid(row=2, column=1, sticky="w")
 nameModelEntry.bind("<Return>",lambda event: create_new_model())#push enter to make a new model
-button_NewModel = ttk.Button(tab5, text="Make New Model", style="TButton", command=lambda: create_new_model())
+button_NewModel = ttk.Button(tab4, text="Make New Model", style="TButton", command=lambda: create_new_model())
 button_NewModel.grid(row=3, column=0)
-button_DeleteModel = ttk.Button(tab5, text="Delete Model", style="TButton", command=lambda: delete_model())
+button_DeleteModel = ttk.Button(tab4, text="Delete Model", style="TButton", command=lambda: delete_model())
 button_DeleteModel.grid(row=3, column=1)
 
 def mainmenu_run():

@@ -11,6 +11,8 @@ import numpy as np
 import filereader
 from lezen_stukken_en_muziek import *
 from time import sleep
+import globalvariables
+from globalvariables import *
  
 #instructie: druk op de linkermuisknop wanneer je een zet hebt gedaan op het fysiek bord.
 
@@ -33,9 +35,6 @@ class GomokuGame:
         
     def set_board(self, board):
         self.board = board
-
-
-
 
 
 class Player:
@@ -63,14 +62,15 @@ class Player:
         self.final_action = None
 
     def set_player(self, player_type, player_id):
-        self.TYPE = str(player_type)#type can be human, testai or DVC-AI
-        self.ID = int(player_id)#id can be 1 or 2 corresponding to human or AI
-        #if self.ID == 2:
-            #self.ai = ai.GomokuAI()
+        self.TYPE = str(player_type) #type can be human, testai or DVC-AI
+        self.ID = int(player_id) #id can be 1 or 2 corresponding to human or AI
         print("Set player", self.ID, "to", self.TYPE)
 
     def get_player(self):
         return self
+    
+    def get_playerID(self):
+        return self.ID
 
     def calculate_score(self, max_score, is_winner, game_number):
         if max_score > 0:
@@ -116,9 +116,10 @@ class Player:
 
 
 # Set default player types. Can be changed on runtime (buttons in GUI)
-player1 = Player("Human", 0)
-player2 = Player("DVC-AI", 1)
+player1 = Player("Human", 1)
+player2 = Player("DVC-AI", 2)
 players = [player1, player2]
+current_player = player1
 
 
 def reset_player_stats():
@@ -151,7 +152,6 @@ def update_player_stats(instance, winning_player):
 def set_players(_players):
     global players
     players = _players
-
 
 window_name = "Gomoku"
 victory_text = ""
@@ -344,12 +344,7 @@ def convert_to_one_hot(board, player_id):#vermijd dat ai denkt dat de getallen i
 
 def run(instance, game_number, train, record_replay=False, moves:dict=None,player_first_move=None):#main function
     # Main game loop
-    global window_name, victory_text, current_player
-    last_active_tab=filereader.read_last_active_tab_from_file()
-    if last_active_tab=="Play Gomoku":
-        use_recognition=filereader.read_value_from_textfile("vars.txt",1)#second line
-    else:
-        use_recognition=False #disable recognition if not playing Gomoku (Someone can turn this option on and then switch to another tab and then train or replay or whatever...)
+    global window_name, victory_text, current_player, last_active_tab, model_player1_str, model_player2_str, use_recognition
     
     if use_recognition:
         print("using recognition")
@@ -359,18 +354,11 @@ def run(instance, game_number, train, record_replay=False, moves:dict=None,playe
     for p in players: #players=[Human, AI]
         if p.TYPE == "DVC-AI":
             if p==player1:
-                p.ai.model.load_model(filereader.read_model_name("models_players.txt",0))
+                p.ai.model.load_model(model_player1_str)
             else:
-                p.ai.model.load_model(filereader.read_model_name("models_players.txt",1))
-
+                p.ai.model.load_model(model_player2_str)
             p.ai.train = train
-    # Initialize Pygame
-    if player_first_move is not None:
-        for index,p in enumerate(players):
-            if p.TYPE=="DVC-AI":
-                current_player=index+1 #simuleer dat het aan een mens was.
-                
-
+            
     pygame.display.set_icon(pygame.image.load('res/ico.png'))
     pygame.init()
     pygame.display.set_caption(window_name)
@@ -388,7 +376,6 @@ def run(instance, game_number, train, record_replay=False, moves:dict=None,playe
         if not check_board_full(instance):
             # Human move
             if players[current_player-1].TYPE == "Human":
-                
                 # Handle events
                 for event in pygame.event.get():
                     if event.type == pygame.QUIT:
@@ -571,9 +558,9 @@ def run(instance, game_number, train, record_replay=False, moves:dict=None,playe
             pad=r"models_players.txt"
             if p==player1:
                 print("model saving")
-                p.ai.model.save_model(filereader.read_model_name(pad,0)) #only saves after each round
+                p.ai.model.save_model(model_player1_str) #only saves after each round
             else:
-                p.ai.model.save_model(filereader.read_model_name(pad,1)) #only saves after each round
+                p.ai.model.save_model(model_player2_str) #only saves after each round
                 #todo:finish this
             p.final_move_scores.append(sum(p.weighed_moves)/len(p.weighed_moves))
             stats.log_message(f"{p.TYPE} {p.ID}: score loss: {float(p.ai.loss)}")

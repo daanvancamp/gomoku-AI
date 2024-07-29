@@ -7,7 +7,8 @@ import numpy as np
 import random
 from collections import deque
 from filereader import log_info_overruling, read_value_from_textfile
-
+from gomoku import *
+from globalvariables import *
 
 MAX_MEMORY = 1_000_0000          # origineel 1_000_000
 BATCH_SIZE = 10_000
@@ -68,6 +69,8 @@ class ConvNet(nn.Module):
 
 
 class GomokuAI:
+    global allow_overrule
+
     def __init__(self, _board_size=15):
         self.n_games = 0
         self.game = None
@@ -223,12 +226,9 @@ class GomokuAI:
         else:
             raise Exception("rewrite this function, this is wrong")
 
-    def get_valid_moves(self, board,allow_overrule=None)->list:#voeg de nodige parameters toe. #returns list of valid moves (overroelen ai kan hier gebeuren door de lijst met lengte 1 te maken.)
-        
+    def get_valid_moves(self, board, overrule)->list:#voeg de nodige parameters toe. #returns list of valid moves (overroelen ai kan hier gebeuren door de lijst met lengte 1 te maken.)
         log_info_overruling("\n\nfunction get_valid_moves called")
         valid_moves = [] 
-        if allow_overrule is None:
-            allow_overrule = read_value_from_textfile("vars.txt",0)
         opponent = 3 - self.determine_current_player(board)  # 3-2=1 and 3-1=2 Player 1 is a one in the list and player 2 is a 2 in the list.
         threat_moves = []
         opponent_winning = False
@@ -311,7 +311,7 @@ class GomokuAI:
                             break  # We hoeven niet verder te zoeken voor deze cel
     
         # Bepaal welke zetten te retourneren op basis van allow_overrule
-        if allow_overrule and threat_moves : #if threat_moves is not empty
+        if overrule and threat_moves : #if threat_moves is not empty
             print("overruled:", threat_moves)
             log_info_overruling("overruled: " + str(threat_moves))
             for row in board:
@@ -339,7 +339,7 @@ class GomokuAI:
             return None
 
     def get_action(self, state, one_hot_board, scores)->tuple:
-        valid_moves = self.get_valid_moves(state)
+        valid_moves = self.get_valid_moves(state, allow_overrule)
         np_scores = np.array(scores).reshape(15, 15)
         current_state = torch.tensor(self.get_state(one_hot_board), dtype=torch.float)
 
