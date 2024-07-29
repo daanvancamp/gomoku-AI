@@ -17,20 +17,33 @@ June 2024:
   
 july 2024:
 
-  **Changed optimizer from Adam to SGD.**
+  **Changed the optimizer of the neural networkfrom Adam to SGD.**
+  
   **Fixed a bug where the training kept repeating the exploration phase: it couldn't choose a move. Now, it is completely random after 30 tries instead of using the function "choose_action". This doesn't have a significant         impact on the training process because it happens approximately one in a 1000 times.**
+  
   The GUI is now more modern and looks better than ever/before.
+  
   I also added exception handling in some functions. The involved functions are now more stable.
+  
   2 functions in filereader.py were defined twice, now they are defined just once. That's a small error of Mikko.
-  **I added a function in the gomoku class to decrease the learning rate after each training round. By doing so, the model explores more specific patterns. The learning rate is multiplied by 0.9999 after each round, in other       words, the learning rate declines by 0,01% after each training round. Like Mikko described in the conclusion of his thesis : It can improve the performance of the model because the model learns more specific patterns.
-  I implemented a way to overrule the model. When the opponent has 4 in a row with one open end, then he will never be able to win. When an opponent has 3 in a row with 2 open ends, the function that overrules the model will     
+  
+  **I added a function in the gomoku class to decrease the learning rate after each training round. By doing so, the model explores more specific patterns. The learning rate is multiplied by 0.9999 after each round, in other       words, the learning rate declines by 0,01% after each training round. Like Mikko described in the conclusion of his thesis : It can improve the performance of the model because the model learns more specific patterns.**
+  
+  **I implemented a way to overrule the model. When the opponent has 4 in a row with one open end, then he will never be able to win. When an opponent has 3 in a row with 2 open ends, the function that overrules the model will     
   block this. The model chooses from the list of empty cells. By narrowing down that list, the problem of hallucination is solved with a relatively low amount of computing power. You need a lot af expensive hardware to develop a   model that can beat everyone. Overruling can be easily turned on and off by clicking a checkbox in the GUI. Turning it on is recommended, it drastically improves the performance. The choices are explained in the terminal and     saved to a textfile along with the board, so you can reread the reasons why the program performs a certain action. This is important because some moves can seam weird to a human, although there are a few bugs.**
+  
   I added an on-screen hover effect when the mouse hovers over the board to make it look better and to prevent misclicks.
+  
   I added a checkbox to train the model against yourself. (human vs DVC-AI) My name is Daan Van Camp, so my initials are DVC.
+  
   Wim added a way to load a situation, so it's easier to find the weaknesses of the model.
+  
   The last move of the model is now red so it's easier to find the last move and anticipate upon it.
+  
   Human training checkbox has now moved to a more appropriate place.
+  
   **You can now train multiple models using this program.**
+  
   There's now a checkbox in the GUI so you can turn the recognition on. (The checkbox will work from 29/7 or 30/7, it is there, but it doesn't do anything as of right now.)
   
   august 2024:
