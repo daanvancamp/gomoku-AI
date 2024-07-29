@@ -276,6 +276,9 @@ def refresh_models():
         i+=1
     CbModel1.configure(values=models)
     CbModel2.configure(values=models)
+    CbModelTrain1.configure(values=models)
+    CbModelTrain2.configure(values=models)
+    CbModelload1.configure(values=models)
 
 def game_over():
     root.wm_state('normal')
@@ -295,8 +298,8 @@ style2.configure("TCheckbutton", font=(style_numbers[0], style_numbers[1]),fg="w
 ### TABS ###
 ttk.Label(tab1)
 
-def toggle_visibility():
-    print("busy")
+
+def toggle_visibility_write_last_active_tab_to_file():
     while True:
         sleep(0.1)#save resources
         try:
@@ -304,7 +307,7 @@ def toggle_visibility():
             tab_text = tabControl.tab(current_tab, "text")
             filereader.write_last_active_tab_to_file(tab_text)
         except Exception as e:
-            print(e)
+            pass
             
 
         ##TAB 1##
@@ -355,7 +358,7 @@ CbModel2 = ttk.Combobox(tab1, state="readonly", values=list_models,textvariable=
 CbModel1.grid(row=6, column=0)
 CbModel2.grid(row=6, column=1)
 
-Thread_visibility=Thread(target=toggle_visibility)
+Thread_visibility=Thread(target=toggle_visibility_write_last_active_tab_to_file)
 Thread_visibility.start()
 
 gamerunslabel = ttk.Label(tab1, text="Number of games: ",style="TLabel")
