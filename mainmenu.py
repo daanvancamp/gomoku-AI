@@ -112,10 +112,7 @@ def browse_state_files():
 def browse_files():
     file_path = filedialog.askopenfilename(filetypes=[("Json File", "*.json")])
     replay_path.set(file_path)
-
-def load_situation():
-    load_situation=True
-    
+   
 def replay():
     p1.set("replay")
     set_player_type(0)
@@ -148,8 +145,8 @@ def start_new_game(is_training=False, moves:dict=None):
     filereader.empty_file("models_players.txt")
     filereader.write_model_name_to_file("models_players.txt", model_player1.get(), 0)
     filereader.write_model_name_to_file("models_players.txt", model_player2.get(), 1)
-    with open ("bool_overrule_and_recognition.txt", "w") as f:
-        f.write("")
+
+    filereader.empty_file("bool_overrule_and_recognition.txt")
     schrijf_bool_naar_tekstbestand(var_allow_overrule)
     schrijf_bool_naar_tekstbestand(use_recognition)
 
@@ -219,8 +216,7 @@ def start_new_game_from_state_file(is_training=False, moves:dict=None):
     filereader.write_model_name_to_file("models_players.txt", model_player1.get(), 0)
     filereader.write_model_name_to_file("models_players.txt", model_player2.get(), 1)
 
-    with open ("bool_overrule_and_recognition.txt", "w") as f:
-        f.write("")#clear file
+    filereader.empty_file("bool_overrule_and_recognition.txt")
     schrijf_bool_naar_tekstbestand(var_allow_overrule)
     use_recognition.set(False) #never use recognition in state files
     schrijf_bool_naar_tekstbestand(use_recognition)
