@@ -13,7 +13,7 @@ def setup_logging(player0_type, player1_type):
     #print("setup logging")
     log_folder = "logs"
     if not os.path.exists(log_folder):
-        #print("log_folder created")
+        print("log_folder created")
         os.makedirs(log_folder)
     log_filename = os.path.join(log_folder, f"logs-{player0_type}-{player1_type}-{datetime.datetime.now().strftime('%Y%m%d%H%M%S')}.txt")
 
