@@ -418,7 +418,6 @@ def run(instance, game_number, train, record_replay=False, moves:dict=None,playe
                                 print("something went wrong with the recognition of the pieces:",e)
 
                         else:
-                            print("position of mouse",use_recognition)
                             x,y=event.pos
             
                         if use_recognition:
