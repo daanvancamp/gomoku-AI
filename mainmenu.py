@@ -427,7 +427,7 @@ label_recognition.grid(row=14, column=0, sticky="w",columnspan=2)
 
 
 bottomframe = Frame(tab1, highlightbackground="blue", highlightthickness=1, borderwidth=1)
-bottomframe.grid(row=16, column=0, sticky="w",columnspan=3)
+bottomframe.grid(row=16, column=0, sticky="w",columnspan=3, padx=5, pady=15)
 
 start_from_file_button=ttk.Checkbutton(bottomframe, text="Load game situation", variable=var_start_from_file,style="TCheckbutton")
 start_from_file_button.grid(row=0, column=0, sticky="w")
