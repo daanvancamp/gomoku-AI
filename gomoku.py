@@ -453,7 +453,6 @@ def run(instance, game_number, train, record_replay=False, moves:dict=None,playe
                         cell_size = instance.CELL_SIZE
                         pygame.draw.circle(instance.screen, HOVER_COLOR, (col * cell_size + cell_size // 2, row * cell_size + cell_size // 2), cell_size // 2 - 5)
                         pygame.display.flip()
-                        sleep(0.15)
 
             # TestAI move
             elif players[current_player-1].TYPE == "AI" and not testai.check_game_over(instance):
