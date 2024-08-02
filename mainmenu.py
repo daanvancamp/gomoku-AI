@@ -339,7 +339,6 @@ def toggle_visibility_write_last_active_tab_to_file():
     global last_active_tab
     tab_text ="Play gomoku"
     while True:
-        sleep(0.1)#save resources
         try:
             old_tab_text= tab_text
             current_tab = tabControl.index(tabControl.select())

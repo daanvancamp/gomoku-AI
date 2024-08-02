@@ -440,7 +440,7 @@ def run(instance, game_number, train, record_replay=False, moves:dict=None,playe
                                 # Switch player if neither player have won
                                 current_player = 3 - current_player #current_player kan 2 zijn of 1, maar in beide gevallen zal er van speler gewisseld worden.
                                 
-                                thread_start_muziek=Thread(target=start_muziek_vertraagd).start() #wordt iedere keer opnieuw aangemaakt aangezien threads moeilijk te stoppen zijn.
+                                Thread(target=start_muziek_vertraagd).start() #wordt iedere keer opnieuw aangemaakt aangezien threads moeilijk te stoppen zijn.
                                 
                 ## adds hover effects to cells when mouse hovers over them##
                 mouse_pos = pygame.mouse.get_pos()
@@ -453,7 +453,7 @@ def run(instance, game_number, train, record_replay=False, moves:dict=None,playe
                         cell_size = instance.CELL_SIZE
                         pygame.draw.circle(instance.screen, HOVER_COLOR, (col * cell_size + cell_size // 2, row * cell_size + cell_size // 2), cell_size // 2 - 5)
                         pygame.display.flip()
-                        sleep(0.15)
+                        sleep(0.1)#otherwise it will be flashing uncontrollably
 
             # TestAI move
             elif players[current_player-1].TYPE == "AI" and not testai.check_game_over(instance):
