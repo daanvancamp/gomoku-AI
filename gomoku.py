@@ -166,23 +166,28 @@ def is_move_model(row,col,last_move_model) -> bool:
 def draw_board(instance,last_move_model=None):
     instance.screen.fill(instance.BOARD_COL)#background color
     cell_size = instance.CELL_SIZE#cell_size=30
+    radius_big_circle=cell_size//2 - 5
+    radius_small_circle=cell_size//3 - 5
+    red=(255,0,0)
     for row in range(instance.GRID_SIZE):#grid_size=15
         for col in range(instance.GRID_SIZE):
             pygame.draw.rect(instance.screen, instance.LINE_COL, (col * cell_size, row * cell_size, cell_size, cell_size), 1)
+
             if instance.board[row][col] == 1:
                 if is_move_model(row,col,last_move_model):
                     #red (R,G,B)
-                    pygame.draw.circle(instance.screen, (255,0,0), (col * cell_size + cell_size // 2, row * cell_size + cell_size // 2), cell_size // 2 - 5)
+                    pygame.draw.circle(instance.screen, instance.P1COL, (col * cell_size + cell_size // 2, row * cell_size + cell_size // 2), radius_big_circle)
+                    pygame.draw.circle(instance.screen, red, (col * cell_size + cell_size // 2, row * cell_size + cell_size // 2), radius_small_circle)
                 else:
-                    pygame.draw.circle(instance.screen, instance.P1COL, (col * cell_size + cell_size // 2, row * cell_size + cell_size // 2), cell_size // 2 - 5)
+                    pygame.draw.circle(instance.screen, instance.P1COL, (col * cell_size + cell_size // 2, row * cell_size + cell_size // 2), radius_big_circle)
 
             elif instance.board[row][col] == 2:
-                pygame.draw.circle(instance.screen, instance.P2COL, (col * cell_size + cell_size // 2, row * cell_size + cell_size // 2), cell_size // 2 - 5)
                 if is_move_model(row,col,last_move_model):
                     #red (R,G,B)
-                    pygame.draw.circle(instance.screen, (255,0,0), (col * cell_size + cell_size // 2, row * cell_size + cell_size // 2), cell_size // 2 - 5)
+                    pygame.draw.circle(instance.screen, instance.P2COL, (col * cell_size + cell_size // 2, row * cell_size + cell_size // 2), radius_big_circle)
+                    pygame.draw.circle(instance.screen, red, (col * cell_size + cell_size // 2, row * cell_size + cell_size // 2), radius_small_circle)
                 else:
-                    pygame.draw.circle(instance.screen, instance.P2COL, (col * cell_size + cell_size // 2, row * cell_size + cell_size // 2), cell_size // 2 - 5)
+                    pygame.draw.circle(instance.screen, instance.P2COL, (col * cell_size + cell_size // 2, row * cell_size + cell_size // 2), radius_big_circle)
 
     # Draw the winning line
     if instance.winning_cells:
