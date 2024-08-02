@@ -337,14 +337,16 @@ ttk.Label(tab1)
 
 def toggle_visibility_write_last_active_tab_to_file():
     global last_active_tab
+    tab_text ="Play gomoku"
     while True:
         sleep(0.1)#save resources
         try:
+            old_tab_text= tab_text
             current_tab = tabControl.index(tabControl.select())
             tab_text = tabControl.tab(current_tab, "text")
-            if tab_text=="Train":
+            if tab_text=="Train" and old_tab_text!=tab_text:
                 game_runs.set("3000")
-            else:
+            elif tab_text=="Play gomoku" and old_tab_text!=tab_text:
                 game_runs.set("1")
             last_active_tab=tab_text
         except Exception as e:
