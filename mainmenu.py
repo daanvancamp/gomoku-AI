@@ -74,15 +74,14 @@ delayvar.set(False)
 logvar = BooleanVar()
 logvar.set(False)
 repvar = BooleanVar()
-repvar.set(False)
+repvar.set(True)
 replay_path = StringVar()
 replay_path.set("")
 var_allow_overrule=BooleanVar()
 var_allow_overrule.set(True)
 
 var_start_from_file=BooleanVar()
-var_allow_overrule.set(False)
-
+var_start_from_file.set(False)
 state_board_path=StringVar()
 state_board_path.set(r".\test_situations\specific_situation.txt")
 name_model=StringVar()
@@ -140,7 +139,6 @@ def load_board_from_file()->list[list[int]]:
 def start_new_game(is_training=False, moves:dict=None):
     global allow_overrule, use_recognition, current_player, player1, player2
     
-    filereader.empty_file("vars.txt")
     log_info_overruling("\n\n\nnew session begins:")
     
     allow_overrule = var_allow_overrule.get()
@@ -223,7 +221,6 @@ def start_new_game(is_training=False, moves:dict=None):
 def start_new_training(moves:dict=None):
     global allow_overrule, use_recognition, current_player, player1, player2
     
-    filereader.empty_file("vars.txt")
     log_info_overruling("\n\n\nnew session begins:")
     
     allow_overrule = var_allow_overrule.get()
