@@ -6,7 +6,7 @@ import torch.nn.functional as F
 import numpy as np
 import random
 from collections import deque
-from filereader import log_info_overruling, read_value_from_textfile
+from filereader import log_info_overruling
 from gomoku import *
 from globalvariables import *
 
@@ -150,7 +150,7 @@ class GomokuAI:
                 threat_moves.remove(move)#remove unvalid moves
         if threat_moves:#if not threat_moves==[]
             print("no threat moves were valid moves, returning valid moves","the model will choose on its own")
-            log_info_overruling("no threat moves were valid moves, returning valid moves:","the model will choose on its own")
+            log_info_overruling("no threat moves were valid moves, returning valid moves: "+"the model will choose on its own")
             return threat_moves
         else:
             return valid_moves
