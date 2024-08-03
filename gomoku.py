@@ -12,6 +12,7 @@ import filereader
 from lezen_stukken_en_muziek import *
 from time import sleep
 from globalvariables import *
+#from ai import *
  
 #instructie: druk op de linkermuisknop wanneer je een zet hebt gedaan op het fysiek bord.
 
@@ -40,8 +41,8 @@ class Player:
     def __init__(self, player_type, player_id):
                 
             #Initialize a Player object with the given player type and ID.
-        self.TYPE = str(player_type) #type can be human, testai or DVC-AI
-        self.ID = int(player_id) #id can be 1 or 2
+        self.TYPE = str(player_type) #type can be human, testai or AI-Model
+        self.id = int(player_id) #id can be 1 or 2
         self.moves = 0
         self.wins = 0
         self.losses = 0
@@ -57,19 +58,24 @@ class Player:
         self.final_move_scores = []
         self.final_move_loss = []
         self.win_rate = 0
-        self.ai = ai.GomokuAI()#self.board_size
+        self.model_name = ""
+        self.ai = ai.GomokuAI()
         self.final_action = None
 
-    def set_player(self, player_type, player_id):
-        self.TYPE = str(player_type) #type can be human, testai or DVC-AI
-        self.ID = int(player_id) #id can be 1 or 2 corresponding to human or AI
-        print("Set player", self.ID, "to", self.TYPE)
+    def set_player_type(self, player_type):
+        self.TYPE = str(player_type) #type can be human, AI-Model or Test Algorithm
+        
+    def get_player_type(self):
+        return self.TYPE
+        
+    def set_player_id(self, player_id):
+        self.id = int(player_id) #id can be 1 or 2 corresponding to human or AI
 
     def get_player(self):
         return self
     
-    def get_playerID(self):
-        return self.ID
+    def get_player_id(self):
+        return self.id
 
     def calculate_score(self, max_score, is_winner, game_number):
         if max_score > 0:
@@ -112,25 +118,45 @@ class Player:
         self.final_move_scores = []
         self.final_move_loss = []
         self.avg_moves = 0
+        
+    def load_model(self, model):
+        self.model_name = model
+        self.ai.model.load_model(model)
+        
+    def get_model_name(self, model):
+        return self.model_name 
+    
 
 
 # Set default player types. Can be changed on runtime (buttons in GUI)
 player1 = Player("Human", 1)
-player2 = Player("DVC-AI", 2)
+player2 = Player("Human", 2)
 players = [player1, player2]
 current_player = player1
 
+
+def logging_players():
+    print("Logging players")
+    print("speler 1 : " + str(player1.get_player_id()))
+    print("speler 1 : " + str(players[0].get_player_id()))
+    print("speler 1 : " + str(player1.TYPE))
+            
+    print("speler 2 : " + str(player2.get_player_id()))
+    print("speler 2 : " + str(player2.TYPE))
+    print("speler 2 : " + str(players[1].get_player_id()))
+    
+    print("current speler : " + str(current_player.get_player_id()))
 
 def reset_player_stats():
     for i in range(len(players)):
         players[i].reset_score()
 
-
-def update_player_stats(instance, winning_player):
+# Update win / loss stats of players: -1 = tie; 1 = player 1 won; 2 = player 2 won
+def update_player_stats(instance, winning_player): 
     global players
     if winning_player > -1: # run if game was not a tie
         for i in range(len(players)):
-            if i == winning_player:
+            if i == winning_player-1:
                 players[i].wins += 1
                 is_winner = True
             else:
@@ -144,8 +170,8 @@ def update_player_stats(instance, winning_player):
             players[i].calculate_score(0, False, instance.current_game)
     stats.log_win(players)
     if instance.last_round:
-        stats.log_message(f"\nStatistics:\n{players[0].TYPE} {players[0].ID}:\nwins: {players[0].wins} - win rate: {players[0].win_rate} - average score: {players[0].avg_score} - weighed score: {sum(players[0].weighed_scores)/len(players[0].weighed_scores)} - average moves: {players[0].avg_moves}.\n"
-                          f"{players[1].TYPE} {players[1].ID}:\nwins: {players[1].wins} - win rate: {players[1].win_rate} - average score: {players[1].avg_score} - weighed score: {sum(players[1].weighed_scores)/len(players[1].weighed_scores)} - average moves: {players[1].avg_moves}.")
+        stats.log_message(f"\nStatistics:\n{players[0].TYPE} {players[0].id}:\nwins: {players[0].wins} - win rate: {players[0].win_rate} - average score: {players[0].avg_score} - weighed score: {sum(players[0].weighed_scores)/len(players[0].weighed_scores)} - average moves: {players[0].avg_moves}.\n"
+                          f"{players[1].TYPE} {players[1].id}:\nwins: {players[1].wins} - win rate: {players[1].win_rate} - average score: {players[1].avg_score} - weighed score: {sum(players[1].weighed_scores)/len(players[1].weighed_scores)} - average moves: {players[1].avg_moves}.")
 
 
 def set_players(_players):
@@ -154,7 +180,6 @@ def set_players(_players):
 
 window_name = "Gomoku"
 victory_text = ""
-current_player = 1
 
 def is_move_model(row,col,last_move_model) -> bool:
     if (row,col)==last_move_model:
@@ -200,7 +225,7 @@ def draw_board(instance,last_move_model=None):
 def reset_game(instance):
     global current_player
     instance.board = [[0] * instance.GRID_SIZE for _ in range(instance.GRID_SIZE)]
-    current_player = 1
+    current_player = player1
 
 def calculate_score(board: tuple, board_size=15):
     directions = [(0, 1), (0, -1), (1, 0), (-1, 0), (1, 1), (-1, -1), (1, -1), (-1, 1)]#richtingen om te controleren of er 5 stukkenp een rij zijn.
@@ -286,7 +311,7 @@ def calculate_score(board: tuple, board_size=15):
         scores_normalized.append(new_normalized_score)
     return max_score, scored_board, scores_normalized#return de hoogste score, het board met scores, de scores genormaliseerd
 
-def check_win(row, col, player, instance):
+def check_win(row, col, playerID, instance):
     directions = [(0, 1), (1, 0), (1, 1), (1, -1)]
     for drow, dcol in directions:
         winning_cells = [(row, col)]
@@ -295,7 +320,7 @@ def check_win(row, col, player, instance):
         # positive direction
         for i in range(1, 5):
             row_, col_ = row + i * drow, col + i * dcol
-            if 0 <= row_ < instance.GRID_SIZE and 0 <= col_ < instance.GRID_SIZE and instance.board[row_][col_] == player:
+            if 0 <= row_ < instance.GRID_SIZE and 0 <= col_ < instance.GRID_SIZE and instance.board[row_][col_] == playerID:
                 count += 1
                 winning_cells.append((row_, col_))
                 winning_direction = [(drow, dcol)]
@@ -304,7 +329,7 @@ def check_win(row, col, player, instance):
         # negative direction
         for i in range(1, 5):
             row_, col_ = row - i * drow, col - i * dcol
-            if 0 <= row_ < instance.GRID_SIZE and 0 <= col_ < instance.GRID_SIZE and instance.board[row_][col_] == player:
+            if 0 <= row_ < instance.GRID_SIZE and 0 <= col_ < instance.GRID_SIZE and instance.board[row_][col_] == playerID:
                 count += 1
                 winning_cells.append((row_, col_))
                 winning_direction = (drow, dcol)
@@ -356,7 +381,7 @@ def run(instance, game_number, train, record_replay=False, moves:dict=None,playe
         print("not using recognition")
 
     for p in players: #players=[Human, AI]
-        if p.TYPE == "DVC-AI":
+        if p.TYPE == "AI-Model":
             if p==player1:
                 p.ai.model.load_model(model_player1_str)
             else:
@@ -369,6 +394,7 @@ def run(instance, game_number, train, record_replay=False, moves:dict=None,playe
     mark_last_move_model=True #todo:maybe add an option in the GUI to turn this off.
     instance.winning_cells = []
     running = True
+    winning_player = 0
 
     if record_replay:
         p1_moves = []
@@ -379,7 +405,7 @@ def run(instance, game_number, train, record_replay=False, moves:dict=None,playe
     while running:
         if not check_board_full(instance):
             # Human move
-            if players[current_player-1].TYPE == "Human":
+            if current_player.TYPE == "Human":
                 # Handle events
                 for event in pygame.event.get():
                     if event.type == pygame.QUIT:
@@ -431,21 +457,26 @@ def run(instance, game_number, train, record_replay=False, moves:dict=None,playe
                         col = x // instance.CELL_SIZE 
                         row = y // instance.CELL_SIZE
                         if instance.GRID_SIZE > row >= 0 == instance.board[row][col] and 0 <= col < instance.GRID_SIZE:
-                            instance.board[row][col] = current_player
-                            if current_player == 1 and record_replay:
+                            instance.board[row][col] = current_player.get_player_id()
+                            if current_player.get_player_id() == 1 and record_replay:
                                 p1_moves.append((row, col))
                             elif record_replay:
                                 p2_moves.append((row, col))
-                            players[current_player - 1].moves += 1
-                            if check_win(row, col, current_player, instance):
-                                victory_text = f"Player {current_player} wins!"
+                            players[current_player.get_player_id() - 1].moves += 1
+                            if check_win(row, col, current_player.get_player_id(), instance):
+                                victory_text = f"Player {current_player.get_player_id()} wins!"
+                                winning_player = current_player.get_player_id()
                                 running = False
                             else:
+                                print("Switch player!!!!!!!!!!!")
+                                logging_players()
+
                                 # Switch player if neither player have won
-                                current_player = 3 - current_player #current_player kan 2 zijn of 1, maar in beide gevallen zal er van speler gewisseld worden.
+                                current_player = players[2 - current_player.get_player_id()]  #current_player kan 2 zijn of 1, maar in beide gevallen zal er van speler gewisseld worden.
                                 
-                                Thread(target=start_muziek_vertraagd).start() #wordt iedere keer opnieuw aangemaakt aangezien threads moeilijk te stoppen zijn.
-                                
+                                print("Na switch player!!!!!!!!!!!")
+                                logging_players()    
+                            
                 ## adds hover effects to cells when mouse hovers over them##
                 mouse_pos = pygame.mouse.get_pos()
                 x,y = mouse_pos
@@ -459,28 +490,32 @@ def run(instance, game_number, train, record_replay=False, moves:dict=None,playe
                         pygame.display.flip()
                         sleep(0.1)#otherwise it will be flashing uncontrollably
 
-            # TestAI move
-            elif players[current_player-1].TYPE == "AI" and not testai.check_game_over(instance):
+            # AI move
+            elif current_player.TYPE == "AI-Model" and not testai.check_game_over(instance):
                 if instance.ai_delay:
                     time.sleep(random.uniform(0.25, 1.0))   # randomize ai "thinking" time
-                ai_row, ai_col = testai.ai_move(instance, players[current_player-1].ID)
-                testai.make_move((ai_row, ai_col), current_player, instance)
-                players[current_player-1].moves += 1
-                if current_player == 1 and record_replay:
+                ai_row, ai_col = testai.ai_move(instance, players[current_player.get_player_id()-1].id)
+                testai.make_move((ai_row, ai_col), current_player.get_player_id(), instance)
+                players[current_player.get_player_id()-1].moves += 1
+                if current_player.get_player_id() == 1 and record_replay:
                     p1_moves.append((ai_row, ai_col))
                 elif record_replay:
                     p2_moves.append((ai_row, ai_col))
-                if check_win(ai_row, ai_col, current_player, instance):
-                    victory_text = f"AI {players[current_player-1].ID} wins!"
+                if check_win(ai_row, ai_col, current_player.get_player_id(), instance):
+                    victory_text = f"AI-Model {players[current_player.get_player_id()-1].id} wins!"
+                    winning_player = current_player.get_player_id()
                     running = False
                 else:
-                    current_player = 3 - current_player
-            # DVC-AI move
-            elif players[current_player-1].TYPE == "DVC-AI":
+                    current_player = players[2 - current_player.get_player_id()]
+                    print("Na switch player AI!!!!!!!!!!!")
+                    logging_players()   
+            
+            # Test Algorithm
+            elif current_player.TYPE == "Test Algorithm":
                 if instance.ai_delay:
                     time.sleep(random.uniform(0.25, 1.0))   # randomize AI "thinking" time
-                one_hot_board = convert_to_one_hot(instance.board, players[current_player-1].ID)
-                mm_ai = players[current_player-1].ai
+                one_hot_board = convert_to_one_hot(instance.board, players[current_player.get_player_id()-1].id)
+                mm_ai = players[current_player.get_player_id()-1].ai
                 mm_ai.set_game(one_hot_board)
                 old_state = instance.board
                 max_score, scores, scores_normalized = calculate_score(instance.board)
@@ -496,36 +531,40 @@ def run(instance, game_number, train, record_replay=False, moves:dict=None,playe
                     score = 0
                 else:
                     score = short_score / max_score
-                if current_player == 1 and record_replay:
+                if current_player.get_player_id() == 1 and record_replay:
                     p1_moves.append(action)
                 elif record_replay:
                     p2_moves.append(action)
-                players[current_player - 1].weighed_moves.append(score)
-                instance.board[action[0]][action[1]] = current_player
-                game_over = check_win(action[0], action[1], current_player, instance)
+                players[current_player.get_player_id() - 1].weighed_moves.append(score)
+                instance.board[action[0]][action[1]] = current_player.get_player_id()
+                game_over = check_win(action[0], action[1], current_player.get_player_id(), instance)
                 next_max_score, next_scores, next_scores_normalized = calculate_score(instance.board)
                 # Train the AI
                 if train:
                     mm_ai.remember(old_state, action, score, instance.board, game_over)
-                    mm_ai.train_short_memory(one_hot_board, action, short_score, scores, convert_to_one_hot(instance.board, players[current_player-1].ID), next_scores, game_over)
-                    players[current_player - 1].move_loss.append(mm_ai.loss)
-                players[current_player-1].final_action = action
-                players[current_player - 1].moves += 1
+                    mm_ai.train_short_memory(one_hot_board, action, short_score, scores, convert_to_one_hot(instance.board, players[current_player-1].id), next_scores, game_over)
+                    players[current_player.get_player_id() - 1].move_loss.append(mm_ai.loss)
+                players[current_player.get_player_id()-1].final_action = action
+                players[current_player.get_player_id() - 1].moves += 1
                 if game_over:
-                    victory_text = f"DVC-AI {players[current_player - 1].ID} wins!"
+                    victory_text = f"AI-Model {players[current_player.get_player_id() - 1].id} wins!"
+                    winning_player = current_player.get_player_id()
                     running = False
                 else:
-                    current_player = 3 - current_player
+                    current_player = players[2 - current_player.get_player_id()]
+                    print("Na switch player AI!!!!!!!!!!!")
+                    logging_players()    
             #Replay
-            elif players[current_player - 1].TYPE == "replay":
+            elif players[current_player.get_player_id() - 1].TYPE == "replay":
                 if instance.ai_delay:
                     time.sleep(random.uniform(0.25, 1.0))   # randomize ai "thinking" time
-                instance.board[position[move_id][0]][position[move_id][1]] = current_player
-                if check_win(position[move_id][0], position[move_id][1], current_player, instance):
-                    victory_text = f"AI {players[current_player-1].ID} wins!"
+                instance.board[position[move_id][0]][position[move_id][1]] = current_player.get_player_id()
+                if check_win(position[move_id][0], position[move_id][1], current_player.get_player_id(), instance):
+                    victory_text = f"AI model {players[current_player.get_player_id()-1].id} wins!"
+                    winning_player = current_player.get_player_id()
                     running = False
                 else:
-                    current_player = 3 - current_player
+                    current_player = players[2 - current_player.get_player_id()]
                     move_id += 1
             try:
                 draw_board(instance,last_move)
@@ -537,21 +576,21 @@ def run(instance, game_number, train, record_replay=False, moves:dict=None,playe
                 
         else:
             victory_text = "TIE"
-            current_player = -1
+            winning_player = -1
             running = False
 
     # End game
     stats.log_message(victory_text)
     pygame.display.set_caption("Gomoku - Game: " + str(game_number) + " - " + victory_text)
-    update_player_stats(instance, current_player-1)
+    update_player_stats(instance, winning_player)
     if record_replay:
         filereader.save_replay(p1_moves, p2_moves)
-    # For any DVC-AI, train for long memory and save model
+    # For any AI-Model, train for long memory and save model
     data = {}
     loss_data = {}
     move_loss_data = {}
     for p in players:
-        if p.TYPE == "DVC-AI" and train:
+        if p.TYPE == "AI-Model" and train:
             p.ai.remember(instance.board, p.final_action, p.score, instance.board, True)
             p.ai.train_long_memory()
             p.score_loss.append(p.ai.loss)
@@ -566,17 +605,17 @@ def run(instance, game_number, train, record_replay=False, moves:dict=None,playe
                 p.ai.model.save_model(model_player2_str) #only saves after each round
                 #todo:finish this
             p.final_move_scores.append(sum(p.weighed_moves)/len(p.weighed_moves))
-            stats.log_message(f"{p.TYPE} {p.ID}: score loss: {float(p.ai.loss)}")
-            stats.log_message(f"{p.TYPE} {p.ID}: move loss: {sum(p.move_loss)/len(p.move_loss)}")
+            stats.log_message(f"{p.TYPE} {p.id}: score loss: {float(p.ai.loss)}")
+            stats.log_message(f"{p.TYPE} {p.id}: move loss: {sum(p.move_loss)/len(p.move_loss)}")
         p.reset_score()
         if instance.last_round:
-            if p.TYPE == "DVC-AI" and train:
-                data[f"{p.TYPE} {p.ID}: game accuracy"] = p.weighed_scores
-                data[f"{p.TYPE} {p.ID}: move accuracy"] = p.final_move_scores
-                loss_data[f"{p.TYPE} {p.ID}: score loss"] = [float(val) for val in p.score_loss]
-                move_loss_data[f"{p.TYPE} {p.ID}: move loss"] = p.final_move_loss
-                stats.log_message(f"{p.TYPE} {p.ID}: average score loss: {sum([float(val) for val in p.score_loss]) / len([float(val) for val in p.score_loss])}")
-                stats.log_message(f"{p.TYPE} {p.ID}: average move loss: {sum(p.final_move_loss) / len(p.final_move_loss)}")
+            if p.TYPE == "AI-Model" and train:
+                data[f"{p.TYPE} {p.id}: game accuracy"] = p.weighed_scores
+                data[f"{p.TYPE} {p.id}: move accuracy"] = p.final_move_scores
+                loss_data[f"{p.TYPE} {p.id}: score loss"] = [float(val) for val in p.score_loss]
+                move_loss_data[f"{p.TYPE} {p.id}: move loss"] = p.final_move_loss
+                stats.log_message(f"{p.TYPE} {p.id}: average score loss: {sum([float(val) for val in p.score_loss]) / len([float(val) for val in p.score_loss])}")
+                stats.log_message(f"{p.TYPE} {p.id}: average move loss: {sum(p.final_move_loss) / len(p.final_move_loss)}")
             p.reset_all_stats()#purely for testing purposes
     if len(data) > 0:
         stats.plot_graph(data, 'accuracy')

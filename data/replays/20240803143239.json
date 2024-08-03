@@ -1,0 +1,40 @@
+{
+    "moves": [
+        {
+            "player": "1",
+            "position": "(5, 2)"
+        },
+        {
+            "player": "2",
+            "position": "(5, 10)"
+        },
+        {
+            "player": "1",
+            "position": "(6, 2)"
+        },
+        {
+            "player": "2",
+            "position": "(6, 10)"
+        },
+        {
+            "player": "1",
+            "position": "(7, 2)"
+        },
+        {
+            "player": "2",
+            "position": "(7, 10)"
+        },
+        {
+            "player": "1",
+            "position": "(8, 2)"
+        },
+        {
+            "player": "2",
+            "position": "(8, 10)"
+        },
+        {
+            "player": "1",
+            "position": "(9, 2)"
+        }
+    ]
+}

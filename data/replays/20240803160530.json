@@ -1,0 +1,12 @@
+{
+    "moves": [
+        {
+            "player": "1",
+            "position": "(3, 2)"
+        },
+        {
+            "player": "2",
+            "position": "(2, 3)"
+        }
+    ]
+}

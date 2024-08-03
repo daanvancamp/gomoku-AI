@@ -1,0 +1,100 @@
+{
+    "moves": [
+        {
+            "player": "1",
+            "position": "(5, 5)"
+        },
+        {
+            "player": "2",
+            "position": "(12, 13)"
+        },
+        {
+            "player": "1",
+            "position": "(5, 6)"
+        },
+        {
+            "player": "2",
+            "position": "(5, 4)"
+        },
+        {
+            "player": "1",
+            "position": "(5, 7)"
+        },
+        {
+            "player": "2",
+            "position": "(5, 8)"
+        },
+        {
+            "player": "1",
+            "position": "(6, 7)"
+        },
+        {
+            "player": "2",
+            "position": "(4, 7)"
+        },
+        {
+            "player": "1",
+            "position": "(7, 7)"
+        },
+        {
+            "player": "2",
+            "position": "(4, 5)"
+        },
+        {
+            "player": "1",
+            "position": "(8, 7)"
+        },
+        {
+            "player": "2",
+            "position": "(9, 7)"
+        },
+        {
+            "player": "1",
+            "position": "(10, 7)"
+        },
+        {
+            "player": "2",
+            "position": "(3, 6)"
+        },
+        {
+            "player": "1",
+            "position": "(8, 8)"
+        },
+        {
+            "player": "2",
+            "position": "(6, 6)"
+        },
+        {
+            "player": "1",
+            "position": "(8, 9)"
+        },
+        {
+            "player": "2",
+            "position": "(8, 6)"
+        },
+        {
+            "player": "1",
+            "position": "(8, 11)"
+        },
+        {
+            "player": "2",
+            "position": "(8, 10)"
+        },
+        {
+            "player": "1",
+            "position": "(8, 12)"
+        },
+        {
+            "player": "2",
+            "position": "(6, 9)"
+        },
+        {
+            "player": "1",
+            "position": "(8, 13)"
+        },
+        {
+            "player": "2",
+            "position": "(7, 10)"
+        }
+    ]
+}

@@ -37,7 +37,7 @@ def log_message(message):
 
 def log_win(players):
     for i in range(len(players)):
-        log = f"{players[i].TYPE} {players[i].ID} - score: {players[i].score} - moves: {players[i].moves} - wins: {players[i].wins} - losses: {players[i].losses}"
+        log = f"{players[i].TYPE} {players[i].id} - score: {players[i].score} - moves: {players[i].moves} - wins: {players[i].wins} - losses: {players[i].losses}"
         print(log)
         if should_log:
             logging.info(log)

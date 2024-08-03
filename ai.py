@@ -7,8 +7,8 @@ import numpy as np
 import random
 from collections import deque
 from filereader import log_info_overruling
-from gomoku import *
-from globalvariables import *
+#from gomoku import *
+#from globalvariables import *
 
 MAX_MEMORY = 1_000_0000          # origineel 1_000_000
 BATCH_SIZE = 10_000
