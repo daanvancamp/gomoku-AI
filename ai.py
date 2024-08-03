@@ -69,9 +69,7 @@ class ConvNet(nn.Module):
 
 
 class GomokuAI:
-    global allow_overrule
-
-    def __init__(self, _board_size=15):
+    def __init__(self, allow_overrule=True ,_board_size=15):
         self.n_games = 0
         self.game = None
         self.learning_rate = 0.00075
@@ -85,6 +83,7 @@ class GomokuAI:
         self.criterion = nn.MSELoss()
         self.loss = 0
         self.train = False
+        self.allow_overrule = allow_overrule 
 
     def decrease_learning_rate(self):
         self.learning_rate *= 0.9999 #decrease learning rate
@@ -318,7 +317,7 @@ class GomokuAI:
             for row in board:
                 log_info_overruling(str(row))
             log_info_overruling("status: an overruled move is executed by the AI")
-            log_info_overruling("allow_overrule: " + str(allow_overrule))
+            log_info_overruling("allow_overrule: " + str(self.allow_overrule))
             log_info_overruling("opponent_winning: " + str(opponent_winning))
             threat_moves=self.remove_unvalid_moves(threat_moves, valid_moves)
             return threat_moves
@@ -327,7 +326,7 @@ class GomokuAI:
             for row in board:
                 log_info_overruling(str(row))
             log_info_overruling("status: a normal move is executed by the AI if it can't win in one move")
-            log_info_overruling("allow_overrule: " + str(allow_overrule))
+            log_info_overruling("allow_overrule: " + str(self.allow_overrule))
             log_info_overruling("opponent_winning: " + str(opponent_winning))
 
             valid_moves = self.can_win_in_one_move(board, self.determine_current_player(board), valid_moves)
@@ -340,7 +339,7 @@ class GomokuAI:
             return None
 
     def get_action(self, state, one_hot_board, scores)->tuple:
-        valid_moves = self.get_valid_moves(state, allow_overrule)
+        valid_moves = self.get_valid_moves(state, self.allow_overrule)
         np_scores = np.array(scores).reshape(15, 15)
         current_state = torch.tensor(self.get_state(one_hot_board), dtype=torch.float)
 

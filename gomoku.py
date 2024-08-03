@@ -371,7 +371,7 @@ def convert_to_one_hot(board, player_id):#vermijd dat ai denkt dat de getallen i
         one_hot_board[2] = (board == 1).astype(np.float32)
     return one_hot_board
 
-def run(instance, game_number, train, record_replay=False, moves:dict=None,player_first_move=None):#main function
+def runGame(instance, game_number, record_replay):#main function
     # Main game loop
     global window_name, victory_text, current_player, last_active_tab, model_player1_str, model_player2_str, use_recognition
     
@@ -379,14 +379,6 @@ def run(instance, game_number, train, record_replay=False, moves:dict=None,playe
         print("using recognition")
     else:
         print("not using recognition")
-
-    for p in players: #players=[Human, AI]
-        if p.TYPE == "AI-Model":
-            if p==player1:
-                p.ai.model.load_model(model_player1_str)
-            else:
-                p.ai.model.load_model(model_player2_str)
-            p.ai.train = train
             
     pygame.display.set_icon(pygame.image.load('res/ico.png'))
     pygame.init()
@@ -399,9 +391,7 @@ def run(instance, game_number, train, record_replay=False, moves:dict=None,playe
     if record_replay:
         p1_moves = []
         p2_moves = []
-    if moves is not None:
-        move_id = 0
-        position = list(moves.keys())
+
     while running:
         if not check_board_full(instance):
             # Human move
@@ -554,8 +544,299 @@ def run(instance, game_number, train, record_replay=False, moves:dict=None,playe
                     current_player = players[2 - current_player.get_player_id()]
                     print("Na switch player AI!!!!!!!!!!!")
                     logging_players()    
+            try:
+                draw_board(instance,last_move)
+            except:
+                draw_board(instance)
+            pygame.display.flip()#refresh
+            window_name = "Gomoku - Game: " + str(game_number) + " - Player " + str(current_player) #beurt start
+            pygame.display.set_caption(window_name)
+                
+        else:
+            victory_text = "TIE"
+            winning_player = -1
+            running = False
+
+    # End game
+    stats.log_message(victory_text)
+    pygame.display.set_caption("Gomoku - Game: " + str(game_number) + " - " + victory_text)
+    update_player_stats(instance, winning_player)
+    if record_replay:
+        filereader.save_replay(p1_moves, p2_moves)
+    # For any AI-Model, train for long memory and save model
+    data = {}
+    loss_data = {}
+    move_loss_data = {}
+    
+    time.sleep(instance.SLEEP_BEFORE_END)#sleep before closing for SLEEP_BEFORE_END seconds
+    reset_game(instance)
+
+def runTraining(instance, game_number, record_replay):#main function
+    # Main game loop
+    global window_name, victory_text, current_player, last_active_tab, model_player1_str, model_player2_str, use_recognition
+
+    for p in players: #players=[Human, AI]
+        if p.TYPE == "AI-Model":
+            if p==player1:
+                p.ai.model.load_model(model_player1_str)
+            else:
+                p.ai.model.load_model(model_player2_str)
+            p.ai.train = True
+            
+    pygame.display.set_icon(pygame.image.load('res/ico.png'))
+    pygame.init()
+    pygame.display.set_caption(window_name)
+    mark_last_move_model=True #todo:maybe add an option in the GUI to turn this off.
+    instance.winning_cells = []
+    running = True
+    winning_player = 0
+
+    if record_replay:
+        p1_moves = []
+        p2_moves = []
+
+    while running:
+        if not check_board_full(instance):
+            # Human move
+            if current_player.TYPE == "Human":
+                # Handle events
+                for event in pygame.event.get():
+                    if event.type == pygame.QUIT:
+                        running = False 
+                        #druk op linkermuisknop om te zetten
+                    elif (event.type == pygame.MOUSEBUTTONDOWN or event.type == pygame.K_UP or event.type == pygame.K_RIGHT) and event.button == 1: #kan zo gelaten worden. Wanneer op de muis wordt gedrukt,wordt de zet gelezen van het bestand
+                        Thread(target=lambda:pygame.mixer.music.fadeout(1000)).start()#don't block the main thread
+
+                        if use_recognition:
+                            schrijf_relevante_stukken_na_zet_weg()#sla de stukken van de mens op in een bestand.
+                            zetten_mens=bepaal_relevante_zet()#vergeet de haakjes niet!!
+                            print("zetten_mens:",zetten_mens)#vorm: lijst van coordinaten(=[tuple(x,y),...])
+                            thread_controleer_vertraging=Thread(target=controleer_vertraging_data) #thread stoppen is moeilijk, daarom wordt die iedere keer opnieuw aangemaakt.
+                            thread_controleer_vertraging.start()
+                            for i in zetten_mens:
+                                try:
+                                    int(i[0])
+                                    int(i[1])
+
+                                except:
+                                    raise Exception("De coordinaten moeten getallen zijn. Controleer de coordinaten in de beeldherkenning. (x,y)")
+                            try:
+                                if len(zetten_mens)==0:
+                                    raise Exception("Er werd geen zet gedetecteerd.")
+
+                                elif len(zetten_mens)==1:
+                                    print("1 zet, super")
+                                    x, y = zetten_mens[0]
+                                elif zetten_mens is None: #zou nooit mogen voorkomen
+                                    raise Exception("Geen zetten, of variabele niet gedeclareerd")
+                                else:
+                                    raise Exception("Meerdere zetten")
+
+                                antwoord=input("Klopt deze zet? (ja/nee) :",x,y)#todo: haal op termijn weg, wanneer de code betrouwbaar genoeg is.
+                                #=debugging
+                                if antwoord=="ja":
+                                    pass
+                                else:
+                                    raise Exception("Als u het denkt, waarde wordt op de normale manier ingesteld.")
+                            except Exception as e:
+                                print("something went wrong with the recognition of the pieces:",e)
+
+                        else:
+                            x,y=event.pos
+            
+                        if use_recognition:
+                            schrijf_relevante_stukken_voor_zet_weg() #sla stukken opnieuw op.
+                        
+                        col = x // instance.CELL_SIZE 
+                        row = y // instance.CELL_SIZE
+                        if instance.GRID_SIZE > row >= 0 == instance.board[row][col] and 0 <= col < instance.GRID_SIZE:
+                            instance.board[row][col] = current_player.get_player_id()
+                            if current_player.get_player_id() == 1 and record_replay:
+                                p1_moves.append((row, col))
+                            elif record_replay:
+                                p2_moves.append((row, col))
+                            players[current_player.get_player_id() - 1].moves += 1
+                            if check_win(row, col, current_player.get_player_id(), instance):
+                                victory_text = f"Player {current_player.get_player_id()} wins!"
+                                winning_player = current_player.get_player_id()
+                                running = False
+                            else:
+                                print("Switch player!!!!!!!!!!!")
+                                logging_players()
+
+                                # Switch player if neither player have won
+                                current_player = players[2 - current_player.get_player_id()]  #current_player kan 2 zijn of 1, maar in beide gevallen zal er van speler gewisseld worden.
+                                
+                                print("Na switch player!!!!!!!!!!!")
+                                logging_players()    
+                            
+                ## adds hover effects to cells when mouse hovers over them##
+                mouse_pos = pygame.mouse.get_pos()
+                x,y = mouse_pos
+                col = x // instance.CELL_SIZE
+                row = y // instance.CELL_SIZE
+                HOVER_COLOR = (211, 211, 211)
+                if instance.GRID_SIZE > row >= 0 == instance.board[row][col] and 0 <= col < instance.GRID_SIZE:
+                    if instance.board[row][col] == 0:#cell is empty
+                        cell_size = instance.CELL_SIZE
+                        pygame.draw.circle(instance.screen, HOVER_COLOR, (col * cell_size + cell_size // 2, row * cell_size + cell_size // 2), cell_size // 2 - 5)
+                        pygame.display.flip()
+                        sleep(0.1)#otherwise it will be flashing uncontrollably
+
+            # AI move
+            elif current_player.TYPE == "AI-Model" and not testai.check_game_over(instance):
+                if instance.ai_delay:
+                    time.sleep(random.uniform(0.25, 1.0))   # randomize ai "thinking" time
+                ai_row, ai_col = testai.ai_move(instance, players[current_player.get_player_id()-1].id)
+                testai.make_move((ai_row, ai_col), current_player.get_player_id(), instance)
+                players[current_player.get_player_id()-1].moves += 1
+                if current_player.get_player_id() == 1 and record_replay:
+                    p1_moves.append((ai_row, ai_col))
+                elif record_replay:
+                    p2_moves.append((ai_row, ai_col))
+                if check_win(ai_row, ai_col, current_player.get_player_id(), instance):
+                    victory_text = f"AI-Model {players[current_player.get_player_id()-1].id} wins!"
+                    winning_player = current_player.get_player_id()
+                    running = False
+                else:
+                    current_player = players[2 - current_player.get_player_id()]
+                    print("Na switch player AI!!!!!!!!!!!")
+                    logging_players()   
+            
+            # Test Algorithm
+            elif current_player.TYPE == "Test Algorithm":
+                if instance.ai_delay:
+                    time.sleep(random.uniform(0.25, 1.0))   # randomize AI "thinking" time
+                one_hot_board = convert_to_one_hot(instance.board, players[current_player.get_player_id()-1].id)
+                mm_ai = players[current_player.get_player_id()-1].ai
+                mm_ai.set_game(one_hot_board)
+                old_state = instance.board
+                max_score, scores, scores_normalized = calculate_score(instance.board)
+                action = mm_ai.get_action(instance.board, one_hot_board, scores_normalized)
+                if mark_last_move_model:
+                    last_move=action #=last move for example :(3,6)
+                else:
+                    last_move=None
+                np_scores = np.array(scores).reshape(15, 15)
+                short_score = np_scores[action[0]][action[1]]
+                if max_score <= 0:
+                    # prevent division with negative values or zero
+                    score = 0
+                else:
+                    score = short_score / max_score
+                if current_player.get_player_id() == 1 and record_replay:
+                    p1_moves.append(action)
+                elif record_replay:
+                    p2_moves.append(action)
+                players[current_player.get_player_id() - 1].weighed_moves.append(score)
+                instance.board[action[0]][action[1]] = current_player.get_player_id()
+                game_over = check_win(action[0], action[1], current_player.get_player_id(), instance)
+                next_max_score, next_scores, next_scores_normalized = calculate_score(instance.board)
+                
+                mm_ai.remember(old_state, action, score, instance.board, game_over)
+                mm_ai.train_short_memory(one_hot_board, action, short_score, scores, convert_to_one_hot(instance.board, current_player), next_scores, game_over)
+                current_player.move_loss.append(mm_ai.loss)
+                
+                current_player.final_action = action
+                current_player.moves += 1
+                if game_over:
+                    victory_text = f"AI-Model {players[current_player.get_player_id() - 1].id} wins!"
+                    winning_player = current_player.get_player_id()
+                    running = False
+                else:
+                    current_player = players[2 - current_player.get_player_id()]
+                    print("Na switch player AI!!!!!!!!!!!")
+                    logging_players()    
+            try:
+                draw_board(instance,last_move)
+            except:
+                draw_board(instance)
+            pygame.display.flip()#refresh
+            window_name = "Gomoku - Game: " + str(game_number) + " - Player " + str(current_player) #beurt start
+            pygame.display.set_caption(window_name)
+                
+        else:
+            victory_text = "TIE"
+            winning_player = -1
+            running = False
+
+    # End game
+    stats.log_message(victory_text)
+    pygame.display.set_caption("Gomoku - Game: " + str(game_number) + " - " + victory_text)
+    update_player_stats(instance, winning_player)
+    if record_replay:
+        filereader.save_replay(p1_moves, p2_moves)
+    # For any AI-Model, train for long memory and save model
+    data = {}
+    loss_data = {}
+    move_loss_data = {}
+    for p in players:
+        if p.TYPE == "AI-Model":
+            p.ai.remember(instance.board, p.final_action, p.score, instance.board, True)
+            p.ai.train_long_memory()
+            p.score_loss.append(p.ai.loss)
+            move_loss = [float(val) for val in p.move_loss]
+            p.final_move_loss.append(sum(move_loss)/len(move_loss))
+
+            pad=r"models_players.txt"
+            if p==player1:
+                print("model saving")
+                p.ai.model.save_model(model_player1_str) #only saves after each round
+            else:
+                p.ai.model.save_model(model_player2_str) #only saves after each round
+                #todo:finish this
+            p.final_move_scores.append(sum(p.weighed_moves)/len(p.weighed_moves))
+            stats.log_message(f"{p.TYPE} {p.id}: score loss: {float(p.ai.loss)}")
+            stats.log_message(f"{p.TYPE} {p.id}: move loss: {sum(p.move_loss)/len(p.move_loss)}")
+        p.reset_score()
+        if instance.last_round:
+            if p.TYPE == "AI-Model":
+                data[f"{p.TYPE} {p.id}: game accuracy"] = p.weighed_scores
+                data[f"{p.TYPE} {p.id}: move accuracy"] = p.final_move_scores
+                loss_data[f"{p.TYPE} {p.id}: score loss"] = [float(val) for val in p.score_loss]
+                move_loss_data[f"{p.TYPE} {p.id}: move loss"] = p.final_move_loss
+                stats.log_message(f"{p.TYPE} {p.id}: average score loss: {sum([float(val) for val in p.score_loss]) / len([float(val) for val in p.score_loss])}")
+                stats.log_message(f"{p.TYPE} {p.id}: average move loss: {sum(p.final_move_loss) / len(p.final_move_loss)}")
+            p.reset_all_stats()#purely for testing purposes
+    if len(data) > 0:
+        stats.plot_graph(data, 'accuracy')
+    if len(loss_data) > 0:
+        stats.plot_graph(loss_data, 'loss data')
+    if len(move_loss_data) > 0:
+        stats.plot_graph(move_loss_data, 'loss data')
+    time.sleep(instance.SLEEP_BEFORE_END)#sleep before closing for SLEEP_BEFORE_END seconds
+    reset_game(instance)
+    
+
+
+
+def runReplay(instance, game_number, moves:dict=None):#main function
+    # Main game loop
+    global window_name, victory_text, current_player, last_active_tab, model_player1_str, model_player2_str, use_recognition
+
+    for p in players: #players=[Human, AI]
+        if p.TYPE == "AI-Model":
+            if p==player1:
+                p.ai.model.load_model(model_player1_str)
+            else:
+                p.ai.model.load_model(model_player2_str)
+            p.ai.train = train
+            
+    pygame.display.set_icon(pygame.image.load('res/ico.png'))
+    pygame.init()
+    pygame.display.set_caption(window_name)
+    mark_last_move_model=True #todo:maybe add an option in the GUI to turn this off.
+    instance.winning_cells = []
+    running = True
+    winning_player = 0
+
+    if moves is not None:
+        move_id = 0
+        position = list(moves.keys())
+    while running:
+        if not check_board_full(instance):
             #Replay
-            elif players[current_player.get_player_id() - 1].TYPE == "replay":
+            if players[current_player.get_player_id() - 1].TYPE == "replay":
                 if instance.ai_delay:
                     time.sleep(random.uniform(0.25, 1.0))   # randomize ai "thinking" time
                 instance.board[position[move_id][0]][position[move_id][1]] = current_player.get_player_id()
@@ -582,48 +863,10 @@ def run(instance, game_number, train, record_replay=False, moves:dict=None,playe
     # End game
     stats.log_message(victory_text)
     pygame.display.set_caption("Gomoku - Game: " + str(game_number) + " - " + victory_text)
-    update_player_stats(instance, winning_player)
-    if record_replay:
-        filereader.save_replay(p1_moves, p2_moves)
-    # For any AI-Model, train for long memory and save model
-    data = {}
-    loss_data = {}
-    move_loss_data = {}
-    for p in players:
-        if p.TYPE == "AI-Model" and train:
-            p.ai.remember(instance.board, p.final_action, p.score, instance.board, True)
-            p.ai.train_long_memory()
-            p.score_loss.append(p.ai.loss)
-            move_loss = [float(val) for val in p.move_loss]
-            p.final_move_loss.append(sum(move_loss)/len(move_loss))
-
-            pad=r"models_players.txt"
-            if p==player1:
-                print("model saving")
-                p.ai.model.save_model(model_player1_str) #only saves after each round
-            else:
-                p.ai.model.save_model(model_player2_str) #only saves after each round
-                #todo:finish this
-            p.final_move_scores.append(sum(p.weighed_moves)/len(p.weighed_moves))
-            stats.log_message(f"{p.TYPE} {p.id}: score loss: {float(p.ai.loss)}")
-            stats.log_message(f"{p.TYPE} {p.id}: move loss: {sum(p.move_loss)/len(p.move_loss)}")
-        p.reset_score()
-        if instance.last_round:
-            if p.TYPE == "AI-Model" and train:
-                data[f"{p.TYPE} {p.id}: game accuracy"] = p.weighed_scores
-                data[f"{p.TYPE} {p.id}: move accuracy"] = p.final_move_scores
-                loss_data[f"{p.TYPE} {p.id}: score loss"] = [float(val) for val in p.score_loss]
-                move_loss_data[f"{p.TYPE} {p.id}: move loss"] = p.final_move_loss
-                stats.log_message(f"{p.TYPE} {p.id}: average score loss: {sum([float(val) for val in p.score_loss]) / len([float(val) for val in p.score_loss])}")
-                stats.log_message(f"{p.TYPE} {p.id}: average move loss: {sum(p.final_move_loss) / len(p.final_move_loss)}")
-            p.reset_all_stats()#purely for testing purposes
-    if len(data) > 0:
-        stats.plot_graph(data, 'accuracy')
-    if len(loss_data) > 0:
-        stats.plot_graph(loss_data, 'loss data')
-    if len(move_loss_data) > 0:
-        stats.plot_graph(move_loss_data, 'loss data')
     time.sleep(instance.SLEEP_BEFORE_END)#sleep before closing for SLEEP_BEFORE_END seconds
     reset_game(instance)
+
+
+
 
 pygame.quit()
