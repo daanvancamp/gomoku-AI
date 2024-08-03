@@ -24,4 +24,4 @@ logs/
 /.vs/gomoku-thesis-proj/v17/Preview/Solution.VC.db
 .vs/
 /__pycache__
-/data/logs
+/data/logs/
