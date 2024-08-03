@@ -199,7 +199,7 @@ def start_new_game():
                     raise Exception("De error is waarschijnlijk te wijten aan een foute zet, controleer het lezen van de json bestanden die het bord opslaan." , str(e))
 
             try:
-                gomoku.run(game_instance, i, False, repvar.get(), None) #kan als hoofdprogramma beschouwd worden (��n spel is ��n run)
+                gomoku.runGame(game_instance, i, False) #kan als hoofdprogramma beschouwd worden (één spel is één run)
             except Exception as e:
                 print("error in gomoku.run, herschrijf die functie.")
                 raise Exception("De error is waarschijnlijk te wijten aan een foute zet, controleer het lezen van de json bestanden die het bord opslaan." , str(e))
@@ -272,7 +272,7 @@ def start_new_training():
                     raise Exception("De error is waarschijnlijk te wijten aan een foute zet, controleer het lezen van de json bestanden die het bord opslaan." , str(e))
 
             try:
-                gomoku.run(game_instance, i, True, repvar.get(), None) #kan als hoofdprogramma beschouwd worden (��n spel is ��n run)
+                gomoku.runTraining(game_instance, i, True) #kan als hoofdprogramma beschouwd worden (één spel is één run)
             except Exception as e:
                 print("error in gomoku.run, herschrijf die functie.")
                 raise Exception("De error is waarschijnlijk te wijten aan een foute zet, controleer het lezen van de json bestanden die het bord opslaan." , str(e))
@@ -293,7 +293,6 @@ def start_new_training():
         print("Most likely: Game runs value invalid, try again.")
     
     game_over()
-
 
 
 
@@ -352,8 +351,8 @@ def start_new_replay(moves:dict=None):
                     print("error in gomoku.run, herschrijf die functie.")
                     raise Exception("De error is waarschijnlijk te wijten aan een foute zet, controleer het lezen van de json bestanden die het bord opslaan." , str(e))
 
-            try:
-                gomoku.run(game_instance, i, True, repvar.get(), moves) #kan als hoofdprogramma beschouwd worden (��n spel is ��n run)
+            try:               
+                gomoku.runReplay(game_instance, i, moves) #kan als hoofdprogramma beschouwd worden (��n spel is ��n run)
             except Exception as e:
                 print("error in gomoku.run, herschrijf die functie.")
                 raise Exception("De error is waarschijnlijk te wijten aan een foute zet, controleer het lezen van de json bestanden die het bord opslaan." , str(e))
@@ -528,7 +527,7 @@ button_2 = ttk.Button(tab2, text="Train", style="TButton", command=lambda: start
 button_2.grid(row=1, column=0, sticky="w")
 train_opponent_label = ttk.Label(tab2, text="Train model against:", style="TLabel")
 train_opponent_label.grid(row=2, column=0, sticky="w")
-radiobutton7 = ttk.Radiobutton(tab2, text="TestAI", variable=var_playerType2, value="TestAI")
+radiobutton7 = ttk.Radiobutton(tab2, text="Test Algorithm", variable=var_playerType2, value="Test Algorithm")
 radiobutton7.grid(row=3, column=0, sticky="w")
 radiobutton8 = ttk.Radiobutton(tab2, text="AI-Model", variable=var_playerType2, value="AI-Model", style="TRadiobutton")
 radiobutton8.grid(row=4, column=0, sticky="w")
