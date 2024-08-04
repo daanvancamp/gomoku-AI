@@ -53,10 +53,9 @@ july 2024:
   I added more test situation, so the performance of the model can be tested more extensively and the overruling/training can be optimized.
   
   
-  august 2024:
+august 2024:
 
-  ...
-  
+  The code was completely restructured. Some performance improvements were also done. There are now 3 functions to run the game.
   
 
 issues:
