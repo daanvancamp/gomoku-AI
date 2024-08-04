@@ -25,3 +25,4 @@ logs/
 .vs/
 /__pycache__
 /data/logs/
+/data/replays
