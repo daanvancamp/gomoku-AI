@@ -590,6 +590,7 @@ def runTraining(instance, game_number, record_replay):#main function
     instance.winning_cells = []
     running = True
     winning_player = 0
+    print(type(use_recognition))
 
     if record_replay:
         p1_moves = []
@@ -776,9 +777,11 @@ def runTraining(instance, game_number, record_replay):#main function
             p.ai.train_long_memory()
             p.score_loss.append(p.ai.loss)
             move_loss = [float(val) for val in p.move_loss]
+            print(p.move_loss)
+            print(p)
+            print(move_loss)
             p.final_move_loss.append(sum(move_loss)/len(move_loss))
 
-            pad=r"models_players.txt"
             if p==player1:
                 print("model saving")
                 p.ai.model.save_model(model_player1_str) #only saves after each round
