@@ -383,7 +383,7 @@ def runGame(instance, game_number, record_replay):#main function
     pygame.display.set_icon(pygame.image.load('res/ico.png'))
     pygame.init()
     pygame.display.set_caption(window_name)
-    mark_last_move_model=True #todo:maybe add an option in the GUI to turn this off.
+    mark_last_move_model=True
     instance.winning_cells = []
     running = True
     winning_player = 0
@@ -586,7 +586,7 @@ def runTraining(instance, game_number, record_replay):#main function
     pygame.display.set_icon(pygame.image.load('res/ico.png'))
     pygame.init()
     pygame.display.set_caption(window_name)
-    mark_last_move_model=True #todo:maybe add an option in the GUI to turn this off.
+    mark_last_move_model=True 
     instance.winning_cells = []
     running = True
     winning_player = 0
@@ -814,6 +814,7 @@ def runReplay(instance, game_number, moves:dict=None):#main function
     # Main game loop
     global window_name, victory_text, current_player, last_active_tab, model_player1_str, model_player2_str, use_recognition
 
+
     for p in players: #players=[Human, AI]
         if p.TYPE == "AI-Model":
             if p==player1:
@@ -825,7 +826,7 @@ def runReplay(instance, game_number, moves:dict=None):#main function
     pygame.display.set_icon(pygame.image.load('res/ico.png'))
     pygame.init()
     pygame.display.set_caption(window_name)
-    mark_last_move_model=True #todo:maybe add an option in the GUI to turn this off.
+    mark_last_move_model=True
     instance.winning_cells = []
     running = True
     winning_player = 0
@@ -840,6 +841,7 @@ def runReplay(instance, game_number, moves:dict=None):#main function
                 if instance.ai_delay:
                     time.sleep(random.uniform(0.25, 1.0))   # randomize ai "thinking" time
                 instance.board[position[move_id][0]][position[move_id][1]] = current_player.get_player_id()
+                last_move = position[move_id]
                 if check_win(position[move_id][0], position[move_id][1], current_player.get_player_id(), instance):
                     victory_text = f"AI model {players[current_player.get_player_id()-1].id} wins!"
                     winning_player = current_player.get_player_id()
@@ -847,10 +849,8 @@ def runReplay(instance, game_number, moves:dict=None):#main function
                 else:
                     current_player = players[2 - current_player.get_player_id()]
                     move_id += 1
-            try:
-                draw_board(instance,last_move)
-            except:
-                draw_board(instance)
+            
+            draw_board(instance,last_move)
             pygame.display.flip()#refresh
             window_name = "Gomoku - Game: " + str(game_number) + " - Player " + str(current_player) #beurt start
             pygame.display.set_caption(window_name)

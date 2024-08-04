@@ -283,9 +283,9 @@ def start_new_training():
             gomoku_ai.decrease_learning_rate()#todo: calculate decrease rate based on number of training rounds
             print("players:",p1,p2)
             if gomoku.player1.get_player_type() == "AI-Model":
-                modelmanager_instance.log_number_of_training_loops(model_player1.get(), 1)#add one to the number of training loops
+                modelmanager_instance.log_number_of_training_loops(var_model_player1.get(), 1)#add one to the number of training loops
             elif gomoku.player2.get_player_type() == "AI-Model":
-                modelmanager_instance.log_number_of_training_loops(model_player2.get(), 1)#add one to the number of training loops
+                modelmanager_instance.log_number_of_training_loops(var_model_player2.get(), 1)#add one to the number of training loops
                     
             else:
                 pass                   
@@ -297,7 +297,7 @@ def start_new_training():
 
 
 def start_new_replay(moves:dict=None):
-    global allow_overrule, use_recognition, current_player, player1, player2
+    global allow_overrule, use_recognition, current_player, player1, player2,p1,p2
     
     log_info_overruling("\n\n\nnew session begins:")
     
