@@ -141,8 +141,8 @@ def start_new_game():
     
     log_info_overruling("\n\n\nnew session begins:")
     
-    allow_overrule = var_allow_overrule.get()
-    use_recognition = var_use_recognition.get()
+    game_instance.allow_overrule = var_allow_overrule.get()
+    game_instance.use_recognition = var_use_recognition.get()
 
     if var_startingPlayer.get() == "Player 1":
         gomoku.current_player = gomoku.player1
@@ -216,8 +216,8 @@ def start_new_training():
     
     log_info_overruling("\n\n\nnew session begins:")
     
-    allow_overrule = var_allow_overrule.get()
-    use_recognition = var_use_recognition.get()
+    game_instance.allow_overrule = var_allow_overrule.get()
+    game_instance.use_recognition = var_use_recognition.get()
 
     if var_startingPlayer.get() == "Player 1":
         gomoku.current_player = gomoku.player1

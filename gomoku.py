@@ -38,7 +38,6 @@ class GomokuGame:
     def set_board(self, board):
         self.board = board
 
-
 class Player:
     def __init__(self, player_type, player_id):
                 
@@ -375,9 +374,9 @@ def convert_to_one_hot(board, player_id):#vermijd dat ai denkt dat de getallen i
 
 def runGame(instance, game_number, record_replay):#main function
     # Main game loop
-    global window_name, victory_text, current_player, last_active_tab, model_player1_str, model_player2_str, use_recognition
+    global window_name, victory_text, current_player, last_active_tab, model_player1_str, model_player2_str
     
-    if use_recognition:
+    if instance.use_recognition:
         print("using recognition")
     else:
         print("not using recognition")
@@ -406,7 +405,7 @@ def runGame(instance, game_number, record_replay):#main function
                     elif (event.type == pygame.MOUSEBUTTONDOWN or event.type == pygame.K_UP or event.type == pygame.K_RIGHT) and event.button == 1: #kan zo gelaten worden. Wanneer op de muis wordt gedrukt,wordt de zet gelezen van het bestand
                         Thread(target=lambda:pygame.mixer.music.fadeout(1000)).start()#don't block the main thread
 
-                        if use_recognition:
+                        if instance.use_recognition:
                             schrijf_relevante_stukken_na_zet_weg()#sla de stukken van de mens op in een bestand.
                             zetten_mens=bepaal_relevante_zet()#vergeet de haakjes niet!!
                             print("zetten_mens:",zetten_mens)#vorm: lijst van coordinaten(=[tuple(x,y),...])
@@ -443,7 +442,7 @@ def runGame(instance, game_number, record_replay):#main function
                         else:
                             x,y=event.pos
             
-                        if use_recognition:
+                        if instance.use_recognition:
                             schrijf_relevante_stukken_voor_zet_weg() #sla stukken opnieuw op.
                         
                         col = x // instance.CELL_SIZE 
