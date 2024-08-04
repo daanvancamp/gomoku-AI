@@ -814,6 +814,7 @@ def runReplay(instance, game_number, moves:dict=None):#main function
     # Main game loop
     global window_name, victory_text, current_player, last_active_tab, model_player1_str, model_player2_str, use_recognition
 
+
     for p in players: #players=[Human, AI]
         if p.TYPE == "AI-Model":
             if p==player1:

@@ -3,7 +3,8 @@ model_player1_str=""
 model_player2_str=""
 allow_overrule=True
 use_recognition=False
-
+p1=""
+p2=""
 
 
 
