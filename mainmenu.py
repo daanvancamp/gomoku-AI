@@ -113,9 +113,9 @@ def browse_files():
     replay_path.set(file_path)
    
 def replay():
-    p1.set("replay")
+    gomoku.player1.set("replay")
     set_player_type(0)
-    p2.set("replay")
+    gomoku.player2.set("replay")
     set_player_type(1)
     game_runs.set("1")
     moves = filereader.load_replay(replay_path.get())
@@ -281,7 +281,7 @@ def start_new_training():
             for i in range(10):
                 print("training round done...")
             gomoku_ai.decrease_learning_rate()#todo: calculate decrease rate based on number of training rounds
-            print("players:",p1,p2)
+            print("players:",gomoku.player1.get_player_type(),gomoku.player2.get_player_type())
             if gomoku.player1.get_player_type() == "AI-Model":
                 modelmanager_instance.log_number_of_training_loops(var_model_player1.get(), 1)#add one to the number of training loops
             elif gomoku.player2.get_player_type() == "AI-Model":
@@ -297,7 +297,7 @@ def start_new_training():
 
 
 def start_new_replay(moves:dict=None):
-    global allow_overrule, use_recognition, current_player, player1, player2,p1,p2
+    global allow_overrule, use_recognition
     
     log_info_overruling("\n\n\nnew session begins:")
     
@@ -315,7 +315,7 @@ def start_new_replay(moves:dict=None):
         raise Exception("Fout in functie: initialiseer_spelbord_json_bestanden")
     try:
         print("training mode")
-        p1.set("AI-Model")
+        gomoku.player1.set("AI-Model")
         set_player_type(0)
         valid_number = False
         while not valid_number:
@@ -327,7 +327,7 @@ def start_new_replay(moves:dict=None):
 
         game_instance.ai_delay = delayvar.get()
         stats.should_log = logvar.get()
-        stats.setup_logging(p1.get(), p2.get())
+        stats.setup_logging(gomoku.player1.get(), gomoku.player2.get())
         root.wm_state('iconic')
         for i in range(runs):
             log_info_overruling("run "+str(i+1)+" begins:")
@@ -361,10 +361,10 @@ def start_new_replay(moves:dict=None):
             for i in range(10):
                 print("training round done...")
             gomoku_ai.decrease_learning_rate()#todo: calculate decrease rate based on number of training rounds
-            print("players:",p1,p2)
-            if p1.get() == "AI-Model":
+            print("players:",player1,player2)
+            if player1.get() == "AI-Model":
                 modelmanager_instance.log_number_of_training_loops(gomoku.player1.get_model_name(), 1)#add one to the number of training loops
-            elif p2.get() == "AI-Model":
+            elif player2.get() == "AI-Model":
                 modelmanager_instance.log_number_of_training_loops(gomoku.player2.get_model_name(), 1)#add one to the number of training loops 
             else:
                 pass                   
@@ -414,7 +414,6 @@ ttk.Label(tab1)
 
 
 def toggle_visibility_write_last_active_tab_to_file():
-    global last_active_tab
     tab_text ="Play gomoku"
     while True:
         try:
@@ -425,7 +424,6 @@ def toggle_visibility_write_last_active_tab_to_file():
                 game_runs.set("3000")
             elif tab_text=="Play gomoku" and old_tab_text!=tab_text:
                 game_runs.set("1")
-            last_active_tab=tab_text
         except Exception as e:
             pass
             

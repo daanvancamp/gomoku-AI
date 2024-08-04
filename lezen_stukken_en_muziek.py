@@ -2,7 +2,8 @@ import json
 from time import sleep
 from typing import List, Tuple, Dict, Any
 import pygame
-from globalvariables import path_wachten_muziek
+
+path_wachten_muziek=r".\wachten_muziek.mp3"
 
 #belangrijk: dit programma wordt nooit zelf uitgevoerd. De functies worden enkel geimporteerd vanuit gomuku.py en main.py
 

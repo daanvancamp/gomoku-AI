@@ -32,6 +32,8 @@ class GomokuGame:
         self.current_game = 0
         self.last_round = False
         self.ai_delay = False
+        self.use_recognition=False
+        self.allow_overrule=True
         
     def set_board(self, board):
         self.board = board
@@ -819,7 +821,6 @@ def runReplay(instance, game_number, moves:dict=None):#main function
                 p.ai.model.load_model(model_player1_str)
             else:
                 p.ai.model.load_model(model_player2_str)
-            p.ai.train = train
             
     pygame.display.set_icon(pygame.image.load('res/ico.png'))
     pygame.init()
