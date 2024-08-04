@@ -529,11 +529,6 @@ def runGame(instance, game_number, record_replay):#main function
                 instance.board[action[0]][action[1]] = current_player.get_player_id()
                 game_over = check_win(action[0], action[1], current_player.get_player_id(), instance)
                 next_max_score, next_scores, next_scores_normalized = calculate_score(instance.board)
-                # Train the AI
-                if train:
-                    mm_ai.remember(old_state, action, score, instance.board, game_over)
-                    mm_ai.train_short_memory(one_hot_board, action, short_score, scores, convert_to_one_hot(instance.board, players[current_player-1].id), next_scores, game_over)
-                    players[current_player.get_player_id() - 1].move_loss.append(mm_ai.loss)
                 players[current_player.get_player_id()-1].final_action = action
                 players[current_player.get_player_id() - 1].moves += 1
                 if game_over:
