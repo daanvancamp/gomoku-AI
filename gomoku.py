@@ -808,7 +808,6 @@ def runTraining(instance, game_number, record_replay):#main function
     
 
 
-
 def runReplay(instance, game_number, moves:dict=None):#main function
     # Main game loop
     global window_name, victory_text, current_player, last_active_tab, model_player1_str, model_player2_str, use_recognition
@@ -863,7 +862,6 @@ def runReplay(instance, game_number, moves:dict=None):#main function
     pygame.display.set_caption("Gomoku - Game: " + str(game_number) + " - " + victory_text)
     time.sleep(instance.SLEEP_BEFORE_END)#sleep before closing for SLEEP_BEFORE_END seconds
     reset_game(instance)
-
 
 
 
