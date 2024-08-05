@@ -133,8 +133,14 @@ class Player:
         self.model_name = model
         self.ai.model.load_model(model)
         
-    def get_model_name(self, model):
-        return self.model_name 
+    def get_model_name(self):
+        if self.id == 1:
+            return self.model_player1
+        elif self.id == 2:
+            return self.model_player2
+        else:
+            return None
+
     def set_model(self, model):
         print(self.id, model,self.TYPE)
         if  self.id == 1:
