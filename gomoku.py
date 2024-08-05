@@ -390,7 +390,7 @@ def runGame(instance, game_number, record_replay):#main function
         print("using recognition")
     else:
         print("not using recognition")
-            
+
     pygame.display.set_icon(pygame.image.load('res/ico.png'))
     pygame.init()
     pygame.display.set_caption(window_name)
