@@ -38,9 +38,8 @@ class GomokuGame:
         self.board = board
 
 class Player:
-    def __init__(self, player_type, player_id):
-                
-            #Initialize a Player object with the given player type and ID.
+    def __init__(self, player_type, player_id):    
+        #Initialize a Player object with the given player type and ID.
         self.TYPE = str(player_type) #type can be human, testai or AI-Model
         self.id = int(player_id) #id can be 1 or 2
         self.moves = 0
@@ -58,17 +57,17 @@ class Player:
         self.final_move_scores = []
         self.final_move_loss = []
         self.win_rate = 0
-        self.model_name = ""
         self.ai = ai.GomokuAI()
         self.final_action = None
-    
+        self.model_player1=None
+        self.model_player2=None
 
     def __str__(self) -> str:
-        import mainmenu #imported here to prevent a circular import
+
         if self.id==1 and self.TYPE=="AI-Model":
-            model=mainmenu.var_model_player1.get()
+            model=self.model_player1
         elif self.id==2 and self.TYPE=="AI-Model":
-            model=mainmenu.var_model_player2.get()
+            model=self.model_player2
         else:
             model="/"
         return f"Player{self.id},(type={self.TYPE}, model={model})"
@@ -87,6 +86,14 @@ class Player:
     
     def get_player_id(self):
         return self.id
+
+    def set_model(self, model):
+        if self.id == 1: 
+            self.model_player1=model
+        elif self.id == 2:
+            self.model_player2=model
+        else:
+            return None
 
     def calculate_score(self, max_score, is_winner, game_number):
         if max_score > 0:
@@ -135,8 +142,12 @@ class Player:
         self.ai.model.load_model(model)
         
     def get_model_name(self, model):
-        return self.model_name 
-    
+        if self.id==1:
+            return self.model_player1
+        elif self.id==2:
+            return self.model_player2
+        else:
+            return None
 
 
 # Set default player types. Can be changed on runtime (buttons in GUI)
@@ -384,7 +395,7 @@ def convert_to_one_hot(board, player_id):#vermijd dat ai denkt dat de getallen i
 
 def runGame(instance, game_number, record_replay):#main function
     # Main game loop
-    global window_name, victory_text, current_player, last_active_tab, model_player1_str, model_player2_str
+    global window_name, victory_text, current_player, last_active_tab
     
     if instance.use_recognition:
         print("using recognition")
@@ -579,14 +590,14 @@ def runGame(instance, game_number, record_replay):#main function
 
 def runTraining(instance, game_number, record_replay):#main function
     # Main game loop
-    global window_name, victory_text, current_player, last_active_tab, model_player1_str, model_player2_str, use_recognition
+    global window_name, victory_text, current_player, last_active_tab, use_recognition
 
     for p in players: #players=[Human, AI]
         if p.TYPE == "AI-Model":
             if p==player1:
-                p.ai.model.load_model(model_player1_str)
+                p.ai.model.load_model(instance.model_player1)
             else:
-                p.ai.model.load_model(model_player2_str)
+                p.ai.model.load_model(instance.model_player2)
             p.ai.train = True
             
     pygame.display.set_icon(pygame.image.load('res/ico.png'))
@@ -790,9 +801,9 @@ def runTraining(instance, game_number, record_replay):#main function
 
             if p==player1:
                 print("model saving")
-                p.ai.model.save_model(model_player1_str) #only saves after each round
+                p.ai.model.save_model(instance.model_player1) #only saves after each round
             else:
-                p.ai.model.save_model(model_player2_str) #only saves after each round
+                p.ai.model.save_model(instance.model_player2) #only saves after each round
                 #todo:finish this
             p.final_move_scores.append(sum(p.weighed_moves)/len(p.weighed_moves))
             stats.log_message(f"{p.TYPE} {p.id}: score loss: {float(p.ai.loss)}")
@@ -820,15 +831,15 @@ def runTraining(instance, game_number, record_replay):#main function
 
 def runReplay(instance, game_number, moves:dict=None):#main function
     # Main game loop
-    global window_name, victory_text, current_player, last_active_tab, model_player1_str, model_player2_str, use_recognition
+    global window_name, victory_text, current_player, last_active_tab, use_recognition,game_instance
 
 
     for p in players: #players=[Human, AI]
         if p.TYPE == "AI-Model":
             if p==player1:
-                p.ai.model.load_model(model_player1_str)
+                p.ai.model.load_model(instance.model_player1)
             else:
-                p.ai.model.load_model(model_player2_str)
+                p.ai.model.load_model(instance.model_player2)
             
     pygame.display.set_icon(pygame.image.load('res/ico.png'))
     pygame.init()

@@ -23,6 +23,7 @@ gomoku_ai = ai.GomokuAI(15)#board_size
 game_instance = gomoku.GomokuGame(filereader.create_gomoku_game("consts.json"))
 modelmanager_instance = modelmanager.ModelManager()
 
+
 root = Tk()
 root.geometry(str(WIDTH) + "x" + str(HEIGHT))
 root.title("Gomoku -- Main Menu")
@@ -137,12 +138,14 @@ def load_board_from_file()->list[list[int]]:
     return board
 
 def start_new_game():
-    global allow_overrule, use_recognition, current_player, player1, player2
+    global allow_overrule, current_player, player1, player2
     
     log_info_overruling("\n\n\nnew session begins:")
     
     game_instance.allow_overrule = var_allow_overrule.get()
     game_instance.use_recognition = var_use_recognition.get()
+    gomoku.player1.set_model(var_model_player1.get())
+    gomoku.player2.set_model(var_model_player2.get())
 
     if var_startingPlayer.get() == "Player 1":
         gomoku.current_player = gomoku.player1
@@ -212,12 +215,14 @@ def start_new_game():
 
 
 def start_new_training():
-    global allow_overrule, use_recognition, current_player, player1, player2
+    global allow_overrule, current_player, player1, player2
     
     log_info_overruling("\n\n\nnew session begins:")
     
     game_instance.allow_overrule = var_allow_overrule.get()
     game_instance.use_recognition = False
+    gomoku.player1.set_model(var_model_player1.get())
+    gomoku.player2.set_model(var_model_player2.get())
 
     if var_startingPlayer.get() == "Player 1":
         gomoku.current_player = gomoku.player1
@@ -297,12 +302,14 @@ def start_new_training():
 
 
 def start_new_replay(moves:dict=None):
-    global allow_overrule, use_recognition
+    global allow_overrule, game_instance
     
     log_info_overruling("\n\n\nnew session begins:")
     
     allow_overrule = var_allow_overrule.get()
-    use_recognition = False
+    game_instance.use_recognition = False
+    gomoku.player1.set_model(var_model_player1.get())
+    gomoku.player2.set_model(var_model_player2.get())
 
     if var_startingPlayer.get() == "Player 1":
         gomoku.current_player = gomoku.player1
