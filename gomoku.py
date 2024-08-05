@@ -555,7 +555,6 @@ def runGame(instance, game_number, record_replay):#main function
             except:
                 draw_board(instance)
             pygame.display.flip()#refresh
-            print(current_player)
             window_name = "Game: " + str(game_number) + " - Player " + str(current_player) #beurt start
             pygame.display.set_caption(window_name)
                 

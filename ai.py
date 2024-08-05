@@ -311,7 +311,7 @@ class GomokuAI:
                             break  # We hoeven niet verder te zoeken voor deze cel
     
         # Bepaal welke zetten te retourneren op basis van allow_overrule
-        if overrule and threat_moves : #if threat_moves is not empty
+        if overrule and threat_moves and self.can_win_in_one_move()!=valid_moves : #if threat_moves is not empty
             print("overruled:", threat_moves)
             log_info_overruling("overruled: " + str(threat_moves))
             for row in board:

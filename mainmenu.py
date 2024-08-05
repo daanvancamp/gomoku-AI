@@ -202,7 +202,7 @@ def start_new_game():
                 gomoku.runGame(game_instance, i, False) #kan als hoofdprogramma beschouwd worden (één spel is één run)
             except Exception as e:
                 print("error in gomoku.run, herschrijf die functie.")
-                raise Exception("De error is waarschijnlijk te wijten aan een foute zet, controleer het lezen van de json bestanden die het bord opslaan." , str(e))
+                raise Exception("There is an error in the main loop, it can be anything." , str(e))
             print("voor if")
                     
     except ValueError:
@@ -217,7 +217,7 @@ def start_new_training():
     log_info_overruling("\n\n\nnew session begins:")
     
     game_instance.allow_overrule = var_allow_overrule.get()
-    game_instance.use_recognition = var_use_recognition.get()
+    game_instance.use_recognition = False
 
     if var_startingPlayer.get() == "Player 1":
         gomoku.current_player = gomoku.player1
@@ -302,7 +302,7 @@ def start_new_replay(moves:dict=None):
     log_info_overruling("\n\n\nnew session begins:")
     
     allow_overrule = var_allow_overrule.get()
-    use_recognition = var_use_recognition.get()
+    use_recognition = False
 
     if var_startingPlayer.get() == "Player 1":
         gomoku.current_player = gomoku.player1
