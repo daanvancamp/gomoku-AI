@@ -17,7 +17,7 @@ import gomoku
 #todo: make it look nice, make it bigger
 
 WIDTH = 500 #origineel 230
-HEIGHT = 700 #origineel 315
+HEIGHT = 500 #origineel 315
 
 gomoku_ai = ai.GomokuAI(15)#board_size
 game_instance = gomoku.GomokuGame(filereader.create_gomoku_game("consts.json"))
