@@ -759,7 +759,7 @@ def runTraining(instance, game_number, record_replay):#main function
             except:
                 draw_board(instance)
             pygame.display.flip()#refresh
-            window_name = "Gomoku - Game: " + str(game_number) + " - Player " + str(current_player) #beurt start
+            window_name = "Gomoku - Game: " + str(game_number) + " - " + str(current_player) #beurt start
             pygame.display.set_caption(window_name)
                 
         else:
