@@ -83,7 +83,7 @@ class GomokuAI:
         self.criterion = nn.MSELoss()
         self.loss = 0
         self.train = False
-        self.allow_overrule = allow_overrule 
+        self.allow_overrule = allow_overrule
 
     def decrease_learning_rate(self):
         self.learning_rate *= 0.9999 #decrease learning rate

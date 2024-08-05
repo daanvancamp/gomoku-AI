@@ -138,7 +138,7 @@ def load_board_from_file()->list[list[int]]:
     return board
 
 def start_new_game():
-    global allow_overrule, current_player
+    global current_player
     
     log_info_overruling("\n\n\nnew session begins:")
     
@@ -217,7 +217,7 @@ def start_new_game():
 
 
 def start_new_training():
-    global allow_overrule, current_player, player1, player2
+    global current_player
     
     log_info_overruling("\n\n\nnew session begins:")
     
@@ -306,11 +306,11 @@ def start_new_training():
 
 
 def start_new_replay(moves:dict=None):
-    global allow_overrule, game_instance
+    global game_instance
     
     log_info_overruling("\n\n\nnew session begins:")
     
-    allow_overrule = var_allow_overrule.get()
+    game_instance.allow_overrule = var_allow_overrule.get()
     game_instance.use_recognition = False
     if gomoku.player1.TYPE == "AI-Model":
         gomoku.player1.set_model(var_model_player1.get())
@@ -374,16 +374,15 @@ def start_new_replay(moves:dict=None):
             for i in range(10):
                 print("training round done...")
             gomoku_ai.decrease_learning_rate()#todo: calculate decrease rate based on number of training rounds
-            print("players:",player1,player2)
-            if player1.get() == "AI-Model":
+            print("players:",gomoku.player1,gomoku.player2)
+            if gomoku.player1.TYPE == "AI-Model":
                 modelmanager_instance.log_number_of_training_loops(gomoku.player1.get_model_name(), 1)#add one to the number of training loops
-            elif player2.get() == "AI-Model":
+            elif gomoku.player2.TYPE == "AI-Model":
                 modelmanager_instance.log_number_of_training_loops(gomoku.player2.get_model_name(), 1)#add one to the number of training loops 
             else:
                 pass                   
     except ValueError:
         print("Most likely: Game runs value invalid, try again.")
-    
     game_over()
 
 
