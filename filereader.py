@@ -6,9 +6,8 @@ def empty_file(filename):
     with open(filename, 'w') as file:
         file.write("")
 
-path_logging_overruling=r".\logging_overruling.txt"
 def log_info_overruling(message):
-    global path_logging_overruling
+    path_logging_overruling=r".\logging_overruling.txt"
     with open(path_logging_overruling, "a") as file:
         file.write(message+"\n") #newline
         
