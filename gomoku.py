@@ -32,7 +32,6 @@ class GomokuGame:
         self.last_round = False
         self.ai_delay = False
         self.use_recognition=False
-        self.allow_overrule=True
         
     def set_board(self, board):
         self.board = board
