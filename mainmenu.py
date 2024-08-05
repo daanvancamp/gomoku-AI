@@ -138,14 +138,16 @@ def load_board_from_file()->list[list[int]]:
     return board
 
 def start_new_game():
-    global allow_overrule, current_player, player1, player2
+    global allow_overrule, current_player
     
     log_info_overruling("\n\n\nnew session begins:")
     
     game_instance.allow_overrule = var_allow_overrule.get()
     game_instance.use_recognition = var_use_recognition.get()
-    gomoku.player1.set_model(var_model_player1.get())
-    gomoku.player2.set_model(var_model_player2.get())
+    if gomoku.player1.TYPE == "AI-Model":
+        gomoku.player1.set_model(var_model_player1.get())
+    elif gomoku.player2.TYPE == "AI-Model":
+        gomoku.player2.set_model(var_model_player2.get())
 
     if var_startingPlayer.get() == "Player 1":
         gomoku.current_player = gomoku.player1
@@ -221,8 +223,10 @@ def start_new_training():
     
     game_instance.allow_overrule = var_allow_overrule.get()
     game_instance.use_recognition = False
-    gomoku.player1.set_model(var_model_player1.get())
-    gomoku.player2.set_model(var_model_player2.get())
+    if gomoku.player1.TYPE == "AI-Model":
+        gomoku.player1.set_model(var_model_player1.get())
+    elif gomoku.player2.TYPE == "AI-Model":
+        gomoku.player2.set_model(var_model_player2.get())
 
     if var_startingPlayer.get() == "Player 1":
         gomoku.current_player = gomoku.player1
@@ -308,8 +312,10 @@ def start_new_replay(moves:dict=None):
     
     allow_overrule = var_allow_overrule.get()
     game_instance.use_recognition = False
-    gomoku.player1.set_model(var_model_player1.get())
-    gomoku.player2.set_model(var_model_player2.get())
+    if gomoku.player1.TYPE == "AI-Model":
+        gomoku.player1.set_model(var_model_player1.get())
+    elif gomoku.player2.TYPE == "AI-Model":
+        gomoku.player2.set_model(var_model_player2.get())
 
     if var_startingPlayer.get() == "Player 1":
         gomoku.current_player = gomoku.player1
