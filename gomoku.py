@@ -583,7 +583,7 @@ def runGame(instance, game_number, record_replay):#main function
 
 def runTraining(instance, game_number, record_replay):#main function
     # Main game loop
-    global window_name, victory_text, current_player, last_active_tab, model_player1_str, model_player2_str, use_recognition
+    global window_name, victory_text, current_player, last_active_tab
 
     for p in players: #players=[Human, AI]
         if p.TYPE == "AI-Model":
@@ -823,7 +823,7 @@ def runTraining(instance, game_number, record_replay):#main function
 
 def runReplay(instance, game_number, moves:dict=None):#main function
     # Main game loop
-    global window_name, victory_text, current_player, last_active_tab, model_player1_str, model_player2_str, use_recognition
+    global window_name, victory_text, current_player, last_active_tab
 
 
     for p in players: #players=[Human, AI]
