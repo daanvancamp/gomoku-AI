@@ -87,14 +87,6 @@ class Player:
     def get_player_id(self):
         return self.id
 
-    def set_model(self, model):
-        if self.id == 1: 
-            self.model_player1=model
-        elif self.id == 2:
-            self.model_player2=model
-        else:
-            raise Exception("Player ID can only be 1 or 2")
-
     def calculate_score(self, max_score, is_winner, game_number):
         if max_score > 0:
             if is_winner:
@@ -142,13 +134,8 @@ class Player:
         self.ai.model.load_model(model)
         
     def get_model_name(self, model):
-        if self.id==1:
-            return self.model_player1
-        elif self.id==2:
-            return self.model_player2
-        else:
-            return None
-
+        return self.model_name 
+    
 
 # Set default player types. Can be changed on runtime (buttons in GUI)
 player1 = Player("Human", 1)
@@ -590,7 +577,7 @@ def runGame(instance, game_number, record_replay):#main function
 
 def runTraining(instance, game_number, record_replay):#main function
     # Main game loop
-    global window_name, victory_text, current_player, last_active_tab
+    global window_name, victory_text, current_player, last_active_tab, model_player1_str, model_player2_str, use_recognition
 
     for p in players: #players=[Human, AI]
         if p.TYPE == "AI-Model":
@@ -830,7 +817,7 @@ def runTraining(instance, game_number, record_replay):#main function
 
 def runReplay(instance, game_number, moves:dict=None):#main function
     # Main game loop
-    global window_name, victory_text, current_player, last_active_tab
+    global window_name, victory_text, current_player, last_active_tab, model_player1_str, model_player2_str, use_recognition
 
 
     for p in players: #players=[Human, AI]
