@@ -135,7 +135,13 @@ class Player:
         
     def get_model_name(self, model):
         return self.model_name 
-    
+    def set_model(self, model):
+        if self.TYPE == "AI-Model" and self.id == 1:
+            self.model_player1 = model
+        elif self.TYPE == "AI-Model" and self.id == 2:
+            self.model_player2 = model
+        else:
+            raise Exception("Model can only be set for player 1 or player 2")
 
 # Set default player types. Can be changed on runtime (buttons in GUI)
 player1 = Player("Human", 1)
