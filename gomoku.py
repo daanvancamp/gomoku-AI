@@ -61,6 +61,17 @@ class Player:
         self.model_name = ""
         self.ai = ai.GomokuAI()
         self.final_action = None
+    
+
+    def __str__(self) -> str:
+        import mainmenu #imported here to prevent a circular import
+        if self.id==1 and self.TYPE=="AI-Model":
+            model=mainmenu.var_model_player1.get()
+        elif self.id==2 and self.TYPE=="AI-Model":
+            model=mainmenu.var_model_player2.get()
+        else:
+            model="/"
+        return f"Player{self.id},(type={self.TYPE}, model={model})"
 
     def set_player_type(self, player_type):
         self.TYPE = str(player_type) #type can be human, AI-Model or Test Algorithm
@@ -544,7 +555,8 @@ def runGame(instance, game_number, record_replay):#main function
             except:
                 draw_board(instance)
             pygame.display.flip()#refresh
-            window_name = "Gomoku - Game: " + str(game_number) + " - Player " + str(current_player) #beurt start
+            print(current_player)
+            window_name = "Game: " + str(game_number) + " - Player " + str(current_player) #beurt start
             pygame.display.set_caption(window_name)
                 
         else:
