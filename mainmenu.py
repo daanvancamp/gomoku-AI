@@ -68,14 +68,14 @@ var_playerType1 = StringVar()
 var_playerType2 = StringVar()
 var_playerType1.set("Human")
 var_playerType2.set("AI-Model")
-game_runs = StringVar()
-game_runs.set("1")
-delayvar = BooleanVar()
-delayvar.set(False)
-logvar = BooleanVar()
-logvar.set(False)
-repvar = BooleanVar()
-repvar.set(True)
+var_game_runs = StringVar()
+var_game_runs.set("1")
+var_delay = BooleanVar()
+var_delay.set(False)
+var_log = BooleanVar()
+var_log.set(False)
+var_rep = BooleanVar()
+var_rep.set(True)
 replay_path = StringVar()
 replay_path.set("")
 var_allow_overrule=BooleanVar()
@@ -85,7 +85,7 @@ var_start_from_file=BooleanVar()
 var_start_from_file.set(False)
 state_board_path=StringVar()
 state_board_path.set(r".\test_situations\specific_situation.txt")
-name_model=StringVar()
+var_name_model=StringVar()
 var_model_player1=StringVar()
 var_model_player2=StringVar()
 var_use_recognition=BooleanVar()
@@ -123,7 +123,6 @@ def replay():
     if moves is not None:
         start_new_game(False, moves)
 
-
 def run():
     gomoku.run(game_instance)
 
@@ -146,21 +145,21 @@ def start_new_game():
     game_instance.use_recognition = var_use_recognition.get()
     if gomoku.player1.TYPE == "AI-Model":
         gomoku.player1.set_model(var_model_player1.get())
+        gomoku.player1.set_allow_overrule(var_allow_overrule.get())
     elif gomoku.player2.TYPE == "AI-Model":
         gomoku.player2.set_model(var_model_player2.get())
-
+        gomoku.player2.set_allow_overrule(var_allow_overrule.get())
     if var_startingPlayer.get() == "Player 1":
         gomoku.current_player = gomoku.player1
     else:
         gomoku.current_player = gomoku.player2
-
     try:
         initialiseer_spelbord_json_bestanden()
     except:
         raise Exception("Fout in functie: initialiseer_spelbord_json_bestanden")
     try:
-        game_instance.ai_delay = delayvar.get()
-        stats.should_log = logvar.get()
+        game_instance.ai_delay = var_delay.get()
+        stats.should_log = var_log.get()
         stats.setup_logging(var_playerType1.get(), var_playerType2.get())
         
         gomoku.player1.set_player_type(var_playerType1.get())
@@ -176,7 +175,7 @@ def start_new_game():
         valid_number = False
         while not valid_number:
             try:
-                runs = int(game_runs.get())
+                runs = int(var_game_runs.get())
                 valid_number=True
             except:
                 print("invalid number, try again")
@@ -249,13 +248,13 @@ def start_new_training():
         valid_number = False
         while not valid_number:
             try:
-                runs = int(game_runs.get())
+                runs = int(var_game_runs.get())
                 valid_number=True
             except:
                 print("invalid number, try again")
 
-        game_instance.ai_delay = delayvar.get()
-        stats.should_log = logvar.get()
+        game_instance.ai_delay = var_delay.get()
+        stats.should_log = var_log.get()
         stats.setup_logging(gomoku.player1.get_player_type(), gomoku.player2.get_player_type())
         root.wm_state('iconic')
         for i in range(runs):
@@ -333,13 +332,13 @@ def start_new_replay(moves:dict=None):
         valid_number = False
         while not valid_number:
             try:
-                runs = int(game_runs.get())
+                runs = int(var_game_runs.get())
                 valid_number=True
             except:
                 print("invalid number, try again")
 
-        game_instance.ai_delay = delayvar.get()
-        stats.should_log = logvar.get()
+        game_instance.ai_delay = var_delay.get()
+        stats.should_log = var_log.get()
         stats.setup_logging(gomoku.player1.get(), gomoku.player2.get())
         root.wm_state('iconic')
         for i in range(runs):
@@ -387,7 +386,7 @@ def start_new_replay(moves:dict=None):
 
 
 def create_new_model():
-    modelmanager_instance.create_new_model(name_model.get())
+    modelmanager_instance.create_new_model(var_name_model.get())
     refresh_models()
 
 def delete_model():
@@ -433,9 +432,9 @@ def toggle_visibility_write_last_active_tab_to_file():
             current_tab = tabControl.index(tabControl.select())
             tab_text = tabControl.tab(current_tab, "text")
             if tab_text=="Train" and old_tab_text!=tab_text:
-                game_runs.set("3000")
+                var_game_runs.set("3000")
             elif tab_text=="Play gomoku" and old_tab_text!=tab_text:
-                game_runs.set("1")
+                var_game_runs.set("1")
         except Exception as e:
             pass
             
@@ -490,7 +489,7 @@ Thread_visibility.start()
 
 gamerunslabel = ttk.Label(tab1, text="Number of games: ",style="TLabel")
 gamerunslabel.grid(row=7, column=0, sticky="w")
-gamerunsentry = ttk.Entry(tab1, textvariable=game_runs,style="TEntry")
+gamerunsentry = ttk.Entry(tab1, textvariable=var_game_runs,style="TEntry")
 gamerunsentry.grid(row=7, column=1, sticky="w")
 
 playerstartLabel = ttk.Label(tab1, text="Player to start: ",style="TLabel")
@@ -500,11 +499,11 @@ CbStartingPlayer = ttk.Combobox(tab1, state="readonly", values=["Player 1", "Pla
 CbStartingPlayer.current(0)
 CbStartingPlayer.grid(row=8, column=1, sticky="w")
 
-delaybutton = ttk.Checkbutton(tab1, text="Use AI Delay", variable=delayvar,style="TCheckbutton")
+delaybutton = ttk.Checkbutton(tab1, text="Use AI Delay", variable=var_delay,style="TCheckbutton")
 delaybutton.grid(row=9, column=0, sticky="w")
-logbutton = ttk.Checkbutton(tab1, text="Create log file", variable=logvar,style="TCheckbutton") 
+logbutton = ttk.Checkbutton(tab1, text="Create log file", variable=var_log,style="TCheckbutton") 
 logbutton.grid(row=10, column=0, sticky="w")
-replaybutton = ttk.Checkbutton(tab1, text="Save replays", variable=repvar,style="TCheckbutton") 
+replaybutton = ttk.Checkbutton(tab1, text="Save replays", variable=var_rep,style="TCheckbutton") 
 replaybutton.grid(row=11, column=0, sticky="w")
 overrule_button=ttk.Checkbutton(tab1, text="Allow overrule", variable=var_allow_overrule,style="TCheckbutton")
 overrule_button.grid(row=12, column=0, sticky="w")
@@ -547,9 +546,9 @@ CbModelTrain2 = ttk.Combobox(tab2, state="readonly", values=list_models,textvari
 CbModelTrain2.grid(row=6, column=0, sticky="w")
 gamerunslabel = ttk.Label(tab2, text="Number of games: ",style="TLabel")
 gamerunslabel.grid(row=7, column=0, sticky="w")
-gamerunsentry2 = ttk.Entry(tab2, textvariable=game_runs,style="TEntry")
+gamerunsentry2 = ttk.Entry(tab2, textvariable=var_game_runs,style="TEntry")
 gamerunsentry2.grid(row=8, column=0, sticky="w")
-replaybutton2 = ttk.Checkbutton(tab2, text="Save replays", variable=repvar,style="TCheckbutton")
+replaybutton2 = ttk.Checkbutton(tab2, text="Save replays", variable=var_rep,style="TCheckbutton")
 replaybutton2.grid(row=9, column=0, sticky="w")
 overrule_button=ttk.Checkbutton(tab2, text="Allow overrule", variable=var_allow_overrule,style="TCheckbutton")
 overrule_button.grid(row=10, column=0, sticky="w")
@@ -564,7 +563,7 @@ replayentry = ttk.Entry(tab3, textvariable=replay_path, width=30,style="TEntry")
 replayentry.grid(row=1, column=0, sticky="w")
 button_4 = ttk.Button(tab3, text="...",style="TButton", command=lambda: browse_files())
 button_4.grid(row=1, column=1, sticky="w")
-delaybutton2 = ttk.Checkbutton(tab3, text="Use AI Delay", variable=delayvar, style="TCheckbutton")
+delaybutton2 = ttk.Checkbutton(tab3, text="Use AI Delay", variable=var_delay, style="TCheckbutton")
 delaybutton2.grid(row=2, column=0, sticky="w")
 button_5 = ttk.Button(tab3, text="Play", style="TButton", command=lambda: replay())
 button_5.grid(row=3, column=0)
@@ -581,7 +580,7 @@ Lb1.grid(row=1, column=1)
 
 nameModelLabel = ttk.Label(tab4, text="Name of model: ",style="TLabel")
 nameModelLabel.grid(row=2, column=0, sticky="w")
-nameModelEntry = ttk.Entry(tab4, textvariable=name_model,style="TEntry")
+nameModelEntry = ttk.Entry(tab4, textvariable=var_name_model,style="TEntry")
 nameModelEntry.grid(row=2, column=1, sticky="w")
 nameModelEntry.bind("<Return>",lambda event: create_new_model())#push enter to make a new model (easier)
 button_NewModel = ttk.Button(tab4, text="Make New Model", style="TButton", command=lambda: create_new_model())

@@ -1,6 +1,5 @@
 
 import operator
-from threading import Thread
 import time
 import pygame
 import testai
@@ -9,9 +8,13 @@ import random
 import stats
 import numpy as np
 import filereader
-from detect_pieces import *
+from threading import Thread
 from time import sleep
-#from ai import *
+from lezen_stukken_en_muziek import *
+
+
+window_name = "Gomoku"
+victory_text = ""
  
 #instructie: druk op de linkermuisknop wanneer je een zet hebt gedaan op het fysiek bord.
 
@@ -36,6 +39,7 @@ class GomokuGame:
     def set_board(self, board):
         self.board = board
 
+
 class Player:
     def __init__(self, player_type, player_id):    
         #Initialize a Player object with the given player type and ID.
@@ -57,19 +61,13 @@ class Player:
         self.final_move_loss = []
         self.win_rate = 0
         self.ai = ai.GomokuAI()
+        self.allow_overrule = True
         self.final_action = None
-        self.model_player1=None
-        self.model_player2=None
+        self.model_name=None
+        
 
     def __str__(self) -> str:
-
-        if self.id==1 and self.TYPE=="AI-Model":
-            model=self.model_player1
-        elif self.id==2 and self.TYPE=="AI-Model":
-            model=self.model_player2
-        else:
-            model="/"
-        return f"Player{self.id},(type={self.TYPE}, model={model})"
+        return f"Player{self.id},(type={self.TYPE}, model={self.model_name})"
 
     def set_player_type(self, player_type):
         self.TYPE = str(player_type) #type can be human, AI-Model or Test Algorithm
@@ -79,9 +77,6 @@ class Player:
         
     def set_player_id(self, player_id):
         self.id = int(player_id) #id can be 1 or 2 corresponding to human or AI
-
-    def get_player(self):
-        return self
     
     def get_player_id(self):
         return self.id
@@ -133,21 +128,15 @@ class Player:
         self.ai.model.load_model(model)
         
     def get_model_name(self):
-        if self.id == 1:
-            return self.model_player1
-        elif self.id == 2:
-            return self.model_player2
-        else:
-            return None
+        return self.model_name
 
-    def set_model(self, model):
-        print(self.id, model,self.TYPE)
-        if  self.id == 1:
-            self.model_player1 = model
-        elif self.id == 2:
-            self.model_player2 = model
-        else:
-            raise Exception("Model can only be set for player 1 or player 2")
+    def set_model(self, model_name):
+        self.model_name = model_name
+        
+    def set_allow_overrule(self, allow_overrule):
+        self.allow_overrule = allow_overrule
+        ai.set_allow_overrule(allow_overrule)
+        return self.id
 
 # Set default player types. Can be changed on runtime (buttons in GUI)
 player1 = Player("Human", 1)
@@ -159,13 +148,9 @@ current_player = player1
 def logging_players():
     print("Logging players")
     print("speler 1 : " + str(player1.get_player_id()))
-    print("speler 1 : " + str(players[0].get_player_id()))
-    print("speler 1 : " + str(player1.TYPE))
-            
+    print("speler 1 : " + str(player1.TYPE))   
     print("speler 2 : " + str(player2.get_player_id()))
     print("speler 2 : " + str(player2.TYPE))
-    print("speler 2 : " + str(players[1].get_player_id()))
-    
     print("current speler : " + str(current_player.get_player_id()))
 
 def reset_player_stats():
@@ -195,12 +180,6 @@ def update_player_stats(instance, winning_player):
                           f"{players[1].TYPE} {players[1].id}:\nwins: {players[1].wins} - win rate: {players[1].win_rate} - average score: {players[1].avg_score} - weighed score: {sum(players[1].weighed_scores)/len(players[1].weighed_scores)} - average moves: {players[1].avg_moves}.")
 
 
-def set_players(_players):
-    global players
-    players = _players
-
-window_name = "Gomoku"
-victory_text = ""
 
 def is_move_model(row,col,last_move_model) -> bool:
     if (row,col)==last_move_model:
