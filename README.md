@@ -56,19 +56,30 @@ july 2024:
 august 2024:
 
   The code was completely restructured. Some performance improvements were also done. There are now 3 functions to run the game.
+
+  You can now choose if you want to allow overruling for each player. Of course, I also added an option in the GUI.
+  
+  splitted the run game function into 3 functions: runreplay, rungame,runtraining
+
+  added an option in the GUI to turn the music on and off.
+  
+  added common code to functions to shorten the code (gomoku.py went from 900 to 700 lines)
+  
+  fixed an issue: Like you see on the image. It's the turn of Black.
+  ![image](https://github.com/user-attachments/assets/46c63a9a-af7f-4f0a-9cf3-2bf9f56af9ac) 
+  You could always win when you started from the ends and made your way to the middle. The model sometimes didn't block it. It turned out that it was the result of a small bug in the overruling.
+  
+  fixed a few general bugs
+  
   
 
 issues:
 
-There's a known issue/weakness. Like you see on the image. It's the turn of Black.
-![image](https://github.com/user-attachments/assets/46c63a9a-af7f-4f0a-9cf3-2bf9f56af9ac) 
-You can always win when you start from the ends and make your way to the middle. The model sometimes won't block it, but no one plays like that. If a 100 people (who have never played the game) would play the game, then they all wouldn't find out about this bug. Someone who knows all the existing bugs and vulnerabilities (and takes 30 seconds to think about each move), will never lose against the model.
 
-roadmap:
+
+roadmap(in descending priority):
 
 -We are trying to make using multiple models more stable.
-
--I am further developping the feature to turn the recognition on and off.
 
 -solving the issues mentioned above, including the issue with the overruling
 
@@ -77,7 +88,7 @@ roadmap:
 -coming soon
 
 
-Note: the project is still under development. Some added features aren't stable as of right now, but overall it works better than the program of Mikko (from which I started). The project will hopefully be finished in april of 2025, so you can expect the stable and complete version ultimately then, but it could be done earlier.
+Note: the project is still under development. Some added features aren't stable as of right now, but overall it works better than the program of Mikko (from which I started). The project will hopefully be finished in april of 2025, so you can expect the stable and complete version ultimately then, but it could be done earlier. **A stable release will be done in a few weeks.** After that, we will be adding more features, but the stability won't improve anymore (,unless we didn't find a bug earlier on.)
 
 developped by:
 daanvancamp & wimnevelsteen
