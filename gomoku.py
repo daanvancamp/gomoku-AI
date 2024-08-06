@@ -408,38 +408,8 @@ def runGame(instance, game_number, record_replay):#main function
                             Thread(target=lambda:pygame.mixer.music.fadeout(1000)).start()#don't block the main thread
 
                         if instance.use_recognition:
-                            schrijf_relevante_stukken_na_zet_weg()#sla de stukken van de mens op in een bestand.
-                            zetten_mens=bepaal_relevante_zet()#vergeet de haakjes niet!!
-                            print("zetten_mens:",zetten_mens)#vorm: lijst van coordinaten(=[tuple(x,y),...])
-                            thread_controleer_vertraging=Thread(target=controleer_vertraging_data) #thread stoppen is moeilijk, daarom wordt die iedere keer opnieuw aangemaakt.
-                            thread_controleer_vertraging.start()
-                            for i in zetten_mens:
-                                try:
-                                    int(i[0])
-                                    int(i[1])
-
-                                except:
-                                    raise Exception("De coordinaten moeten getallen zijn. Controleer de coordinaten in de beeldherkenning. (x,y)")
-                            try:
-                                if len(zetten_mens)==0:
-                                    raise Exception("Er werd geen zet gedetecteerd.")
-
-                                elif len(zetten_mens)==1:
-                                    print("1 zet, super")
-                                    x, y = zetten_mens[0]
-                                elif zetten_mens is None: #zou nooit mogen voorkomen
-                                    raise Exception("Geen zetten, of variabele niet gedeclareerd")
-                                else:
-                                    raise Exception("Meerdere zetten")
-
-                                antwoord=input("Klopt deze zet? (ja/nee) :",x,y)#todo: haal op termijn weg, wanneer de code betrouwbaar genoeg is.
-                                #=debugging
-                                if antwoord=="ja":
-                                    pass
-                                else:
-                                    raise Exception("Als u het denkt, waarde wordt op de normale manier ingesteld.")
-                            except Exception as e:
-                                print("something went wrong with the recognition of the pieces:",e)
+                            x,y=recognize_move()
+                            
 
                         else:
                             x,y=event.pos
