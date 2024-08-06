@@ -78,8 +78,10 @@ var_rep = BooleanVar()
 var_rep.set(True)
 replay_path = StringVar()
 replay_path.set("")
-var_allow_overrule=BooleanVar()
-var_allow_overrule.set(True)
+var_allow_overrule_player_1=BooleanVar()
+var_allow_overrule_player_1.set(True)
+var_allow_overrule_player_2=BooleanVar()
+var_allow_overrule_player_2.set(True)
 var_play_music=BooleanVar()
 var_play_music.set(False)
 
@@ -144,16 +146,15 @@ def start_new_game():
     
     log_info_overruling("\n\n\nnew session begins:")
     
-    game_instance.allow_overrule = var_allow_overrule.get()
     game_instance.use_recognition = var_use_recognition.get()
     game_instance.play_music = var_play_music.get()
 
-    if gomoku.player1.TYPE == "AI-Model":
+    if var_playerType1.get() == "AI-Model":
         gomoku.player1.set_model(var_model_player1.get())
-        gomoku.player1.set_allow_overrule(var_allow_overrule.get())
-    elif gomoku.player2.TYPE == "AI-Model":
+        gomoku.player1.set_allow_overrule(var_allow_overrule_player_1.get())
+    elif var_playerType2.get() == "AI-Model":
         gomoku.player2.set_model(var_model_player2.get())
-        gomoku.player2.set_allow_overrule(var_allow_overrule.get())
+        gomoku.player2.set_allow_overrule(var_allow_overrule_player_2.get())
     if var_startingPlayer.get() == "Player 1":
         gomoku.current_player = gomoku.player1
     else:
@@ -224,7 +225,7 @@ def start_new_training():
     global current_player
     log_info_overruling("\n\n\nnew session begins:")
     
-    game_instance.allow_overrule = var_allow_overrule.get()
+    game_instance.allow_overrule = var_allow_overrule_player_1.get()
     game_instance.use_recognition = False
     game_instance.play_music = False
 
@@ -315,7 +316,7 @@ def start_new_replay(moves:dict=None):
     
     log_info_overruling("\n\n\nnew session begins:")
     
-    game_instance.allow_overrule = var_allow_overrule.get()
+    game_instance.allow_overrule = var_allow_overrule_player_1.get()
     game_instance.use_recognition = False
     game_instance.play_music = False
 
@@ -495,32 +496,38 @@ CbModel2.grid(row=6, column=1)
 Thread_visibility=Thread(target=toggle_visibility_write_last_active_tab_to_file)
 Thread_visibility.start()
 
+
+overrule_button_player_1=ttk.Checkbutton(tab1, text="Allow overrule", variable=var_allow_overrule_player_1,style="TCheckbutton")
+overrule_button_player_1.grid(row=7, column=0, sticky="w")
+
+overrule_button_player_2=ttk.Checkbutton(tab1, text="Allow overrule", variable=var_allow_overrule_player_2,style="TCheckbutton")
+overrule_button_player_2.grid(row=7, column=1, sticky="w")
+
+
 gamerunslabel = ttk.Label(tab1, text="Number of games: ",style="TLabel")
-gamerunslabel.grid(row=7, column=0, sticky="w")
+gamerunslabel.grid(row=8, column=0, sticky="w")
 gamerunsentry = ttk.Entry(tab1, textvariable=var_game_runs,style="TEntry")
-gamerunsentry.grid(row=7, column=1, sticky="w")
+gamerunsentry.grid(row=8, column=1, sticky="w")
 
 playerstartLabel = ttk.Label(tab1, text="Player to start: ",style="TLabel")
-playerstartLabel.grid(row=8, column=0, sticky="w")
-
+playerstartLabel.grid(row=9, column=0, sticky="w")
 CbStartingPlayer = ttk.Combobox(tab1, state="readonly", values=["Player 1", "Player 2"], textvariable=var_startingPlayer)
 CbStartingPlayer.current(0)
-CbStartingPlayer.grid(row=8, column=1, sticky="w")
-##column 0
-delaybutton = ttk.Checkbutton(tab1, text="Use AI Delay", variable=var_delay,style="TCheckbutton")
-delaybutton.grid(row=9, column=0, sticky="w")
+CbStartingPlayer.grid(row=9, column=1, sticky="w")
+
 logbutton = ttk.Checkbutton(tab1, text="Create log file", variable=var_log,style="TCheckbutton") 
 logbutton.grid(row=10, column=0, sticky="w")
 replaybutton = ttk.Checkbutton(tab1, text="Save replays", variable=var_rep,style="TCheckbutton") 
 replaybutton.grid(row=11, column=0, sticky="w")
 
 #column1
-overrule_button=ttk.Checkbutton(tab1, text="Allow overrule", variable=var_allow_overrule,style="TCheckbutton")
-overrule_button.grid(row=9, column=1, sticky="w")
+
 use_recognition_button=ttk.Checkbutton(tab1, text="use recognition*", variable=var_use_recognition,style="TCheckbutton")
 use_recognition_button.grid(row=10, column=1, sticky="w")
 music_button=ttk.Checkbutton(tab1, text="Play music", variable=var_play_music,style="TCheckbutton")
 music_button.grid(row=11, column=1, sticky="w")
+delaybutton = ttk.Checkbutton(tab1, text="Use AI Delay", variable=var_delay,style="TCheckbutton")
+delaybutton.grid(row=12, column=1, sticky="w")
 
 
 label_recognition=ttk.Label(tab1, text="*only turn on when you have a physical board, a webcam and the other repository: ",style="TLabel",wraplength=300)
@@ -564,8 +571,8 @@ gamerunsentry2 = ttk.Entry(tab2, textvariable=var_game_runs,style="TEntry")
 gamerunsentry2.grid(row=8, column=0, sticky="w")
 replaybutton2 = ttk.Checkbutton(tab2, text="Save replays", variable=var_rep,style="TCheckbutton")
 replaybutton2.grid(row=9, column=0, sticky="w")
-overrule_button=ttk.Checkbutton(tab2, text="Allow overrule", variable=var_allow_overrule,style="TCheckbutton")
-overrule_button.grid(row=10, column=0, sticky="w")
+overrule_button_player_1=ttk.Checkbutton(tab2, text="Allow overrule", variable=var_allow_overrule_player_1,style="TCheckbutton")
+overrule_button_player_1.grid(row=10, column=0, sticky="w")
 
 train_description = Label(tab2, text="It is recommended to run at least 3 000 games per training session.", font=(style_numbers[0], style_numbers[1]), wraplength=WIDTH-5, justify=LEFT)#origineel width-5
 train_description.grid(row=11, column=0, sticky="w")
