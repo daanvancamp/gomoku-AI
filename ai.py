@@ -143,6 +143,9 @@ class GomokuAI:
         self.optimizer.step()
         self.optimizer.zero_grad(set_to_none=False)
     
+    def set_allow_overrule(self, allow_overrule):
+        self.allow_overrule = allow_overrule
+
     def remove_unvalid_moves(self,threat_moves,valid_moves):
         for move in threat_moves:
             if move not in valid_moves:
@@ -311,7 +314,7 @@ class GomokuAI:
                             break  # We hoeven niet verder te zoeken voor deze cel
     
         # Bepaal welke zetten te retourneren op basis van allow_overrule
-        if overrule and threat_moves and self.can_win_in_one_move()!=valid_moves : #if threat_moves is not empty
+        if overrule and threat_moves and self.can_win_in_one_move(board,self.determine_current_player(board),valid_moves) : #if threat_moves is not empty
             print("overruled:", threat_moves)
             log_info_overruling("overruled: " + str(threat_moves))
             for row in board:

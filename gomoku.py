@@ -137,7 +137,7 @@ class Player:
         
     def set_allow_overrule(self, allow_overrule):
         self.allow_overrule = allow_overrule
-        ai.set_allow_overrule(allow_overrule)
+        self.ai.set_allow_overrule(allow_overrule)
         return self.id
 
 # Set default player types. Can be changed on runtime (buttons in GUI)
@@ -408,9 +408,9 @@ def runGame(instance, game_number, record_replay):#main function
                             Thread(target=lambda:pygame.mixer.music.fadeout(1000)).start()#don't block the main thread
 
                         if instance.use_recognition:
-                            x,y=recognize_move()
-                            
-
+                            (x,y)=recognize_move()
+                            if (x,y) is None:
+                                continue #don't do anything
                         else:
                             x,y=event.pos
             
@@ -455,7 +455,7 @@ def runGame(instance, game_number, record_replay):#main function
                         sleep(0.1)#otherwise it will be flashing uncontrollably
 
             # AI move
-            elif current_player.TYPE == "AI-Model" and not testai.check_game_over(instance):
+            elif current_player.TYPE == "Test Algorithm" and not testai.check_game_over(instance):
                 if instance.ai_delay:
                     time.sleep(random.uniform(0.25, 1.0))   # randomize ai "thinking" time
                 ai_row, ai_col = testai.ai_move(instance, players[current_player.get_player_id()-1].id)
@@ -465,6 +465,7 @@ def runGame(instance, game_number, record_replay):#main function
                     p1_moves.append((ai_row, ai_col))
                 elif record_replay:
                     p2_moves.append((ai_row, ai_col))
+
                 if check_win(ai_row, ai_col, current_player.get_player_id(), instance):
                     victory_text = f"AI-Model {players[current_player.get_player_id()-1].id} wins!"
                     winning_player = current_player.get_player_id()
@@ -475,7 +476,7 @@ def runGame(instance, game_number, record_replay):#main function
                     logging_players()   
             
             # Test Algorithm
-            elif current_player.TYPE == "Test Algorithm":
+            elif current_player.TYPE == "AI-Model":
                 if instance.ai_delay:
                     time.sleep(random.uniform(0.25, 1.0))   # randomize AI "thinking" time
                 one_hot_board = convert_to_one_hot(instance.board, players[current_player.get_player_id()-1].id)
@@ -484,12 +485,13 @@ def runGame(instance, game_number, record_replay):#main function
                 old_state = instance.board
                 max_score, scores, scores_normalized = calculate_score(instance.board)
                 action = mm_ai.get_action(instance.board, one_hot_board, scores_normalized)
-                if mark_last_move_model:
-                    last_move=action #=last move for example :(3,6)
-                else:
-                    last_move=None
                 np_scores = np.array(scores).reshape(15, 15)
                 short_score = np_scores[action[0]][action[1]]
+                if mark_last_move_model:
+                    last_move_model=action #=last move for example :(3,6)
+                    print(action)
+                else:
+                    last_move_model=None
                 if max_score <= 0:
                     # prevent division with negative values or zero
                     score = 0
@@ -514,7 +516,7 @@ def runGame(instance, game_number, record_replay):#main function
                     print("Na switch player AI!!!!!!!!!!!")
                     logging_players()    
             try:
-                draw_board(instance,last_move)
+                draw_board(instance,last_move_model)
             except:
                 draw_board(instance)
             pygame.display.flip()#refresh
