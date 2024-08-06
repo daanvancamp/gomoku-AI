@@ -4,7 +4,7 @@ import os
 from threading import Thread
 from filereader import log_info_overruling
 import mainmenu
-from lezen_stukken_en_muziek import initialiseer_muziek
+from music import initialiseer_muziek
 
 def main():
     mainmenu.mainmenu_run()

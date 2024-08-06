@@ -8,7 +8,7 @@ import ai
 import filereader
 import stats
 from PIL import Image, ImageTk
-from lezen_stukken_en_muziek import TE_DETECTEREN_KLEUR, initialiseer_spelbord_json_bestanden
+from detect_pieces import TE_DETECTEREN_KLEUR, initialiseer_spelbord_json_bestanden
 from filereader import log_info_overruling
 import modelmanager
 import gomoku

@@ -9,7 +9,7 @@ import random
 import stats
 import numpy as np
 import filereader
-from lezen_stukken_en_muziek import *
+from detect_pieces import *
 from time import sleep
 #from ai import *
  
