@@ -734,7 +734,7 @@ def runTraining(instance, game_number, record_replay):#main function
     
 
 
-def runReplay(instance, game_number, moves:dict=None):#main function
+def runReplay(instance, moves:dict=None):#main function
     # Main game loop
     global window_name, victory_text, current_player, running
     
@@ -746,13 +746,16 @@ def runReplay(instance, game_number, moves:dict=None):#main function
     running = True
     winning_player = 0
 
+    print("wim")
+    print(moves)
+
     if moves is not None:
         move_id = 0
         position = list(moves.keys())
     while running:
         if not check_board_full(instance):
             #Replay
-            if players[current_player.get_player_id() - 1].TYPE == "replay":
+            if players[current_player.get_player_id() - 1].TYPE == "Replay":
                 if instance.ai_delay:
                     time.sleep(random.uniform(0.25, 1.0))   # randomize ai "thinking" time
                 instance.board[position[move_id][0]][position[move_id][1]] = current_player.get_player_id()
@@ -768,7 +771,7 @@ def runReplay(instance, game_number, moves:dict=None):#main function
                 draw_board(instance,last_move)
             except:
                 draw_board(instance)
-            refresh_screen(game_number, current_player)
+            refresh_screen(0, current_player)
                 
         else:
             victory_text = "TIE"
@@ -777,7 +780,7 @@ def runReplay(instance, game_number, moves:dict=None):#main function
 
     # End game
     stats.log_message(victory_text)
-    pygame.display.set_caption("Gomoku - Game: " + str(game_number) + " - " + victory_text)
+    pygame.display.set_caption("Gomoku - Game: " + victory_text)
     time.sleep(instance.SLEEP_BEFORE_END)#sleep before closing for SLEEP_BEFORE_END seconds
     reset_game(instance)
 

@@ -120,15 +120,7 @@ def browse_files():
     file_path = filedialog.askopenfilename(filetypes=[("Json File", "*.json")])
     replay_path.set(file_path)
    
-def replay():
-    var_playerType1.set("replay")
-    set_player_type(0)
-    var_playerType2.set("replay")
-    set_player_type(1)
-    var_game_runs.set("1")
-    moves = filereader.load_replay(replay_path.get())
-    if moves is not None:
-        start_new_game(False, moves)
+
 
 def run():
     gomoku.run(game_instance)
@@ -313,79 +305,45 @@ def start_new_training():
 
 
 
-def start_new_replay(moves:dict=None):
+def start_new_replay():
     global game_instance
     
     log_info_overruling("\n\n\nnew session begins:")
+   
+    moves = filereader.load_replay(replay_path.get())
     
+    print("Daan")
+    print(moves)
+
     game_instance.use_recognition = False
     game_instance.play_music = False
 
-    if gomoku.player1.TYPE == "AI-Model":
-        gomoku.player1.set_model(var_model_player1.get())
-    if gomoku.player2.TYPE == "AI-Model":
-        gomoku.player2.set_model(var_model_player2.get())
+    gomoku.player1.TYPE = "Replay"
+    gomoku.player2.TYPE = "Replay"
 
-    if var_startingPlayer.get() == "Player 1":
-        gomoku.current_player = gomoku.player1
-    else:
-        gomoku.current_player = gomoku.player2
+    gomoku.current_player = gomoku.player1
 
     try:
         initialiseer_spelbord_json_bestanden()
     except:
         raise Exception("Fout in functie: initialiseer_spelbord_json_bestanden")
     try:
-        gomoku.player1.set("AI-Model")
-        set_player_type(0)
-        valid_number = False
-        while not valid_number:
-            try:
-                runs = int(var_game_runs.get())
-                valid_number=True
-            except:
-                print("invalid number, try again")
-
         game_instance.ai_delay = var_delay.get()
         stats.should_log = var_log.get()
-        stats.setup_logging(gomoku.player1.get(), gomoku.player2.get())
+        stats.setup_logging(str(gomoku.player1), str(gomoku.player2))
         root.wm_state('iconic')
-        for i in range(runs):
-            log_info_overruling("run "+str(i+1)+" begins:")
-            try:
-                initialiseer_spelbord_json_bestanden()#geen stukken op bord
-            except:
-                raise Exception("Fout in functie: initialiseer_spelbord_json_bestanden")
-            
-            stats.log_message(f"Game  {i+1} begins.")
-            game_instance.current_game = i+1
-            game_instance.last_round = (i+1 == runs)
-            
-            if var_start_from_file.get():
-                try:
-                    board = load_board_from_file()
-                    print("Bord geladen")
-                    for row in board:
-                        print(row)
-                    game_instance.set_board(board)
-                except Exception as e:
-                    print("error in gomoku.run, herschrijf die functie.")
-                    raise Exception("De error is waarschijnlijk te wijten aan een foute zet, controleer het lezen van de json bestanden die het bord opslaan." , str(e))
 
-            try:               
-                gomoku.runReplay(game_instance, i, moves) #kan als hoofdprogramma beschouwd worden (��n spel is ��n run)
-            except Exception as e:
-                print("error in gomoku.run, herschrijf die functie.")
-                raise Exception("De error is waarschijnlijk te wijten aan een foute zet, controleer het lezen van de json bestanden die het bord opslaan." , str(e))
-            
-            gomoku_ai.decrease_learning_rate()#todo: calculate decrease rate based on number of training rounds
-            print("players:",gomoku.player1,gomoku.player2)
-            if gomoku.player1.TYPE == "AI-Model":
-                modelmanager_instance.log_number_of_training_loops(gomoku.player1.get_model_name(), 1)#add one to the number of training loops
-            elif gomoku.player2.TYPE == "AI-Model":
-                modelmanager_instance.log_number_of_training_loops(gomoku.player2.get_model_name(), 1)#add one to the number of training loops 
-            else:
-                pass                   
+        try:
+            initialiseer_spelbord_json_bestanden()#geen stukken op bord
+        except:
+            raise Exception("Fout in functie: initialiseer_spelbord_json_bestanden")
+           
+        try:               
+            gomoku.runReplay(game_instance, moves) #kan als hoofdprogramma beschouwd worden (��n spel is ��n run)
+        except Exception as e:
+            print("error in gomoku.run, herschrijf die functie.")
+            raise Exception("De error is waarschijnlijk te wijten aan een foute zet, controleer het lezen van de json bestanden die het bord opslaan." , str(e))
+                            
     except ValueError:
         print("Most likely: Game runs value invalid, try again.")
     game_over()
@@ -609,7 +567,7 @@ button_4 = ttk.Button(tab3, text="...",style="TButton", command=lambda: browse_f
 button_4.grid(row=1, column=1, sticky="w")
 delaybutton2 = ttk.Checkbutton(tab3, text="Use AI Delay", variable=var_delay, style="TCheckbutton")
 delaybutton2.grid(row=2, column=0, sticky="w")
-button_5 = ttk.Button(tab3, text="Play", style="TButton", command=lambda: replay())
+button_5 = ttk.Button(tab3, text="Play", style="TButton", command=lambda: start_new_replay())
 button_5.grid(row=3, column=0)
 
 
