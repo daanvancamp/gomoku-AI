@@ -285,7 +285,6 @@ def start_new_training():
             except Exception as e:
                 print("error in gomoku.run, herschrijf die functie.")
                 raise Exception("De error is waarschijnlijk te wijten aan een foute zet, controleer het lezen van de json bestanden die het bord opslaan." , str(e))
-            print("voor if")
 
             for i in range(10):
                 print("training round done...")
@@ -311,9 +310,6 @@ def start_new_replay():
     log_info_overruling("\n\n\nnew session begins:")
    
     moves = filereader.load_replay(replay_path.get())
-    
-    print("Daan")
-    print(moves)
 
     game_instance.use_recognition = False
     game_instance.play_music = False

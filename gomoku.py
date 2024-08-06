@@ -152,11 +152,11 @@ current_player = player1
 
 def logging_players():
     print("Logging players")
-    print("speler 1 : " + str(player1.get_player_id()))
-    print("speler 1 : " + str(player1.TYPE))   
-    print("speler 2 : " + str(player2.get_player_id()))
-    print("speler 2 : " + str(player2.TYPE))
-    print("current speler : " + str(current_player.get_player_id()))
+    print("Player 1 : " + str(player1.get_player_id()))
+    print("Player 1 : " + str(player1.TYPE))   
+    print("Player 2 : " + str(player2.get_player_id()))
+    print("Player 2 : " + str(player2.TYPE))
+    print("Current player : " + str(current_player.get_player_id()))
 
 def reset_player_stats():
     for i in range(len(players)):
@@ -398,14 +398,12 @@ def handle_human_move(instance, x, y, record_replay, players,p1_moves=None, p2_m
             winning_player = current_player.get_player_id()
             running = False
         else:
-            print("Switch player!!!!!!!!!!!")
             logging_players()
             if instance.play_music:
                 Thread(target=start_muziek_vertraagd).start()
 
             # Switch player if neither player have won
             current_player = players[2 - current_player.get_player_id()]  #current_player kan 2 zijn of 1, maar in beide gevallen zal er van speler gewisseld worden.
-            print("Na switch player!!!!!!!!!!!")
             logging_players()    
 
 def add_hover_effect(instance):
@@ -609,7 +607,7 @@ def runTraining(instance, game_number, record_replay):#main function
                         except Exception as e:
                             handle_human_move(instance, x, y, record_replay, players)
             # AI move
-            elif current_player.TYPE == "AI-Model" and not testai.check_game_over(instance):
+            elif current_player.TYPE == "Test Algorithm" and not testai.check_game_over(instance):
                 if instance.ai_delay:
                     time.sleep(random.uniform(0.25, 1.0))   # randomize ai "thinking" time
                 ai_row, ai_col = testai.ai_move(instance, players[current_player.get_player_id()-1].id)
@@ -625,11 +623,10 @@ def runTraining(instance, game_number, record_replay):#main function
                     running = False
                 else:
                     current_player = players[2 - current_player.get_player_id()]
-                    print("Na switch player AI!!!!!!!!!!!")
                     logging_players()   
             
             # Test Algorithm
-            elif current_player.TYPE == "Test Algorithm":
+            elif current_player.TYPE == "AI-Model":
                 if instance.ai_delay:
                     time.sleep(random.uniform(0.25, 1.0))   # randomize AI "thinking" time
                 one_hot_board = convert_to_one_hot(instance.board, players[current_player.get_player_id()-1].id)
@@ -670,7 +667,6 @@ def runTraining(instance, game_number, record_replay):#main function
                     running = False
                 else:
                     current_player = players[2 - current_player.get_player_id()]
-                    print("Na switch player AI!!!!!!!!!!!")
                     logging_players()    
             try:
                 draw_board(instance,last_move)
@@ -699,17 +695,9 @@ def runTraining(instance, game_number, record_replay):#main function
             p.ai.train_long_memory()
             p.score_loss.append(p.ai.loss)
             move_loss = [float(val) for val in p.move_loss]
-            print(p.move_loss)
-            print(p)
-            print(move_loss)
             p.final_move_loss.append(sum(move_loss)/len(move_loss))
-
-            if p==player1:
-                print("model saving")
-                p.ai.model.save_model(instance.model_player1) #only saves after each round
-            else:
-                p.ai.model.save_model(instance.model_player2) #only saves after each round
-                #todo:finish this
+            print("model saving")
+            p.ai.model.save_model(p.model_name) #only saves after each round
             p.final_move_scores.append(sum(p.weighed_moves)/len(p.weighed_moves))
             stats.log_message(f"{p.TYPE} {p.id}: score loss: {float(p.ai.loss)}")
             stats.log_message(f"{p.TYPE} {p.id}: move loss: {sum(p.move_loss)/len(p.move_loss)}")
@@ -745,9 +733,6 @@ def runReplay(instance, moves:dict=None):#main function
     instance.winning_cells = []
     running = True
     winning_player = 0
-
-    print("wim")
-    print(moves)
 
     if moves is not None:
         move_id = 0

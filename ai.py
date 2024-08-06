@@ -50,10 +50,9 @@ class ConvNet(nn.Module):
     def load_model(self, folder,file_name='model.pth'):
         model_folder = './data/models/'+folder.strip()
         full_path = os.path.join(model_folder, file_name)
-        print("volledig pad model:",full_path)
+        print("Full path model:",full_path)
         if os.path.isfile(full_path):
             print("A model already exists, loading model...")
-            print("Wanneer je het model traint, wordt het model bijgewerkt.")
             self.load_state_dict(torch.load(full_path,weights_only=False))
         else:
             print("No model exists. Creating a new model.")
