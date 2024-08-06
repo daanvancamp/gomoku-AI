@@ -10,7 +10,7 @@ import numpy as np
 import filereader
 from threading import Thread
 from time import sleep
-from lezen_stukken_en_muziek import *
+from detect_pieces import *
 
 
 window_name = "Gomoku"
