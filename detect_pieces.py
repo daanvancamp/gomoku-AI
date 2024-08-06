@@ -1,6 +1,6 @@
 import json
 from typing import List, Tuple, Dict, Any
-
+from threading import Thread
 
 
 board: List[List[int]] = []
@@ -12,7 +12,6 @@ relevante_stukken: List[Tuple[int, int]] = []
 TE_DETECTEREN_KLEUR:str = "Blauw"  # Verander dit naar "Rood" om rode zetten te beschouwen als mens
 
 def recognize_move():
-    schrijf_relevante_stukken_na_zet_weg()#sla de stukken van de mens op in een bestand.
     zetten_mens=bepaal_relevante_zet()#vergeet de haakjes niet!!
     print("zetten_mens:",zetten_mens)#vorm: lijst van coordinaten(=[tuple(x,y),...])
     thread_controleer_vertraging=Thread(target=controleer_vertraging_data) #thread stoppen is moeilijk, daarom wordt die iedere keer opnieuw aangemaakt.

@@ -69,7 +69,7 @@ class ConvNet(nn.Module):
 
 
 class GomokuAI:
-    def __init__(self, allow_overrule=True ,_board_size=15):
+    def __init__(self,_board_size=15):
         self.n_games = 0
         self.game = None
         self.learning_rate = 0.00075
@@ -83,7 +83,7 @@ class GomokuAI:
         self.criterion = nn.MSELoss()
         self.loss = 0
         self.train = False
-        self.allow_overrule = allow_overrule
+        self.allow_overrule = True
 
     def decrease_learning_rate(self):
         self.learning_rate *= 0.9999 #decrease learning rate
@@ -145,7 +145,7 @@ class GomokuAI:
     
     def set_allow_overrule(self, allow_overrule):
         self.allow_overrule = allow_overrule
-
+        
     def remove_unvalid_moves(self,threat_moves,valid_moves):
         for move in threat_moves:
             if move not in valid_moves:

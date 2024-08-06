@@ -4,6 +4,8 @@ from time import sleep
 from tkinter import *
 from tkinter import ttk
 from tkinter import filedialog
+
+from numpy import var
 import ai
 import filereader
 import stats
@@ -152,13 +154,14 @@ def start_new_game():
     if var_playerType1.get() == "AI-Model":
         gomoku.player1.set_model(var_model_player1.get())
         gomoku.player1.set_allow_overrule(var_allow_overrule_player_1.get())
-    elif var_playerType2.get() == "AI-Model":
+    if var_playerType2.get() == "AI-Model":
         gomoku.player2.set_model(var_model_player2.get())
         gomoku.player2.set_allow_overrule(var_allow_overrule_player_2.get())
     if var_startingPlayer.get() == "Player 1":
         gomoku.current_player = gomoku.player1
     else:
         gomoku.current_player = gomoku.player2
+    
     try:
         initialiseer_spelbord_json_bestanden()
     except:
@@ -225,14 +228,14 @@ def start_new_training():
     global current_player
     log_info_overruling("\n\n\nnew session begins:")
     
-    game_instance.allow_overrule = var_allow_overrule_player_1.get()
     game_instance.use_recognition = False
     game_instance.play_music = False
 
-    if gomoku.player1.TYPE == "AI-Model":
-        gomoku.player1.set_model(var_model_player1.get())
-    elif gomoku.player2.TYPE == "AI-Model":
+    gomoku.player1.set_model(var_model_player1.get())#always AI-Model(training)
+    gomoku.player1.set_allow_overrule(var_allow_overrule_player_1.get())
+    if gomoku.player2.TYPE == "AI-Model":
         gomoku.player2.set_model(var_model_player2.get())
+        gomoku.player2.set_allow_overrule(var_allow_overrule_player_2.get())
 
     if var_startingPlayer.get() == "Player 1":
         gomoku.current_player = gomoku.player1
@@ -244,7 +247,6 @@ def start_new_training():
     except:
         raise Exception("Fout in functie: initialiseer_spelbord_json_bestanden")
     try:
-        print("training mode")
         gomoku.player1.set_player_type("AI-Model")
         gomoku.player1.load_model(var_model_player1.get())
         
@@ -316,13 +318,12 @@ def start_new_replay(moves:dict=None):
     
     log_info_overruling("\n\n\nnew session begins:")
     
-    game_instance.allow_overrule = var_allow_overrule_player_1.get()
     game_instance.use_recognition = False
     game_instance.play_music = False
 
     if gomoku.player1.TYPE == "AI-Model":
         gomoku.player1.set_model(var_model_player1.get())
-    elif gomoku.player2.TYPE == "AI-Model":
+    if gomoku.player2.TYPE == "AI-Model":
         gomoku.player2.set_model(var_model_player2.get())
 
     if var_startingPlayer.get() == "Player 1":
@@ -335,7 +336,6 @@ def start_new_replay(moves:dict=None):
     except:
         raise Exception("Fout in functie: initialiseer_spelbord_json_bestanden")
     try:
-        print("training mode")
         gomoku.player1.set("AI-Model")
         set_player_type(0)
         valid_number = False
@@ -377,10 +377,7 @@ def start_new_replay(moves:dict=None):
             except Exception as e:
                 print("error in gomoku.run, herschrijf die functie.")
                 raise Exception("De error is waarschijnlijk te wijten aan een foute zet, controleer het lezen van de json bestanden die het bord opslaan." , str(e))
-            print("voor if")
-
-            for i in range(10):
-                print("training round done...")
+            
             gomoku_ai.decrease_learning_rate()#todo: calculate decrease rate based on number of training rounds
             print("players:",gomoku.player1,gomoku.player2)
             if gomoku.player1.TYPE == "AI-Model":
@@ -434,7 +431,7 @@ ttk.Label(tab1)
 
 
 def toggle_visibility_write_last_active_tab_to_file():
-    tab_text ="Play gomoku"
+    tab_text = "Play gomoku"
     while True:
         try:
             old_tab_text= tab_text
@@ -450,18 +447,34 @@ def toggle_visibility_write_last_active_tab_to_file():
         ##TAB 1##
         if var_playerType1.get()=="AI-Model":
             CbModel1.grid(row=6,column=0)
+            overrule_button_player_1.grid(row=7,column=0)
 
         else:
+            overrule_button_player_1.grid_remove()
             CbModel1.grid_remove()
 
         if var_playerType2.get()=="AI-Model":
             CbModel2.grid(row=6,column=1)
+            overrule_button_player_2.grid(row=7,column=1)
+            overrule_button_player_2_tab2.grid(row=8,column=0)
         else:
             CbModel2.grid_remove()
+            overrule_button_player_2.grid_remove()
+            overrule_button_player_2_tab2.grid_remove()
 
-        ##tab 2##
+        if var_start_from_file.get():
+            label_load_state.grid(row=1, column=0, sticky="w")
+            load_state_entry.grid(row=2, column=0, sticky="w")
+            button_browse_state_file.grid(row=2, column=1, sticky="w")
+        else:
+            label_load_state.grid_remove()
+            load_state_entry.grid_remove()
+            button_browse_state_file.grid_remove()
+            
+
+        ##tab 3##
         if var_playerType2.get()=="AI-Model":
-            CbModelTrain2.grid(row=6, column=0, sticky="w")
+            CbModelTrain2.grid(row=7, column=0, sticky="w")
         else:
             CbModelTrain2.grid_remove()
 
@@ -534,7 +547,7 @@ label_recognition=ttk.Label(tab1, text="*only turn on when you have a physical b
 label_recognition.grid(row=14, column=0, sticky="w",columnspan=2)
 
 
-bottomframe = Frame(tab1, highlightbackground="blue", highlightthickness=1, borderwidth=1)
+bottomframe = Frame(tab1, highlightbackground="blue", highlightthickness=3, borderwidth=1)
 bottomframe.grid(row=16, column=0, sticky="w",columnspan=3, padx=5, pady=15)
 
 start_from_file_button=ttk.Checkbutton(bottomframe, text="Load game situation", variable=var_start_from_file,style="TCheckbutton")
@@ -553,29 +566,34 @@ button_3.grid(row=1, column=0, sticky="e")
 ttk.Label(tab2)
 CbModelTrain1 = ttk.Combobox(tab2, state="readonly", values=list_models,textvariable=var_model_player1)
 CbModelTrain1.grid(row=0, column=0, sticky="w")
+overrule_button_player_1_tab2=ttk.Checkbutton(tab2, text="Allow overrule", variable=var_allow_overrule_player_1,style="TCheckbutton")
+overrule_button_player_1_tab2.grid(row=1, column=0, sticky="w")
 button_2 = ttk.Button(tab2, text="Train", style="TButton", command=lambda: start_new_training())
-button_2.grid(row=1, column=0, sticky="w")
+button_2.grid(row=2, column=0, sticky="w")
 train_opponent_label = ttk.Label(tab2, text="Train model against:", style="TLabel")
-train_opponent_label.grid(row=2, column=0, sticky="w")
+train_opponent_label.grid(row=3, column=0, sticky="w")
 radiobutton7 = ttk.Radiobutton(tab2, text="Test Algorithm", variable=var_playerType2, value="Test Algorithm")
-radiobutton7.grid(row=3, column=0, sticky="w")
+radiobutton7.grid(row=4, column=0, sticky="w")
 radiobutton8 = ttk.Radiobutton(tab2, text="AI-Model", variable=var_playerType2, value="AI-Model", style="TRadiobutton")
-radiobutton8.grid(row=4, column=0, sticky="w")
+radiobutton8.grid(row=5, column=0, sticky="w")
 human_training_button=ttk.Radiobutton(tab2, text="Human", variable=var_playerType2, value="Human", style="TRadiobutton")
-human_training_button.grid(row=5, column=0,sticky="w")
+human_training_button.grid(row=6, column=0,sticky="w")
 CbModelTrain2 = ttk.Combobox(tab2, state="readonly", values=list_models,textvariable=var_model_player2)
-CbModelTrain2.grid(row=6, column=0, sticky="w")
+CbModelTrain2.grid(row=7, column=0, sticky="w")
+overrule_button_player_2_tab2=ttk.Checkbutton(tab2, text="Allow overrule", variable=var_allow_overrule_player_2,style="TCheckbutton")
+overrule_button_player_2_tab2.grid(row=8, column=0, sticky="w")
+
 gamerunslabel = ttk.Label(tab2, text="Number of games: ",style="TLabel")
-gamerunslabel.grid(row=7, column=0, sticky="w")
+gamerunslabel.grid(row=9, column=0, sticky="w")
 gamerunsentry2 = ttk.Entry(tab2, textvariable=var_game_runs,style="TEntry")
-gamerunsentry2.grid(row=8, column=0, sticky="w")
+gamerunsentry2.grid(row=10, column=0, sticky="w")
 replaybutton2 = ttk.Checkbutton(tab2, text="Save replays", variable=var_rep,style="TCheckbutton")
-replaybutton2.grid(row=9, column=0, sticky="w")
-overrule_button_player_1=ttk.Checkbutton(tab2, text="Allow overrule", variable=var_allow_overrule_player_1,style="TCheckbutton")
-overrule_button_player_1.grid(row=10, column=0, sticky="w")
+replaybutton2.grid(row=11, column=0, sticky="w")
+
+
 
 train_description = Label(tab2, text="It is recommended to run at least 3 000 games per training session.", font=(style_numbers[0], style_numbers[1]), wraplength=WIDTH-5, justify=LEFT)#origineel width-5
-train_description.grid(row=11, column=0, sticky="w")
+train_description.grid(row=12, column=0, sticky="w",columnspan=2)
 
 ttk.Label(tab3)
 replaylabel = ttk.Label(tab3, text="Choose the replay file: ",style="TLabel")
@@ -592,12 +610,18 @@ button_5.grid(row=3, column=0)
 
 ttk.Label(tab4) 
 Lb1 = Listbox(tab4)
+
 models = modelmanager_instance.get_list_models()
 i  = 0
 for model in models:
     Lb1.insert(i, model.split('\\')[-1])
     i+=1
 Lb1.grid(row=1, column=1)
+
+for item in models:
+    if item=="standaard"or item=="Standaard":
+        Lb1.selection_set(models.index(item))
+        Lb1.activate(models.index(item))
 
 nameModelLabel = ttk.Label(tab4, text="Name of model: ",style="TLabel")
 nameModelLabel.grid(row=2, column=0, sticky="w")

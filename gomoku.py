@@ -16,6 +16,7 @@ from detect_pieces import *
 
 window_name = "Gomoku"
 victory_text = ""
+mark_last_move_model = True
  
 #instructie: druk op de linkermuisknop wanneer je een zet hebt gedaan op het fysiek bord.
 
@@ -137,7 +138,7 @@ class Player:
         
     def set_allow_overrule(self, allow_overrule):
         self.allow_overrule = allow_overrule
-        self.ai.set_allow_overrule(allow_overrule)
+        self.ai.set_allow_overrule(allow_overrule)#ai=GomokuAI
         return self.id
 
 # Set default player types. Can be changed on runtime (buttons in GUI)
@@ -191,6 +192,7 @@ def is_move_model(row,col,last_move_model) -> bool:
 
 # Function to draw the game board
 def draw_board(instance,last_move_model=None):
+    global mark_last_move_model
     instance.screen.fill(instance.BOARD_COL)#background color
     cell_size = instance.CELL_SIZE#cell_size=30
     radius_big_circle=cell_size//2 - 5#radius_big_circle=15
@@ -201,7 +203,7 @@ def draw_board(instance,last_move_model=None):
             pygame.draw.rect(instance.screen, instance.LINE_COL, (col * cell_size, row * cell_size, cell_size, cell_size), 1)
 
             if instance.board[row][col] == 1:
-                if is_move_model(row,col,last_move_model):
+                if is_move_model(row,col,last_move_model) and mark_last_move_model:
                     #red (R,G,B)
                     pygame.draw.circle(instance.screen, instance.P1COL, (col * cell_size + cell_size // 2, row * cell_size + cell_size // 2), radius_big_circle)
                     pygame.draw.circle(instance.screen, red, (col * cell_size + cell_size // 2, row * cell_size + cell_size // 2), radius_small_circle)
@@ -209,7 +211,7 @@ def draw_board(instance,last_move_model=None):
                     pygame.draw.circle(instance.screen, instance.P1COL, (col * cell_size + cell_size // 2, row * cell_size + cell_size // 2), radius_big_circle)
 
             elif instance.board[row][col] == 2:
-                if is_move_model(row,col,last_move_model):
+                if is_move_model(row,col,last_move_model) and mark_last_move_model:
                     #red (R,G,B)
                     pygame.draw.circle(instance.screen, instance.P2COL, (col * cell_size + cell_size // 2, row * cell_size + cell_size // 2), radius_big_circle)
                     pygame.draw.circle(instance.screen, red, (col * cell_size + cell_size // 2, row * cell_size + cell_size // 2), radius_small_circle)
@@ -373,6 +375,25 @@ def convert_to_one_hot(board, player_id):#vermijd dat ai denkt dat de getallen i
         one_hot_board[2] = (board == 1).astype(np.float32)
     return one_hot_board
 
+def refresh_screen(game_number, current_player):
+    pygame.display.flip()#refresh
+    window_name = "Game: " + str(game_number) + " - " + str(current_player) #beurt start
+    pygame.display.set_caption(window_name)
+
+def add_hover_effect(instance):
+    ## adds hover effects to cells when mouse hovers over them##
+    mouse_pos = pygame.mouse.get_pos()
+    x,y = mouse_pos
+    col = x // instance.CELL_SIZE
+    row = y // instance.CELL_SIZE
+    HOVER_COLOR = (211, 211, 211)
+    if instance.GRID_SIZE > row >= 0 == instance.board[row][col] and 0 <= col < instance.GRID_SIZE:
+        if instance.board[row][col] == 0:#cell is empty
+            cell_size = instance.CELL_SIZE
+            pygame.draw.circle(instance.screen, HOVER_COLOR, (col * cell_size + cell_size // 2, row * cell_size + cell_size // 2), cell_size // 2 - 5)
+            pygame.display.flip()
+            sleep(0.1)#otherwise it will be flashing uncontrollably
+
 def runGame(instance, game_number, record_replay):#main function
     # Main game loop
     global window_name, victory_text, current_player, last_active_tab, player1, player2
@@ -408,14 +429,13 @@ def runGame(instance, game_number, record_replay):#main function
                             Thread(target=lambda:pygame.mixer.music.fadeout(1000)).start()#don't block the main thread
 
                         if instance.use_recognition:
+                            schrijf_relevante_stukken_na_zet_weg()
                             (x,y)=recognize_move()
+                            schrijf_relevante_stukken_voor_zet_weg()
                             if (x,y) is None:
                                 continue #don't do anything
                         else:
                             x,y=event.pos
-            
-                        if instance.use_recognition:
-                            schrijf_relevante_stukken_voor_zet_weg() #sla stukken opnieuw op.
                         
                         col = x // instance.CELL_SIZE 
                         row = y // instance.CELL_SIZE
@@ -441,18 +461,7 @@ def runGame(instance, game_number, record_replay):#main function
                                 print("Na switch player!!!!!!!!!!!")
                                 logging_players()    
                             
-                ## adds hover effects to cells when mouse hovers over them##
-                mouse_pos = pygame.mouse.get_pos()
-                x,y = mouse_pos
-                col = x // instance.CELL_SIZE
-                row = y // instance.CELL_SIZE
-                HOVER_COLOR = (211, 211, 211)
-                if instance.GRID_SIZE > row >= 0 == instance.board[row][col] and 0 <= col < instance.GRID_SIZE:
-                    if instance.board[row][col] == 0:#cell is empty
-                        cell_size = instance.CELL_SIZE
-                        pygame.draw.circle(instance.screen, HOVER_COLOR, (col * cell_size + cell_size // 2, row * cell_size + cell_size // 2), cell_size // 2 - 5)
-                        pygame.display.flip()
-                        sleep(0.1)#otherwise it will be flashing uncontrollably
+                add_hover_effect(instance)
 
             # AI move
             elif current_player.TYPE == "Test Algorithm" and not testai.check_game_over(instance):
@@ -519,9 +528,7 @@ def runGame(instance, game_number, record_replay):#main function
             except :
                 draw_board(instance)
 
-            pygame.display.flip()#refresh
-            window_name = "Game: " + str(game_number) + " - Player " + str(current_player) #beurt start
-            pygame.display.set_caption(window_name)
+            refresh_screen(game_number, current_player)
                 
         else:
             victory_text = "TIE"
@@ -544,7 +551,7 @@ def runGame(instance, game_number, record_replay):#main function
 
 def runTraining(instance, game_number, record_replay):#main function
     # Main game loop
-    global window_name, victory_text, current_player, last_active_tab,player1,player2
+    global window_name, victory_text, current_player,player1,player2
 
     for p in players: #players=[Human, AI]
         if p.TYPE == "AI-Model":
@@ -577,46 +584,7 @@ def runTraining(instance, game_number, record_replay):#main function
                         #druk op linkermuisknop om te zetten
                     elif (event.type == pygame.MOUSEBUTTONDOWN or event.type == pygame.K_UP or event.type == pygame.K_RIGHT) and event.button == 1: #kan zo gelaten worden. Wanneer op de muis wordt gedrukt,wordt de zet gelezen van het bestand
                         Thread(target=lambda:pygame.mixer.music.fadeout(1000)).start()#don't block the main thread
-
-                        if instance.use_recognition:
-                            schrijf_relevante_stukken_na_zet_weg()#sla de stukken van de mens op in een bestand.
-                            zetten_mens=bepaal_relevante_zet()#vergeet de haakjes niet!!
-                            print("zetten_mens:",zetten_mens)#vorm: lijst van coordinaten(=[tuple(x,y),...])
-                            thread_controleer_vertraging=Thread(target=controleer_vertraging_data) #thread stoppen is moeilijk, daarom wordt die iedere keer opnieuw aangemaakt.
-                            thread_controleer_vertraging.start()
-                            for i in zetten_mens:
-                                try:
-                                    int(i[0])
-                                    int(i[1])
-
-                                except:
-                                    raise Exception("De coordinaten moeten getallen zijn. Controleer de coordinaten in de beeldherkenning. (x,y)")
-                            try:
-                                if len(zetten_mens)==0:
-                                    raise Exception("Er werd geen zet gedetecteerd.")
-
-                                elif len(zetten_mens)==1:
-                                    print("1 zet, super")
-                                    x, y = zetten_mens[0]
-                                elif zetten_mens is None: #zou nooit mogen voorkomen
-                                    raise Exception("Geen zetten, of variabele niet gedeclareerd")
-                                else:
-                                    raise Exception("Meerdere zetten")
-
-                                antwoord=input("Klopt deze zet? (ja/nee) :",x,y)#todo: haal op termijn weg, wanneer de code betrouwbaar genoeg is.
-                                #=debugging
-                                if antwoord=="ja":
-                                    pass
-                                else:
-                                    raise Exception("Als u het denkt, waarde wordt op de normale manier ingesteld.")
-                            except Exception as e:
-                                print("something went wrong with the recognition of the pieces:",e)
-
-                        else:
-                            x,y=event.pos
-            
-                        if instance.use_recognition:
-                            schrijf_relevante_stukken_voor_zet_weg() #sla stukken opnieuw op.
+                        x,y=event.pos
                         
                         col = x // instance.CELL_SIZE 
                         row = y // instance.CELL_SIZE
@@ -640,19 +608,6 @@ def runTraining(instance, game_number, record_replay):#main function
                                 
                                 print("Na switch player!!!!!!!!!!!")
                                 logging_players()    
-                            
-                ## adds hover effects to cells when mouse hovers over them##
-                mouse_pos = pygame.mouse.get_pos()
-                x,y = mouse_pos
-                col = x // instance.CELL_SIZE
-                row = y // instance.CELL_SIZE
-                HOVER_COLOR = (211, 211, 211)
-                if instance.GRID_SIZE > row >= 0 == instance.board[row][col] and 0 <= col < instance.GRID_SIZE:
-                    if instance.board[row][col] == 0:#cell is empty
-                        cell_size = instance.CELL_SIZE
-                        pygame.draw.circle(instance.screen, HOVER_COLOR, (col * cell_size + cell_size // 2, row * cell_size + cell_size // 2), cell_size // 2 - 5)
-                        pygame.display.flip()
-                        sleep(0.1)#otherwise it will be flashing uncontrollably
 
             # AI move
             elif current_player.TYPE == "AI-Model" and not testai.check_game_over(instance):
@@ -722,9 +677,7 @@ def runTraining(instance, game_number, record_replay):#main function
                 draw_board(instance,last_move)
             except:
                 draw_board(instance)
-            pygame.display.flip()#refresh
-            window_name = "Gomoku - Game: " + str(game_number) + " - " + str(current_player) #beurt start
-            pygame.display.set_caption(window_name)
+            refresh_screen(game_number, current_player)
                 
         else:
             victory_text = "TIE"
@@ -797,7 +750,7 @@ def runReplay(instance, game_number, moves:dict=None):#main function
     pygame.display.set_icon(pygame.image.load('res/ico.png'))
     pygame.init()
     pygame.display.set_caption(window_name)
-    mark_last_move_model=True
+
     instance.winning_cells = []
     running = True
     winning_player = 0
@@ -822,9 +775,7 @@ def runReplay(instance, game_number, moves:dict=None):#main function
                     move_id += 1
             
             draw_board(instance,last_move)
-            pygame.display.flip()#refresh
-            window_name = "Gomoku - Game: " + str(game_number) + " - Player " + str(current_player) #beurt start
-            pygame.display.set_caption(window_name)
+            refresh_screen(game_number, current_player)
                 
         else:
             victory_text = "TIE"
