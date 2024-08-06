@@ -229,13 +229,14 @@ class GomokuAI:
         else:
             raise Exception("rewrite this function, this is wrong")
 
-    def get_valid_moves(self, board, overrule)->list:#voeg de nodige parameters toe. #returns list of valid moves (overroelen ai kan hier gebeuren door de lijst met lengte 1 te maken.)
+    def get_valid_moves(self, board)->list:#voeg de nodige parameters toe. #returns list of valid moves (overroelen ai kan hier gebeuren door de lijst met lengte 1 te maken.)
         log_info_overruling("\n\nfunction get_valid_moves called")
-        valid_moves = [] 
+        valid_moves = []
         opponent = 3 - self.determine_current_player(board)  # 3-2=1 and 3-1=2 Player 1 is a one in the list and player 2 is a 2 in the list.
         threat_moves = []
         opponent_winning = False
         directions = [(0, 1), (1, 0), (1, 1), (1, -1)]
+        overrule=self.allow_overrule #shorter
     
         for row in range(len(board)):
             for col in range(len(board)):
@@ -342,7 +343,7 @@ class GomokuAI:
             return None
 
     def get_action(self, state, one_hot_board, scores)->tuple:
-        valid_moves = self.get_valid_moves(state, self.allow_overrule)
+        valid_moves = self.get_valid_moves(state)
         np_scores = np.array(scores).reshape(15, 15)
         current_state = torch.tensor(self.get_state(one_hot_board), dtype=torch.float)
 

@@ -470,7 +470,11 @@ def toggle_visibility_write_last_active_tab_to_file():
             label_load_state.grid_remove()
             load_state_entry.grid_remove()
             button_browse_state_file.grid_remove()
-            
+        recognition_possible=(var_playerType1.get()=="Human" or var_playerType2.get()=="Human")and (var_playerType1.get()=="AI-Model" or var_playerType2.get()=="AI-Model" or var_playerType1.get()=="Test Algorithm" or var_playerType2.get()=="Test Algorithm")
+        if recognition_possible:
+            use_recognition_button.grid(row=11, column=1, sticky="w")
+        else:
+            use_recognition_button.grid_remove()
 
         ##tab 3##
         if var_playerType2.get()=="AI-Model":
@@ -532,15 +536,16 @@ logbutton = ttk.Checkbutton(tab1, text="Create log file", variable=var_log,style
 logbutton.grid(row=10, column=0, sticky="w")
 replaybutton = ttk.Checkbutton(tab1, text="Save replays", variable=var_rep,style="TCheckbutton") 
 replaybutton.grid(row=11, column=0, sticky="w")
+delaybutton = ttk.Checkbutton(tab1, text="Use AI Delay", variable=var_delay,style="TCheckbutton")
+delaybutton.grid(row=12, column=0, sticky="w")
 
 #column1
-
-use_recognition_button=ttk.Checkbutton(tab1, text="use recognition*", variable=var_use_recognition,style="TCheckbutton")
-use_recognition_button.grid(row=10, column=1, sticky="w")
 music_button=ttk.Checkbutton(tab1, text="Play music", variable=var_play_music,style="TCheckbutton")
-music_button.grid(row=11, column=1, sticky="w")
-delaybutton = ttk.Checkbutton(tab1, text="Use AI Delay", variable=var_delay,style="TCheckbutton")
-delaybutton.grid(row=12, column=1, sticky="w")
+music_button.grid(row=10, column=1, sticky="w")
+use_recognition_button=ttk.Checkbutton(tab1, text="use recognition*", variable=var_use_recognition,style="TCheckbutton")
+use_recognition_button.grid(row=11, column=1, sticky="w")
+
+
 
 
 label_recognition=ttk.Label(tab1, text="*only turn on when you have a physical board, a webcam and the other repository: ",style="TLabel",wraplength=300)

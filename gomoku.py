@@ -2,6 +2,7 @@
 import operator
 import time
 import pygame
+from torch.serialization import get_default_load_endianness
 from music import start_muziek_vertraagd
 import testai
 import ai
@@ -380,6 +381,33 @@ def refresh_screen(game_number, current_player):
     window_name = "Game: " + str(game_number) + " - " + str(current_player) #beurt start
     pygame.display.set_caption(window_name)
 
+
+def handle_human_move(instance, x, y, current_player, record_replay, p1_moves, p2_moves, players):
+    global victory_text, winning_player, running
+    col = x // instance.CELL_SIZE 
+    row = y // instance.CELL_SIZE
+    if instance.GRID_SIZE > row >= 0 == instance.board[row][col] and 0 <= col < instance.GRID_SIZE:
+        instance.board[row][col] = current_player.get_player_id()
+        if current_player.get_player_id() == 1 and record_replay:
+            p1_moves.append((row, col))
+        elif record_replay:
+            p2_moves.append((row, col))
+        players[current_player.get_player_id() - 1].moves += 1
+        if check_win(row, col, current_player.get_player_id(), instance):
+            victory_text = f"Player {current_player.get_player_id()} wins!"
+            winning_player = current_player.get_player_id()
+            running = False
+        else:
+            print("Switch player!!!!!!!!!!!")
+            logging_players()
+            if instance.play_music:
+                Thread(target=start_muziek_vertraagd).start()
+
+            # Switch player if neither player have won
+            current_player = players[2 - current_player.get_player_id()]  #current_player kan 2 zijn of 1, maar in beide gevallen zal er van speler gewisseld worden.
+            print("Na switch player!!!!!!!!!!!")
+            logging_players()    
+
 def add_hover_effect(instance):
     ## adds hover effects to cells when mouse hovers over them##
     mouse_pos = pygame.mouse.get_pos()
@@ -396,12 +424,22 @@ def add_hover_effect(instance):
 
 def runGame(instance, game_number, record_replay):#main function
     # Main game loop
-    global window_name, victory_text, current_player, last_active_tab, player1, player2
+    global window_name, victory_text, current_player, player1, player2
     
     if instance.use_recognition:
         print("using recognition")
     else:
         print("not using recognition")
+    if player1.TYPE=="AI-Model":
+        if player1.allow_overrule:
+            print("Overruling is allowed for player 1")
+        else:
+            print("Overruling is not allowed for player 1")
+    if player2.TYPE=="AI-Model":
+        if player2.allow_overrule:
+            print("Overruling is allowed for player 2")
+        else:
+            print("Overruling is not allowed for player 2")
 
     pygame.display.set_icon(pygame.image.load('res/ico.png'))
     pygame.init()
@@ -437,29 +475,7 @@ def runGame(instance, game_number, record_replay):#main function
                         else:
                             x,y=event.pos
                         
-                        col = x // instance.CELL_SIZE 
-                        row = y // instance.CELL_SIZE
-                        if instance.GRID_SIZE > row >= 0 == instance.board[row][col] and 0 <= col < instance.GRID_SIZE:
-                            instance.board[row][col] = current_player.get_player_id()
-                            if current_player.get_player_id() == 1 and record_replay:
-                                p1_moves.append((row, col))
-                            elif record_replay:
-                                p2_moves.append((row, col))
-                            players[current_player.get_player_id() - 1].moves += 1
-                            if check_win(row, col, current_player.get_player_id(), instance):
-                                victory_text = f"Player {current_player.get_player_id()} wins!"
-                                winning_player = current_player.get_player_id()
-                                running = False
-                            else:
-                                print("Switch player!!!!!!!!!!!")
-                                logging_players()
-                                if instance.play_music:
-                                    Thread(target=start_muziek_vertraagd).start()
-
-                                # Switch player if neither player have won
-                                current_player = players[2 - current_player.get_player_id()]  #current_player kan 2 zijn of 1, maar in beide gevallen zal er van speler gewisseld worden.
-                                print("Na switch player!!!!!!!!!!!")
-                                logging_players()    
+                        handle_human_move(instance, x, y, current_player, record_replay, p1_moves, p2_moves, players) 
                             
                 add_hover_effect(instance)
 
@@ -560,7 +576,8 @@ def runTraining(instance, game_number, record_replay):#main function
             else:
                 p.ai.model.load_model(player2.model_name)
             p.ai.train = True
-            
+    
+    instance.play_music=False
     pygame.display.set_icon(pygame.image.load('res/ico.png'))
     pygame.init()
     pygame.display.set_caption(window_name)
@@ -586,28 +603,7 @@ def runTraining(instance, game_number, record_replay):#main function
                         Thread(target=lambda:pygame.mixer.music.fadeout(1000)).start()#don't block the main thread
                         x,y=event.pos
                         
-                        col = x // instance.CELL_SIZE 
-                        row = y // instance.CELL_SIZE
-                        if instance.GRID_SIZE > row >= 0 == instance.board[row][col] and 0 <= col < instance.GRID_SIZE:
-                            instance.board[row][col] = current_player.get_player_id()
-                            if current_player.get_player_id() == 1 and record_replay:
-                                p1_moves.append((row, col))
-                            elif record_replay:
-                                p2_moves.append((row, col))
-                            players[current_player.get_player_id() - 1].moves += 1
-                            if check_win(row, col, current_player.get_player_id(), instance):
-                                victory_text = f"Player {current_player.get_player_id()} wins!"
-                                winning_player = current_player.get_player_id()
-                                running = False
-                            else:
-                                print("Switch player!!!!!!!!!!!")
-                                logging_players()
-
-                                # Switch player if neither player have won
-                                current_player = players[2 - current_player.get_player_id()]  #current_player kan 2 zijn of 1, maar in beide gevallen zal er van speler gewisseld worden.
-                                
-                                print("Na switch player!!!!!!!!!!!")
-                                logging_players()    
+                        handle_human_move(instance, x, y, current_player, record_replay, p1_moves, p2_moves, players) 
 
             # AI move
             elif current_player.TYPE == "AI-Model" and not testai.check_game_over(instance):
@@ -737,16 +733,8 @@ def runTraining(instance, game_number, record_replay):#main function
 
 def runReplay(instance, game_number, moves:dict=None):#main function
     # Main game loop
-    global window_name, victory_text, current_player, last_active_tab
-
-
-    for p in players: #players=[Human, AI]
-        if p.TYPE == "AI-Model":
-            if p==player1:
-                p.ai.model.load_model(instance.model_player1)
-            else:
-                p.ai.model.load_model(instance.model_player2)
-            
+    global window_name, victory_text, current_player
+    
     pygame.display.set_icon(pygame.image.load('res/ico.png'))
     pygame.init()
     pygame.display.set_caption(window_name)
@@ -787,7 +775,6 @@ def runReplay(instance, game_number, moves:dict=None):#main function
     pygame.display.set_caption("Gomoku - Game: " + str(game_number) + " - " + victory_text)
     time.sleep(instance.SLEEP_BEFORE_END)#sleep before closing for SLEEP_BEFORE_END seconds
     reset_game(instance)
-
 
 
 pygame.quit()
