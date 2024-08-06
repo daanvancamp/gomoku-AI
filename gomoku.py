@@ -489,7 +489,6 @@ def runGame(instance, game_number, record_replay):#main function
                 short_score = np_scores[action[0]][action[1]]
                 if mark_last_move_model:
                     last_move_model=action #=last move for example :(3,6)
-                    print(action)
                 else:
                     last_move_model=None
                 if max_score <= 0:
@@ -517,8 +516,9 @@ def runGame(instance, game_number, record_replay):#main function
                     logging_players()    
             try:
                 draw_board(instance,last_move_model)
-            except:
+            except :
                 draw_board(instance)
+
             pygame.display.flip()#refresh
             window_name = "Game: " + str(game_number) + " - Player " + str(current_player) #beurt start
             pygame.display.set_caption(window_name)
@@ -549,9 +549,9 @@ def runTraining(instance, game_number, record_replay):#main function
     for p in players: #players=[Human, AI]
         if p.TYPE == "AI-Model":
             if p==player1:
-                p.ai.model.load_model(instance.model_player1)
+                p.ai.model.load_model(player1.model_name)
             else:
-                p.ai.model.load_model(instance.model_player2)
+                p.ai.model.load_model(player2.model_name)
             p.ai.train = True
             
     pygame.display.set_icon(pygame.image.load('res/ico.png'))

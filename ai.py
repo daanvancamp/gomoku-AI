@@ -207,7 +207,7 @@ class GomokuAI:
                             break  # We hoeven niet verder te zoeken voor deze cel
          if winning_moves:
             log_info_overruling("the model will be overruled because of a possible winning move")
-            log_info_overruling(f"winning moves: {winning_moves}")
+            log_info_overruling("It will choose on its own")
             return winning_moves
          else:
             log_info_overruling("no winning moves found, the model will fully choose a move on its own out of all possible moves:")
@@ -314,7 +314,7 @@ class GomokuAI:
                             break  # We hoeven niet verder te zoeken voor deze cel
     
         # Bepaal welke zetten te retourneren op basis van allow_overrule
-        if overrule and threat_moves and self.can_win_in_one_move(board,self.determine_current_player(board),valid_moves) : #if threat_moves is not empty
+        if overrule and threat_moves : #if threat_moves is not empty
             print("overruled:", threat_moves)
             log_info_overruling("overruled: " + str(threat_moves))
             for row in board:
