@@ -101,6 +101,9 @@ var_model_player1.set("standaard")
 var_model_player2.set("standaard")
 var_startingPlayer=StringVar()
 
+var_number_of_training_loops=IntVar()
+var_number_of_training_loops.set(0)
+
 def set_player_type(player_id):
     if player_id == 1:
         newtype = var_playerType1.get()
@@ -436,6 +439,12 @@ def toggle_visibility_write_last_active_tab_to_file():
         else:
             CbModelTrain2.grid_remove()
 
+def show_number_of_training_loops():
+    while True:
+        for i in Lb1.curselection():
+            model=Lb1.get(i)
+        var_number_of_training_loops.set(modelmanager_instance.get_number_of_training_loops(model))
+
 
 button_1 = ttk.Button(tab1, text="New Game", command=lambda: start_new_game(), style="TButton")
 button_1.grid(row=0, column=0, sticky="w")
@@ -591,6 +600,13 @@ button_NewModel = ttk.Button(tab4, text="Make New Model", style="TButton", comma
 button_NewModel.grid(row=3, column=0)
 button_DeleteModel = ttk.Button(tab4, text="Delete Model", style="TButton", command=lambda: delete_model())
 button_DeleteModel.grid(row=3, column=1)
+
+label_number_of_training_loops = ttk.Label(tab4, text="Training loops: ",style="TLabel")
+label_number_of_training_loops.grid(row=4, column=0, sticky="w")
+label_value_number_of_training_loops = ttk.Label(tab4, textvariable=var_number_of_training_loops,style="TLabel")
+label_value_number_of_training_loops.grid(row=4, column=1, sticky="w")
+
+Thread(target=show_number_of_training_loops, daemon=True).start()
 
 def mainmenu_run():
     root.mainloop()

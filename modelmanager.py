@@ -23,6 +23,13 @@ class ModelManagerMeta(type):
 
 
 class ModelManager(metaclass=ModelManagerMeta):
+    def get_number_of_training_loops(self,modelname):
+        if os.path.exists("data/models/" + modelname + "/modelconfig.json"):
+            with open("data/models/" + modelname + "/modelconfig.json", "r") as file:
+                data = json.load(file)
+                return data["training loops"]
+        else:
+            return 0
     def log_number_of_training_loops(self, modelname,number_of_additonal_training_loops):
         print("log tr loops...")
         if os.path.exists("data/models/" + modelname + "/modelconfig.json"):
