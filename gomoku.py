@@ -2,6 +2,7 @@
 import operator
 import time
 import pygame
+from music import start_muziek_vertraagd
 import testai
 import ai
 import random
@@ -35,6 +36,7 @@ class GomokuGame:
         self.last_round = False
         self.ai_delay = False
         self.use_recognition=False
+        self.play_music = False
         
     def set_board(self, board):
         self.board = board
@@ -373,7 +375,7 @@ def convert_to_one_hot(board, player_id):#vermijd dat ai denkt dat de getallen i
 
 def runGame(instance, game_number, record_replay):#main function
     # Main game loop
-    global window_name, victory_text, current_player, last_active_tab
+    global window_name, victory_text, current_player, last_active_tab, player1, player2
     
     if instance.use_recognition:
         print("using recognition")
@@ -402,7 +404,8 @@ def runGame(instance, game_number, record_replay):#main function
                         running = False 
                         #druk op linkermuisknop om te zetten
                     elif (event.type == pygame.MOUSEBUTTONDOWN or event.type == pygame.K_UP or event.type == pygame.K_RIGHT) and event.button == 1: #kan zo gelaten worden. Wanneer op de muis wordt gedrukt,wordt de zet gelezen van het bestand
-                        Thread(target=lambda:pygame.mixer.music.fadeout(1000)).start()#don't block the main thread
+                        if instance.play_music:
+                            Thread(target=lambda:pygame.mixer.music.fadeout(1000)).start()#don't block the main thread
 
                         if instance.use_recognition:
                             schrijf_relevante_stukken_na_zet_weg()#sla de stukken van de mens op in een bestand.
@@ -460,10 +463,11 @@ def runGame(instance, game_number, record_replay):#main function
                             else:
                                 print("Switch player!!!!!!!!!!!")
                                 logging_players()
+                                if instance.play_music:
+                                    Thread(target=start_muziek_vertraagd).start()
 
                                 # Switch player if neither player have won
                                 current_player = players[2 - current_player.get_player_id()]  #current_player kan 2 zijn of 1, maar in beide gevallen zal er van speler gewisseld worden.
-                                
                                 print("Na switch player!!!!!!!!!!!")
                                 logging_players()    
                             
@@ -568,7 +572,7 @@ def runGame(instance, game_number, record_replay):#main function
 
 def runTraining(instance, game_number, record_replay):#main function
     # Main game loop
-    global window_name, victory_text, current_player, last_active_tab
+    global window_name, victory_text, current_player, last_active_tab,player1,player2
 
     for p in players: #players=[Human, AI]
         if p.TYPE == "AI-Model":

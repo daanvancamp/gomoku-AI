@@ -80,6 +80,9 @@ replay_path = StringVar()
 replay_path.set("")
 var_allow_overrule=BooleanVar()
 var_allow_overrule.set(True)
+var_play_music=BooleanVar()
+var_play_music.set(False)
+
 
 var_start_from_file=BooleanVar()
 var_start_from_file.set(False)
@@ -114,11 +117,11 @@ def browse_files():
     replay_path.set(file_path)
    
 def replay():
-    gomoku.player1.set("replay")
+    var_playerType1.set("replay")
     set_player_type(0)
-    gomoku.player2.set("replay")
+    var_playerType2.set("replay")
     set_player_type(1)
-    game_runs.set("1")
+    var_game_runs.set("1")
     moves = filereader.load_replay(replay_path.get())
     if moves is not None:
         start_new_game(False, moves)
@@ -143,6 +146,8 @@ def start_new_game():
     
     game_instance.allow_overrule = var_allow_overrule.get()
     game_instance.use_recognition = var_use_recognition.get()
+    game_instance.play_music = var_play_music.get()
+
     if gomoku.player1.TYPE == "AI-Model":
         gomoku.player1.set_model(var_model_player1.get())
         gomoku.player1.set_allow_overrule(var_allow_overrule.get())
@@ -217,11 +222,12 @@ def start_new_game():
 
 def start_new_training():
     global current_player
-    
     log_info_overruling("\n\n\nnew session begins:")
     
     game_instance.allow_overrule = var_allow_overrule.get()
     game_instance.use_recognition = False
+    game_instance.play_music = False
+
     if gomoku.player1.TYPE == "AI-Model":
         gomoku.player1.set_model(var_model_player1.get())
     elif gomoku.player2.TYPE == "AI-Model":
@@ -311,6 +317,8 @@ def start_new_replay(moves:dict=None):
     
     game_instance.allow_overrule = var_allow_overrule.get()
     game_instance.use_recognition = False
+    game_instance.play_music = False
+
     if gomoku.player1.TYPE == "AI-Model":
         gomoku.player1.set_model(var_model_player1.get())
     elif gomoku.player2.TYPE == "AI-Model":
