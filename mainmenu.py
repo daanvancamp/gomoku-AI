@@ -506,17 +506,23 @@ playerstartLabel.grid(row=8, column=0, sticky="w")
 CbStartingPlayer = ttk.Combobox(tab1, state="readonly", values=["Player 1", "Player 2"], textvariable=var_startingPlayer)
 CbStartingPlayer.current(0)
 CbStartingPlayer.grid(row=8, column=1, sticky="w")
-
+##column 0
 delaybutton = ttk.Checkbutton(tab1, text="Use AI Delay", variable=var_delay,style="TCheckbutton")
 delaybutton.grid(row=9, column=0, sticky="w")
 logbutton = ttk.Checkbutton(tab1, text="Create log file", variable=var_log,style="TCheckbutton") 
 logbutton.grid(row=10, column=0, sticky="w")
 replaybutton = ttk.Checkbutton(tab1, text="Save replays", variable=var_rep,style="TCheckbutton") 
 replaybutton.grid(row=11, column=0, sticky="w")
+
+#column1
 overrule_button=ttk.Checkbutton(tab1, text="Allow overrule", variable=var_allow_overrule,style="TCheckbutton")
-overrule_button.grid(row=12, column=0, sticky="w")
+overrule_button.grid(row=9, column=1, sticky="w")
 use_recognition_button=ttk.Checkbutton(tab1, text="use recognition*", variable=var_use_recognition,style="TCheckbutton")
-use_recognition_button.grid(row=13, column=0, sticky="w")
+use_recognition_button.grid(row=10, column=1, sticky="w")
+music_button=ttk.Checkbutton(tab1, text="Play music", variable=var_play_music,style="TCheckbutton")
+music_button.grid(row=11, column=1, sticky="w")
+
+
 label_recognition=ttk.Label(tab1, text="*only turn on when you have a physical board, a webcam and the other repository: ",style="TLabel",wraplength=300)
 label_recognition.grid(row=14, column=0, sticky="w",columnspan=2)
 
