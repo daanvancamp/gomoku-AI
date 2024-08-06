@@ -1,4 +1,5 @@
 
+from calendar import c
 import operator
 import time
 import pygame
@@ -381,9 +382,8 @@ def refresh_screen(game_number, current_player):
     window_name = "Game: " + str(game_number) + " - " + str(current_player) #beurt start
     pygame.display.set_caption(window_name)
 
-
-def handle_human_move(instance, x, y, current_player, record_replay, p1_moves, p2_moves, players):
-    global victory_text, winning_player, running
+def handle_human_move(instance, x, y, record_replay, players,p1_moves=None, p2_moves=None):
+    global victory_text, winning_player, running,current_player
     col = x // instance.CELL_SIZE 
     row = y // instance.CELL_SIZE
     if instance.GRID_SIZE > row >= 0 == instance.board[row][col] and 0 <= col < instance.GRID_SIZE:
@@ -424,7 +424,7 @@ def add_hover_effect(instance):
 
 def runGame(instance, game_number, record_replay):#main function
     # Main game loop
-    global window_name, victory_text, current_player, player1, player2
+    global window_name, victory_text, current_player, player1, player2, running,current_player,p1_moves, p2_moves
     
     if instance.use_recognition:
         print("using recognition")
@@ -474,8 +474,10 @@ def runGame(instance, game_number, record_replay):#main function
                                 continue #don't do anything
                         else:
                             x,y=event.pos
-                        
-                        handle_human_move(instance, x, y, current_player, record_replay, p1_moves, p2_moves, players) 
+                        try:
+                            handle_human_move(instance, x, y, record_replay, players, p1_moves, p2_moves) 
+                        except Exception as e:
+                            handle_human_move(instance, x, y, record_replay, players)
                             
                 add_hover_effect(instance)
 
@@ -567,7 +569,7 @@ def runGame(instance, game_number, record_replay):#main function
 
 def runTraining(instance, game_number, record_replay):#main function
     # Main game loop
-    global window_name, victory_text, current_player,player1,player2
+    global window_name, victory_text, current_player,player1,player2,running
 
     for p in players: #players=[Human, AI]
         if p.TYPE == "AI-Model":
@@ -602,9 +604,10 @@ def runTraining(instance, game_number, record_replay):#main function
                     elif (event.type == pygame.MOUSEBUTTONDOWN or event.type == pygame.K_UP or event.type == pygame.K_RIGHT) and event.button == 1: #kan zo gelaten worden. Wanneer op de muis wordt gedrukt,wordt de zet gelezen van het bestand
                         Thread(target=lambda:pygame.mixer.music.fadeout(1000)).start()#don't block the main thread
                         x,y=event.pos
-                        
-                        handle_human_move(instance, x, y, current_player, record_replay, p1_moves, p2_moves, players) 
-
+                        try:
+                            handle_human_move(instance, x, y, record_replay, players, p1_moves, p2_moves) 
+                        except Exception as e:
+                            handle_human_move(instance, x, y, record_replay, players)
             # AI move
             elif current_player.TYPE == "AI-Model" and not testai.check_game_over(instance):
                 if instance.ai_delay:
@@ -733,7 +736,7 @@ def runTraining(instance, game_number, record_replay):#main function
 
 def runReplay(instance, game_number, moves:dict=None):#main function
     # Main game loop
-    global window_name, victory_text, current_player
+    global window_name, victory_text, current_player, running
     
     pygame.display.set_icon(pygame.image.load('res/ico.png'))
     pygame.init()
@@ -761,8 +764,10 @@ def runReplay(instance, game_number, moves:dict=None):#main function
                 else:
                     current_player = players[2 - current_player.get_player_id()]
                     move_id += 1
-            
-            draw_board(instance,last_move)
+            try:
+                draw_board(instance,last_move)
+            except:
+                draw_board(instance)
             refresh_screen(game_number, current_player)
                 
         else:
