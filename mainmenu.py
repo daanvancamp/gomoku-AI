@@ -204,7 +204,7 @@ def start_new_game():
                     raise Exception("De error is waarschijnlijk te wijten aan een foute zet, controleer het lezen van de json bestanden die het bord opslaan." , str(e))
 
             try:
-                gomoku.runGame(game_instance, i, False) #kan als hoofdprogramma beschouwd worden (één spel is één run)
+                gomoku.runGame(game_instance, i, var_rep.get()) #kan als hoofdprogramma beschouwd worden (één spel is één run)
             except Exception as e:
                 print("error in gomoku.run, herschrijf die functie.")
                 raise Exception("There is an error in the main loop, it can be anything." , str(e))
