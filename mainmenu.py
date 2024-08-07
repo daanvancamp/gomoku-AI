@@ -359,7 +359,10 @@ def quit_game():
 def maintain_GUI():
     #delete this optional thread if the program stutters or crashes on your computer
     tab_text = "Play gomoku"
+    last_value_repvar=True
+    last_value_load_board_from_file=False
     while True:
+        sleep(0.1)
         try:
             old_tab_text= tab_text
             current_tab = tabControl.index(tabControl.select())
@@ -378,8 +381,8 @@ def maintain_GUI():
             label_value_number_of_training_loops_p1.grid()
 
         else:
-            overrule_button_player_1.grid_remove()
             CbModel1.grid_remove()
+            overrule_button_player_1.grid_remove()
             label_value_number_of_training_loops_p1.grid_remove()
 
         if var_playerType2.get()=="AI-Model":
@@ -393,22 +396,14 @@ def maintain_GUI():
             overrule_button_player_2_tab2.grid_remove()
             label_value_number_of_training_loops_p2.grid_remove()
 
-        if not var_playerType2.get()=="AI-model" and not var_playerType1.get()=="AI-Model":
-            label_show_number_of_training_loops.grid_remove() #remove text 'loops'
-
         if var_start_from_file.get():
             label_load_state.grid()
             load_state_entry.grid()
             button_browse_state_file.grid()
-            use_recognition_button.grid_remove()
-            label_recognition.grid_remove()
-            
         else:
             label_load_state.grid_remove()
             load_state_entry.grid_remove()
             button_browse_state_file.grid_remove()
-            use_recognition_button.grid()
-            label_recognition.grid()
         
         recognition_possible=(var_playerType1.get()=="Human" or var_playerType2.get()=="Human")and (var_playerType1.get()=="AI-Model" or var_playerType2.get()=="AI-Model" or var_playerType1.get()=="Test Algorithm" or var_playerType2.get()=="Test Algorithm")
         if recognition_possible and not var_start_from_file.get():
@@ -418,7 +413,7 @@ def maintain_GUI():
             use_recognition_button.grid_remove()
             label_recognition.grid_remove()
         #tab 1, delaybutton#
-        if var_playerType1.get()=="AI-Model" or var_playerType2.get()=="AI-Model"or var_playerType1.get()=="Test Algorithm" or var_playerType2.get()=="Test Algorithm":
+        if (var_playerType1.get()=="AI-Model" or var_playerType2.get()=="AI-Model" ) or (var_playerType1.get()=="Test Algorithm" or var_playerType2.get()=="Test Algorithm"):
             delaybutton.grid()
         else:
             delaybutton.grid_remove()
@@ -436,6 +431,17 @@ def maintain_GUI():
             playerstartLabel.grid()
             CbStartingPlayer.grid()
 
+        if var_start_from_file.get()!=last_value_load_board_from_file and var_start_from_file.get()==True:
+            var_rep.set(False) #can't be used simultanously because if you would save a replay file, it wouldn't be complete (the moves that are loaded are gone)
+            
+            last_value_load_board_from_file=var_start_from_file.get()
+            last_value_repvar=var_rep.get()
+        if var_rep.get()!=last_value_repvar and var_rep.get()==True:
+            var_start_from_file.set(False)
+
+            last_value_load_board_from_file=var_start_from_file.get()
+            last_value_repvar=var_rep.get()
+
         if var_playerType2.get()=="Human":
             train_description.grid_remove() #a human will never play the game 3000 times to train the model
         else:
@@ -445,9 +451,11 @@ def maintain_GUI():
         else:
             CbModelTrain2.grid_remove()
         
-        #tab4##
+
         show_number_of_training_loops()
         show_number_of_training_loops_comboboxes()
+
+
 def show_number_of_training_loops():
     for i in Lb1.curselection():
         model=Lb1.get(i)
@@ -501,10 +509,6 @@ CbModel2 = ttk.Combobox(tab1, state="readonly", values=list_models,textvariable=
 
 CbModel1.grid(row=6, column=0)
 CbModel2.grid(row=6, column=1)
-
-
-label_show_number_of_training_loops = ttk.Label(tab1, text="loops: ",style="TLabel")
-label_show_number_of_training_loops.grid(row=7, column=0, columnspan=2)
 
 label_value_number_of_training_loops_p1 = ttk.Label(tab1, textvariable=var_number_of_training_loops_comboboxes_p1,style="TLabel")
 label_value_number_of_training_loops_p1.grid(row=8, column=0, sticky="w")
