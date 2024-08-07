@@ -23,24 +23,31 @@ class ModelManagerMeta(type):
 
 
 class ModelManager(metaclass=ModelManagerMeta):
-    def get_number_of_training_loops(self,modelname):
-        if os.path.exists("data/models/" + modelname + "/modelconfig.json"):
-            with open("data/models/" + modelname + "/modelconfig.json", "r") as file:
-                data = json.load(file)
-                return data["training loops"]
-        else:
-            return 0
-    def log_number_of_training_loops(self, modelname,number_of_additonal_training_loops):
+    def get_total_number_of_training_loops(self,modelname):
+        try:
+            if os.path.exists("data/models/" + modelname + "/modelconfig.json"):
+                with open("data/models/" + modelname + "/modelconfig.json", "r") as file:
+                    data = json.load(file)
+                    return data["training loops"]
+            else:
+                return 0
+        except PermissionError:
+            print("Please close the file and try again")
+    def log_number_of_training_loops(self, modelname,number_of_additional_training_loops,opponent):
         print("log tr loops...")
         if os.path.exists("data/models/" + modelname + "/modelconfig.json"):
             with open("data/models/" + modelname + "/modelconfig.json", "r") as file:
                 data = json.load(file)
-                data["training loops"] += number_of_additonal_training_loops
+                data["training loops"] += number_of_additional_training_loops
+                data["training loops against "+opponent] += number_of_additional_training_loops
                 with open("data/models/" + modelname + "/modelconfig.json", "w") as file:
                     json.dump(data, file, sort_keys = True, indent = 4, ensure_ascii = False)
         else:
+            raise Exception("Config file not found, try to delete the model and create it again")
             with open("data/models/" + modelname + "/modelconfig.json", "w") as file:
-                data ={"training loops": number_of_additonal_training_loops}
+                data ={"training loops": number_of_additional_training_loops,
+                       "training loops against "+opponent: number_of_additional_training_loops
+                       }
                 json.dump(data, file, sort_keys = True, indent = 4, ensure_ascii = False)
 
     def create_new_model(self, modelName):
@@ -63,10 +70,14 @@ class ModelManager(metaclass=ModelManagerMeta):
                 print("Directory already existed, please give a unique name")
         else:
             print("Directory '% s' not created" % path,"please specify a valid name instead of an empty string")
-        # copy the contents of the demo.py file to  a new file called demo1.py
+        
         shutil.copyfile('./data/templatemodel/model.pth', path + "/model.pth")
         
-        json_data = {'training loops': 0}
+        json_data = {'training loops': 0,
+                     "training loops against Human": 0,
+                     "training loops against AI-Model": 0,
+                     "training loops against Test Algorithm": 0
+                     }
 
         with open(path + "/modelconfig.json", 'w') as out_file:
             json.dump(json_data, out_file, sort_keys = True, indent = 4, ensure_ascii = False)

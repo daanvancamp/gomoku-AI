@@ -311,10 +311,10 @@ def start_new_training():
             gomoku_ai.decrease_learning_rate()#todo: calculate decrease rate based on number of training rounds
             print("players:",gomoku.player1.get_player_type(),gomoku.player2.get_player_type())
             if gomoku.player1.get_player_type() == "AI-Model":
-                modelmanager_instance.log_number_of_training_loops(var_model_player1.get(), 1)#add one to the number of training loops
+                modelmanager_instance.log_number_of_training_loops(var_model_player1.get(), 1,gomoku.player2.get_player_type())#add one to the number of training loops
             if gomoku.player2.get_player_type() == "AI-Model":
-                modelmanager_instance.log_number_of_training_loops(var_model_player2.get(), 1)#add one to the number of training loops
-                    
+                modelmanager_instance.log_number_of_training_loops(var_model_player2.get(), 1,gomoku.player1.get_player_type())#add one to the number of training loops
+                #arguments: model_name, number_of_additional_training_loops, opponent
             else:
                 pass                   
     except ValueError:
@@ -483,14 +483,14 @@ def show_number_of_training_loops():
     for i in Lb1.curselection():
         model=Lb1.get(i)
     try:
-        var_number_of_training_loops.set(modelmanager_instance.get_number_of_training_loops(model))
+        var_number_of_training_loops.set(modelmanager_instance.get_total_number_of_training_loops(model))
     except:
         pass
 
 def show_number_of_training_loops_comboboxes():
-    var_number_of_training_loops_comboboxes_p1.set(modelmanager_instance.get_number_of_training_loops(var_model_player1.get()))
+    var_number_of_training_loops_comboboxes_p1.set(modelmanager_instance.get_total_number_of_training_loops(var_model_player1.get()))
     
-    var_number_of_training_loops_comboboxes_p2.set(modelmanager_instance.get_number_of_training_loops(var_model_player2.get()))
+    var_number_of_training_loops_comboboxes_p2.set(modelmanager_instance.get_total_number_of_training_loops(var_model_player2.get()))
     
 Thread_maintain_GUI=Thread(target=maintain_GUI,daemon=True)#end when main program ends
 Thread_maintain_GUI.start()
