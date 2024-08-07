@@ -90,7 +90,7 @@ var_log.set(False)
 var_rep = BooleanVar()
 var_rep.set(True)
 replay_path = StringVar()
-replay_path.set("")
+replay_path.set(r".\data\replays")
 var_allow_overrule_player_1=BooleanVar()
 var_allow_overrule_player_1.set(True)
 var_allow_overrule_player_2=BooleanVar()
@@ -145,7 +145,6 @@ def run():
     gomoku.run(game_instance)
 
 def load_board_from_file()->list[list[int]]:
-    print("Load " + state_board_path.get())
     with open(state_board_path.get(), "r") as file:
         board = [[0] * 15 for _ in range(15)] # 0 = empty, 1 = player 1, 2 = player 2.
         for row in range(15):
@@ -214,9 +213,6 @@ def start_new_game():
             if var_start_from_file.get():
                 try:
                     board = load_board_from_file()
-                    print("Bord geladen")
-                    for row in board:
-                        print(row)
                     game_instance.set_board(board)
                 except Exception as e:
                     print("error in gomoku.run, herschrijf die functie.")
@@ -227,7 +223,6 @@ def start_new_game():
             except Exception as e:
                 print("error in gomoku.run, herschrijf die functie.")
                 raise Exception("There is an error in the main loop, it can be anything." , str(e))
-            print("voor if")
                     
     except ValueError:
         print("Most likely: Game runs value invalid, try again.")

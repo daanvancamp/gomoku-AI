@@ -83,6 +83,7 @@ class GomokuAI:
         self.loss = 0
         self.train = False
         self.allow_overrule = True
+        self.current_player_id = None
 
     def decrease_learning_rate(self):
         self.learning_rate *= 0.9999 #decrease learning rate
@@ -156,11 +157,11 @@ class GomokuAI:
         else:
             return valid_moves
 
-    def can_win_in_one_move(self, board, current_player,valid_moves)->list:
+    def can_win_in_one_move(self, board,valid_moves)->list:
          log_info_overruling("function can_win_in_one_move called")
          winning_moves=[]
          directions = [(0, 1), (1, 0), (1, 1), (1, -1)]
-         current_player=self.determine_current_player(board)
+         current_player=self.current_player_id
          for row in range(len(board)):
             for col in range(len(board)):
                 if board[row][col] == 0:  # Lege cel
@@ -212,26 +213,12 @@ class GomokuAI:
             log_info_overruling("no winning moves found, the model will fully choose a move on its own out of all possible moves:")
             return valid_moves
 
-    def determine_current_player(self,board)->int:
-        pieces_player1=0
-        pieces_player2=0
-        for i in range(len(board)):
-            for j in range(len(board[i])):#sublist
-                if board[i][j]==1:
-                    pieces_player1+=1
-                elif board[i][j]==2:
-                    pieces_player2+=1
-        if pieces_player1>pieces_player2:
-            return 2
-        elif pieces_player1==pieces_player2:
-            return 1 #player one hasn't done his move yet, so he has one piece less than player2#this is also the case if the board is full or empty
-        else:
-            raise Exception("rewrite this function, this is wrong")
-
     def get_valid_moves(self, board)->list:#voeg de nodige parameters toe. #returns list of valid moves (overroelen ai kan hier gebeuren door de lijst met lengte 1 te maken.)
         log_info_overruling("\n\nfunction get_valid_moves called")
+        log_info_overruling("the involved player is player " + str(self.current_player_id))
         valid_moves = []
-        opponent = 3 - self.determine_current_player(board)  # 3-2=1 and 3-1=2 Player 1 is a one in the list and player 2 is a 2 in the list.
+        
+        opponent = 3 - self.current_player_id  # 3-2=1 and 3-1=2 Player 1 is a one in the list and player 2 is a 2 in the list.
         threat_moves = []
         opponent_winning = False
         directions = [(0, 1), (1, 0), (1, 1), (1, -1)]
@@ -332,7 +319,7 @@ class GomokuAI:
             log_info_overruling("allow_overrule: " + str(self.allow_overrule))
             log_info_overruling("opponent_winning: " + str(opponent_winning))
 
-            valid_moves = self.can_win_in_one_move(board, self.determine_current_player(board), valid_moves)
+            valid_moves = self.can_win_in_one_move(board,valid_moves)
             return valid_moves
 
     def id_to_move(self, move_id, valid_moves):

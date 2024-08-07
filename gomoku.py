@@ -504,10 +504,11 @@ def runGame(instance, game_number, record_replay):#main function
                 if instance.ai_delay:
                     time.sleep(random.uniform(0.25, 1.0))   # randomize AI "thinking" time
                 one_hot_board = convert_to_one_hot(instance.board, players[current_player.get_player_id()-1].id)
-                mm_ai = players[current_player.get_player_id()-1].ai
+                mm_ai = players[current_player.get_player_id()-1].ai#player1.ai or player2.ai #always an instance of GomokuAI
                 mm_ai.set_game(one_hot_board)
                 old_state = instance.board
                 max_score, scores, scores_normalized = calculate_score(instance.board)
+                mm_ai.current_player_id=current_player.get_player_id()
                 action = mm_ai.get_action(instance.board, one_hot_board, scores_normalized)
                
                 np_scores = np.array(scores).reshape(15, 15)

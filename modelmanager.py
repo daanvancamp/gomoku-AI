@@ -43,12 +43,8 @@ class ModelManager(metaclass=ModelManagerMeta):
                 with open("data/models/" + modelname + "/modelconfig.json", "w") as file:
                     json.dump(data, file, sort_keys = True, indent = 4, ensure_ascii = False)
         else:
-            raise Exception("Config file not found, try to delete the model and create it again")
-            with open("data/models/" + modelname + "/modelconfig.json", "w") as file:
-                data ={"training loops": number_of_additional_training_loops,
-                       "training loops against "+opponent: number_of_additional_training_loops
-                       }
-                json.dump(data, file, sort_keys = True, indent = 4, ensure_ascii = False)
+            raise Exception("Config file not found, try to delete the model and create it again or replace the config file with the template file")
+            
 
     def create_new_model(self, modelName):
         # Directory 
