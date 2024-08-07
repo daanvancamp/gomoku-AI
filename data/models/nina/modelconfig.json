@@ -1,3 +1,6 @@
 {
-    "training loops": 3
+  "training loops": 0,
+  "training loops against Human": 0,
+  "training loops against AI-Model": 0,
+  "training loops against Test Algorithm": 0
 }
