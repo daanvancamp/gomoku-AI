@@ -328,39 +328,46 @@ def start_new_replay():
    
     moves = filereader.load_replay(replay_path.get())
 
-    game_instance.use_recognition = False
-    game_instance.play_music = False
+    if moves is None:
+        replay_loaded=False
+    else:
+        replay_loaded=True
+    
+    if replay_loaded:
+        game_instance.use_recognition = False
+        game_instance.play_music = False
 
-    gomoku.player1.TYPE = "Replay"
-    gomoku.player2.TYPE = "Replay"
+        gomoku.player1.TYPE = "Replay"
+        gomoku.player2.TYPE = "Replay"
 
-    gomoku.current_player = gomoku.player1
-
-    try:
-        initialiseer_spelbord_json_bestanden()
-    except:
-        raise Exception("Fout in functie: initialiseer_spelbord_json_bestanden")
-    try:
-        game_instance.ai_delay = var_delay.get()
-        stats.should_log = var_log.get()
-        stats.setup_logging(str(gomoku.player1), str(gomoku.player2))
-        root.wm_state('iconic')
+        gomoku.current_player = gomoku.player1
 
         try:
-            initialiseer_spelbord_json_bestanden()#geen stukken op bord
+            initialiseer_spelbord_json_bestanden()
         except:
             raise Exception("Fout in functie: initialiseer_spelbord_json_bestanden")
-           
-        try:               
-            gomoku.runReplay(game_instance, moves) #kan als hoofdprogramma beschouwd worden (��n spel is ��n run)
-        except Exception as e:
-            print("error in gomoku.run, herschrijf die functie.")
-            raise Exception("De error is waarschijnlijk te wijten aan een foute zet, controleer het lezen van de json bestanden die het bord opslaan." , str(e))
-                            
-    except ValueError:
-        print("Most likely: Game runs value invalid, try again.")
-    game_over()
+        try:
+            game_instance.ai_delay = var_delay.get()
+            stats.should_log = var_log.get()
+            stats.setup_logging(str(gomoku.player1), str(gomoku.player2))
+            root.wm_state('iconic')
 
+            try:
+                initialiseer_spelbord_json_bestanden()#geen stukken op bord
+            except:
+                raise Exception("Fout in functie: initialiseer_spelbord_json_bestanden")
+           
+            try:               
+                gomoku.runReplay(game_instance, moves) #kan als hoofdprogramma beschouwd worden (��n spel is ��n run)
+            except Exception as e:
+                print("error in gomoku.run, herschrijf die functie.")
+                raise Exception("De error is waarschijnlijk te wijten aan een foute zet, controleer het lezen van de json bestanden die het bord opslaan." , str(e))
+                            
+        except ValueError:
+            print("Most likely: Game runs value invalid, try again.")
+        game_over()
+    else:
+        print("Try again, please select a valid json file")
 
 def create_new_model():
     modelmanager_instance.create_new_model(var_name_model.get())
@@ -652,7 +659,7 @@ button_5 = ttk.Button(tab3, text="Play", style="TButton", command=lambda: start_
 button_5.grid(row=3, column=0)
 
 
-ttk.Label(tab4) 
+ttk.Label(tab4)
 Lb1 = Listbox(tab4)
 
 models = modelmanager_instance.get_list_models()

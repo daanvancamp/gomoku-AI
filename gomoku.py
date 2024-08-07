@@ -738,6 +738,9 @@ def runReplay(instance, moves:dict=None):#main function
     if moves is not None:
         move_id = 0
         position = list(moves.keys())
+    else:
+        pass
+        
     while running:
         if not check_board_full(instance):
             #Replay
