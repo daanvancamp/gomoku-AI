@@ -57,13 +57,16 @@ class ModelManager(metaclass=ModelManagerMeta):
             os.mkdir(path)
             
         if not directory=="" and directory is not None:
-            print("Directory '% s' created" % path) 
+            if not os.path.exists(path):
+                print("Directory '% s' created" % path) 
+            else:
+                print("Directory already existed, please give a unique name")
         else:
             print("Directory '% s' not created" % path,"please specify a valid name instead of an empty string")
         # copy the contents of the demo.py file to  a new file called demo1.py
         shutil.copyfile('./data/templatemodel/model.pth', path + "/model.pth")
         
-        json_data = {'training loops:': 0}
+        json_data = {'training loops': 0}
 
         with open(path + "/modelconfig.json", 'w') as out_file:
             json.dump(json_data, out_file, sort_keys = True, indent = 4, ensure_ascii = False)
