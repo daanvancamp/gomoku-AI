@@ -84,6 +84,9 @@ class GomokuAI:
         self.train = False
         self.allow_overrule = True
         self.current_player_id = None
+        self.threat_moves =[]
+        self.valid_moves = []
+
 
     def decrease_learning_rate(self):
         self.learning_rate *= 0.9999 #decrease learning rate
@@ -146,18 +149,19 @@ class GomokuAI:
     def set_allow_overrule(self, allow_overrule):
         self.allow_overrule = allow_overrule
         
-    def remove_unvalid_moves(self,threat_moves,valid_moves):
-        for move in threat_moves:
-            if move not in valid_moves:
-                threat_moves.remove(move)#remove unvalid moves
-        if threat_moves:#if not threat_moves==[]
+    def remove_unvalid_moves(self):
+        for move in self.threat_moves:
+            if move not in self.valid_moves:
+                self.threat_moves.remove(move)#remove unvalid moves
+        if self.threat_moves:#if not threat_moves==[]
             print("no threat moves were valid moves, returning valid moves","the model will choose on its own")
             log_info_overruling("no threat moves were valid moves, returning valid moves: "+"the model will choose on its own")
-            return threat_moves
+            print("overruled:", self.threat_moves)
+            return self.threat_moves
         else:
-            return valid_moves
+            return self.valid_moves
 
-    def can_win_in_one_move(self, board,valid_moves)->list:
+    def can_win_in_one_move(self, board)->list:
          log_info_overruling("function can_win_in_one_move called")
          winning_moves=[]
          directions = [(0, 1), (1, 0), (1, 1), (1, -1)]
@@ -206,28 +210,25 @@ class GomokuAI:
                             winning_moves.append((row, col))
                             break  # We hoeven niet verder te zoeken voor deze cel
          if winning_moves:
-            log_info_overruling("the model will be overruled because of a possible winning move")
-            log_info_overruling("It will choose on its own")
-            return winning_moves
+            log_info_overruling("It will choose on its own, it can win in one move if it does the right move.")
+            return True
          else:
-            log_info_overruling("no winning moves found, the model will fully choose a move on its own out of all possible moves:")
-            return valid_moves
+            log_info_overruling("no winning moves found")
+            return False
 
     def get_valid_moves(self, board)->list:#voeg de nodige parameters toe. #returns list of valid moves (overroelen ai kan hier gebeuren door de lijst met lengte 1 te maken.)
         log_info_overruling("\n\nfunction get_valid_moves called")
         log_info_overruling("the involved player is player " + str(self.current_player_id))
-        valid_moves = []
-        
         opponent = 3 - self.current_player_id  # 3-2=1 and 3-1=2 Player 1 is a one in the list and player 2 is a 2 in the list.
-        threat_moves = []
-        opponent_winning = False
+        self.valid_moves = []
+        self.threat_moves = []
         directions = [(0, 1), (1, 0), (1, 1), (1, -1)]
-        overrule=self.allow_overrule #shorter
+        overrule=self.allow_overrule #shorter variable name
     
         for row in range(len(board)):
             for col in range(len(board)):
                 if board[row][col] == 0:  # Lege cel
-                    valid_moves.append((row, col))
+                    self.valid_moves.append((row, col))
 
                     for drow, dcol in directions:
                         count = 0  
@@ -283,44 +284,35 @@ class GomokuAI:
     
                         # Controleer op dreigende situaties
                         if (count == 3 and open_ends == 2) or (count == 4) or adjacent_two == 2 or three_and_one_pattern:
-                            threat_moves.append((row, col))
+                            self.threat_moves.append((row, col))
                             log_info_overruling(f"player {opponent} has a threat at {row}, {col}")
                        
                             if adjacent_two == 2 or (count == 4) or three_and_one_pattern:
                                 log_info_overruling(f"player {opponent} has a winning threat at {row}, {col}")
                                 if adjacent_two == 2:
                                     log_info_overruling(f"player {opponent} has 2 times 2 in a row: xx_xx")
-                                elif count == 4 and open_ends >= 1:
-                                    log_info_overruling(f"player {opponent} has 4 in a row: _xxxx_")
                                 elif count == 4 and open_ends >= 0:
-                                    log_info_overruling(f"player {opponent} has 3 in a row and 1 nearby: xxx_x or x_xxx")
+                                    log_info_overruling(f"player {opponent} has 4 in a row: _xxxx_")
                                 elif three_and_one_pattern:
                                     log_info_overruling(f"player {opponent} has 3 in a row and 1 nearby: xxx_x or x_xxx")
-                                opponent_winning = True
 
-                            break  # We hoeven niet verder te zoeken voor deze cel
+                            break  # Don't need to search any further for this cell.
     
-        # Bepaal welke zetten te retourneren op basis van allow_overrule
-        if overrule and threat_moves : #if threat_moves is not empty
-            print("overruled:", threat_moves)
-            log_info_overruling("overruled: " + str(threat_moves))
+        if overrule and self.threat_moves and not self.can_win_in_one_move(board): #if threat_moves is not empty
+            log_info_overruling("overruled: " + str(self.threat_moves))
             for row in board:
                 log_info_overruling(str(row))
             log_info_overruling("status: an overruled move is executed by the AI")
             log_info_overruling("allow_overrule: " + str(self.allow_overrule))
-            log_info_overruling("opponent_winning: " + str(opponent_winning))
-            threat_moves=self.remove_unvalid_moves(threat_moves, valid_moves)
-            return threat_moves
+            self.threat_moves=self.remove_unvalid_moves()
+            return self.threat_moves
         else:
-            print("a normal move is executed by the AI if it can't win in one move")
+            print("a normal move is executed by the AI")
             for row in board:
                 log_info_overruling(str(row))
-            log_info_overruling("status: a normal move is executed by the AI if it can't win in one move")
+            log_info_overruling("status: a normal move is executed by the AI")
             log_info_overruling("allow_overrule: " + str(self.allow_overrule))
-            log_info_overruling("opponent_winning: " + str(opponent_winning))
-
-            valid_moves = self.can_win_in_one_move(board,valid_moves)
-            return valid_moves
+            return self.valid_moves
 
     def id_to_move(self, move_id, valid_moves):
         if move_id < len(valid_moves):
@@ -360,7 +352,7 @@ class GomokuAI:
         while action is None:#Het programma blijft hier hangen!!!
             attempts+=1
             if attempts>max_attempts:
-                  action = random.choice(valid_moves) #vorm: (x,y)
+                  action = random.choice(valid_moves) #form: (x,y), move is completely random after max_attempts
                   if action is None:
                       raise Exception("A random move couldn't be found")
                   print("move not found, random move chosen")
