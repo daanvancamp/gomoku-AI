@@ -312,7 +312,7 @@ def start_new_training():
             print("players:",gomoku.player1.get_player_type(),gomoku.player2.get_player_type())
             if gomoku.player1.get_player_type() == "AI-Model":
                 modelmanager_instance.log_number_of_training_loops(var_model_player1.get(), 1)#add one to the number of training loops
-            elif gomoku.player2.get_player_type() == "AI-Model":
+            if gomoku.player2.get_player_type() == "AI-Model":
                 modelmanager_instance.log_number_of_training_loops(var_model_player2.get(), 1)#add one to the number of training loops
                     
             else:
