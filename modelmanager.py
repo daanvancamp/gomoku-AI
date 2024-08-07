@@ -63,7 +63,7 @@ class ModelManager(metaclass=ModelManagerMeta):
             if not os.path.exists(path):
                 print("Directory '% s' created" % path) 
             else:
-                print("Directory already existed, please give a unique name")
+                print("Directory already exists, please use a unique name")
         else:
             print("Directory '% s' not created" % path,"please specify a valid name instead of an empty string")
         

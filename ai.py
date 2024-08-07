@@ -296,7 +296,7 @@ class GomokuAI:
                                 elif three_and_one_pattern:
                                     log_info_overruling(f"player {opponent} has 3 in a row and 1 nearby: xxx_x or x_xxx")
 
-                            break  # Don't need to search any further for this cell.
+                            break  # There's no need to search any further for this cell.
     
         if overrule and self.threat_moves and not self.can_win_in_one_move(board): #if threat_moves is not empty
             log_info_overruling("overruled: " + str(self.threat_moves))
