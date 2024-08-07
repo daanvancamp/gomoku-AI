@@ -134,9 +134,6 @@ class Player:
         
     def get_model_name(self):
         return self.model_name
-
-    def set_model(self, model_name):
-        self.model_name = model_name
         
     def set_allow_overrule(self, allow_overrule):
         self.allow_overrule = allow_overrule
@@ -496,7 +493,6 @@ def runGame(instance, game_number, record_replay):#main function
                     running = False
                 else:
                     current_player = players[2 - current_player.get_player_id()]
-                    print("Na switch player AI!!!!!!!!!!!")
                     logging_players()   
             
             # AI model
@@ -506,7 +502,6 @@ def runGame(instance, game_number, record_replay):#main function
                 one_hot_board = convert_to_one_hot(instance.board, players[current_player.get_player_id()-1].id)
                 mm_ai = players[current_player.get_player_id()-1].ai#player1.ai or player2.ai #always an instance of GomokuAI
                 mm_ai.set_game(one_hot_board)
-                old_state = instance.board
                 max_score, scores, scores_normalized = calculate_score(instance.board)
                 mm_ai.current_player_id=current_player.get_player_id()
                 action = mm_ai.get_action(instance.board, one_hot_board, scores_normalized)
@@ -529,7 +524,6 @@ def runGame(instance, game_number, record_replay):#main function
                 players[current_player.get_player_id() - 1].weighed_moves.append(score)
                 instance.board[action[0]][action[1]] = current_player.get_player_id()
                 game_over = check_win(action[0], action[1], current_player.get_player_id(), instance)
-                next_max_score, next_scores, next_scores_normalized = calculate_score(instance.board)
                 players[current_player.get_player_id()-1].final_action = action
                 players[current_player.get_player_id() - 1].moves += 1
                 if game_over:
@@ -558,10 +552,6 @@ def runGame(instance, game_number, record_replay):#main function
     update_player_stats(instance, winning_player)
     if record_replay:
         filereader.save_replay(p1_moves, p2_moves)
-    # For any AI-Model, train for long memory and save model
-    data = {}
-    loss_data = {}
-    move_loss_data = {}
     
     time.sleep(instance.SLEEP_BEFORE_END)#sleep before closing for SLEEP_BEFORE_END seconds
     reset_game(instance)
@@ -569,7 +559,7 @@ def runGame(instance, game_number, record_replay):#main function
 def runTraining(instance, game_number, record_replay):#main function
     # Main game loop
     global window_name, victory_text, current_player,player1,player2,running
-
+    mark_last_move_model=False 
     for p in players: #players=[Human, AI]
         if p.TYPE == "AI-Model":
             if p==player1:
@@ -577,12 +567,15 @@ def runTraining(instance, game_number, record_replay):#main function
             else:
                 p.ai.model.load_model(player2.model_name)
             p.ai.train = True
-    
+        if p.TYPE == "Human":
+            p.ai.train = False
+            mark_last_move_model=True
+
+
     instance.play_music=False
     pygame.display.set_icon(pygame.image.load('res/ico.png'))
     pygame.init()
     pygame.display.set_caption(window_name)
-    mark_last_move_model=True 
     instance.winning_cells = []
     running = True
     winning_player = 0
@@ -605,9 +598,9 @@ def runTraining(instance, game_number, record_replay):#main function
                         x,y=event.pos
                         try:
                             handle_human_move(instance, x, y, record_replay, players, p1_moves, p2_moves) 
-                        except Exception as e:
+                        except:
                             handle_human_move(instance, x, y, record_replay, players)
-            # AI move
+            # test algorithm
             elif current_player.TYPE == "Test Algorithm" and not testai.check_game_over(instance):
                 if instance.ai_delay:
                     time.sleep(random.uniform(0.25, 1.0))   # randomize ai "thinking" time
@@ -626,7 +619,7 @@ def runTraining(instance, game_number, record_replay):#main function
                     current_player = players[2 - current_player.get_player_id()]
                     logging_players()   
             
-            # Test Algorithm
+            # AI-Model
             elif current_player.TYPE == "AI-Model":
                 if instance.ai_delay:
                     time.sleep(random.uniform(0.25, 1.0))   # randomize AI "thinking" time
@@ -635,6 +628,7 @@ def runTraining(instance, game_number, record_replay):#main function
                 mm_ai.set_game(one_hot_board)
                 old_state = instance.board
                 max_score, scores, scores_normalized = calculate_score(instance.board)
+                mm_ai.current_player_id=current_player.get_player_id()
                 action = mm_ai.get_action(instance.board, one_hot_board, scores_normalized)
                 if mark_last_move_model:
                     last_move=action #=last move for example :(3,6)
@@ -751,7 +745,6 @@ def runReplay(instance, moves:dict=None):#main function
                 last_move = position[move_id]
                 if check_win(position[move_id][0], position[move_id][1], current_player.get_player_id(), instance):
                     victory_text = f"AI model {players[current_player.get_player_id()-1].id} wins!"
-                    winning_player = current_player.get_player_id()
                     running = False
                 else:
                     current_player = players[2 - current_player.get_player_id()]
@@ -764,7 +757,6 @@ def runReplay(instance, moves:dict=None):#main function
                 
         else:
             victory_text = "TIE"
-            winning_player = -1
             running = False
 
     # End game
