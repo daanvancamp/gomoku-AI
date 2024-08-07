@@ -5,7 +5,6 @@ from tkinter import *
 from tkinter import ttk
 from tkinter import filedialog
 
-from numpy import var
 import ai
 import filereader
 import stats
@@ -61,6 +60,19 @@ tabControl.add(tab2, text='Train')
 tabControl.add(tab3, text='Replay old games')
 tabControl.add(tab4, text='Define model')
 tabControl.grid(row=0, sticky="w")
+
+# tab1.columnconfigure(0, weight=1)
+# tab1.columnconfigure(1, weight=1)
+# tab1.columnconfigure(2, weight=1)
+
+
+# tab2.columnconfigure(0, weight=2)
+# tab2.columnconfigure(1, weight=0)
+# tab2.columnconfigure(2, weight=1)
+
+# tab3.columnconfigure(0, weight=1)
+# tab4.columnconfigure(0, weight=1)
+
 
 style_numbers = ["georgia", 10, "white", 12, 2]#font, size, color, bold, underline
 
@@ -380,19 +392,8 @@ def game_over():
 def quit_game():
     sys.exit()#beeindig het programma volledig
 
-#style_numbers = ["georgia", 10, "white", 12, 2]#font, size, color, bold, underline (already defined)
-style2=ttk.Style()
-style2.configure("TButton", font=(style_numbers[0], style_numbers[1]),bg=style_numbers[2],ipadx=style_numbers[3],ipady=style_numbers[4],pady=15)#font=georgia, size=10;bg=white
-style2.configure("TRadiobutton",fg="white",bg="green")
-style2.configure("TEntry",fg="white",bg="green")
-style2.configure("TLabel", font=(style_numbers[0], style_numbers[1]),fg="white",bg="green")#font=georgia, size=10
-style2.configure("TCheckbutton", font=(style_numbers[0], style_numbers[1]),fg="white",bg="green")#font=georgia, size=10
-
-### TABS ###
-ttk.Label(tab1)
-
-
 def maintain_GUI():
+    #delete this optional thread if the program stutters or crashes on your computer
     tab_text = "Play gomoku"
     while True:
         try:
@@ -403,7 +404,7 @@ def maintain_GUI():
                 var_game_runs.set("3000")
             elif tab_text=="Play gomoku" and old_tab_text!=tab_text:
                 var_game_runs.set("1")
-        except Exception as e:
+        except:
             pass
             
         ##TAB 1##
@@ -448,7 +449,7 @@ def maintain_GUI():
             use_recognition_button.grid_remove()
             label_recognition.grid_remove()
         #tab 1, delaybutton#
-        if var_playerType1.get()=="AI-Model" or var_playerType2.get()=="AI-Model":
+        if var_playerType1.get()=="AI-Model" or var_playerType2.get()=="AI-Model"or var_playerType1.get()=="Test Algorithm" or var_playerType2.get()=="Test Algorithm":
             delaybutton.grid()
         else:
             delaybutton.grid_remove()
@@ -465,7 +466,11 @@ def maintain_GUI():
         else:
             playerstartLabel.grid()
             CbStartingPlayer.grid()
-        ##tab 3##
+
+        if var_playerType2.get()=="Human":
+            train_description.grid_remove() #a human will never play the game 3000 times to train the model
+        else:
+            train_description.grid()
         if var_playerType2.get()=="AI-Model":
             CbModelTrain2.grid()
         else:
@@ -473,7 +478,7 @@ def maintain_GUI():
         
         #tab4##
         show_number_of_training_loops()
-
+        show_number_of_training_loops_comboboxes()
 def show_number_of_training_loops():
     for i in Lb1.curselection():
         model=Lb1.get(i)
@@ -482,11 +487,24 @@ def show_number_of_training_loops():
     except:
         pass
 
-
-Thread_maintain_GUI=Thread(target=maintain_GUI)
+def show_number_of_training_loops_comboboxes():
+    var_number_of_training_loops_comboboxes_p1.set(modelmanager_instance.get_number_of_training_loops(var_model_player1.get()))
+    
+    var_number_of_training_loops_comboboxes_p2.set(modelmanager_instance.get_number_of_training_loops(var_model_player2.get()))
+    
+Thread_maintain_GUI=Thread(target=maintain_GUI,daemon=True)#end when main program ends
 Thread_maintain_GUI.start()
 
+#style_numbers = ["georgia", 10, "white", 12, 2]#font, size, color, bold, underline (already defined)
+style2=ttk.Style()
+style2.configure("TButton", font=(style_numbers[0], style_numbers[1]),bg=style_numbers[2],ipadx=style_numbers[3],ipady=style_numbers[4],pady=15)#font=georgia, size=10;bg=white
+style2.configure("TRadiobutton",fg="white",bg="green")
+style2.configure("TEntry",fg="white",bg="green")
+style2.configure("TLabel", font=(style_numbers[0], style_numbers[1]),fg="white",bg="green")#font=georgia, size=10
+style2.configure("TCheckbutton", font=(style_numbers[0], style_numbers[1]),fg="white",bg="green")#font=georgia, size=10
 
+### TABS ###
+ttk.Label(tab1)
 
 button_1 = ttk.Button(tab1, text="New Game", command=lambda: start_new_game(), style="TButton")
 button_1.grid(row=0, column=0, sticky="w")
@@ -526,7 +544,6 @@ label_value_number_of_training_loops_p2 = ttk.Label(tab1, textvariable=var_numbe
 label_value_number_of_training_loops_p2.grid(row=8, column=1, sticky="w")
 
 
-
 overrule_button_player_1=ttk.Checkbutton(tab1, text="Allow overrule", variable=var_allow_overrule_player_1,style="TCheckbutton")
 overrule_button_player_1.grid(row=9, column=0, sticky="w")
 
@@ -545,6 +562,7 @@ CbStartingPlayer = ttk.Combobox(tab1, state="readonly", values=["Player 1", "Pla
 CbStartingPlayer.current(0)
 CbStartingPlayer.grid(row=11, column=1, sticky="w")
 
+#column 0
 logbutton = ttk.Checkbutton(tab1, text="Create log file", variable=var_log,style="TCheckbutton") 
 logbutton.grid(row=12, column=0, sticky="w")
 replaybutton = ttk.Checkbutton(tab1, text="Save replays", variable=var_rep,style="TCheckbutton") 
@@ -557,8 +575,6 @@ music_button=ttk.Checkbutton(tab1, text="Play music", variable=var_play_music,st
 music_button.grid(row=12, column=1, sticky="w")
 use_recognition_button=ttk.Checkbutton(tab1, text="use recognition*", variable=var_use_recognition,style="TCheckbutton")
 use_recognition_button.grid(row=13, column=1, sticky="w")
-
-
 
 
 label_recognition=ttk.Label(tab1, text="*only turn on when you have a physical board, a webcam and the other repository: ",style="TLabel",wraplength=300)
@@ -578,40 +594,53 @@ button_browse_state_file = ttk.Button(bottomframe, text="...",style="TButton", c
 button_browse_state_file.grid(row=2, column=1, sticky="w")
 
 
-button_3 = ttk.Button(input_canvas, text="Quit Game", style="TButton", command=lambda: quit_game())
+
+button_3 = ttk.Button(input_canvas, text="Quit Game(ESC/Q)", style="TButton", command=lambda: quit_game())
 button_3.grid(row=1, column=0, sticky="e")
+root.bind("<Escape>", lambda event: quit_game())
+root.bind("<q>", lambda event: quit_game())
 
 ttk.Label(tab2)
-CbModelTrain1 = ttk.Combobox(tab2, state="readonly", values=list_models,textvariable=var_model_player1)
-CbModelTrain1.grid(row=0, column=0, sticky="w")
-overrule_button_player_1_tab2=ttk.Checkbutton(tab2, text="Allow overrule", variable=var_allow_overrule_player_1,style="TCheckbutton")
-overrule_button_player_1_tab2.grid(row=1, column=0, sticky="w")
+#row 0
 button_2 = ttk.Button(tab2, text="Train", style="TButton", command=lambda: start_new_training())
-button_2.grid(row=2, column=0, sticky="w")
+button_2.grid(row=0, column=1, sticky="e")
+
+#column 0
+label_model=ttk.Label(tab2, text="AI-Model: ",style="TLabel")
+label_model.grid(row=1, column=0, sticky="w",padx=10,pady=1)
+CbModelTrain1 = ttk.Combobox(tab2, state="readonly", values=list_models,textvariable=var_model_player1)
+CbModelTrain1.grid(row=2, column=0, sticky="w",padx=10,pady=1)
+label_value_number_of_training_loops_tab2_p1 = ttk.Label(tab2, textvariable=var_number_of_training_loops_comboboxes_p1,style="TLabel")
+label_value_number_of_training_loops_tab2_p1.grid(row=3, column=0, sticky="w")
+overrule_button_player_1_tab2=ttk.Checkbutton(tab2, text="Allow overrule", variable=var_allow_overrule_player_1,style="TCheckbutton")
+overrule_button_player_1_tab2.grid(row=4, column=0, sticky="w")
+
+
 train_opponent_label = ttk.Label(tab2, text="Train model against:", style="TLabel")
-train_opponent_label.grid(row=3, column=0, sticky="w")
+train_opponent_label.grid(row=1, column=1, sticky="w")
 radiobutton7 = ttk.Radiobutton(tab2, text="Test Algorithm", variable=var_playerType2, value="Test Algorithm")
-radiobutton7.grid(row=4, column=0, sticky="w")
+radiobutton7.grid(row=2, column=1, sticky="w")
 radiobutton8 = ttk.Radiobutton(tab2, text="AI-Model", variable=var_playerType2, value="AI-Model", style="TRadiobutton")
-radiobutton8.grid(row=5, column=0, sticky="w")
+radiobutton8.grid(row=3, column=1, sticky="w")
 human_training_button=ttk.Radiobutton(tab2, text="Human", variable=var_playerType2, value="Human", style="TRadiobutton")
-human_training_button.grid(row=6, column=0,sticky="w")
+human_training_button.grid(row=4, column=1,sticky="w")
 CbModelTrain2 = ttk.Combobox(tab2, state="readonly", values=list_models,textvariable=var_model_player2)
-CbModelTrain2.grid(row=7, column=0, sticky="w")
+CbModelTrain2.grid(row=5, column=1, sticky="w")
+label_value_number_of_training_loops_tab2_p2 = ttk.Label(tab2, textvariable=var_number_of_training_loops_comboboxes_p2,style="TLabel")
+label_value_number_of_training_loops_tab2_p2.grid(row=6, column=1, sticky="w")
 overrule_button_player_2_tab2=ttk.Checkbutton(tab2, text="Allow overrule", variable=var_allow_overrule_player_2,style="TCheckbutton")
-overrule_button_player_2_tab2.grid(row=8, column=0, sticky="w")
+overrule_button_player_2_tab2.grid(row=7, column=1, sticky="w")
 
 gamerunslabel = ttk.Label(tab2, text="Number of games: ",style="TLabel")
-gamerunslabel.grid(row=9, column=0, sticky="w")
+gamerunslabel.grid(row=8, column=0, sticky="w",pady=2)
 gamerunsentry2 = ttk.Entry(tab2, textvariable=var_game_runs,style="TEntry")
-gamerunsentry2.grid(row=10, column=0, sticky="w")
+gamerunsentry2.grid(row=9, column=0, sticky="w")
 replaybutton2 = ttk.Checkbutton(tab2, text="Save replays", variable=var_rep,style="TCheckbutton")
-replaybutton2.grid(row=11, column=0, sticky="w")
-
+replaybutton2.grid(row=10, column=0, sticky="w")
 
 
 train_description = Label(tab2, text="It is recommended to run at least 3 000 games per training session.", font=(style_numbers[0], style_numbers[1]), wraplength=WIDTH-5, justify=LEFT)#origineel width-5
-train_description.grid(row=12, column=0, sticky="w",columnspan=2)
+train_description.grid(row=11, column=0, sticky="w",columnspan=2)
 
 ttk.Label(tab3)
 replaylabel = ttk.Label(tab3, text="Choose the replay file: ",style="TLabel")
