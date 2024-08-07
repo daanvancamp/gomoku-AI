@@ -387,7 +387,7 @@ style2.configure("TCheckbutton", font=(style_numbers[0], style_numbers[1]),fg="w
 ttk.Label(tab1)
 
 
-def toggle_visibility_write_last_active_tab_to_file():
+def maintain_GUI():
     tab_text = "Play gomoku"
     while True:
         try:
@@ -403,47 +403,59 @@ def toggle_visibility_write_last_active_tab_to_file():
             
         ##TAB 1##
         if var_playerType1.get()=="AI-Model":
-            CbModel1.grid(row=6,column=0)
-            overrule_button_player_1.grid(row=7,column=0)
-
+            CbModel1.grid()
+            overrule_button_player_1.grid()
         else:
             overrule_button_player_1.grid_remove()
             CbModel1.grid_remove()
 
         if var_playerType2.get()=="AI-Model":
-            CbModel2.grid(row=6,column=1)
-            overrule_button_player_2.grid(row=7,column=1)
-            overrule_button_player_2_tab2.grid(row=8,column=0)
+            CbModel2.grid()
+            overrule_button_player_2.grid()
+            overrule_button_player_2_tab2.grid()
         else:
             CbModel2.grid_remove()
             overrule_button_player_2.grid_remove()
             overrule_button_player_2_tab2.grid_remove()
 
         if var_start_from_file.get():
-            label_load_state.grid(row=1, column=0, sticky="w")
-            load_state_entry.grid(row=2, column=0, sticky="w")
-            button_browse_state_file.grid(row=2, column=1, sticky="w")
+            label_load_state.grid()
+            load_state_entry.grid()
+            button_browse_state_file.grid()
         else:
             label_load_state.grid_remove()
             load_state_entry.grid_remove()
             button_browse_state_file.grid_remove()
         recognition_possible=(var_playerType1.get()=="Human" or var_playerType2.get()=="Human")and (var_playerType1.get()=="AI-Model" or var_playerType2.get()=="AI-Model" or var_playerType1.get()=="Test Algorithm" or var_playerType2.get()=="Test Algorithm")
         if recognition_possible:
-            use_recognition_button.grid(row=11, column=1, sticky="w")
+            use_recognition_button.grid()
         else:
             use_recognition_button.grid_remove()
+        #tab 1, delaybutton#
+        if var_playerType1=="AI-Model" or var_playerType2=="AI-Model":
+            delaybutton.grid()
+        else:
+            delaybutton.grid_remove()
+
+
 
         ##tab 3##
         if var_playerType2.get()=="AI-Model":
-            CbModelTrain2.grid(row=7, column=0, sticky="w")
+            CbModelTrain2.grid()
         else:
             CbModelTrain2.grid_remove()
+        
+        #tab4##
+        show_number_of_training_loops()
 
 def show_number_of_training_loops():
-    while True:
-        for i in Lb1.curselection():
-            model=Lb1.get(i)
-        var_number_of_training_loops.set(modelmanager_instance.get_number_of_training_loops(model))
+    for i in Lb1.curselection():
+        model=Lb1.get(i)
+    var_number_of_training_loops.set(modelmanager_instance.get_number_of_training_loops(model))
+
+Thread_maintain_GUI=Thread(target=maintain_GUI)
+Thread_maintain_GUI.start()
+
 
 
 button_1 = ttk.Button(tab1, text="New Game", command=lambda: start_new_game(), style="TButton")
@@ -473,40 +485,44 @@ CbModel2 = ttk.Combobox(tab1, state="readonly", values=list_models,textvariable=
 CbModel1.grid(row=6, column=0)
 CbModel2.grid(row=6, column=1)
 
-Thread_visibility=Thread(target=toggle_visibility_write_last_active_tab_to_file)
-Thread_visibility.start()
+
+label_show_number_of_training_loops = ttk.Label(tab1, text="Training loops: ",style="TLabel")
+label_show_number_of_training_loops.grid(row=7, column=0, sticky="w")
+label_value_number_of_training_loops = ttk.Label(tab1, textvariable=var_number_of_training_loops,style="TLabel")
+label_value_number_of_training_loops.grid(row=7, column=1, sticky="w")
+
 
 
 overrule_button_player_1=ttk.Checkbutton(tab1, text="Allow overrule", variable=var_allow_overrule_player_1,style="TCheckbutton")
-overrule_button_player_1.grid(row=7, column=0, sticky="w")
+overrule_button_player_1.grid(row=8, column=0, sticky="w")
 
 overrule_button_player_2=ttk.Checkbutton(tab1, text="Allow overrule", variable=var_allow_overrule_player_2,style="TCheckbutton")
-overrule_button_player_2.grid(row=7, column=1, sticky="w")
+overrule_button_player_2.grid(row=8, column=1, sticky="w")
 
 
 gamerunslabel = ttk.Label(tab1, text="Number of games: ",style="TLabel")
-gamerunslabel.grid(row=8, column=0, sticky="w")
+gamerunslabel.grid(row=9, column=0, sticky="w")
 gamerunsentry = ttk.Entry(tab1, textvariable=var_game_runs,style="TEntry")
-gamerunsentry.grid(row=8, column=1, sticky="w")
+gamerunsentry.grid(row=9, column=1, sticky="w")
 
 playerstartLabel = ttk.Label(tab1, text="Player to start: ",style="TLabel")
-playerstartLabel.grid(row=9, column=0, sticky="w")
+playerstartLabel.grid(row=10, column=0, sticky="w")
 CbStartingPlayer = ttk.Combobox(tab1, state="readonly", values=["Player 1", "Player 2"], textvariable=var_startingPlayer)
 CbStartingPlayer.current(0)
-CbStartingPlayer.grid(row=9, column=1, sticky="w")
+CbStartingPlayer.grid(row=10, column=1, sticky="w")
 
 logbutton = ttk.Checkbutton(tab1, text="Create log file", variable=var_log,style="TCheckbutton") 
-logbutton.grid(row=10, column=0, sticky="w")
+logbutton.grid(row=11, column=0, sticky="w")
 replaybutton = ttk.Checkbutton(tab1, text="Save replays", variable=var_rep,style="TCheckbutton") 
-replaybutton.grid(row=11, column=0, sticky="w")
+replaybutton.grid(row=12, column=0, sticky="w")
 delaybutton = ttk.Checkbutton(tab1, text="Use AI Delay", variable=var_delay,style="TCheckbutton")
-delaybutton.grid(row=12, column=0, sticky="w")
+delaybutton.grid(row=13, column=0, sticky="w")
 
 #column1
 music_button=ttk.Checkbutton(tab1, text="Play music", variable=var_play_music,style="TCheckbutton")
-music_button.grid(row=10, column=1, sticky="w")
+music_button.grid(row=11, column=1, sticky="w")
 use_recognition_button=ttk.Checkbutton(tab1, text="use recognition*", variable=var_use_recognition,style="TCheckbutton")
-use_recognition_button.grid(row=11, column=1, sticky="w")
+use_recognition_button.grid(row=12, column=1, sticky="w")
 
 
 
