@@ -479,7 +479,7 @@ def runGame(instance, game_number, record_replay):#main function
                             
                 add_hover_effect(instance)
 
-            # AI move
+            # test algorithm move
             elif current_player.TYPE == "Test Algorithm" and not testai.check_game_over(instance):
                 if instance.ai_delay:
                     time.sleep(random.uniform(0.25, 1.0))   # randomize ai "thinking" time
@@ -500,7 +500,7 @@ def runGame(instance, game_number, record_replay):#main function
                     print("Na switch player AI!!!!!!!!!!!")
                     logging_players()   
             
-            # Test Algorithm
+            # AI model
             elif current_player.TYPE == "AI-Model":
                 if instance.ai_delay:
                     time.sleep(random.uniform(0.25, 1.0))   # randomize AI "thinking" time

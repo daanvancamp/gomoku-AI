@@ -100,9 +100,14 @@ var_use_recognition.set(False)
 var_model_player1.set("standaard")
 var_model_player2.set("standaard")
 var_startingPlayer=StringVar()
+var_startingPlayer.set("Player 1")
 
 var_number_of_training_loops=IntVar()
 var_number_of_training_loops.set(0)
+var_number_of_training_loops_comboboxes_p1=IntVar()
+var_number_of_training_loops_comboboxes_p1.set(0)
+var_number_of_training_loops_comboboxes_p2=IntVar()
+var_number_of_training_loops_comboboxes_p2.set(0)
 
 def set_player_type(player_id):
     if player_id == 1:
@@ -405,18 +410,26 @@ def maintain_GUI():
         if var_playerType1.get()=="AI-Model":
             CbModel1.grid()
             overrule_button_player_1.grid()
+            label_value_number_of_training_loops_p1.grid()
+
         else:
             overrule_button_player_1.grid_remove()
             CbModel1.grid_remove()
+            label_value_number_of_training_loops_p1.grid_remove()
 
         if var_playerType2.get()=="AI-Model":
             CbModel2.grid()
             overrule_button_player_2.grid()
             overrule_button_player_2_tab2.grid()
+            label_value_number_of_training_loops_p2.grid()
         else:
             CbModel2.grid_remove()
             overrule_button_player_2.grid_remove()
             overrule_button_player_2_tab2.grid_remove()
+            label_value_number_of_training_loops_p2.grid_remove()
+
+        if not var_playerType2.get()=="AI-model" and not var_playerType1.get()=="AI-Model":
+            label_show_number_of_training_loops.grid_remove() #remove text 'loops'
 
         if var_start_from_file.get():
             label_load_state.grid()
@@ -426,19 +439,32 @@ def maintain_GUI():
             label_load_state.grid_remove()
             load_state_entry.grid_remove()
             button_browse_state_file.grid_remove()
+        
         recognition_possible=(var_playerType1.get()=="Human" or var_playerType2.get()=="Human")and (var_playerType1.get()=="AI-Model" or var_playerType2.get()=="AI-Model" or var_playerType1.get()=="Test Algorithm" or var_playerType2.get()=="Test Algorithm")
         if recognition_possible:
             use_recognition_button.grid()
+            label_recognition.grid()
         else:
             use_recognition_button.grid_remove()
+            label_recognition.grid_remove()
         #tab 1, delaybutton#
-        if var_playerType1=="AI-Model" or var_playerType2=="AI-Model":
+        if var_playerType1.get()=="AI-Model" or var_playerType2.get()=="AI-Model":
             delaybutton.grid()
         else:
             delaybutton.grid_remove()
+        #tab1, music button#
+        if var_playerType1.get()=="Human" or var_playerType2.get()=="Human":
+            music_button.grid()
+        else:
+            music_button.grid_remove()
 
-
-
+        #starting player
+        if var_playerType1.get()==var_playerType2.get() and var_playerType1=="Test Algorithm": #option not relevant
+            playerstartLabel.grid_remove()
+            CbStartingPlayer.grid_remove()
+        else:
+            playerstartLabel.grid()
+            CbStartingPlayer.grid()
         ##tab 3##
         if var_playerType2.get()=="AI-Model":
             CbModelTrain2.grid()
@@ -451,7 +477,11 @@ def maintain_GUI():
 def show_number_of_training_loops():
     for i in Lb1.curselection():
         model=Lb1.get(i)
-    var_number_of_training_loops.set(modelmanager_instance.get_number_of_training_loops(model))
+    try:
+        var_number_of_training_loops.set(modelmanager_instance.get_number_of_training_loops(model))
+    except:
+        pass
+
 
 Thread_maintain_GUI=Thread(target=maintain_GUI)
 Thread_maintain_GUI.start()
@@ -486,49 +516,53 @@ CbModel1.grid(row=6, column=0)
 CbModel2.grid(row=6, column=1)
 
 
-label_show_number_of_training_loops = ttk.Label(tab1, text="Training loops: ",style="TLabel")
-label_show_number_of_training_loops.grid(row=7, column=0, sticky="w")
-label_value_number_of_training_loops = ttk.Label(tab1, textvariable=var_number_of_training_loops,style="TLabel")
-label_value_number_of_training_loops.grid(row=7, column=1, sticky="w")
+label_show_number_of_training_loops = ttk.Label(tab1, text="loops: ",style="TLabel")
+label_show_number_of_training_loops.grid(row=7, column=0, columnspan=2)
+
+label_value_number_of_training_loops_p1 = ttk.Label(tab1, textvariable=var_number_of_training_loops_comboboxes_p1,style="TLabel")
+label_value_number_of_training_loops_p1.grid(row=8, column=0, sticky="w")
+
+label_value_number_of_training_loops_p2 = ttk.Label(tab1, textvariable=var_number_of_training_loops_comboboxes_p2,style="TLabel")
+label_value_number_of_training_loops_p2.grid(row=8, column=1, sticky="w")
 
 
 
 overrule_button_player_1=ttk.Checkbutton(tab1, text="Allow overrule", variable=var_allow_overrule_player_1,style="TCheckbutton")
-overrule_button_player_1.grid(row=8, column=0, sticky="w")
+overrule_button_player_1.grid(row=9, column=0, sticky="w")
 
 overrule_button_player_2=ttk.Checkbutton(tab1, text="Allow overrule", variable=var_allow_overrule_player_2,style="TCheckbutton")
-overrule_button_player_2.grid(row=8, column=1, sticky="w")
+overrule_button_player_2.grid(row=9, column=1, sticky="w")
 
 
 gamerunslabel = ttk.Label(tab1, text="Number of games: ",style="TLabel")
-gamerunslabel.grid(row=9, column=0, sticky="w")
+gamerunslabel.grid(row=10, column=0, sticky="w")
 gamerunsentry = ttk.Entry(tab1, textvariable=var_game_runs,style="TEntry")
-gamerunsentry.grid(row=9, column=1, sticky="w")
+gamerunsentry.grid(row=10, column=1, sticky="w")
 
 playerstartLabel = ttk.Label(tab1, text="Player to start: ",style="TLabel")
-playerstartLabel.grid(row=10, column=0, sticky="w")
+playerstartLabel.grid(row=11, column=0, sticky="w")
 CbStartingPlayer = ttk.Combobox(tab1, state="readonly", values=["Player 1", "Player 2"], textvariable=var_startingPlayer)
 CbStartingPlayer.current(0)
-CbStartingPlayer.grid(row=10, column=1, sticky="w")
+CbStartingPlayer.grid(row=11, column=1, sticky="w")
 
 logbutton = ttk.Checkbutton(tab1, text="Create log file", variable=var_log,style="TCheckbutton") 
-logbutton.grid(row=11, column=0, sticky="w")
+logbutton.grid(row=12, column=0, sticky="w")
 replaybutton = ttk.Checkbutton(tab1, text="Save replays", variable=var_rep,style="TCheckbutton") 
-replaybutton.grid(row=12, column=0, sticky="w")
+replaybutton.grid(row=13, column=0, sticky="w")
 delaybutton = ttk.Checkbutton(tab1, text="Use AI Delay", variable=var_delay,style="TCheckbutton")
-delaybutton.grid(row=13, column=0, sticky="w")
+delaybutton.grid(row=14, column=0, sticky="w")
 
 #column1
 music_button=ttk.Checkbutton(tab1, text="Play music", variable=var_play_music,style="TCheckbutton")
-music_button.grid(row=11, column=1, sticky="w")
+music_button.grid(row=12, column=1, sticky="w")
 use_recognition_button=ttk.Checkbutton(tab1, text="use recognition*", variable=var_use_recognition,style="TCheckbutton")
-use_recognition_button.grid(row=12, column=1, sticky="w")
+use_recognition_button.grid(row=13, column=1, sticky="w")
 
 
 
 
 label_recognition=ttk.Label(tab1, text="*only turn on when you have a physical board, a webcam and the other repository: ",style="TLabel",wraplength=300)
-label_recognition.grid(row=14, column=0, sticky="w",columnspan=2)
+label_recognition.grid(row=15, column=0, sticky="w",columnspan=2)
 
 
 bottomframe = Frame(tab1, highlightbackground="blue", highlightthickness=3, borderwidth=1)
@@ -619,8 +653,8 @@ button_DeleteModel.grid(row=3, column=1)
 
 label_number_of_training_loops = ttk.Label(tab4, text="Training loops: ",style="TLabel")
 label_number_of_training_loops.grid(row=4, column=0, sticky="w")
-label_value_number_of_training_loops = ttk.Label(tab4, textvariable=var_number_of_training_loops,style="TLabel")
-label_value_number_of_training_loops.grid(row=4, column=1, sticky="w")
+label_value_number_of_training_loops_tab4 = ttk.Label(tab4, textvariable=var_number_of_training_loops,style="TLabel")
+label_value_number_of_training_loops_tab4.grid(row=4, column=1, sticky="w")
 
 Thread(target=show_number_of_training_loops, daemon=True).start()
 
