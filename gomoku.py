@@ -729,7 +729,7 @@ def runReplay(instance, moves:dict=None):#main function
     running = True
     winning_player = 0
 
-    if moves is not None:
+    if moves is not None:#always true for now
         move_id = 0
         position = list(moves.keys())
     else:
@@ -741,6 +741,7 @@ def runReplay(instance, moves:dict=None):#main function
             if players[current_player.get_player_id() - 1].TYPE == "Replay":
                 if instance.ai_delay:
                     time.sleep(random.uniform(0.25, 1.0))   # randomize ai "thinking" time
+                print(instance.board)
                 instance.board[position[move_id][0]][position[move_id][1]] = current_player.get_player_id()
                 last_move = position[move_id]
                 if check_win(position[move_id][0], position[move_id][1], current_player.get_player_id(), instance):

@@ -288,7 +288,6 @@ def start_new_training():
     game_over()
 
 
-
 def start_new_replay():
     global game_instance
     
@@ -300,6 +299,7 @@ def start_new_replay():
         replay_loaded=False
     else:
         replay_loaded=True
+        print(moves)
     
     if replay_loaded:
         game_instance.use_recognition = False
