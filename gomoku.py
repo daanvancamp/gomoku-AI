@@ -423,7 +423,6 @@ def add_hover_effect(instance):
 def runGame(instance, game_number, record_replay):#main function
     # Main game loop
     global window_name, victory_text, current_player, player1, player2, running,current_player,p1_moves, p2_moves
-    
     if instance.use_recognition:
         print("using recognition")
     else:
@@ -510,6 +509,7 @@ def runGame(instance, game_number, record_replay):#main function
                 old_state = instance.board
                 max_score, scores, scores_normalized = calculate_score(instance.board)
                 action = mm_ai.get_action(instance.board, one_hot_board, scores_normalized)
+               
                 np_scores = np.array(scores).reshape(15, 15)
                 short_score = np_scores[action[0]][action[1]]
                 if mark_last_move_model:

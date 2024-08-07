@@ -20,7 +20,6 @@ import gomoku
 WIDTH = 500 #origineel 230
 HEIGHT = 500 #origineel 315
 
-gomoku_ai = ai.GomokuAI(15)#board_size
 game_instance = gomoku.GomokuGame(filereader.create_gomoku_game("consts.json"))
 modelmanager_instance = modelmanager.ModelManager()
 
@@ -150,7 +149,7 @@ def load_board_from_file()->list[list[int]]:
     with open(state_board_path.get(), "r") as file:
         board = [[0] * 15 for _ in range(15)] # 0 = empty, 1 = player 1, 2 = player 2.
         for row in range(15):
-            line = file.readline()
+            line = file.readline().replace("\n", "").replace(" ", "") # remove \n and spaces
             for col in range(15):      
                 board[row][col]=int(line[col])
     return board
@@ -308,11 +307,14 @@ def start_new_training():
 
             for i in range(10):
                 print("training round done...")
-            gomoku_ai.decrease_learning_rate()#todo: calculate decrease rate based on number of training rounds
             print("players:",gomoku.player1.get_player_type(),gomoku.player2.get_player_type())
             if gomoku.player1.get_player_type() == "AI-Model":
+                #gomoku.Player1 is an object of the class Player, ai is an object of the class gomokuAI and ai.decrease_learning_rate() is a method of the class gomokuAI
+                gomoku.Player1.ai.decrease_learning_rate()#todo: calculate decrease rate based on number of training rounds
                 modelmanager_instance.log_number_of_training_loops(var_model_player1.get(), 1,gomoku.player2.get_player_type())#add one to the number of training loops
             if gomoku.player2.get_player_type() == "AI-Model":
+                #gomoku.Player2 is an object of the class Player, ai is an object of the class gomokuAI and ai.decrease_learning_rate() is a method of the class gomokuAI
+                gomoku.Player2.ai.decrease_learning_rate()
                 modelmanager_instance.log_number_of_training_loops(var_model_player2.get(), 1,gomoku.player1.get_player_type())#add one to the number of training loops
                 #arguments: model_name, number_of_additional_training_loops, opponent
             else:
