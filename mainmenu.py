@@ -195,7 +195,7 @@ def start_new_game():
         stats.log_message(f"Game  {i+1} begins.")
         game_instance.current_game = i+1
         game_instance.last_round = (i+1 == runs)
-            
+        board_loaded=None
         if var_start_from_file.get():
             board = load_board_from_file()
             if board is not None:
@@ -310,29 +310,25 @@ def start_new_replay():
 
         gomoku.current_player = gomoku.player1
 
-        try:
-            game_instance.ai_delay = var_delay.get()
-            stats.should_log = var_log.get()
-            stats.setup_logging(str(gomoku.player1), str(gomoku.player2))
-            root.wm_state('iconic')
+        game_instance.ai_delay = var_delay.get()
+        stats.should_log = var_log.get()
+        stats.setup_logging(str(gomoku.player1), str(gomoku.player2))
+        root.wm_state('iconic')
 
-            try:
-                initialiseer_spelbord_json_bestanden()#geen stukken op bord
-            except:
-                raise Exception("Fout in functie: initialiseer_spelbord_json_bestanden")
+        try:
+            initialiseer_spelbord_json_bestanden()#geen stukken op bord
+        except:
+            raise Exception("Fout in functie: initialiseer_spelbord_json_bestanden")
            
-            try:               
-                gomoku.runReplay(game_instance, moves) #kan als hoofdprogramma beschouwd worden (��n spel is ��n run)
-            except Exception as e:
-                print("error in gomoku.run, herschrijf die functie.")
-                raise Exception("De error is waarschijnlijk te wijten aan een foute zet, controleer het lezen van de json bestanden die het bord opslaan." , str(e))
-                            
-        except ValueError:
-            print("Most likely: Game runs value invalid, try again.")
-        game_over()
+        try:               
+            gomoku.runReplay(game_instance, moves) #kan als hoofdprogramma beschouwd worden (��n spel is ��n run)
+        except Exception as e:
+            print("error in gomoku.run, herschrijf die functie.")
+            raise Exception("De error is waarschijnlijk te wijten aan een foute zet, controleer het lezen van de json bestanden die het bord opslaan." , str(e)) 
     else:
         print("Try again, please select a valid json file")
-
+    game_over()
+    root.wm_state('normal')
 def create_new_model():
     modelmanager_instance.create_new_model(var_name_model.get())
     refresh_models()
