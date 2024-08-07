@@ -1,7 +1,7 @@
 import json
 import datetime
 import os
-        
+
 def empty_file(filename):
     with open(filename, 'w') as file:
         file.write("")
@@ -63,7 +63,6 @@ def load_replay(file):
     try:
         with open(file, 'r') as j:
             moves_data = json.loads(j.read())
-    
         moves = {}
         for move in moves_data["moves"]:
             player = int(move["player"])

@@ -1,10 +1,11 @@
-
 from datetime import datetime
 import os
 from threading import Thread
 from filereader import log_info_overruling
 import mainmenu
 from music import initialiseer_muziek
+
+#todo: make the error messages more clear, sometimes they are wrong, search "raise Exception"
 
 def main():
     mainmenu.mainmenu_run()

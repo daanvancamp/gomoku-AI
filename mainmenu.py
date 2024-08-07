@@ -5,11 +5,10 @@ from tkinter import *
 from tkinter import ttk
 from tkinter import filedialog
 
-import ai
 import filereader
 import stats
 from PIL import Image, ImageTk
-from detect_pieces import TE_DETECTEREN_KLEUR, initialiseer_spelbord_json_bestanden
+from detect_pieces import initialiseer_spelbord_json_bestanden
 from filereader import log_info_overruling
 import modelmanager
 import gomoku
@@ -17,7 +16,7 @@ import gomoku
 #todo: make the GUI fullscreen, add webcam view
 #todo: make it look nice, make it bigger
 
-WIDTH = 500 #origineel 230
+WIDTH = 400 #origineel 230
 HEIGHT = 500 #origineel 315
 
 game_instance = gomoku.GomokuGame(filereader.create_gomoku_game("consts.json"))
@@ -27,13 +26,7 @@ modelmanager_instance = modelmanager.ModelManager()
 root = Tk()
 root.geometry(str(WIDTH) + "x" + str(HEIGHT))
 root.title("Gomoku -- Main Menu")
-if TE_DETECTEREN_KLEUR=="Blauw":
-    root.configure(bg="blue")
-elif TE_DETECTEREN_KLEUR=="Rood":
-    root.configure(bg="red")
-else:
-    raise Exception("Unknown color, change the color of the background here... Add if statement and you're done.")
-
+root.configure(background='green')
 root.attributes("-topmost", True)
 
 try:
@@ -59,19 +52,6 @@ tabControl.add(tab2, text='Train')
 tabControl.add(tab3, text='Replay old games')
 tabControl.add(tab4, text='Define model')
 tabControl.grid(row=0, sticky="w")
-
-# tab1.columnconfigure(0, weight=1)
-# tab1.columnconfigure(1, weight=1)
-# tab1.columnconfigure(2, weight=1)
-
-
-# tab2.columnconfigure(0, weight=2)
-# tab2.columnconfigure(1, weight=0)
-# tab2.columnconfigure(2, weight=1)
-
-# tab3.columnconfigure(0, weight=1)
-# tab4.columnconfigure(0, weight=1)
-
 
 style_numbers = ["georgia", 10, "white", 12, 2]#font, size, color, bold, underline
 
@@ -140,32 +120,37 @@ def browse_files():
     replay_path.set(file_path)
    
 
-
 def run():
     gomoku.run(game_instance)
 
 def load_board_from_file()->list[list[int]]:
-    with open(state_board_path.get(), "r") as file:
-        board = [[0] * 15 for _ in range(15)] # 0 = empty, 1 = player 1, 2 = player 2.
-        for row in range(15):
-            line = file.readline().replace("\n", "").replace(" ", "") # remove \n and spaces
-            for col in range(15):      
-                board[row][col]=int(line[col])
-    return board
+    try:
+        with open(state_board_path.get(), "r") as file:
+            board = [[0] * 15 for _ in range(15)] # 0 = empty, 1 = player 1, 2 = player 2.
+            for row in range(15):
+                line = file.readline().replace("\n", "").replace(" ", "") # remove \n and spaces
+                for col in range(15):      
+                    board[row][col]=int(line[col])
+                    if int(line[col]) not in [0, 1, 2]:
+                        return None
+        print("board loaded")
+        return board
+    except:
+        return None
+
 
 def start_new_game():
-    global current_player
-    
+    global game_instance
     log_info_overruling("\n\n\nnew session begins:")
     
     game_instance.use_recognition = var_use_recognition.get()
     game_instance.play_music = var_play_music.get()
 
     if var_playerType1.get() == "AI-Model":
-        gomoku.player1.set_model(var_model_player1.get())
+        gomoku.player1.load_model(var_model_player1.get())
         gomoku.player1.set_allow_overrule(var_allow_overrule_player_1.get())
     if var_playerType2.get() == "AI-Model":
-        gomoku.player2.set_model(var_model_player2.get())
+        gomoku.player2.load_model(var_model_player2.get())
         gomoku.player2.set_allow_overrule(var_allow_overrule_player_2.get())
     if var_startingPlayer.get() == "Player 1":
         gomoku.current_player = gomoku.player1
@@ -176,71 +161,80 @@ def start_new_game():
         initialiseer_spelbord_json_bestanden()
     except:
         raise Exception("Fout in functie: initialiseer_spelbord_json_bestanden")
-    try:
-        game_instance.ai_delay = var_delay.get()
-        stats.should_log = var_log.get()
-        stats.setup_logging(var_playerType1.get(), var_playerType2.get())
+
+    game_instance.ai_delay = var_delay.get()
+    stats.should_log = var_log.get()
+    stats.setup_logging(var_playerType1.get(), var_playerType2.get())
         
-        gomoku.player1.set_player_type(var_playerType1.get())
-        gomoku.player2.set_player_type(var_playerType2.get())
+    gomoku.player1.set_player_type(var_playerType1.get())
+    gomoku.player2.set_player_type(var_playerType2.get())
 
-        if (gomoku.player1.get_player_type() == "AI-Model" ):
-            gomoku.player1.load_model(var_model_player1.get())
-        if (gomoku.player2.get_player_type() == "AI-Model" ):
-            gomoku.player2.load_model(var_model_player2.get())
+    if (gomoku.player1.get_player_type() == "AI-Model" ):
+        gomoku.player1.load_model(var_model_player1.get())
+    if (gomoku.player2.get_player_type() == "AI-Model" ):
+        gomoku.player2.load_model(var_model_player2.get())
 
-        root.wm_state('iconic')
+    root.wm_state('iconic')
         
-        valid_number = False
-        while not valid_number:
-            try:
-                runs = int(var_game_runs.get())
-                valid_number=True
-            except:
-                print("invalid number, try again")
+    valid_number = False
 
-        for i in range(runs):
-            log_info_overruling("run "+str(i+1)+" begins:")
-            try:
-                initialiseer_spelbord_json_bestanden()#geen stukken op bord
-            except:
-                raise Exception("Fout in functie: initialiseer_spelbord_json_bestanden")
-            
-            stats.log_message(f"Game  {i+1} begins.")
-            game_instance.current_game = i+1
-            game_instance.last_round = (i+1 == runs)
-            
-            if var_start_from_file.get():
-                try:
-                    board = load_board_from_file()
-                    game_instance.set_board(board)
-                except Exception as e:
-                    print("error in gomoku.run, herschrijf die functie.")
-                    raise Exception("De error is waarschijnlijk te wijten aan een foute zet, controleer het lezen van de json bestanden die het bord opslaan." , str(e))
+    while not valid_number:
+        try:
+            runs = int(var_game_runs.get())
+            valid_number=True
+        except:
+            print("invalid number, try again")
 
+    for i in range(runs):
+        log_info_overruling("run "+str(i+1)+" begins:")
+        try:
+            initialiseer_spelbord_json_bestanden()#geen stukken op bord
+        except:
+            raise Exception("Fout in functie: initialiseer_spelbord_json_bestanden")
+            
+        stats.log_message(f"Game  {i+1} begins.")
+        game_instance.current_game = i+1
+        game_instance.last_round = (i+1 == runs)
+            
+        if var_start_from_file.get():
+            board = load_board_from_file()
+            if board is not None:
+                board_loaded=True
+            else:
+                board_loaded=False
+            game_instance.set_board(board)
+        if (board_loaded and var_start_from_file.get()) or not var_start_from_file.get():
             try:
                 gomoku.runGame(game_instance, i, var_rep.get()) #kan als hoofdprogramma beschouwd worden (één spel is één run)
             except Exception as e:
-                print("error in gomoku.run, herschrijf die functie.")
-                raise Exception("There is an error in the main loop, it can be anything." , str(e))
-                    
-    except ValueError:
-        print("Most likely: Game runs value invalid, try again.")
+                print("error in gomoku.run")
+                raise Exception("There is an error in the main function/loop, it can be anything." , str(e))
+        else:
+            print("Please select a valid file that contains the board in the following format and try again:")
+            for i in range(15):
+                for b in range(15):
+                    print(0, end="")
+                print("\n",end="")
+            print("The board can only contain 0, 1, or 2. 0 = empty, 1 = player 1, 2 = player 2.")
     
     game_over()
 
 
 def start_new_training():
-    global current_player
+    global game_instance
     log_info_overruling("\n\n\nnew session begins:")
     
     game_instance.use_recognition = False
     game_instance.play_music = False
 
-    gomoku.player1.set_model(var_model_player1.get())#always AI-Model(training)
+    gomoku.player1.set_player_type("AI-Model")
+    gomoku.player2.set_player_type(var_playerType2.get())
+    
+    gomoku.player1.load_model(var_model_player1.get())#player 1 is always an AI-Model when training
     gomoku.player1.set_allow_overrule(var_allow_overrule_player_1.get())
-    if gomoku.player2.TYPE == "AI-Model":
-        gomoku.player2.set_model(var_model_player2.get())
+
+    if gomoku.player2.get_player_type() == "AI-Model":
+        gomoku.player2.load_model(var_model_player2.get())
         gomoku.player2.set_allow_overrule(var_allow_overrule_player_2.get())
 
     if var_startingPlayer.get() == "Player 1":
@@ -248,18 +242,8 @@ def start_new_training():
     else:
         gomoku.current_player = gomoku.player2
 
+
     try:
-        initialiseer_spelbord_json_bestanden()
-    except:
-        raise Exception("Fout in functie: initialiseer_spelbord_json_bestanden")
-    try:
-        gomoku.player1.set_player_type("AI-Model")
-        gomoku.player1.load_model(var_model_player1.get())
-        
-        gomoku.player2.set_player_type(var_playerType2.get())
-        if (gomoku.player2.get_player_type() == "AI-Model" ):
-            gomoku.player2.load_model(var_model_player2.get())        
-        
         valid_number = False
         while not valid_number:
             try:
@@ -268,7 +252,7 @@ def start_new_training():
             except:
                 print("invalid number, try again")
 
-        game_instance.ai_delay = var_delay.get()
+        game_instance.ai_delay = False #never wait when training
         stats.should_log = var_log.get()
         stats.setup_logging(gomoku.player1.get_player_type(), gomoku.player2.get_player_type())
         root.wm_state('iconic')
@@ -282,27 +266,12 @@ def start_new_training():
             stats.log_message(f"Game  {i+1} begins.")
             game_instance.current_game = i+1
             game_instance.last_round = (i+1 == runs)
-            
-            if var_start_from_file.get():
-                try:
-                    board = load_board_from_file()
-                    print("Bord geladen")
-                    for row in board:
-                        print(row)
-                    game_instance.set_board(board)
-                except Exception as e:
-                    print("error in gomoku.run, herschrijf die functie.")
-                    raise Exception("De error is waarschijnlijk te wijten aan een foute zet, controleer het lezen van de json bestanden die het bord opslaan." , str(e))
-
             try:
                 gomoku.runTraining(game_instance, i, True) #kan als hoofdprogramma beschouwd worden (één spel is één run)
             except Exception as e:
                 print("error in gomoku.run, herschrijf die functie.")
                 raise Exception("De error is waarschijnlijk te wijten aan een foute zet, controleer het lezen van de json bestanden die het bord opslaan." , str(e))
 
-            for i in range(10):
-                print("training round done...")
-            print("players:",gomoku.player1.get_player_type(),gomoku.player2.get_player_type())
             if gomoku.player1.get_player_type() == "AI-Model":
                 #gomoku.Player1 is an object of the class Player, ai is an object of the class gomokuAI and ai.decrease_learning_rate() is a method of the class gomokuAI
                 gomoku.Player1.ai.decrease_learning_rate()#todo: calculate decrease rate based on number of training rounds
@@ -312,8 +281,7 @@ def start_new_training():
                 gomoku.Player2.ai.decrease_learning_rate()
                 modelmanager_instance.log_number_of_training_loops(var_model_player2.get(), 1,gomoku.player1.get_player_type())#add one to the number of training loops
                 #arguments: model_name, number_of_additional_training_loops, opponent
-            else:
-                pass                   
+              
     except ValueError:
         print("Most likely: Game runs value invalid, try again.")
     
@@ -342,10 +310,6 @@ def start_new_replay():
 
         gomoku.current_player = gomoku.player1
 
-        try:
-            initialiseer_spelbord_json_bestanden()
-        except:
-            raise Exception("Fout in functie: initialiseer_spelbord_json_bestanden")
         try:
             game_instance.ai_delay = var_delay.get()
             stats.should_log = var_log.get()
@@ -440,13 +404,18 @@ def maintain_GUI():
             label_load_state.grid()
             load_state_entry.grid()
             button_browse_state_file.grid()
+            use_recognition_button.grid_remove()
+            label_recognition.grid_remove()
+            
         else:
             label_load_state.grid_remove()
             load_state_entry.grid_remove()
             button_browse_state_file.grid_remove()
+            use_recognition_button.grid()
+            label_recognition.grid()
         
         recognition_possible=(var_playerType1.get()=="Human" or var_playerType2.get()=="Human")and (var_playerType1.get()=="AI-Model" or var_playerType2.get()=="AI-Model" or var_playerType1.get()=="Test Algorithm" or var_playerType2.get()=="Test Algorithm")
-        if recognition_possible:
+        if recognition_possible and not var_start_from_file.get():
             use_recognition_button.grid()
             label_recognition.grid()
         else:
