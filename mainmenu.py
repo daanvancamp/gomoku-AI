@@ -133,11 +133,11 @@ def set_game_instance(new_instance):
     game_instance = new_instance
 
 def browse_state_files():
-    file_path = filedialog.askopenfilename(filetypes=[("txt File", "*.txt")])
+    file_path = filedialog.askopenfilename(filetypes=[("txt File", "*.txt")],initialdir=r".\test_situations")
     state_board_path.set(file_path)
 
 def browse_files():
-    file_path = filedialog.askopenfilename(filetypes=[("Json File", "*.json")])
+    file_path = filedialog.askopenfilename(filetypes=[("Json File", "*.json")],initialdir=r".\data\replays")
     replay_path.set(file_path)
    
 
