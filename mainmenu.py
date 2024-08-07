@@ -538,7 +538,7 @@ CbStartingPlayer.grid(row=11, column=1, sticky="w")
 #column 0
 logbutton = ttk.Checkbutton(tab1, text="Create log file", variable=var_log,style="TCheckbutton") 
 logbutton.grid(row=12, column=0, sticky="w")
-replaybutton = ttk.Checkbutton(tab1, text="Save replays", variable=var_rep,style="TCheckbutton") 
+replaybutton = ttk.Checkbutton(tab1, text="Save replays(1)", variable=var_rep,style="TCheckbutton") 
 replaybutton.grid(row=13, column=0, sticky="w")
 delaybutton = ttk.Checkbutton(tab1, text="Use AI Delay", variable=var_delay,style="TCheckbutton")
 delaybutton.grid(row=14, column=0, sticky="w")
@@ -557,7 +557,7 @@ label_recognition.grid(row=15, column=0, sticky="w",columnspan=2)
 bottomframe = Frame(tab1, highlightbackground="blue", highlightthickness=3, borderwidth=1)
 bottomframe.grid(row=16, column=0, sticky="w",columnspan=3, padx=5, pady=15)
 
-start_from_file_button=ttk.Checkbutton(bottomframe, text="Load game situation", variable=var_start_from_file,style="TCheckbutton")
+start_from_file_button=ttk.Checkbutton(bottomframe, text="Load game situation(2)", variable=var_start_from_file,style="TCheckbutton")
 start_from_file_button.grid(row=0, column=0, sticky="w")
 label_load_state=ttk.Label(bottomframe, text="Choose file board state: ",style="TLabel")
 label_load_state.grid(row=1, column=0, sticky="w")
@@ -567,11 +567,13 @@ button_browse_state_file = ttk.Button(bottomframe, text="...",style="TButton", c
 button_browse_state_file.grid(row=2, column=1, sticky="w")
 
 
-
 button_3 = ttk.Button(input_canvas, text="Quit Game(ESC/Q)", style="TButton", command=lambda: quit_game())
 button_3.grid(row=1, column=0, sticky="e")
 root.bind("<Escape>", lambda event: quit_game())
 root.bind("<q>", lambda event: quit_game())
+
+label_info_load_save_replay=ttk.Label(tab1,wraplength=300, text="(1)(2)The save replay function can't be used when loading a board, because that would create a wrong replay file ",style="TLabel")
+label_info_load_save_replay.grid(row=17, column=0, sticky="w",columnspan=2)
 
 ttk.Label(tab2)
 #row 0
