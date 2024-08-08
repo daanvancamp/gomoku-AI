@@ -1,6 +1,10 @@
 {
-    "training loops": 45,
-    "training loops against AI-Model": 36,
-    "training loops against Human": 1,
-    "training loops against Test Algorithm": 8
+  "training loops": 0,
+  "training loops against Human": 0,
+  "training loops against AI-Model": 0,
+  "training loops against Test Algorithm": 0,
+
+  "losses": 0,
+  "wins": 0,
+  "ties": 0
 }
