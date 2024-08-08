@@ -181,7 +181,7 @@ def start_new_game():
     try:
         initialiseer_spelbord_json_bestanden()
     except:
-        raise Exception("Fout in functie: initialiseer_spelbord_json_bestanden")
+        raise Exception("error in function: initialiseer_spelbord_json_bestanden")
 
     game_instance.ai_delay = var_delay.get()
     stats.should_log = var_log.get()
@@ -208,10 +208,11 @@ def start_new_game():
 
     for i in range(runs):
         log_info_overruling("run "+str(i+1)+" begins:")
-        try:
-            initialiseer_spelbord_json_bestanden()#geen stukken op bord
-        except:
-            raise Exception("Fout in functie: initialiseer_spelbord_json_bestanden")
+        if game_instance.use_recognition:
+            try:
+                initialiseer_spelbord_json_bestanden()#geen stukken op bord
+            except:
+                raise Exception("Error in function: initialiseer_spelbord_json_bestanden")
             
         stats.log_message(f"Game  {i+1} begins.")
         game_instance.current_game = i+1
@@ -280,10 +281,6 @@ def start_new_training():
         root.wm_state('iconic')
         for i in range(runs):
             log_info_overruling("run "+str(i+1)+" begins:")
-            try:
-                initialiseer_spelbord_json_bestanden()#geen stukken op bord
-            except:
-                raise Exception("Fout in functie: initialiseer_spelbord_json_bestanden")
             
             stats.log_message(f"Game  {i+1} begins.")
             game_instance.current_game = i+1
@@ -292,7 +289,7 @@ def start_new_training():
                 gomoku.runTraining(game_instance, i, True) #kan als hoofdprogramma beschouwd worden (één spel is één run)
             except Exception as e:
                 print("error in gomoku.run, herschrijf die functie.")
-                raise Exception("De error is waarschijnlijk te wijten aan een foute zet, controleer het lezen van de json bestanden die het bord opslaan." , str(e))
+                raise Exception("There is an error in the main function/loop, it can be anything." , str(e))
 
             if gomoku.player1.get_player_type() == "AI-Model":
                 #gomoku.player1 is an object of the class Player, ai is an object of the class gomokuAI and ai.decrease_learning_rate() is a method of the class gomokuAI
@@ -336,16 +333,11 @@ def start_new_replay():
         stats.setup_logging(str(gomoku.player1), str(gomoku.player2))
         root.wm_state('iconic')
 
-        try:
-            initialiseer_spelbord_json_bestanden()#geen stukken op bord
-        except:
-            raise Exception("Fout in functie: initialiseer_spelbord_json_bestanden")
-           
         try:               
             gomoku.runReplay(game_instance, moves) #kan als hoofdprogramma beschouwd worden (��n spel is ��n run)
         except Exception as e:
             print("error in gomoku.run, herschrijf die functie.")
-            raise Exception("De error is waarschijnlijk te wijten aan een foute zet, controleer het lezen van de json bestanden die het bord opslaan." , str(e)) 
+            raise Exception("There is an error in the main function/loop, it can be anything." , str(e)) 
     else:
         print("Try again, please select a valid json file")
     game_over()
