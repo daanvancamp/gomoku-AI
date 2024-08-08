@@ -46,7 +46,6 @@ def log_win(players):
 def round_formatter(x, pos):
     return f'{int(x)}'
 
-
 def plot_graph(data: dict, data_name='data', title='title'):
     # plt.figure(figsize=(10, 6))
     for k, v in data.items():

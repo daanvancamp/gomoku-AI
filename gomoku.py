@@ -1,9 +1,6 @@
-
-from calendar import c
 import operator
 import time
 import pygame
-from torch.serialization import get_default_load_endianness
 from music import start_muziek_vertraagd
 import testai
 import ai
@@ -161,9 +158,20 @@ def reset_player_stats():
         players[i].reset_score()
 
 # Update win / loss stats of players: -1 = tie; 1 = player 1 won; 2 = player 2 won
-def update_player_stats(instance, winning_player): 
-    global players
+def update_player_stats(instance, winning_player,is_training):
+    from mainmenu import modelmanager_instance     
     if winning_player > -1: # run if game was not a tie
+        if not is_training:#don't save the wins and losses caused by training
+            if winning_player == 1:
+                if player1.TYPE =="AI-Model":
+                    modelmanager_instance.log_win(player1.get_model_name())
+                if player2.TYPE =="AI-Model":
+                    modelmanager_instance.log_loss(player2.get_model_name())
+            elif winning_player == 2:
+                if player1.TYPE =="AI-Model":
+                    modelmanager_instance.log_loss(player1.get_model_name())
+                if player2.TYPE =="AI-Model":
+                    modelmanager_instance.log_win(player2.get_model_name())
         for i in range(len(players)):
             if i == winning_player-1:
                 players[i].wins += 1
@@ -175,6 +183,7 @@ def update_player_stats(instance, winning_player):
             if instance.last_round:
                 players[i].calculate_win_rate(instance.current_game)
     else:
+        modelmanager_instance.log_tie()
         for i in range(len(players)):
             players[i].calculate_score(0, False, instance.current_game)
     stats.log_win(players)
@@ -425,7 +434,7 @@ def add_hover_effect(instance):
 
 def runGame(instance, game_number, record_replay):#main function
     # Main game loop
-    global window_name, victory_text, current_player, player1, player2, running,current_player,p1_moves, p2_moves
+    global window_name, victory_text, current_player, player1, player2, running,current_player,p1_moves, p2_moves,winning_player
     if instance.use_recognition:
         print("using recognition")
     else:
@@ -536,10 +545,11 @@ def runGame(instance, game_number, record_replay):#main function
                 if game_over:
                     victory_text = f"AI-Model {players[current_player.get_player_id() - 1].id} wins!"
                     winning_player = current_player.get_player_id()
+                    print("player that has won:",winning_player)
                     running = False
                 else:
                     current_player = players[2 - current_player.get_player_id()]
-                    print("Na switch player AI!!!!!!!!!!!")
+                    #print("Na switch player AI!!!!!!!!!!!")
                     #logging_players()    
             try:
                 draw_board(instance,last_move_model)
@@ -556,7 +566,7 @@ def runGame(instance, game_number, record_replay):#main function
     # End game
     stats.log_message(victory_text)
     pygame.display.set_caption("Gomoku - Game: " + str(game_number) + " - " + victory_text)
-    update_player_stats(instance, winning_player)
+    update_player_stats(instance, winning_player,False)
     if record_replay:
         filereader.save_replay(p1_moves, p2_moves)
     
@@ -574,7 +584,7 @@ def handle_events():
 
 def runTraining(instance, game_number, record_replay):#main function
     # Main game loop
-    global window_name, victory_text, current_player,player1,player2,running
+    global window_name, victory_text, current_player,player1,player2,running,winning_player
     mark_last_move_model=False 
     for p in players: #players=[Human, AI]
         if p.TYPE == "AI-Model":
@@ -700,7 +710,7 @@ def runTraining(instance, game_number, record_replay):#main function
     # End game
     stats.log_message(victory_text)
     pygame.display.set_caption("Gomoku - Game: " + str(game_number) + " - " + victory_text)
-    update_player_stats(instance, winning_player)
+    update_player_stats(instance, winning_player,True)
     if record_replay:
         filereader.save_replay(p1_moves, p2_moves)
     # For any AI-Model, train for long memory and save model

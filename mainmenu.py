@@ -12,11 +12,11 @@ from detect_pieces import initialiseer_spelbord_json_bestanden
 from filereader import log_info_overruling
 import modelmanager
 import gomoku
+import numpy as np
 
 #todo: make the GUI fullscreen, add webcam view
-#todo: make it look nice, make it bigger
 
-WIDTH = 400 #origineel 230
+WIDTH = 420 #origineel 230
 HEIGHT = 500 #origineel 315
 
 game_instance = gomoku.GomokuGame(filereader.create_gomoku_game("consts.json"))
@@ -50,7 +50,7 @@ tab4 = ttk.Frame(tabControl)
 tabControl.add(tab1, text='Play gomoku')
 tabControl.add(tab2, text='Train')
 tabControl.add(tab3, text='Replay old games')
-tabControl.add(tab4, text='Define model')
+tabControl.add(tab4, text=' Models')
 tabControl.grid(row=0, sticky="w")
 
 style_numbers = ["georgia", 10, "white", 12, 2]#font, size, color, bold, underline
@@ -79,6 +79,24 @@ var_play_music=BooleanVar()
 var_play_music.set(False)
 var_show_overruling=BooleanVar()
 var_show_overruling.set(True)
+
+var_losses=IntVar()
+var_losses.set(0)
+var_wins=IntVar()
+var_wins.set(0)
+var_ties=IntVar()
+var_ties.set(0)
+
+var_relative_value_losses = StringVar()
+var_relative_value_losses.set("0%")
+
+var_relative_value_wins = StringVar()
+var_relative_value_wins.set("0%")
+
+var_relative_value_ties = StringVar()
+var_relative_value_ties.set("0%")
+
+
 
 var_start_from_file=BooleanVar()
 var_start_from_file.set(False)
@@ -229,6 +247,7 @@ def start_new_training():
     
     game_instance.use_recognition = False
     game_instance.play_music = False
+    game_instance.show_overruling=False
 
     gomoku.player1.set_player_type("AI-Model")
     gomoku.player2.set_player_type(var_playerType2.get())
@@ -278,11 +297,11 @@ def start_new_training():
             if gomoku.player1.get_player_type() == "AI-Model":
                 #gomoku.player1 is an object of the class Player, ai is an object of the class gomokuAI and ai.decrease_learning_rate() is a method of the class gomokuAI
                 gomoku.player1.ai.decrease_learning_rate()#todo: calculate decrease rate based on number of training rounds
-                modelmanager_instance.log_number_of_training_loops(var_model_player1.get(), 1,gomoku.player2.get_player_type())#add one to the number of training loops
+                modelmanager_instance.log_number_of_training_loops(var_model_player1.get(),gomoku.player2.get_player_type())#add one to the number of training loops
             if gomoku.player2.get_player_type() == "AI-Model":
                 #gomoku.player2 is an object of the class Player, ai is an object of the class gomokuAI and ai.decrease_learning_rate() is a method of the class gomokuAI
                 gomoku.player2.ai.decrease_learning_rate()
-                modelmanager_instance.log_number_of_training_loops(var_model_player2.get(), 1,gomoku.player1.get_player_type())#add one to the number of training loops
+                modelmanager_instance.log_number_of_training_loops(var_model_player2.get(),gomoku.player1.get_player_type())#add one to the number of training loops
                 #arguments: model_name, number_of_additional_training_loops, opponent
               
     except ValueError:
@@ -331,15 +350,29 @@ def start_new_replay():
         print("Try again, please select a valid json file")
     game_over()
     root.wm_state('normal')
+
 def create_new_model():
     modelmanager_instance.create_new_model(var_name_model.get())
     refresh_models()
+    refresh_training_stats()
 
 def delete_model():
     for i in Lb1.curselection():
         modelmanager_instance.delete_model(Lb1.get(i))
     refresh_models()
+    refresh_training_stats()
         
+def reset_all_stats():
+    for i in Lb1.curselection():
+        modelmanager_instance.reset_stats(Lb1.get(i))
+    refresh_models()
+    refresh_training_stats()
+
+def reset_end_states():
+    for i in Lb1.curselection():
+        modelmanager_instance.reset_end_states(Lb1.get(i))
+    refresh_models()
+    refresh_training_stats()
 def refresh_models():
     Lb1.delete(0,END)
     i = 0
@@ -351,6 +384,7 @@ def refresh_models():
     CbModel2.configure(values=models)
     CbModelTrain1.configure(values=models)
     CbModelTrain2.configure(values=models)
+
 def game_over():
     root.wm_state('normal')
     game_instance.current_game = 0
@@ -470,17 +504,25 @@ def maintain_GUI():
             CbModelTrain2.grid_remove()
 
         show_number_of_training_loops_comboboxes()
-        show_number_of_training_loops()
+        refresh_training_stats()
 
-
-
-def show_number_of_training_loops():
+def refresh_training_stats():
     for i in Lb1.curselection():
         model=Lb1.get(i)
-    try:
         var_number_of_training_loops.set(modelmanager_instance.get_total_number_of_training_loops(model))
-    except:
-        pass
+        var_losses.set(modelmanager_instance.get_number_of_losses(model))
+        var_wins.set(modelmanager_instance.get_number_of_wins(model))
+        var_ties.set(modelmanager_instance.get_number_of_ties(model))
+
+        if 0 not in [var_losses.get(),var_ties.get(),var_wins.get()]:
+            var_relative_value_losses.set(str(np.round((var_losses.get()/(var_losses.get()+var_ties.get()+var_wins.get()))*100))+"%")
+            var_relative_value_wins.set(str(np.round((var_wins.get()/(var_losses.get()+var_ties.get()+var_wins.get()))*100))+"%")
+            var_relative_value_ties.set(str(np.round((var_ties.get()/(var_losses.get()+var_ties.get()+var_wins.get()))*100))+"%")
+            
+        else:
+            var_relative_value_losses.set("N/A")
+            var_relative_value_wins.set("N/A")
+            var_relative_value_ties.set("N/A")
 
 def show_number_of_training_loops_comboboxes():
     var_number_of_training_loops_comboboxes_p1.set(modelmanager_instance.get_total_number_of_training_loops(var_model_player1.get()))
@@ -660,10 +702,15 @@ for model in models:
     i+=1
 Lb1.grid(row=1, column=1)
 
-for item in models:
-    if item=="standaard"or item=="Standaard":
-        Lb1.selection_set(models.index(item))
-        Lb1.activate(models.index(item))
+if "standaard" in models or "Standaard" in models:
+    for item in models:
+        if item=="standaard"or item=="Standaard":
+            Lb1.selection_set(models.index(item))
+            Lb1.activate(models.index(item))
+else:
+    Lb1.selection_set(0)
+    Lb1.activate(0)
+
 
 nameModelLabel = ttk.Label(tab4, text="Name of model: ",style="TLabel")
 nameModelLabel.grid(row=2, column=0, sticky="w")
@@ -674,11 +721,37 @@ button_NewModel = ttk.Button(tab4, text="Make New Model", style="TButton", comma
 button_NewModel.grid(row=3, column=0)
 button_DeleteModel = ttk.Button(tab4, text="Delete Model", style="TButton", command=lambda: delete_model())
 button_DeleteModel.grid(row=3, column=1)
+button_reset_stats=ttk.Button(tab4, text="Reset Stats", style="TButton", command=lambda: reset_all_stats())
+button_reset_stats.grid(row=3, column=2)
+button_reset_end_states=ttk.Button(tab4, text="Reset End States", style="TButton", command=lambda: reset_end_states())
+button_reset_end_states.grid(row=3, column=3)
 
 label_number_of_training_loops = ttk.Label(tab4, text="Training loops: ",style="TLabel")
 label_number_of_training_loops.grid(row=4, column=0, sticky="w")
 label_value_number_of_training_loops_tab4 = ttk.Label(tab4, textvariable=var_number_of_training_loops,style="TLabel")
 label_value_number_of_training_loops_tab4.grid(row=4, column=1, sticky="w")
+
+label_losses=ttk.Label(tab4, text="Losses: ",style="TLabel")
+label_losses.grid(row=5, column=0, sticky="w")
+label_value_losses_tab4 = ttk.Label(tab4, textvariable=var_losses,style="TLabel")
+label_value_losses_tab4.grid(row=5, column=1, sticky="w")
+label_relative_value_losses=ttk.Label(tab4, textvariable=var_relative_value_losses,style="TLabel")
+label_relative_value_losses.grid(row=5, column=2, sticky="w")
+
+label_wins=ttk.Label(tab4, text="Wins: ",style="TLabel")
+label_wins.grid(row=6, column=0, sticky="w")
+label_value_wins_tab4 = ttk.Label(tab4, textvariable=var_wins,style="TLabel")
+label_value_wins_tab4.grid(row=6, column=1, sticky="w")
+label_relative_value_wins=ttk.Label(tab4, textvariable=var_relative_value_wins,style="TLabel")
+label_relative_value_wins.grid(row=6, column=2, sticky="w")
+
+label_ties=ttk.Label(tab4, text="Ties: ",style="TLabel")
+label_ties.grid(row=7, column=0, sticky="w")
+
+label_value_ties_tab4 = ttk.Label(tab4, textvariable=var_ties,style="TLabel")
+label_value_ties_tab4.grid(row=7, column=1, sticky="w")
+label_relative_value_ties=ttk.Label(tab4, textvariable=var_relative_value_ties,style="TLabel")
+label_relative_value_ties.grid(row=7, column=2, sticky="w")
 
 def mainmenu_run():
     root.mainloop()
