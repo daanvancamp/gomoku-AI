@@ -15,8 +15,6 @@ BATCH_SIZE = 10_000
 MIN_EPSILON = 0.01
 EPSILON_DECAY_RATE = 0.999
 
-#todo: Verbeteringen aanbrengen in het model door een complexere neurale netwerkarchitectuur te implementeren.:zeer moeilijk
-
 class ConvNet(nn.Module):
     def __init__(self, input_dim, hidden_dim, output_dim):
         super(ConvNet, self).__init__()
@@ -315,6 +313,7 @@ class GomokuAI:
                 log_info_overruling(str(row))
             log_info_overruling("status: a normal move is executed by the AI")
             log_info_overruling("allow_overrule: " + str(self.allow_overrule))
+            self.overruled_last_move = False
             return self.valid_moves
 
     def id_to_move(self, move_id, valid_moves):
