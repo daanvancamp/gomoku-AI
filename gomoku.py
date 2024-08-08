@@ -471,7 +471,6 @@ def runGame(instance, game_number, record_replay):#main function
                 for event in pygame.event.get():
                     if event.type == pygame.QUIT:
                         running = False 
-                        #druk op linkermuisknop om te zetten
                     elif (event.type == pygame.MOUSEBUTTONDOWN or event.type == pygame.K_UP or event.type == pygame.K_RIGHT) and event.button == 1: #kan zo gelaten worden. Wanneer op de muis wordt gedrukt,wordt de zet gelezen van het bestand
                         if instance.play_music:
                             Thread(target=lambda:pygame.mixer.music.fadeout(1000)).start()#don't block the main thread
