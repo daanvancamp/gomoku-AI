@@ -448,6 +448,7 @@ def runGame(instance, game_number, record_replay):#main function
         p2_moves = []
 
     while running:
+        handle_events()
         if not check_board_full(instance):
             # Human move
             if current_player.TYPE == "Human":
@@ -594,7 +595,6 @@ def runTraining(instance, game_number, record_replay):#main function
         p2_moves = []
 
     while running:
-        
         handle_events()
         # Check if board is full    
         if not check_board_full(instance):
@@ -640,7 +640,6 @@ def runTraining(instance, game_number, record_replay):#main function
                 mm_ai = players[current_player.get_player_id()-1].ai
                 mm_ai.set_game(one_hot_board)
                 old_state = instance.board
-                handle_events()
                 max_score, scores, scores_normalized = calculate_score(instance.board)
                 mm_ai.current_player_id=current_player.get_player_id()
                 pygame.event.get()
@@ -661,13 +660,10 @@ def runTraining(instance, game_number, record_replay):#main function
                 elif record_replay:
                     p2_moves.append(action)
                 players[current_player.get_player_id() - 1].weighed_moves.append(score)
-                handle_events()
                 instance.board[action[0]][action[1]] = current_player.get_player_id()
                 game_over = check_win(action[0], action[1], current_player.get_player_id(), instance)
                 next_max_score, next_scores, next_scores_normalized = calculate_score(instance.board)
-                
-                handle_events()
-
+            
                 mm_ai.remember(old_state, action, score, instance.board, game_over)
                 mm_ai.train_short_memory(one_hot_board, action, short_score, scores, convert_to_one_hot(instance.board, current_player), next_scores, game_over)
                 current_player.move_loss.append(mm_ai.loss)
