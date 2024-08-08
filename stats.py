@@ -1,5 +1,6 @@
 import logging
 import math
+from matplotlib.ticker import FuncFormatter
 import numpy as np
 import datetime
 import os
@@ -42,15 +43,21 @@ def log_win(players):
         if should_log:
             logging.info(log)
 
+def round_formatter(x, pos):
+    return f'{int(x)}'
+
 
 def plot_graph(data: dict, data_name='data', title='title'):
     # plt.figure(figsize=(10, 6))
     for k, v in data.items():
-        plt.plot(v, 'o', label=k)
+        plt.plot(np.round(v), 'o', label=k)
         running_avg = np.cumsum(v) / (np.arange(len(v)) + 1)
         plt.plot(running_avg, label=f'{k} avg')
         plt.ylabel(data_name)
-        plt.xlabel('round')
+
+    #plt.gca().xaxis.set_major_formatter(FuncFormatter(round_formatter))
     plt.legend()
     plt.title(title)
     plt.show()
+    
+

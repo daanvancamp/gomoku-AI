@@ -77,7 +77,8 @@ var_allow_overrule_player_2=BooleanVar()
 var_allow_overrule_player_2.set(True)
 var_play_music=BooleanVar()
 var_play_music.set(False)
-
+var_show_overruling=BooleanVar()
+var_show_overruling.set(True)
 
 var_start_from_file=BooleanVar()
 var_start_from_file.set(False)
@@ -145,6 +146,8 @@ def start_new_game():
     
     game_instance.use_recognition = var_use_recognition.get()
     game_instance.play_music = var_play_music.get()
+    game_instance.show_overruling=var_show_overruling.get()
+
 
     if var_playerType1.get() == "AI-Model":
         gomoku.player1.load_model(var_model_player1.get())
@@ -451,6 +454,12 @@ def maintain_GUI():
             last_value_load_board_from_file=var_start_from_file.get()
             last_value_repvar=var_rep.get()
 
+        list_artificial_players=["AI-Model","Test Algorithm"]
+        if var_playerType1.get() not in list_artificial_players and var_playerType2.get() not in list_artificial_players:
+            button_show_overruling.grid_remove()
+        else:
+            button_show_overruling.grid()
+
         if var_playerType2.get()=="Human":
             train_description.grid_remove() #a human will never play the game 3000 times to train the model
         else:
@@ -459,7 +468,6 @@ def maintain_GUI():
             CbModelTrain2.grid()
         else:
             CbModelTrain2.grid_remove()
-        
 
         show_number_of_training_loops_comboboxes()
         show_number_of_training_loops()
@@ -556,8 +564,10 @@ delaybutton.grid(row=14, column=0, sticky="w")
 #column1
 music_button=ttk.Checkbutton(tab1, text="Play music", variable=var_play_music,style="TCheckbutton")
 music_button.grid(row=12, column=1, sticky="w")
+button_show_overruling=ttk.Checkbutton(tab1, text="Show overruling", variable=var_show_overruling,style="TCheckbutton")
+button_show_overruling.grid(row=13, column=1, sticky="w")
 use_recognition_button=ttk.Checkbutton(tab1, text="use recognition*", variable=var_use_recognition,style="TCheckbutton")
-use_recognition_button.grid(row=13, column=1, sticky="w")
+use_recognition_button.grid(row=14, column=1, sticky="w")
 
 
 label_recognition=ttk.Label(tab1, text="*only turn on when you have a physical board, a webcam and the other repository: ",style="TLabel",wraplength=300)
@@ -582,7 +592,7 @@ button_3.grid(row=1, column=0, sticky="e")
 root.bind("<Escape>", lambda event: quit_game())
 root.bind("<q>", lambda event: quit_game())
 
-label_info_load_save_replay=ttk.Label(tab1,wraplength=300, text="(1)(2)The save replay function can't be used when loading a board, because that would create a wrong replay file ",style="TLabel")
+label_info_load_save_replay=ttk.Label(tab1,wraplength=300, text="(1)(2)The save replay function can't be used when loading a board, because that would create a wrong replay file.",style="TLabel")
 label_info_load_save_replay.grid(row=17, column=0, sticky="w",columnspan=2,pady=5)
 
 ttk.Label(tab2)

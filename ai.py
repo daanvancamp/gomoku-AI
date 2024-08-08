@@ -86,6 +86,7 @@ class GomokuAI:
         self.current_player_id = None
         self.threat_moves =[]
         self.valid_moves = []
+        self.overruled_last_move = False
 
 
     def decrease_learning_rate(self):
@@ -154,11 +155,13 @@ class GomokuAI:
             if move not in self.valid_moves:
                 self.threat_moves.remove(move)#remove unvalid moves
         if self.threat_moves:#if not threat_moves==[]
-            print("no threat moves were valid moves, returning valid moves","the model will choose on its own")
-            log_info_overruling("no threat moves were valid moves, returning valid moves: "+"the model will choose on its own")
             print("overruled:", self.threat_moves)
+            self.overruled_last_move = True
             return self.threat_moves
         else:
+            print("no threat moves were valid moves, returning valid moves","the model will choose on its own")
+            log_info_overruling("no threat moves were valid moves, returning valid moves: "+"the model will choose on its own")
+            self.overruled_last_move = False
             return self.valid_moves
 
     def can_win_in_one_move(self, board)->list:
@@ -206,7 +209,7 @@ class GomokuAI:
                                 break
             
                         # Controleer op dreigende situaties
-                        if  (count == 4 and open_ends >= 0) or adjacent_two == 2:
+                        if  (count == 4 and open_ends >= 0) or adjacent_two == 2 or (count == 3 and open_ends >= 1):
                             winning_moves.append((row, col))
                             break  # We hoeven niet verder te zoeken voor deze cel
          if winning_moves:

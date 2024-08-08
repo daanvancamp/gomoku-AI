@@ -40,6 +40,7 @@ class GomokuGame:
         self.ai_delay = False
         self.use_recognition=False
         self.play_music = False
+        self.show_overruling = False
         
     def set_board(self, board):
         self.board = board
@@ -191,21 +192,24 @@ def is_move_model(row,col,last_move_model) -> bool:
 
 # Function to draw the game board
 def draw_board(instance,last_move_model=None):
-    global mark_last_move_model
+    global mark_last_move_model, player1, player2
     instance.screen.fill(instance.BOARD_COL)#background color
     cell_size = instance.CELL_SIZE#cell_size=30
     radius_big_circle=cell_size//2 - 5#radius_big_circle=15
     radius_small_circle=cell_size//3 - 5#radius_small_circle=10
+    radius_smallest_circle=cell_size//4 - 5#radius_smallest_circle=5
     red=(255,0,0) #R=255, G=0, B=0
+    green=(0,255,0)
     for row in range(instance.GRID_SIZE):#grid_size=15
         for col in range(instance.GRID_SIZE):
             pygame.draw.rect(instance.screen, instance.LINE_COL, (col * cell_size, row * cell_size, cell_size, cell_size), 1)
 
             if instance.board[row][col] == 1:
                 if is_move_model(row,col,last_move_model) and mark_last_move_model:
-                    #red (R,G,B)
                     pygame.draw.circle(instance.screen, instance.P1COL, (col * cell_size + cell_size // 2, row * cell_size + cell_size // 2), radius_big_circle)
                     pygame.draw.circle(instance.screen, red, (col * cell_size + cell_size // 2, row * cell_size + cell_size // 2), radius_small_circle)
+                    if instance.show_overruling and player1.ai.overruled_last_move:
+                        pygame.draw.circle(instance.screen, green, (col * cell_size + cell_size // 2, row * cell_size + cell_size // 2), radius_smallest_circle)
                 else:
                     pygame.draw.circle(instance.screen, instance.P1COL, (col * cell_size + cell_size // 2, row * cell_size + cell_size // 2), radius_big_circle)
 
@@ -214,6 +218,8 @@ def draw_board(instance,last_move_model=None):
                     #red (R,G,B)
                     pygame.draw.circle(instance.screen, instance.P2COL, (col * cell_size + cell_size // 2, row * cell_size + cell_size // 2), radius_big_circle)
                     pygame.draw.circle(instance.screen, red, (col * cell_size + cell_size // 2, row * cell_size + cell_size // 2), radius_small_circle)
+                    if instance.show_overruling and player2.ai.overruled_last_move:
+                        pygame.draw.circle(instance.screen, green, (col * cell_size + cell_size // 2, row * cell_size + cell_size // 2), radius_smallest_circle)
                 else:
                     pygame.draw.circle(instance.screen, instance.P2COL, (col * cell_size + cell_size // 2, row * cell_size + cell_size // 2), radius_big_circle)
 
@@ -395,13 +401,13 @@ def handle_human_move(instance, x, y, record_replay, players,p1_moves=None, p2_m
             winning_player = current_player.get_player_id()
             running = False
         else:
-            logging_players()
+            #logging_players()
             if instance.play_music:
                 Thread(target=start_muziek_vertraagd).start()
 
             # Switch player if neither player have won
             current_player = players[2 - current_player.get_player_id()]  #current_player kan 2 zijn of 1, maar in beide gevallen zal er van speler gewisseld worden.
-            logging_players()    
+            #logging_players()    
 
 def add_hover_effect(instance):
     ## adds hover effects to cells when mouse hovers over them##
@@ -494,18 +500,18 @@ def runGame(instance, game_number, record_replay):#main function
                     running = False
                 else:
                     current_player = players[2 - current_player.get_player_id()]
-                    logging_players()   
+                    #logging_players()   
             
             # AI model
             elif current_player.TYPE == "AI-Model":
                 if instance.ai_delay:
                     time.sleep(random.uniform(0.25, 1.0))   # randomize AI "thinking" time
                 one_hot_board = convert_to_one_hot(instance.board, players[current_player.get_player_id()-1].id)
-                mm_ai = players[current_player.get_player_id()-1].ai#player1.ai or player2.ai #always an instance of GomokuAI
-                mm_ai.set_game(one_hot_board)
+                DVC_AI = players[current_player.get_player_id()-1].ai#player1.ai or player2.ai #always an instance of GomokuAI
+                DVC_AI.set_game(one_hot_board)
                 max_score, scores, scores_normalized = calculate_score(instance.board)
-                mm_ai.current_player_id=current_player.get_player_id()
-                action = mm_ai.get_action(instance.board, one_hot_board, scores_normalized)
+                DVC_AI.current_player_id=current_player.get_player_id()
+                action = DVC_AI.get_action(instance.board, one_hot_board, scores_normalized)
                
                 np_scores = np.array(scores).reshape(15, 15)
                 short_score = np_scores[action[0]][action[1]]
@@ -534,7 +540,7 @@ def runGame(instance, game_number, record_replay):#main function
                 else:
                     current_player = players[2 - current_player.get_player_id()]
                     print("Na switch player AI!!!!!!!!!!!")
-                    logging_players()    
+                    #logging_players()    
             try:
                 draw_board(instance,last_move_model)
             except :
@@ -631,7 +637,7 @@ def runTraining(instance, game_number, record_replay):#main function
                     running = False
                 else:
                     current_player = players[2 - current_player.get_player_id()]
-                    logging_players()   
+                    #logging_players()   
             
             # AI-Model
             elif current_player.TYPE == "AI-Model":
@@ -678,7 +684,7 @@ def runTraining(instance, game_number, record_replay):#main function
                     running = False
                 else:
                     current_player = players[2 - current_player.get_player_id()]
-                    logging_players()    
+                    #logging_players()    
             try:
                 draw_board(instance,last_move)
             except:
