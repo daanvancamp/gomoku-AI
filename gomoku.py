@@ -14,7 +14,7 @@ import filereader
 from threading import Thread
 from time import sleep
 from detect_pieces import *
-
+import os
 
 window_name = "Gomoku"
 victory_text = ""
@@ -556,6 +556,13 @@ def runGame(instance, game_number, record_replay):#main function
     time.sleep(instance.SLEEP_BEFORE_END)#sleep before closing for SLEEP_BEFORE_END seconds
     reset_game(instance)
 
+
+
+def handle_events():
+    if not player1.TYPE == "Human" and  not player2.TYPE == "Human":
+            for event in pygame.event.get():
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    pass
 def runTraining(instance, game_number, record_replay):#main function
     # Main game loop
     global window_name, victory_text, current_player,player1,player2,running
@@ -574,6 +581,8 @@ def runTraining(instance, game_number, record_replay):#main function
 
     instance.play_music=False
     pygame.display.set_icon(pygame.image.load('res/ico.png'))
+    os.environ['SDL_VIDEO_WINDOW_POS'] = "%d,%d" % (300,200)
+
     pygame.init()
     pygame.display.set_caption(window_name)
     instance.winning_cells = []
@@ -585,6 +594,9 @@ def runTraining(instance, game_number, record_replay):#main function
         p2_moves = []
 
     while running:
+        
+        handle_events()
+        # Check if board is full    
         if not check_board_full(instance):
             # Human move
             if current_player.TYPE == "Human":
@@ -624,11 +636,14 @@ def runTraining(instance, game_number, record_replay):#main function
                 if instance.ai_delay:
                     time.sleep(random.uniform(0.25, 1.0))   # randomize AI "thinking" time
                 one_hot_board = convert_to_one_hot(instance.board, players[current_player.get_player_id()-1].id)
+                handle_events()
                 mm_ai = players[current_player.get_player_id()-1].ai
                 mm_ai.set_game(one_hot_board)
                 old_state = instance.board
+                handle_events()
                 max_score, scores, scores_normalized = calculate_score(instance.board)
                 mm_ai.current_player_id=current_player.get_player_id()
+                pygame.event.get()
                 action = mm_ai.get_action(instance.board, one_hot_board, scores_normalized)
                 if mark_last_move_model:
                     last_move=action #=last move for example :(3,6)
@@ -646,10 +661,13 @@ def runTraining(instance, game_number, record_replay):#main function
                 elif record_replay:
                     p2_moves.append(action)
                 players[current_player.get_player_id() - 1].weighed_moves.append(score)
+                handle_events()
                 instance.board[action[0]][action[1]] = current_player.get_player_id()
                 game_over = check_win(action[0], action[1], current_player.get_player_id(), instance)
                 next_max_score, next_scores, next_scores_normalized = calculate_score(instance.board)
                 
+                handle_events()
+
                 mm_ai.remember(old_state, action, score, instance.board, game_over)
                 mm_ai.train_short_memory(one_hot_board, action, short_score, scores, convert_to_one_hot(instance.board, current_player), next_scores, game_over)
                 current_player.move_loss.append(mm_ai.loss)
@@ -667,6 +685,7 @@ def runTraining(instance, game_number, record_replay):#main function
                 draw_board(instance,last_move)
             except:
                 draw_board(instance)
+            handle_events()
             refresh_screen(game_number, current_player)
                 
         else:
@@ -692,6 +711,7 @@ def runTraining(instance, game_number, record_replay):#main function
             move_loss = [float(val) for val in p.move_loss]
             p.final_move_loss.append(sum(move_loss)/len(move_loss))
             print("model saving")
+            handle_events()
             p.ai.model.save_model(p.model_name) #only saves after each round
             p.final_move_scores.append(sum(p.weighed_moves)/len(p.weighed_moves))
             stats.log_message(f"{p.TYPE} {p.id}: score loss: {float(p.ai.loss)}")
@@ -720,14 +740,13 @@ def runTraining(instance, game_number, record_replay):#main function
 def runReplay(instance, moves:dict=None):#main function
     # Main game loop
     global window_name, victory_text, current_player, running
-    
+    os.environ['SDL_VIDEO_WINDOW_POS'] = "%d,%d" % (300,200)
     pygame.display.set_icon(pygame.image.load('res/ico.png'))
     pygame.init()
     pygame.display.set_caption(window_name)
 
     instance.winning_cells = []
     running = True
-    winning_player = 0
 
     if moves is not None:#always true for now
         move_id = 0
@@ -736,6 +755,8 @@ def runReplay(instance, moves:dict=None):#main function
         pass
         
     while running:
+        handle_events()
+
         if not check_board_full(instance):
             #Replay
             if players[current_player.get_player_id() - 1].TYPE == "Replay":

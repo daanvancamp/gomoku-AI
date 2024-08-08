@@ -273,12 +273,12 @@ def start_new_training():
                 raise Exception("De error is waarschijnlijk te wijten aan een foute zet, controleer het lezen van de json bestanden die het bord opslaan." , str(e))
 
             if gomoku.player1.get_player_type() == "AI-Model":
-                #gomoku.Player1 is an object of the class Player, ai is an object of the class gomokuAI and ai.decrease_learning_rate() is a method of the class gomokuAI
-                gomoku.Player1.ai.decrease_learning_rate()#todo: calculate decrease rate based on number of training rounds
+                #gomoku.player1 is an object of the class Player, ai is an object of the class gomokuAI and ai.decrease_learning_rate() is a method of the class gomokuAI
+                gomoku.player1.ai.decrease_learning_rate()#todo: calculate decrease rate based on number of training rounds
                 modelmanager_instance.log_number_of_training_loops(var_model_player1.get(), 1,gomoku.player2.get_player_type())#add one to the number of training loops
             if gomoku.player2.get_player_type() == "AI-Model":
-                #gomoku.Player2 is an object of the class Player, ai is an object of the class gomokuAI and ai.decrease_learning_rate() is a method of the class gomokuAI
-                gomoku.Player2.ai.decrease_learning_rate()
+                #gomoku.player2 is an object of the class Player, ai is an object of the class gomokuAI and ai.decrease_learning_rate() is a method of the class gomokuAI
+                gomoku.player2.ai.decrease_learning_rate()
                 modelmanager_instance.log_number_of_training_loops(var_model_player2.get(), 1,gomoku.player1.get_player_type())#add one to the number of training loops
                 #arguments: model_name, number_of_additional_training_loops, opponent
               
@@ -462,8 +462,9 @@ def maintain_GUI():
             CbModelTrain2.grid_remove()
         
 
-        show_number_of_training_loops()
         show_number_of_training_loops_comboboxes()
+        show_number_of_training_loops()
+
 
 
 def show_number_of_training_loops():
@@ -669,8 +670,6 @@ label_number_of_training_loops = ttk.Label(tab4, text="Training loops: ",style="
 label_number_of_training_loops.grid(row=4, column=0, sticky="w")
 label_value_number_of_training_loops_tab4 = ttk.Label(tab4, textvariable=var_number_of_training_loops,style="TLabel")
 label_value_number_of_training_loops_tab4.grid(row=4, column=1, sticky="w")
-
-Thread(target=show_number_of_training_loops, daemon=True).start()
 
 def mainmenu_run():
     root.mainloop()
