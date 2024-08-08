@@ -564,6 +564,8 @@ def handle_events():
             for event in pygame.event.get():
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     pass
+
+
 def runTraining(instance, game_number, record_replay):#main function
     # Main game loop
     global window_name, victory_text, current_player,player1,player2,running
@@ -732,7 +734,6 @@ def runTraining(instance, game_number, record_replay):#main function
     reset_game(instance)
     
 
-
 def runReplay(instance, moves:dict=None):#main function
     # Main game loop
     global window_name, victory_text, current_player, running
@@ -752,13 +753,11 @@ def runReplay(instance, moves:dict=None):#main function
         
     while running:
         handle_events()
-
         if not check_board_full(instance):
             #Replay
             if players[current_player.get_player_id() - 1].TYPE == "Replay":
                 if instance.ai_delay:
                     time.sleep(random.uniform(0.25, 1.0))   # randomize ai "thinking" time
-                print(instance.board)
                 instance.board[position[move_id][0]][position[move_id][1]] = current_player.get_player_id()
                 last_move = position[move_id]
                 if check_win(position[move_id][0], position[move_id][1], current_player.get_player_id(), instance):

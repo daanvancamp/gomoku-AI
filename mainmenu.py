@@ -299,7 +299,6 @@ def start_new_replay():
         replay_loaded=False
     else:
         replay_loaded=True
-        print(moves)
     
     if replay_loaded:
         game_instance.use_recognition = False
