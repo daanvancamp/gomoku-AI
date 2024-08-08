@@ -56,7 +56,7 @@ class ModelManager(metaclass=ModelManagerMeta):
                 with open("data/models/" + modelname + self.name_config_file, "w") as file:
                     json.dump(data, file, sort_keys = True, indent = 4, ensure_ascii = False)
         else:
-            raise Exception("Config file not found, try to delete the model and create it again or replace the config file with the template file")
+            raise Exception("Config file not found, try to delete the model and create it again, or replace the config file with the template file")
     
     def log_win(self, modelname):
         if os.path.exists("data/models/" + modelname + self.name_config_file):
@@ -66,7 +66,7 @@ class ModelManager(metaclass=ModelManagerMeta):
                 with open("data/models/" + modelname + self.name_config_file, "w") as file:
                     json.dump(data, file, sort_keys = True, indent = 4, ensure_ascii = False)
         else:
-            raise Exception("Config file not found, try to delete the model and create it again or replace the config file with the template file")
+            raise Exception("Config file not found, try to delete the model and create it again, or replace the config file with the template file")
     def log_loss(self, modelname):
         if os.path.exists("data/models/" + modelname + self.name_config_file):
             with open("data/models/" + modelname + self.name_config_file, "r") as file:
@@ -75,7 +75,7 @@ class ModelManager(metaclass=ModelManagerMeta):
                 with open("data/models/" + modelname + self.name_config_file, "w") as file:
                     json.dump(data, file, sort_keys = True, indent = 4, ensure_ascii = False)
         else:
-            raise Exception("Config file not found, try to delete the model and create it again or replace the config file with the template file")
+            raise Exception("Config file not found, try to delete the model and create it again, or replace the config file with the template file")
 
     def log_tie(self):
         list_AI_players = [p for p in gomoku.players if p.TYPE == "AI-Model"]
@@ -89,7 +89,7 @@ class ModelManager(metaclass=ModelManagerMeta):
                     with open("data/models/" + modelname + self.name_config_file, "w") as file:
                         json.dump(data, file, sort_keys = True, indent = 4, ensure_ascii = False)
             else:
-                raise Exception("Config file not found, try to delete the model and create it again or replace the config file with the template file")
+                raise Exception("Config file not found, try to delete the model and create it again, or replace the config file with the template file")
 
     def get_number_of_wins(self, modelname):
         try:
