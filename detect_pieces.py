@@ -53,7 +53,7 @@ def recognize_move():
 def initialiseer_spelbord_json_bestanden():
     import json
     relevante_stukken=[]
-    pads=[r".\bord_gomoku\bord_na_zet.json",r".\bord_gomoku\bord_voor_zet.json"]
+    pads=[r".\board_gomoku\bord_na_zet.json",r".\board_gomoku\bord_voor_zet.json"]
 
     for pad in pads:
         with open(pad, 'w') as json_file:

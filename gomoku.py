@@ -217,6 +217,7 @@ def draw_board(instance,last_move_model=None):
                 if is_move_model(row,col,last_move_model) and mark_last_move_model:
                     pygame.draw.circle(instance.screen, instance.P1COL, (col * cell_size + cell_size // 2, row * cell_size + cell_size // 2), radius_big_circle)
                     pygame.draw.circle(instance.screen, red, (col * cell_size + cell_size // 2, row * cell_size + cell_size // 2), radius_small_circle)
+
                     if instance.show_overruling and player1.ai.overruled_last_move:
                         pygame.draw.circle(instance.screen, green, (col * cell_size + cell_size // 2, row * cell_size + cell_size // 2), radius_smallest_circle)
                 else:
@@ -227,6 +228,7 @@ def draw_board(instance,last_move_model=None):
                     #red (R,G,B)
                     pygame.draw.circle(instance.screen, instance.P2COL, (col * cell_size + cell_size // 2, row * cell_size + cell_size // 2), radius_big_circle)
                     pygame.draw.circle(instance.screen, red, (col * cell_size + cell_size // 2, row * cell_size + cell_size // 2), radius_small_circle)
+                    print(player2.ai.overruled_last_move)
                     if instance.show_overruling and player2.ai.overruled_last_move:
                         pygame.draw.circle(instance.screen, green, (col * cell_size + cell_size // 2, row * cell_size + cell_size // 2), radius_smallest_circle)
                 else:
