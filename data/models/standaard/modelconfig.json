@@ -1,8 +1,8 @@
 {
     "losses": 1,
     "ties": 1,
-    "training loops": 0,
-    "training loops against AI-Model": 0,
+    "training loops": 8,
+    "training loops against AI-Model": 8,
     "training loops against Human": 0,
     "training loops against Test Algorithm": 0,
     "wins": 7
