@@ -1,10 +1,12 @@
-# adapted from gomoku-thesis-proj
+# started from gomoku-thesis-proj
 https://github.com/Mig26/gomoku-thesis-proj
 
 I added support for physical boards via webcam, you can easily turn the recogniton via webcam on and off. There's a built-in checkbox fot that. It is turned off by default. I also optimized a few things. The code for the webcam can be found here. You need to run both programs simultaneously if you want to use the recognition, otherwise, it won't work as expected. The data is transfered via a json file. A file is used to save system resources; a thread puts more strain on the hardware. A constant connection with the webcam is also recommended because it takes about 5 seconds to connect to the webcam. The program should run perfectly fine on a relatively low-spec computer. https://github.com/daanvancamp/vijf_op_een_rij_beeldherkenning The usage of the recognition feature can be controlled via a checkbox.
-We are working on integrating the two programs. We will integhrate them when they are both stable.
+We are working on integrating the two programs. We will integrate them when the recognition is stable and functional.
 
-I also want to mention the following: "please don't hesitate to report any bugs". There are probably many undiscovered bugs. Please check if your bug if listed below before reporting it, because then it's a known issue/bug. Feature suggestions are also more than welcome, because they can help to develop a better, versatile program.
+**The stable release is version 1.0. The recognition doesn't work in this version yet, but all the other features work perfectly, if not: repart the bug.** That version is the compiled version of the python code. It is made for those who don't want to experience issues caused by features that are in development or those who just want to play it as fast as possible without having to install python or anything like that. It can be installed on any system that supports .exe files.
+
+I also want to mention the following: "please don't hesitate to report any bugs". There are probably many undiscovered bugs. Please check if your bug if listed below before reporting it, because then it's a known issue/bug. Feature suggestions are also more than welcome, because they can help to develop a better, more versatile program. **Don't report any bugs in the code in this repository. Only report bugs that were caused by the executable file.**
 
 A few of the optimizations I have done and some added features:
 
@@ -57,7 +59,8 @@ august 2024:
 
   The code was completely restructured. Some performance improvements were also done. There are now 3 functions to run the game.
 
-  You can now choose if you want to allow overruling for each player. Of course, I also added an option in the GUI.
+  **You can now choose if you want to allow overruling for each player. Of course, I also added an option in the GUI.**
+  **All the options that you can't choose because that would cause a crash are now hided.**
   
   splitted the run game function into 3 functions: runreplay, rungame,runtraining
 
@@ -65,12 +68,13 @@ august 2024:
   
   added common code to functions to shorten the code (gomoku.py went from 900 to 700 lines)
   
-  fixed an issue: Like you see on the image. It's the turn of Black.
+  **fixed an issue: Like you see on the image. It's the turn of Black.
   ![image](https://github.com/user-attachments/assets/46c63a9a-af7f-4f0a-9cf3-2bf9f56af9ac) 
-  You could always win when you started from the ends and made your way to the middle. The model sometimes didn't block it. It turned out that it was the result of a small bug in the overruling.
+  You could always win when you started from the ends and made your way to the middle. The model sometimes didn't block it. It turned out that it was the result of a small bug in the overruling.**
   
   fixed a few general bugs
-  
+  **big performance and stability improvements, the GUI won't crash ever. If it does, please report that.**
+  added more info in the define tab
   
 
 issues:
@@ -79,16 +83,12 @@ issues:
 
 roadmap(in descending priority):
 
--We are trying to make using multiple models more stable.
-
--solving the issues mentioned above, including the issue with the overruling
-
 -We are working on integrating the two programs. We will integrate them when they are both stable.
 
--coming soon
+-coming soon, but it's done as of right now.
 
 
-Note: the project is still under development. Some added features aren't stable as of right now, but overall it works better than the program of Mikko (from which I started). The project will hopefully be finished in april of 2025, so you can expect the stable and complete version ultimately then, but it could be done earlier. **A stable release will be done in a few weeks.** After that, we will be adding more features, but the stability won't improve anymore (,unless we didn't find a bug earlier on.)
+Note: the project is still under development. Some added features aren't stable as of right now, but overall it works better than the program of Mikko (from which I started). The project will hopefully be finished in april of 2025, so you can expect a complete version ultimately then, but it could be done earlier. **The stable version doesn't contain all latest features, but you can download it from the releases tab.** Right now, it is version 1.0. An executable will be release every few weeks.
 
 developped by:
 daanvancamp & wimnevelsteen
