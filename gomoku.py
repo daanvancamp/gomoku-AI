@@ -75,12 +75,6 @@ class Player:
         else:
             return f"Player{self.id},(type={self.TYPE})"
 
-    def set_player_type(self, player_type):
-        self.TYPE = str(player_type) #type can be human, AI-Model or Test Algorithm
-        
-    def get_player_type(self):
-        return self.TYPE
-        
     def set_player_id(self, player_id):
         self.id = int(player_id) #id can be 1 or 2 corresponding to human or AI
     
@@ -169,12 +163,12 @@ def update_player_stats(instance, winning_player,is_training):
                 if player1.TYPE =="AI-Model":
                     player1.AI_model.log_win()
                 if player2.TYPE =="AI-Model":
-                    player2.AI_model.log_loss(player2.get_model_name())
+                    player2.AI_model.log_loss()
             elif winning_player == 2:
                 if player1.TYPE =="AI-Model":
-                    player1.AI_model.log_loss(player1.get_model_name())
+                    player1.AI_model.log_loss()
                 if player2.TYPE =="AI-Model":
-                    player2.AI_model.log_win(player2.get_model_name())
+                    player2.AI_model.log_win()
 
         for i in range(len(players)):
             if i == winning_player-1:
@@ -595,9 +589,9 @@ def runTraining(instance, game_number, record_replay):#main function
     for p in players: #players=[Human, AI]
         if p.TYPE == "AI-Model":
             if p==player1:
-                p.ai.model.load_model(player1.model_name)
+                p.ai.model.load_model(player1.AI_model.modelname)
             else:
-                p.ai.model.load_model(player2.model_name)
+                p.ai.model.load_model(player2.AI_model.modelname)
             p.ai.train = True
         if p.TYPE == "Human":
             p.ai.train = False
@@ -732,7 +726,7 @@ def runTraining(instance, game_number, record_replay):#main function
             p.final_move_loss.append(sum(move_loss)/len(move_loss))
             print("model saving")
             handle_events()
-            p.ai.model.save_model(p.model_name) #only saves after each round
+            p.ai.model.save_model(p.AI_model.modelname) #only saves after each round
             p.final_move_scores.append(sum(p.weighed_moves)/len(p.weighed_moves))
             stats.log_message(f"{p.TYPE} {p.id}: score loss: {float(p.ai.loss)}")
             stats.log_message(f"{p.TYPE} {p.id}: move loss: {sum(p.move_loss)/len(p.move_loss)}")
