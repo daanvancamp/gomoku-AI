@@ -15,7 +15,6 @@ import gomoku
 import numpy as np
 
 #todo: make the GUI fullscreen, add webcam view
-#todo: disable checkboxes instead of hiding them
 
 WIDTH = 420 #origineel 230
 HEIGHT = 500 #origineel 315
@@ -125,7 +124,7 @@ def set_player_type(player_id):
         newtype = var_playerType1.get()
     else:
         newtype = var_playerType2.get()
-    gomoku.players[player_id-1].set_player_type(newtype)
+    gomoku.players[player_id-1].TYPE=newtype
 
 def set_game_instance(new_instance):
     global game_instance
@@ -188,12 +187,12 @@ def start_new_game():
     stats.should_log = var_log.get()
     stats.setup_logging(var_playerType1.get(), var_playerType2.get())
         
-    gomoku.player1.set_player_type(var_playerType1.get())
-    gomoku.player2.set_player_type(var_playerType2.get())
+    gomoku.player1.TYPE=var_playerType1.get()
+    gomoku.player2.TYPE=var_playerType2.get()
 
-    if (gomoku.player1.get_player_type() == "AI-Model" ):
+    if (gomoku.player1.TYPE == "AI-Model" ):
         gomoku.player1.load_model(var_model_player1.get())
-    if (gomoku.player2.get_player_type() == "AI-Model" ):
+    if (gomoku.player2.TYPE == "AI-Model" ):
         gomoku.player2.load_model(var_model_player2.get())
 
     root.wm_state('iconic')
@@ -244,20 +243,20 @@ def start_new_game():
 
 
 def start_new_training():
-    global game_instance
+    global game_instance, player1, player2
     log_info_overruling("\n\n\nnew session begins:")
     
     game_instance.use_recognition = False
     game_instance.play_music = False
     game_instance.show_overruling=False
 
-    gomoku.player1.set_player_type("AI-Model")
-    gomoku.player2.set_player_type(var_playerType2.get())
+    gomoku.player1.TYPE=var_playerType1.get()
+    gomoku.player2.TYPE=var_playerType2.get()
     
     gomoku.player1.load_model(var_model_player1.get())#player 1 is always an AI-Model when training
     gomoku.player1.set_allow_overrule(var_allow_overrule_player_1.get())
 
-    if gomoku.player2.get_player_type() == "AI-Model":
+    if gomoku.player2.TYPE == "AI-Model":
         gomoku.player2.load_model(var_model_player2.get())
         gomoku.player2.set_allow_overrule(var_allow_overrule_player_2.get())
 
@@ -278,7 +277,7 @@ def start_new_training():
 
         game_instance.ai_delay = False #never wait when training
         stats.should_log = var_log.get()
-        stats.setup_logging(gomoku.player1.get_player_type(), gomoku.player2.get_player_type())
+        stats.setup_logging(gomoku.player1.TYPE, gomoku.player2.TYPE)
         root.wm_state('iconic')
         for i in range(runs):
             log_info_overruling("run "+str(i+1)+" begins:")
@@ -292,14 +291,14 @@ def start_new_training():
                 print("error in gomoku.run, herschrijf die functie.")
                 raise Exception("There is an error in the main function/loop, it can be anything." , str(e))
 
-            if gomoku.player1.get_player_type() == "AI-Model":
+            if gomoku.player1.TYPE == "AI-Model":
                 #gomoku.player1 is an object of the class Player, ai is an object of the class gomokuAI and ai.decrease_learning_rate() is a method of the class gomokuAI
                 gomoku.player1.ai.decrease_learning_rate()#todo: calculate decrease rate based on number of training rounds
-                modelmanager_instance.log_number_of_training_loops(var_model_player1.get(),gomoku.player2.get_player_type())#add one to the number of training loops
-            if gomoku.player2.get_player_type() == "AI-Model":
+                player1.AI_model.log_number_of_training_loops(player2.TYPE)
+            if gomoku.player2.TYPE == "AI-Model":
                 #gomoku.player2 is an object of the class Player, ai is an object of the class gomokuAI and ai.decrease_learning_rate() is a method of the class gomokuAI
                 gomoku.player2.ai.decrease_learning_rate()
-                modelmanager_instance.log_number_of_training_loops(var_model_player2.get(),gomoku.player1.get_player_type())#add one to the number of training loops
+                player2.AI_model.log_number_of_training_loops(player1.TYPE)
                 #arguments: model_name, number_of_additional_training_loops, opponent
               
     except ValueError:
@@ -415,24 +414,24 @@ def maintain_GUI():
 
 
         if var_playerType1.get()=="AI-Model":
-            CbModel1.grid()
-            overrule_button_player_1.grid()
+            CbModel1.config(state=NORMAL)
+            overrule_button_player_1.config(state=NORMAL)
             label_value_number_of_training_loops_p1.grid()
 
         else:
-            CbModel1.grid_remove()
-            overrule_button_player_1.grid_remove()
+            CbModel1.config(state=DISABLED)
+            overrule_button_player_1.config(state=DISABLED)
             label_value_number_of_training_loops_p1.grid_remove()
 
         if var_playerType2.get()=="AI-Model":
-            CbModel2.grid()
-            overrule_button_player_2.grid()
-            overrule_button_player_2_tab2.grid()
+            CbModel2.config(state=NORMAL)
+            overrule_button_player_2.config(state=NORMAL)
+            overrule_button_player_2_tab2.config(state=NORMAL)
             label_value_number_of_training_loops_p2.grid()
         else:
-            CbModel2.grid_remove()
-            overrule_button_player_2.grid_remove()
-            overrule_button_player_2_tab2.grid_remove()
+            CbModel2.config(state=DISABLED)
+            overrule_button_player_2.config(state=DISABLED)
+            overrule_button_player_2_tab2.config(state=DISABLED)
             label_value_number_of_training_loops_p2.grid_remove()
 
         if var_start_from_file.get():
@@ -446,29 +445,29 @@ def maintain_GUI():
         
         recognition_possible=(var_playerType1.get()=="Human" or var_playerType2.get()=="Human")and (var_playerType1.get()=="AI-Model" or var_playerType2.get()=="AI-Model" or var_playerType1.get()=="Test Algorithm" or var_playerType2.get()=="Test Algorithm")
         if recognition_possible and not var_start_from_file.get():
-            use_recognition_button.grid()
-            label_recognition.grid()
+            use_recognition_button.config(state=NORMAL)
+            label_recognition.config(state=NORMAL)
         else:
-            use_recognition_button.grid_remove()
-            label_recognition.grid_remove()
+            use_recognition_button.config(state=DISABLED)
+            label_recognition.config(state=DISABLED)
         #tab 1, delaybutton#
         if (var_playerType1.get()=="AI-Model" or var_playerType2.get()=="AI-Model" ) or (var_playerType1.get()=="Test Algorithm" or var_playerType2.get()=="Test Algorithm"):
-            delaybutton.grid()
+            delaybutton.config(state=NORMAL)
         else:
-            delaybutton.grid_remove()
+            delaybutton.config(state=DISABLED)
         #tab1, music button#
         if var_playerType1.get()=="Human" or var_playerType2.get()=="Human":
-            music_button.grid()
+            music_button.config(state=NORMAL)
         else:
-            music_button.grid_remove()
+            music_button.config(state=DISABLED)
 
         #starting player
         if var_playerType1.get()==var_playerType2.get() and var_playerType1=="Test Algorithm": #option not relevant
-            playerstartLabel.grid_remove()
-            CbStartingPlayer.grid_remove()
+            playerstartLabel.config(state=DISABLED)
+            CbStartingPlayer.config(state=DISABLED)
         else:
-            playerstartLabel.grid()
-            CbStartingPlayer.grid()
+            playerstartLabel.config(state=NORMAL)
+            CbStartingPlayer.config(state=NORMAL)
 
         if var_start_from_file.get()!=last_value_load_board_from_file and var_start_from_file.get()==True:
             var_rep.set(False) #can't be used simultanously because if you would save a replay file, it wouldn't be complete (the moves that are loaded are gone)
@@ -483,18 +482,18 @@ def maintain_GUI():
 
         list_artificial_players=["AI-Model","Test Algorithm"]
         if var_playerType1.get() not in list_artificial_players and var_playerType2.get() not in list_artificial_players:
-            button_show_overruling.grid_remove()
+            button_show_overruling.config(state=NORMAL)
         else:
-            button_show_overruling.grid()
+            button_show_overruling.config(state=DISABLED)
 
         if var_playerType2.get()=="Human":
             train_description.grid_remove() #a human will never play the game 3000 times to train the model
         else:
             train_description.grid()
         if var_playerType2.get()=="AI-Model":
-            CbModelTrain2.grid()
+            CbModelTrain2.config(state=NORMAL)
         else:
-            CbModelTrain2.grid_remove()
+            CbModelTrain2.config(state=DISABLED)
 
         show_number_of_training_loops_comboboxes()
         refresh_training_stats()

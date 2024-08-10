@@ -2,7 +2,7 @@ import os
 import shutil
 import json
 from AI_model import AI_Model
-import gomoku
+
 class ModelManagerMeta(type):
     """
     The Singleton class can be implemented in different ways in Python. Some

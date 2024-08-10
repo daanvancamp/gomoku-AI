@@ -9,7 +9,9 @@ class AI_Model():
         self.wins=None
         self.losses=None
         self.ties=None
+
         self.modelname=name
+
         self.parent_dir = "data/models"
         self.name_config_file = "/modelconfig.json"
         self.initial_json_data = {'training loops': 0,
@@ -23,7 +25,6 @@ class AI_Model():
                      }
 
         self.directory = self.modelname
-
         self.path = os.path.join(self.parent_dir, self.directory)
 
     def get_total_number_of_training_loops(self):
@@ -39,6 +40,7 @@ class AI_Model():
                 print("Please close the file and try again")
         else:
             return self.number_of_training_loops
+
     def log_number_of_training_loops(self,opponent):
         if os.path.exists("data/models/" + self.modelname + self.name_config_file):
             with open("data/models/" + self.modelname + self.name_config_file, "r") as file:
