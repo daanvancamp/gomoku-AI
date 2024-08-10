@@ -1,6 +1,7 @@
 import os
 import shutil
 import json
+from AI_model import AI_Model
 import gomoku
 class ModelManagerMeta(type):
     """
@@ -35,93 +36,6 @@ class ModelManager(metaclass=ModelManagerMeta):
                      "wins": 0,
                      "ties": 0
                      }
-    
-    def get_total_number_of_training_loops(self,modelname):
-        try:
-            if os.path.exists("data/models/" + modelname + self.name_config_file):
-                with open("data/models/" + modelname + self.name_config_file, "r") as file:
-                    data = json.load(file)
-                    return data["training loops"]
-            else:
-                return 0
-        except PermissionError:
-            print("Please close the file and try again")
-
-    def log_number_of_training_loops(self, modelname,opponent):
-        if os.path.exists("data/models/" + modelname + self.name_config_file):
-            with open("data/models/" + modelname + self.name_config_file, "r") as file:
-                data = json.load(file)
-                data["training loops"] += 1
-                data["training loops against "+opponent] += 1
-                with open("data/models/" + modelname + self.name_config_file, "w") as file:
-                    json.dump(data, file, sort_keys = True, indent = 4, ensure_ascii = False)
-        else:
-            raise Exception("Config file not found, try to delete the model and create it again, or replace the config file with the template file")
-    
-    def log_win(self, modelname):
-        if os.path.exists("data/models/" + modelname + self.name_config_file):
-            with open("data/models/" + modelname + self.name_config_file, "r") as file:
-                data = json.load(file)
-                data["wins"] += 1
-                with open("data/models/" + modelname + self.name_config_file, "w") as file:
-                    json.dump(data, file, sort_keys = True, indent = 4, ensure_ascii = False)
-        else:
-            raise Exception("Config file not found, try to delete the model and create it again, or replace the config file with the template file")
-    def log_loss(self, modelname):
-        if os.path.exists("data/models/" + modelname + self.name_config_file):
-            with open("data/models/" + modelname + self.name_config_file, "r") as file:
-                data = json.load(file)
-                data["losses"] += 1
-                with open("data/models/" + modelname + self.name_config_file, "w") as file:
-                    json.dump(data, file, sort_keys = True, indent = 4, ensure_ascii = False)
-        else:
-            raise Exception("Config file not found, try to delete the model and create it again, or replace the config file with the template file")
-
-    def log_tie(self):
-        list_AI_players = [p for p in gomoku.players if p.TYPE == "AI-Model"]
-
-        for player in list_AI_players:
-            modelname=player.model_name
-            if os.path.exists("data/models/" + modelname + self.name_config_file):
-                with open("data/models/" + modelname + self.name_config_file, "r") as file:
-                    data = json.load(file)
-                    data["ties"] += 1
-                    with open("data/models/" + modelname + self.name_config_file, "w") as file:
-                        json.dump(data, file, sort_keys = True, indent = 4, ensure_ascii = False)
-            else:
-                raise Exception("Config file not found, try to delete the model and create it again, or replace the config file with the template file")
-
-    def get_number_of_wins(self, modelname):
-        try:
-            if os.path.exists("data/models/" + modelname + self.name_config_file):
-                with open("data/models/" + modelname + self.name_config_file, "r") as file:
-                    data = json.load(file)
-                    return data["wins"]
-            else:
-                return 0
-        except PermissionError:
-            print("Please close the file and try again")
-    def get_number_of_losses(self, modelname):
-        try:
-            if os.path.exists("data/models/" + modelname + self.name_config_file):
-                with open("data/models/" + modelname + self.name_config_file, "r") as file:
-                    data = json.load(file)
-                    return data["losses"]
-            else:
-                return 0
-        except PermissionError:
-            print("Please close the file and try again")
-
-    def get_number_of_ties(self, modelname):
-        try:
-            if os.path.exists("data/models/" + modelname + self.name_config_file):
-                with open("data/models/" + modelname + self.name_config_file, "r") as file:
-                    data = json.load(file)
-                    return data["ties"]
-            else:
-                return 0
-        except PermissionError:
-            print("Please close the file and try again")
 
     def create_new_model(self, modelName):
         # Directory 
@@ -160,8 +74,11 @@ class ModelManager(metaclass=ModelManagerMeta):
         path = os.path.join(self.parent_dir, modelName) 
         shutil.rmtree(path)
         
-        print("Directory '% s' deleted" % path) 
+        print("Directory '% s' deleted" % path)
     
+    def get_model(self, modelName):
+        return AI_Model(modelName)
+
     def reset_stats(self, modelName):
          # Directory 
         directory = modelName

@@ -1,6 +1,7 @@
 import operator
 import time
 import pygame
+from AI_model import AI_Model
 from music import start_muziek_vertraagd
 import testai
 import ai
@@ -63,14 +64,16 @@ class Player:
         self.final_move_scores = []
         self.final_move_loss = []
         self.win_rate = 0
-        self.ai = ai.GomokuAI()
         self.allow_overrule = True
         self.final_action = None
-        self.model_name=None
+        self.ai = ai.GomokuAI()
+        self.AI_model=None
         
-
     def __str__(self) -> str:
-        return f"Player{self.id},(type={self.TYPE}, model={self.model_name})"
+        if self.AI_model is not None:
+            return f"Player{self.id},(type={self.TYPE}, model={self.AI_model.modelname})"
+        else:
+            return f"Player{self.id},(type={self.TYPE})"
 
     def set_player_type(self, player_type):
         self.TYPE = str(player_type) #type can be human, AI-Model or Test Algorithm
@@ -127,11 +130,11 @@ class Player:
         self.avg_moves = 0
         
     def load_model(self, model):
-        self.model_name = model
+        self.AI_model = AI_Model(model)
         self.ai.model.load_model(model)
-        
+
     def get_model_name(self):
-        return self.model_name
+        return self.AI_model.modelname
         
     def set_allow_overrule(self, allow_overrule):
         self.allow_overrule = allow_overrule
@@ -159,19 +162,20 @@ def reset_player_stats():
 
 # Update win / loss stats of players: -1 = tie; 1 = player 1 won; 2 = player 2 won
 def update_player_stats(instance, winning_player,is_training):
-    from mainmenu import modelmanager_instance     
+    global player1, player2
     if winning_player > -1: # run if game was not a tie
         if not is_training:#don't save the wins and losses caused by training
             if winning_player == 1:
                 if player1.TYPE =="AI-Model":
-                    modelmanager_instance.log_win(player1.get_model_name())
+                    player1.AI_model.log_win()
                 if player2.TYPE =="AI-Model":
-                    modelmanager_instance.log_loss(player2.get_model_name())
+                    player2.AI_model.log_loss(player2.get_model_name())
             elif winning_player == 2:
                 if player1.TYPE =="AI-Model":
-                    modelmanager_instance.log_loss(player1.get_model_name())
+                    player1.AI_model.log_loss(player1.get_model_name())
                 if player2.TYPE =="AI-Model":
-                    modelmanager_instance.log_win(player2.get_model_name())
+                    player2.AI_model.log_win(player2.get_model_name())
+
         for i in range(len(players)):
             if i == winning_player-1:
                 players[i].wins += 1
@@ -183,9 +187,11 @@ def update_player_stats(instance, winning_player,is_training):
             if instance.last_round:
                 players[i].calculate_win_rate(instance.current_game)
     else:
-        modelmanager_instance.log_tie()
-        for i in range(len(players)):
-            players[i].calculate_score(0, False, instance.current_game)
+        player1.AI_model.log_tie()
+        player2.AI_model.log_tie()
+
+    for i in range(len(players)):
+        players[i].calculate_score(0, False, instance.current_game)
     stats.log_win(players)
     if instance.last_round:
         stats.log_message(f"\nStatistics:\n{players[0].TYPE} {players[0].id}:\nwins: {players[0].wins} - win rate: {players[0].win_rate} - average score: {players[0].avg_score} - weighed score: {sum(players[0].weighed_scores)/len(players[0].weighed_scores)} - average moves: {players[0].avg_moves}.\n"
@@ -228,7 +234,6 @@ def draw_board(instance,last_move_model=None):
                     #red (R,G,B)
                     pygame.draw.circle(instance.screen, instance.P2COL, (col * cell_size + cell_size // 2, row * cell_size + cell_size // 2), radius_big_circle)
                     pygame.draw.circle(instance.screen, red, (col * cell_size + cell_size // 2, row * cell_size + cell_size // 2), radius_small_circle)
-                    print(player2.ai.overruled_last_move)
                     if instance.show_overruling and player2.ai.overruled_last_move:
                         pygame.draw.circle(instance.screen, green, (col * cell_size + cell_size // 2, row * cell_size + cell_size // 2), radius_smallest_circle)
                 else:

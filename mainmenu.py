@@ -502,10 +502,11 @@ def maintain_GUI():
 def refresh_training_stats():
     for i in Lb1.curselection():
         model=Lb1.get(i)
-        var_number_of_training_loops.set(modelmanager_instance.get_total_number_of_training_loops(model))
-        var_losses.set(modelmanager_instance.get_number_of_losses(model))
-        var_wins.set(modelmanager_instance.get_number_of_wins(model))
-        var_ties.set(modelmanager_instance.get_number_of_ties(model))
+        model_class=modelmanager_instance.get_model(model)
+        var_number_of_training_loops.set(model_class.get_total_number_of_training_loops())
+        var_losses.set(model_class.get_number_of_losses())
+        var_wins.set(model_class.get_number_of_wins())
+        var_ties.set(model_class.get_number_of_ties())
 
         if 0 not in [var_losses.get(),var_ties.get(),var_wins.get()]:
             var_relative_value_losses.set(str(np.round((var_losses.get()/(var_losses.get()+var_ties.get()+var_wins.get()))*100))+"%")
@@ -518,9 +519,9 @@ def refresh_training_stats():
             var_relative_value_ties.set("N/A")
 
 def show_number_of_training_loops_comboboxes():
-    var_number_of_training_loops_comboboxes_p1.set(modelmanager_instance.get_total_number_of_training_loops(var_model_player1.get()))
+    var_number_of_training_loops_comboboxes_p1.set(modelmanager_instance.get_model(var_model_player1.get()).get_total_number_of_training_loops())
     
-    var_number_of_training_loops_comboboxes_p2.set(modelmanager_instance.get_total_number_of_training_loops(var_model_player2.get()))
+    var_number_of_training_loops_comboboxes_p2.set(modelmanager_instance.get_model(var_model_player2.get()).get_total_number_of_training_loops())
     
 Thread_maintain_GUI=Thread(target=maintain_GUI,daemon=True)#end when main program ends
 Thread_maintain_GUI.start()
