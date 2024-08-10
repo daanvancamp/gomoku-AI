@@ -15,6 +15,7 @@ import gomoku
 import numpy as np
 
 #todo: make the GUI fullscreen, add webcam view
+#todo: disable checkboxes instead of hiding them
 
 WIDTH = 420 #origineel 230
 HEIGHT = 500 #origineel 315
@@ -96,7 +97,7 @@ var_relative_value_wins.set("0%")
 var_relative_value_ties = StringVar()
 var_relative_value_ties.set("0%")
 
-
+var_choose_stats=StringVar()
 
 var_start_from_file=BooleanVar()
 var_start_from_file.set(False)
@@ -406,11 +407,11 @@ def maintain_GUI():
         if var_playerType1.get() == "Human" and var_playerType2.get() == "Human":
             var_log.set(False)
             var_rep.set(False)
-            logbutton.grid_remove()
-            replaybutton.grid_remove()
+            logbutton.config(state=DISABLED)
+            replaybutton.config(state=DISABLED)
         else:
-            logbutton.grid()
-            replaybutton.grid()
+            logbutton.config(state=NORMAL)
+            replaybutton.config(state=NORMAL)
 
 
         if var_playerType1.get()=="AI-Model":
@@ -723,27 +724,32 @@ label_number_of_training_loops.grid(row=4, column=0, sticky="w")
 label_value_number_of_training_loops_tab4 = ttk.Label(tab4, textvariable=var_number_of_training_loops,style="TLabel")
 label_value_number_of_training_loops_tab4.grid(row=4, column=1, sticky="w")
 
+stats_list=["Total","Games","Training"]
+Cb_choose_stats= ttk.Combobox(tab4, state="readonly", values=stats_list, textvariable=var_choose_stats)
+Cb_choose_stats.current(0)
+Cb_choose_stats.grid(row=5, column=0, sticky="w")
+
+
 label_losses=ttk.Label(tab4, text="Losses: ",style="TLabel")
-label_losses.grid(row=5, column=0, sticky="w")
+label_losses.grid(row=6, column=0, sticky="w")
 label_value_losses_tab4 = ttk.Label(tab4, textvariable=var_losses,style="TLabel")
-label_value_losses_tab4.grid(row=5, column=1, sticky="w")
+label_value_losses_tab4.grid(row=6, column=1, sticky="w")
 label_relative_value_losses=ttk.Label(tab4, textvariable=var_relative_value_losses,style="TLabel")
-label_relative_value_losses.grid(row=5, column=2, sticky="w")
+label_relative_value_losses.grid(row=6, column=2, sticky="w")
 
 label_wins=ttk.Label(tab4, text="Wins: ",style="TLabel")
-label_wins.grid(row=6, column=0, sticky="w")
+label_wins.grid(row=7, column=0, sticky="w")
 label_value_wins_tab4 = ttk.Label(tab4, textvariable=var_wins,style="TLabel")
-label_value_wins_tab4.grid(row=6, column=1, sticky="w")
+label_value_wins_tab4.grid(row=7, column=1, sticky="w")
 label_relative_value_wins=ttk.Label(tab4, textvariable=var_relative_value_wins,style="TLabel")
-label_relative_value_wins.grid(row=6, column=2, sticky="w")
+label_relative_value_wins.grid(row=7, column=2, sticky="w")
 
 label_ties=ttk.Label(tab4, text="Ties: ",style="TLabel")
-label_ties.grid(row=7, column=0, sticky="w")
-
+label_ties.grid(row=8, column=0, sticky="w")
 label_value_ties_tab4 = ttk.Label(tab4, textvariable=var_ties,style="TLabel")
-label_value_ties_tab4.grid(row=7, column=1, sticky="w")
+label_value_ties_tab4.grid(row=8, column=1, sticky="w")
 label_relative_value_ties=ttk.Label(tab4, textvariable=var_relative_value_ties,style="TLabel")
-label_relative_value_ties.grid(row=7, column=2, sticky="w")
+label_relative_value_ties.grid(row=8, column=2, sticky="w")
 
 def mainmenu_run():
     root.mainloop()
