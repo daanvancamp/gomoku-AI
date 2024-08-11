@@ -1,10 +1,17 @@
-# started from gomoku-thesis-proj
+# started from gomoku-thesis-proj, but we changed and improved almost everything.
 https://github.com/Mig26/gomoku-thesis-proj
 
-I added support for physical boards via webcam, you can easily turn the recogniton via webcam on and off. There's a built-in checkbox fot that. It is turned off by default. I also optimized a few things. The code for the webcam can be found here. You need to run both programs simultaneously if you want to use the recognition, otherwise, it won't work as expected. The data is transfered via a json file. A file is used to save system resources; a thread puts more strain on the hardware. A constant connection with the webcam is also recommended because it takes about 5 seconds to connect to the webcam. The program should run perfectly fine on a relatively low-spec computer. https://github.com/daanvancamp/vijf_op_een_rij_beeldherkenning The usage of the recognition feature can be controlled via a checkbox.
+**The stable release is version 1.0. The recognition doesn't work in this version yet, but all the other features work perfectly, if not: report the bug.** That version is the compiled version of the python code. It is made for those who don't want to experience issues caused by features that are in development or those who just want to play it as fast as possible without having to install python or anything else.
+
+stable release:https://github.com/daanvancamp/gomoku-thesis-proj/releases/tag/v1.0
+
+Note: the project is still under development. Some added features aren't stable as of right now, but overall it works better than the program of Mikko (from which I started). The project will hopefully be finished in april of 2025, so you can expect a complete version ultimately then, but it could be done earlier. **The stable version doesn't contain all latest features, but you can download it from the releases tab.** Right now, it is version 1.0. An executable will be release every few weeks.
+
+If you would just clone the repos, then you will most likely experience stability problems or bugs.
+
+I added support for physical boards via webcam, you can easily turn the recogniton via webcam on and off. There's a built-in checkbox for that. It is turned off by default. I also optimized a few things. The code for the webcam can be found here. You need to run both programs simultaneously if you want to use the recognition, otherwise, it won't work as expected. The data is transfered via a json file. A file is used to save system resources; a thread puts more strain on the hardware. A constant connection with the webcam is also recommended because it takes about 5 seconds to connect to the webcam. The program should run perfectly fine on a relatively low-spec computer. https://github.com/daanvancamp/vijf_op_een_rij_beeldherkenning The usage of the recognition feature can be controlled via a checkbox.
 We are working on integrating the two programs. We will integrate them when the recognition is stable and functional.
 
-**The stable release is version 1.0. The recognition doesn't work in this version yet, but all the other features work perfectly, if not: repart the bug.** That version is the compiled version of the python code. It is made for those who don't want to experience issues caused by features that are in development or those who just want to play it as fast as possible without having to install python or anything like that. It can be installed on any system that supports .exe files.
 
 I also want to mention the following: "please don't hesitate to report any bugs". There are probably many undiscovered bugs. Please check if your bug if listed below before reporting it, because then it's a known issue/bug. Feature suggestions are also more than welcome, because they can help to develop a better, more versatile program. **Don't report any bugs in the code in this repository. Only report bugs that were caused by the executable file.**
 
@@ -70,25 +77,33 @@ august 2024:
   
   **fixed an issue: Like you see on the image. It's the turn of Black.
   ![image](https://github.com/user-attachments/assets/46c63a9a-af7f-4f0a-9cf3-2bf9f56af9ac) 
+  
   You could always win when you started from the ends and made your way to the middle. The model sometimes didn't block it. It turned out that it was the result of a small bug in the overruling.**
   
   fixed a few general bugs
-  **big performance and stability improvements, the GUI won't crash ever. If it does, please report that.**
+  **big performance and stability improvements, the GUI won't crash anymore. If it does, please report that.**
+
   added more info in the define tab
+  fixed some crash issues and bugs
+  buttons and labels are now grayed out instead of invisible
+  restructured code, added class to save model stats
+  added more stats to tab 4
+  rewrited modelmanager class
   
+  released version 1.1
+
 
 issues:
 
-
+There are no issues at the moment.
 
 roadmap(in descending priority):
 
--We are working on integrating the two programs. We will integrate them when they are both stable.
+-We are working on integrating the two programs. We will integrate them when the recognition is stable.
 
 -coming soon, but it's done as of right now.
 
 
-Note: the project is still under development. Some added features aren't stable as of right now, but overall it works better than the program of Mikko (from which I started). The project will hopefully be finished in april of 2025, so you can expect a complete version ultimately then, but it could be done earlier. **The stable version doesn't contain all latest features, but you can download it from the releases tab.** Right now, it is version 1.0. An executable will be release every few weeks.
 
 developped by:
 daanvancamp & wimnevelsteen
