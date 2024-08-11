@@ -493,10 +493,10 @@ def maintain_GUI():
 
         if var_playerType2.get()=="AI-Model":
             CbModelTrain2.config(state="readonly")
-            label_value_number_of_training_loops_tab4.config(state=NORMAL)
+            label_value_number_of_training_loops_tab2_p2.config(state=NORMAL)
         else:
             CbModelTrain2.config(state=DISABLED)
-            label_value_number_of_training_loops_tab4.config(state=DISABLED)
+            label_value_number_of_training_loops_tab2_p2.config(state=DISABLED)
 
         show_number_of_training_loops_comboboxes()
         refresh_training_stats()
@@ -521,16 +521,15 @@ def refresh_training_stats():
         var_losses.set(model_class.get_number_of_losses("training loops end stats"))
         var_wins.set(model_class.get_number_of_wins("training loops end stats"))
         var_ties.set(model_class.get_number_of_ties("training loops end stats"))
-
-    if 0 not in [var_losses.get(),var_ties.get(),var_wins.get()]:
-        var_relative_value_losses.set(str(np.round((var_losses.get()/(var_losses.get()+var_ties.get()+var_wins.get()))*100))+"%")
-        var_relative_value_wins.set(str(np.round((var_wins.get()/(var_losses.get()+var_ties.get()+var_wins.get()))*100))+"%")
-        var_relative_value_ties.set(str(np.round((var_ties.get()/(var_losses.get()+var_ties.get()+var_wins.get()))*100))+"%")
-            
-    else:
-        var_relative_value_losses.set("N/A")
-        var_relative_value_wins.set("N/A")
-        var_relative_value_ties.set("N/A")
+    
+        total_sum=var_losses.get()+var_ties.get()+var_wins.get()
+        if total_sum>0:
+            for relative_value,value in zip([var_relative_value_losses,var_relative_value_wins,var_relative_value_ties],[var_losses,var_wins,var_ties]):
+                relative_value.set(str(np.round((value.get()/total_sum)*100))+"%")  
+        else:
+            var_relative_value_losses.set("N/A")
+            var_relative_value_wins.set("N/A")
+            var_relative_value_ties.set("N/A")
 
 def show_number_of_training_loops_comboboxes():
     var_number_of_training_loops_comboboxes_p1.set("training loops: "+str(modelmanager_instance.get_model(var_model_player1.get()).get_number_of_training_loops()))
