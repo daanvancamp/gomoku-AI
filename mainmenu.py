@@ -112,11 +112,11 @@ var_model_player2.set("standaard")
 var_startingPlayer=StringVar()
 var_startingPlayer.set("Player 1")
 
-var_number_of_training_loops=IntVar()
+var_number_of_training_loops=StringVar()
 var_number_of_training_loops.set(0)
-var_number_of_training_loops_comboboxes_p1=IntVar()
+var_number_of_training_loops_comboboxes_p1=StringVar()
 var_number_of_training_loops_comboboxes_p1.set(0)
-var_number_of_training_loops_comboboxes_p2=IntVar()
+var_number_of_training_loops_comboboxes_p2=StringVar()
 var_number_of_training_loops_comboboxes_p2.set(0)
 
 def set_player_type(player_id):
@@ -236,14 +236,14 @@ def start_new_game():
 
 
 def start_new_training():
-    global game_instance, player1, player2
+    global game_instance
     log_info_overruling("\n\n\nnew session begins:")
     
     game_instance.use_recognition = False
     game_instance.play_music = False
     game_instance.show_overruling=False
 
-    gomoku.player1.TYPE=var_playerType1.get()
+    gomoku.player1.TYPE="AI-Model"
     gomoku.player2.TYPE=var_playerType2.get()
     
     gomoku.player1.load_model(var_model_player1.get(),True)#player 1 is always an AI-Model when training
@@ -287,11 +287,11 @@ def start_new_training():
             if gomoku.player1.TYPE == "AI-Model":
                 #gomoku.player1 is an object of the class Player, ai is an object of the class gomokuAI and ai.decrease_learning_rate() is a method of the class gomokuAI
                 gomoku.player1.ai.decrease_learning_rate()#todo: calculate decrease rate based on number of training rounds
-                player1.AI_model.log_number_of_training_loops(player2.TYPE)
+                gomoku.player1.AI_model.log_number_of_training_loops(gomoku.player2.TYPE)
             if gomoku.player2.TYPE == "AI-Model":
                 #gomoku.player2 is an object of the class Player, ai is an object of the class gomokuAI and ai.decrease_learning_rate() is a method of the class gomokuAI
                 gomoku.player2.ai.decrease_learning_rate()
-                player2.AI_model.log_number_of_training_loops(player1.TYPE)
+                gomoku.player2.AI_model.log_number_of_training_loops(gomoku.player1.TYPE)
                 #arguments: model_name, number_of_additional_training_loops, opponent
               
     except ValueError:
@@ -349,13 +349,13 @@ def delete_model():
         
 def reset_all_stats():
     for i in Lb1.curselection():
-        modelmanager_instance.get_model(Lb1.get(i)).reset_stats()
+        modelmanager_instance.get_model(Lb1.get(i)).reset_stats(True)
     refresh_models()
     refresh_training_stats()
 
 def reset_end_states():
     for i in Lb1.curselection():
-        modelmanager_instance.reset_end_states(Lb1.get(i))
+        modelmanager_instance.get_model(Lb1.get(i)).reset_end_states()
     refresh_models()
     refresh_training_stats()
 def refresh_models():
@@ -407,7 +407,7 @@ def maintain_GUI():
 
 
         if var_playerType1.get()=="AI-Model":
-            CbModel1.config(state=NORMAL)
+            CbModel1.config(state="readonly")
             overrule_button_player_1.config(state=NORMAL)
             label_value_number_of_training_loops_p1.grid()
 
@@ -417,7 +417,7 @@ def maintain_GUI():
             label_value_number_of_training_loops_p1.grid_remove()
 
         if var_playerType2.get()=="AI-Model":
-            CbModel2.config(state=NORMAL)
+            CbModel2.config(state="readonly")
             overrule_button_player_2.config(state=NORMAL)
             overrule_button_player_2_tab2.config(state=NORMAL)
             label_value_number_of_training_loops_p2.grid()
@@ -460,7 +460,7 @@ def maintain_GUI():
             CbStartingPlayer.config(state=DISABLED)
         else:
             playerstartLabel.config(state=NORMAL)
-            CbStartingPlayer.config(state=NORMAL)
+            CbStartingPlayer.config(state="readonly")
 
         if var_start_from_file.get()!=last_value_load_board_from_file and var_start_from_file.get()==True:
             var_rep.set(False) #can't be used simultanously because if you would save a replay file, it wouldn't be complete (the moves that are loaded are gone)
@@ -484,7 +484,7 @@ def maintain_GUI():
         else:
             train_description.grid()
         if var_playerType2.get()=="AI-Model":
-            CbModelTrain2.config(state=NORMAL)
+            CbModelTrain2.config(state="readonly")
         else:
             CbModelTrain2.config(state=DISABLED)
 
@@ -492,28 +492,39 @@ def maintain_GUI():
         refresh_training_stats()
 
 def refresh_training_stats():
+    global last_selected_model #used to keep track of which model is selected, because it is unselected when selecting something in the  combobox
     for i in Lb1.curselection():
-        model=Lb1.get(i)
-        model_class=modelmanager_instance.get_model(model)
-        var_number_of_training_loops.set(model_class.get_total_number_of_training_loops())
-        var_losses.set(model_class.get_number_of_losses())
-        var_wins.set(model_class.get_number_of_wins())
-        var_ties.set(model_class.get_number_of_ties())
+        last_selected_model=Lb1.get(i)
+    model_class=modelmanager_instance.get_model(last_selected_model)
+    var_number_of_training_loops.set(model_class.get_number_of_training_loops())
 
-        if 0 not in [var_losses.get(),var_ties.get(),var_wins.get()]:
-            var_relative_value_losses.set(str(np.round((var_losses.get()/(var_losses.get()+var_ties.get()+var_wins.get()))*100))+"%")
-            var_relative_value_wins.set(str(np.round((var_wins.get()/(var_losses.get()+var_ties.get()+var_wins.get()))*100))+"%")
-            var_relative_value_ties.set(str(np.round((var_ties.get()/(var_losses.get()+var_ties.get()+var_wins.get()))*100))+"%")
+    if Cb_choose_stats.get()== "Total":
+        var_losses.set(model_class.get_number_of_losses("total end stats"))
+        var_wins.set(model_class.get_number_of_wins("total end stats"))
+        var_ties.set(model_class.get_number_of_ties("total end stats"))
+    elif Cb_choose_stats.get()== "Games":
+        var_losses.set(model_class.get_number_of_losses("games end stats"))
+        var_wins.set(model_class.get_number_of_wins("games end stats"))
+        var_ties.set(model_class.get_number_of_ties("games end stats"))
+    elif Cb_choose_stats.get()== "Training":
+        var_losses.set(model_class.get_number_of_losses("training loops end stats"))
+        var_wins.set(model_class.get_number_of_wins("training loops end stats"))
+        var_ties.set(model_class.get_number_of_ties("training loops end stats"))
+
+    if 0 not in [var_losses.get(),var_ties.get(),var_wins.get()]:
+        var_relative_value_losses.set(str(np.round((var_losses.get()/(var_losses.get()+var_ties.get()+var_wins.get()))*100))+"%")
+        var_relative_value_wins.set(str(np.round((var_wins.get()/(var_losses.get()+var_ties.get()+var_wins.get()))*100))+"%")
+        var_relative_value_ties.set(str(np.round((var_ties.get()/(var_losses.get()+var_ties.get()+var_wins.get()))*100))+"%")
             
-        else:
-            var_relative_value_losses.set("N/A")
-            var_relative_value_wins.set("N/A")
-            var_relative_value_ties.set("N/A")
+    else:
+        var_relative_value_losses.set("N/A")
+        var_relative_value_wins.set("N/A")
+        var_relative_value_ties.set("N/A")
 
 def show_number_of_training_loops_comboboxes():
-    var_number_of_training_loops_comboboxes_p1.set(modelmanager_instance.get_model(var_model_player1.get()).get_total_number_of_training_loops())
+    var_number_of_training_loops_comboboxes_p1.set("training loops: "+str(modelmanager_instance.get_model(var_model_player1.get()).get_number_of_training_loops()))
     
-    var_number_of_training_loops_comboboxes_p2.set(modelmanager_instance.get_model(var_model_player2.get()).get_total_number_of_training_loops())
+    var_number_of_training_loops_comboboxes_p2.set("training loops: "+str(modelmanager_instance.get_model(var_model_player2.get()).get_number_of_training_loops()))
     
 Thread_maintain_GUI=Thread(target=maintain_GUI,daemon=True)#end when main program ends
 Thread_maintain_GUI.start()
@@ -531,6 +542,7 @@ ttk.Label(tab1)
 
 button_1 = ttk.Button(tab1, text="New Game", command=lambda: start_new_game(), style="TButton")
 button_1.grid(row=0, column=0, sticky="w")
+
 player1typelabel = ttk.Label(tab1,style="TLabel", text="Player 1(black)")
 player1typelabel.grid(row=2, column=0, sticky="w")
 player2typelabel = ttk.Label(tab1, text="Player 2(white)", style="TLabel")
@@ -693,9 +705,12 @@ if "standaard" in models or "Standaard" in models:
         if item=="standaard"or item=="Standaard":
             Lb1.selection_set(models.index(item))
             Lb1.activate(models.index(item))
+            last_selected_model=item
 else:
     Lb1.selection_set(0)
     Lb1.activate(0)
+    last_selected_model=models[0]
+
 
 
 nameModelLabel = ttk.Label(tab4, text="Name of model: ",style="TLabel")
