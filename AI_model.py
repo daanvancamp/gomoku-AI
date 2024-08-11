@@ -42,6 +42,19 @@ class AI_Model():
         self.directory = self.modelname
         self.path = os.path.join(self.parent_dir, self.directory)
         self.path_config_file=self.path+self.name_config_file
+    
+    def add_one_to_value_from_config_file(self,category,item):
+        if os.path.exists(self.path_config_file):
+            try:
+                with open(self.path_config_file, "r") as file:
+                    data = json.load(file)
+                    data[category][item] += 1
+                    with open(self.path_config_file, "w") as file:
+                        json.dump(data, file, sort_keys = True, indent = 4, ensure_ascii = False)
+            except PermissionError:
+                print("Please close the file and try again")
+        else:
+            raise Exception("Config file not found, try to delete the model and create it again, or replace the config file with the template file")
 
     def get_value_from_config_file(self,category,item):
         if os.path.exists(self.path_config_file):
@@ -54,62 +67,35 @@ class AI_Model():
         else:
             raise Exception("Config file not found, try to delete the model and create it again, or replace the config file with the template file")
 
-    def get_total_number_of_training_loops(self):
+    def get_number_of_training_loops(self):
         if self.number_of_training_loops is None:
             return self.get_value_from_config_file("training stats","training loops")
         else:
             return self.number_of_training_loops
 
     def log_number_of_training_loops(self,opponent):
-        if os.path.exists(self.path_config_file):
-            with open(self.path_config_file, "r") as file:
-                data = json.load(file)
-                data["training stats"]["training loops"] += 1
-                self.number_of_training_loops = data["training stats"]["training loops"]
-                data["training stats"]["training loops against "+opponent] += 1
-                if opponent=="Human":
-                    self.number_of_training_loops_against_human = data["training loops against Human"]
-                elif opponent=="AI-Model":
-                    self.number_of_training_loops_against_ai_model = data["training loops against AI-Model"]
-                elif opponent=="Test Algorithm":
-                    self.number_of_training_loops_against_test_algorithm = data["training loops against Test Algorithm"]
-                with open(self.path_config_file, "w") as file:
-                    json.dump(data, file, sort_keys = True, indent = 4, ensure_ascii = False)
-        else:
-            raise Exception("Config file not found, try to delete the model and create it again, or replace the config file with the template file")
+        self.add_one_to_value_from_config_file("training stats","training loops")
+        self.number_of_training_loops = self.get_value_from_config_file("training stats","training loops")
+        self.add_one_to_value_from_config_file("training stats","training loops against "+ opponent)
+        if opponent=="Human":
+            self.number_of_training_loops_against_human = self.get_value_from_config_file("training stats","training loops against Human")
+        elif opponent=="AI-Model":
+            self.number_of_training_loops_against_ai_model = self.get_value_from_config_file("training stats","training loops against AI-Model")
+        elif opponent=="Test Algorithm":
+            self.number_of_training_loops_against_test_algorithm = self.get_value_from_config_file("training stats","training loops against Test Algorithm")
     
     def log_win(self):
-        if os.path.exists(self.path_config_file):
-            with open(self.path_config_file, "r") as file:
-                data = json.load(file)
-                data["total end stats"]["wins"] += 1
-                self.wins = data["total end stats"]["wins"]
-                with open(self.path_config_file, "w") as file:
-                    json.dump(data, file, sort_keys = True, indent = 4, ensure_ascii = False)
-        else:
-            raise Exception("Config file not found, try to delete the model and create it again, or replace the config file with the template file")
+        self.add_one_to_value_from_config_file("total end stats","wins")
+        self.wins = self.get_value_from_config_file("total end stats","wins")
+                
     def log_loss(self):
-        if os.path.exists(self.path_config_file):
-            with open(self.path_config_file, "r") as file:
-                data = json.load(file)
-                data["losses"] += 1
-                self.losses = data["losses"]
-                with open(self.path_config_file, "w") as file:
-                    json.dump(data, file, sort_keys = True, indent = 4, ensure_ascii = False)
-        else:
-            raise Exception("Config file not found, try to delete the model and create it again, or replace the config file with the template file")
-
+        self.add_one_to_value_from_config_file("total end stats","losses")
+        self.losses = self.get_value_from_config_file("total end stats","losses")
+                
     def log_tie(self):
-        if os.path.exists(self.path_config_file):
-            with open(self.path_config_file, "r") as file:
-                data = json.load(file)
-                data["ties"] += 1
-                self.ties = data["ties"]
-                with open(self.path_config_file, "w") as file:
-                    json.dump(data, file, sort_keys = True, indent = 4, ensure_ascii = False)
-        else:
-            raise Exception("Config file not found, try to delete the model and create it again, or replace the config file with the template file")
-
+        self.add_one_to_value_from_config_file("total end stats","ties")     
+        self.ties = self.get_value_from_config_file("total end stats","ties")
+                
     def get_number_of_wins(self):
         if self.wins is None:
             return self.get_value_from_config_file("total end stats","wins")
