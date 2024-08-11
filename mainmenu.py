@@ -342,9 +342,11 @@ def create_new_model():
     refresh_training_stats()
 
 def delete_model():
+    global last_selected_model
     for i in Lb1.curselection():
-        modelmanager_instance.get_model(Lb1.get(i)).delete_model()
+        modelmanager_instance.delete_model(Lb1.get(i))
     refresh_models()
+    last_selected_model=Lb1.get(0)
     refresh_training_stats()
         
 def reset_all_stats():
@@ -467,6 +469,7 @@ def maintain_GUI():
             
             last_value_load_board_from_file=var_start_from_file.get()
             last_value_repvar=var_rep.get()
+
         if var_rep.get()!=last_value_repvar and var_rep.get()==True:
             var_start_from_file.set(False)
 
@@ -495,6 +498,7 @@ def refresh_training_stats():
     global last_selected_model #used to keep track of which model is selected, because it is unselected when selecting something in the  combobox
     for i in Lb1.curselection():
         last_selected_model=Lb1.get(i)
+
     model_class=modelmanager_instance.get_model(last_selected_model)
     var_number_of_training_loops.set(model_class.get_number_of_training_loops())
 
@@ -537,23 +541,25 @@ style2.configure("TEntry",fg="white",bg="green")
 style2.configure("TLabel", font=(style_numbers[0], style_numbers[1]),fg="white",bg="green")#font=georgia, size=10
 style2.configure("TCheckbutton", font=(style_numbers[0], style_numbers[1]),fg="white",bg="green")#font=georgia, size=10
 
+distance_from_left_side=10
 ### TABS ###
 ttk.Label(tab1)
 
 button_1 = ttk.Button(tab1, text="New Game", command=lambda: start_new_game(), style="TButton")
-button_1.grid(row=0, column=0, sticky="w")
+button_1.grid(row=0, column=0, sticky="w", padx=distance_from_left_side)
 
 player1typelabel = ttk.Label(tab1,style="TLabel", text="Player 1(black)")
-player1typelabel.grid(row=2, column=0, sticky="w")
+player1typelabel.grid(row=2, column=0, sticky="w", padx=distance_from_left_side)
 player2typelabel = ttk.Label(tab1, text="Player 2(white)", style="TLabel")
-player2typelabel.grid(row=2, column=1, sticky="w")
+player2typelabel.grid(row=2, column=1, sticky="w", padx=distance_from_left_side)
 
 radiobutton1 = ttk.Radiobutton(tab1, text="Human", variable=var_playerType1, value="Human", command=lambda: set_player_type(0),style="TRadiobutton")
-radiobutton1.grid(row=3, column=0, sticky="w")
+radiobutton1.grid(row=3, column=0, sticky="w", padx=distance_from_left_side)
 radiobutton2 = ttk.Radiobutton(tab1, text="Test Algorithm", variable=var_playerType1, value="Test Algorithm", command=lambda: set_player_type(0),style="TRadiobutton")
-radiobutton2.grid(row=4, column=0, sticky="w")
+radiobutton2.grid(row=4, column=0, sticky="w", padx=distance_from_left_side)
 radiobutton3 = ttk.Radiobutton(tab1, text="AI-Model", variable=var_playerType1, value="AI-Model", command=lambda: set_player_type(0),style="TRadiobutton")
-radiobutton3.grid(row=5, column=0, sticky="w")
+radiobutton3.grid(row=5, column=0, sticky="w", padx=distance_from_left_side)
+
 radiobutton4 = ttk.Radiobutton(tab1, text="Human", variable=var_playerType2, value="Human", command=lambda: set_player_type(1),style="TRadiobutton")
 radiobutton4.grid(row=3, column=1, sticky="w")
 radiobutton5 = ttk.Radiobutton(tab1, text="Test Algorithm", variable=var_playerType2, value="Test Algorithm", command=lambda: set_player_type(1),style="TRadiobutton")
@@ -565,41 +571,41 @@ list_models = modelmanager_instance.get_list_models()
 CbModel1 = ttk.Combobox(tab1, state="readonly", values=list_models,textvariable=var_model_player1)
 CbModel2 = ttk.Combobox(tab1, state="readonly", values=list_models,textvariable=var_model_player2)
 
-CbModel1.grid(row=6, column=0)
+CbModel1.grid(row=6, column=0, sticky="w",padx=distance_from_left_side)
 CbModel2.grid(row=6, column=1)
 
 label_value_number_of_training_loops_p1 = ttk.Label(tab1, textvariable=var_number_of_training_loops_comboboxes_p1,style="TLabel")
-label_value_number_of_training_loops_p1.grid(row=8, column=0, sticky="w")
+label_value_number_of_training_loops_p1.grid(row=8, column=0, sticky="w",padx=distance_from_left_side)
 
 label_value_number_of_training_loops_p2 = ttk.Label(tab1, textvariable=var_number_of_training_loops_comboboxes_p2,style="TLabel")
 label_value_number_of_training_loops_p2.grid(row=8, column=1, sticky="w")
 
 
 overrule_button_player_1=ttk.Checkbutton(tab1, text="Allow overrule", variable=var_allow_overrule_player_1,style="TCheckbutton")
-overrule_button_player_1.grid(row=9, column=0, sticky="w")
+overrule_button_player_1.grid(row=9, column=0, sticky="w",padx=distance_from_left_side)
 
 overrule_button_player_2=ttk.Checkbutton(tab1, text="Allow overrule", variable=var_allow_overrule_player_2,style="TCheckbutton")
 overrule_button_player_2.grid(row=9, column=1, sticky="w")
 
 
 gamerunslabel = ttk.Label(tab1, text="Number of games: ",style="TLabel")
-gamerunslabel.grid(row=10, column=0, sticky="w")
+gamerunslabel.grid(row=10, column=0, sticky="w",padx=distance_from_left_side)
 gamerunsentry = ttk.Entry(tab1, textvariable=var_game_runs,style="TEntry")
 gamerunsentry.grid(row=10, column=1, sticky="w")
 
 playerstartLabel = ttk.Label(tab1, text="Player to start: ",style="TLabel")
-playerstartLabel.grid(row=11, column=0, sticky="w")
+playerstartLabel.grid(row=11, column=0, sticky="w", padx=distance_from_left_side)
 CbStartingPlayer = ttk.Combobox(tab1, state="readonly", values=["Player 1", "Player 2"], textvariable=var_startingPlayer)
 CbStartingPlayer.current(0)
 CbStartingPlayer.grid(row=11, column=1, sticky="w")
 
 #column 0
 logbutton = ttk.Checkbutton(tab1, text="Create log file", variable=var_log,style="TCheckbutton") 
-logbutton.grid(row=12, column=0, sticky="w")
+logbutton.grid(row=12, column=0, sticky="w",padx=distance_from_left_side)
 replaybutton = ttk.Checkbutton(tab1, text="Save replays(1)", variable=var_rep,style="TCheckbutton") 
-replaybutton.grid(row=13, column=0, sticky="w")
+replaybutton.grid(row=13, column=0, sticky="w",padx=distance_from_left_side)
 delaybutton = ttk.Checkbutton(tab1, text="Use AI Delay", variable=var_delay,style="TCheckbutton")
-delaybutton.grid(row=14, column=0, sticky="w")
+delaybutton.grid(row=14, column=0, sticky="w",padx=distance_from_left_side)
 
 #column1
 music_button=ttk.Checkbutton(tab1, text="Play music", variable=var_play_music,style="TCheckbutton")
@@ -611,11 +617,11 @@ use_recognition_button.grid(row=14, column=1, sticky="w")
 
 
 label_recognition=ttk.Label(tab1, text="*only turn on when you have a physical board, a webcam and the other repository.",style="TLabel",wraplength=300)
-label_recognition.grid(row=15, column=0, sticky="w",columnspan=2)
+label_recognition.grid(row=15, column=0, sticky="w",columnspan=2, padx=distance_from_left_side)
 
 
 bottomframe = Frame(tab1, highlightbackground="blue", highlightthickness=3, borderwidth=1)
-bottomframe.grid(row=16, column=0, sticky="w",columnspan=3, padx=5, pady=15)
+bottomframe.grid(row=16, column=0, sticky="w",columnspan=3, padx=distance_from_left_side, pady=15)
 
 start_from_file_button=ttk.Checkbutton(bottomframe, text="Load game situation(2)", variable=var_start_from_file,style="TCheckbutton")
 start_from_file_button.grid(row=0, column=0, sticky="w")
@@ -633,22 +639,22 @@ root.bind("<Escape>", lambda event: quit_game())
 root.bind("<q>", lambda event: quit_game())
 
 label_info_load_save_replay=ttk.Label(tab1,wraplength=300, text="(1)(2)The save replay function can't be used when loading a board, because that would create a wrong replay file.",style="TLabel")
-label_info_load_save_replay.grid(row=17, column=0, sticky="w",columnspan=2,pady=5)
+label_info_load_save_replay.grid(row=17, column=0, sticky="w",columnspan=2,pady=5,padx=distance_from_left_side)
 
 ttk.Label(tab2)
 #row 0
 button_2 = ttk.Button(tab2, text="Train", style="TButton", command=lambda: start_new_training())
-button_2.grid(row=0, column=1, sticky="e")
+button_2.grid(row=0, column=1, sticky="e",padx=distance_from_left_side)
 
 #column 0
 label_model=ttk.Label(tab2, text="AI-Model: ",style="TLabel")
-label_model.grid(row=1, column=0, sticky="w",padx=10,pady=1)
+label_model.grid(row=1, column=0, sticky="w",padx=distance_from_left_side,pady=1)
 CbModelTrain1 = ttk.Combobox(tab2, state="readonly", values=list_models,textvariable=var_model_player1)
-CbModelTrain1.grid(row=2, column=0, sticky="w",padx=10,pady=1)
+CbModelTrain1.grid(row=2, column=0, sticky="w",padx=distance_from_left_side,pady=1)
 label_value_number_of_training_loops_tab2_p1 = ttk.Label(tab2, textvariable=var_number_of_training_loops_comboboxes_p1,style="TLabel")
-label_value_number_of_training_loops_tab2_p1.grid(row=3, column=0, sticky="w")
+label_value_number_of_training_loops_tab2_p1.grid(row=3, column=0, sticky="w",padx=distance_from_left_side,pady=1)
 overrule_button_player_1_tab2=ttk.Checkbutton(tab2, text="Allow overrule", variable=var_allow_overrule_player_1,style="TCheckbutton")
-overrule_button_player_1_tab2.grid(row=4, column=0, sticky="w")
+overrule_button_player_1_tab2.grid(row=4, column=0, sticky="w",padx=distance_from_left_side)
 
 
 train_opponent_label = ttk.Label(tab2, text="Train model against:", style="TLabel")
@@ -667,27 +673,27 @@ overrule_button_player_2_tab2=ttk.Checkbutton(tab2, text="Allow overrule", varia
 overrule_button_player_2_tab2.grid(row=7, column=1, sticky="w")
 
 gamerunslabel = ttk.Label(tab2, text="Number of games: ",style="TLabel")
-gamerunslabel.grid(row=8, column=0, sticky="w",pady=2)
+gamerunslabel.grid(row=8, column=0, sticky="w",pady=2,padx=distance_from_left_side)
 gamerunsentry2 = ttk.Entry(tab2, textvariable=var_game_runs,style="TEntry")
-gamerunsentry2.grid(row=9, column=0, sticky="w")
+gamerunsentry2.grid(row=9, column=0, sticky="w",pady=2,padx=distance_from_left_side)
 replaybutton2 = ttk.Checkbutton(tab2, text="Save replays", variable=var_rep,style="TCheckbutton")
-replaybutton2.grid(row=10, column=0, sticky="w")
+replaybutton2.grid(row=10, column=0, sticky="w",pady=2,padx=distance_from_left_side)
 
 
 train_description = Label(tab2, text="It is recommended to run at least 3 000 games per training session.", font=(style_numbers[0], style_numbers[1]), wraplength=WIDTH-5, justify=LEFT)#origineel width-5
-train_description.grid(row=11, column=0, sticky="w",columnspan=2)
+train_description.grid(row=11, column=0, sticky="w",columnspan=2,padx=distance_from_left_side)
 
 ttk.Label(tab3)
 replaylabel = ttk.Label(tab3, text="Choose the replay file: ",style="TLabel")
-replaylabel.grid(row=0, column=0, sticky="w")
+replaylabel.grid(row=0, column=0, sticky="w",pady=2,padx=distance_from_left_side)
 replayentry = ttk.Entry(tab3, textvariable=replay_path, width=30,style="TEntry")
-replayentry.grid(row=1, column=0, sticky="w")
+replayentry.grid(row=1, column=0, sticky="w",pady=2,padx=distance_from_left_side)
 button_4 = ttk.Button(tab3, text="...",style="TButton", command=lambda: browse_files())
 button_4.grid(row=1, column=1, sticky="w")
 delaybutton2 = ttk.Checkbutton(tab3, text="Use AI Delay", variable=var_delay, style="TCheckbutton")
-delaybutton2.grid(row=2, column=0, sticky="w")
+delaybutton2.grid(row=2, column=0, sticky="w",pady=2,padx=distance_from_left_side)
 button_5 = ttk.Button(tab3, text="Play", style="TButton", command=lambda: start_new_replay())
-button_5.grid(row=3, column=0)
+button_5.grid(row=3, column=0, sticky="w",pady=2,padx=distance_from_left_side)
 
 
 ttk.Label(tab4)
@@ -698,7 +704,7 @@ i  = 0
 for model in models:
     Lb1.insert(i, model.split('\\')[-1])
     i+=1
-Lb1.grid(row=1, column=1)
+Lb1.grid(row=1, column=1,padx=distance_from_left_side)
 
 if "standaard" in models or "Standaard" in models:
     for item in models:
@@ -714,28 +720,25 @@ else:
 
 
 nameModelLabel = ttk.Label(tab4, text="Name of model: ",style="TLabel")
-nameModelLabel.grid(row=2, column=0, sticky="w")
+nameModelLabel.grid(row=2, column=0, sticky="w",pady=2,padx=distance_from_left_side)
 nameModelEntry = ttk.Entry(tab4, textvariable=var_name_model,style="TEntry")
-nameModelEntry.grid(row=2, column=1, sticky="w")
+nameModelEntry.grid(row=2, column=1, sticky="w",pady=2,padx=distance_from_left_side)
 nameModelEntry.bind("<Return>",lambda event: create_new_model())#push enter to make a new model (easier)
 button_NewModel = ttk.Button(tab4, text="Make New Model", style="TButton", command=lambda: create_new_model())
-button_NewModel.grid(row=3, column=0)
+button_NewModel.grid(row=3, column=0,sticky="w",pady=2,padx=distance_from_left_side)
 button_DeleteModel = ttk.Button(tab4, text="Delete Model", style="TButton", command=lambda: delete_model())
 button_DeleteModel.grid(row=3, column=1)
-button_reset_stats=ttk.Button(tab4, text="Reset Stats", style="TButton", command=lambda: reset_all_stats())
-button_reset_stats.grid(row=3, column=2)
-button_reset_end_states=ttk.Button(tab4, text="Reset End States", style="TButton", command=lambda: reset_end_states())
-button_reset_end_states.grid(row=3, column=3)
+
 
 label_number_of_training_loops = ttk.Label(tab4, text="Training loops: ",style="TLabel")
-label_number_of_training_loops.grid(row=4, column=0, sticky="w")
+label_number_of_training_loops.grid(row=4, column=0, sticky="w",pady=2,padx=distance_from_left_side)
 label_value_number_of_training_loops_tab4 = ttk.Label(tab4, textvariable=var_number_of_training_loops,style="TLabel")
 label_value_number_of_training_loops_tab4.grid(row=4, column=1, sticky="w")
 
 stats_list=["Total","Games","Training"]
 Cb_choose_stats= ttk.Combobox(tab4, state="readonly", values=stats_list, textvariable=var_choose_stats)
 Cb_choose_stats.current(0)
-Cb_choose_stats.grid(row=5, column=0, sticky="w")
+Cb_choose_stats.grid(row=5, column=0, sticky="w",pady=2,padx=distance_from_left_side)
 
 
 label_losses=ttk.Label(tab4, text="Losses: ",style="TLabel")
@@ -746,18 +749,25 @@ label_relative_value_losses=ttk.Label(tab4, textvariable=var_relative_value_loss
 label_relative_value_losses.grid(row=6, column=2, sticky="w")
 
 label_wins=ttk.Label(tab4, text="Wins: ",style="TLabel")
-label_wins.grid(row=7, column=0, sticky="w")
+label_wins.grid(row=7, column=0, sticky="w",padx=distance_from_left_side)
 label_value_wins_tab4 = ttk.Label(tab4, textvariable=var_wins,style="TLabel")
 label_value_wins_tab4.grid(row=7, column=1, sticky="w")
 label_relative_value_wins=ttk.Label(tab4, textvariable=var_relative_value_wins,style="TLabel")
 label_relative_value_wins.grid(row=7, column=2, sticky="w")
 
 label_ties=ttk.Label(tab4, text="Ties: ",style="TLabel")
-label_ties.grid(row=8, column=0, sticky="w")
+label_ties.grid(row=8, column=0, sticky="w",padx=distance_from_left_side)
 label_value_ties_tab4 = ttk.Label(tab4, textvariable=var_ties,style="TLabel")
 label_value_ties_tab4.grid(row=8, column=1, sticky="w")
 label_relative_value_ties=ttk.Label(tab4, textvariable=var_relative_value_ties,style="TLabel")
 label_relative_value_ties.grid(row=8, column=2, sticky="w")
+
+frame_stats_buttons=ttk.Frame(tab4)
+frame_stats_buttons.grid(row=9, column=0, columnspan=3)
+button_reset_stats=ttk.Button(frame_stats_buttons, text="Reset Stats", style="TButton", command=lambda: reset_all_stats())
+button_reset_stats.grid(row=0, column=0)
+button_reset_end_states=ttk.Button(frame_stats_buttons, text="Reset End States", style="TButton", command=lambda: reset_end_states())
+button_reset_end_states.grid(row=0, column=1)
 
 def mainmenu_run():
     root.mainloop()

@@ -1,7 +1,7 @@
 import os
 import shutil
 import json
-from AI_Model import AI_Model
+from  AI_Model import AI_Model
 
 class ModelManagerMeta(type):
     """
@@ -26,16 +26,6 @@ class ModelManagerMeta(type):
 class ModelManager(metaclass=ModelManagerMeta):
     def __init__(self):
         self.parent_dir = "data/models"
-        self.name_config_file = "/modelconfig.json"
-        self.initial_json_data = {'training loops': 0,
-                     "training loops against Human": 0,
-                     "training loops against AI-Model": 0,
-                     "training loops against Test Algorithm": 0,
-                     
-                     "losses": 0,
-                     "wins": 0,
-                     "ties": 0
-                     }
 
     def create_new_model(self, modelName):
         # Directory 
@@ -57,9 +47,7 @@ class ModelManager(metaclass=ModelManagerMeta):
         
         shutil.copyfile('./data/templatemodel/model.pth', path + "/model.pth")
         
-        
-        with open(path + self.name_config_file, 'w') as out_file:
-            json.dump(self.initial_json_data, out_file, sort_keys = True, indent = 4, ensure_ascii = False)
+        self.get_model(modelName).reset_stats(False)
        
     def get_list_models(self):
         subfolders = [ f.path for f in os.scandir('data/models') if f.is_dir() ]
