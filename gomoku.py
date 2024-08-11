@@ -1,3 +1,4 @@
+from concurrent.futures import thread
 import operator
 import time
 import pygame
@@ -434,6 +435,7 @@ def add_hover_effect(instance):
             pygame.display.flip()
             sleep(0.1)#otherwise it will be flashing uncontrollably
 
+
 def runGame(instance, game_number, record_replay):#main function
     # Main game loop
     global window_name, victory_text, current_player, player1, player2, running,current_player,p1_moves, p2_moves,winning_player
@@ -446,6 +448,7 @@ def runGame(instance, game_number, record_replay):#main function
             print("Overruling is allowed for player 1")
         else:
             print("Overruling is not allowed for player 1")
+
     if player2.TYPE=="AI-Model":
         if player2.allow_overrule:
             print("Overruling is allowed for player 2")
@@ -487,11 +490,9 @@ def runGame(instance, game_number, record_replay):#main function
                             x,y=event.pos
                         try:
                             handle_human_move(instance, x, y, record_replay, players, p1_moves, p2_moves) 
-                        except Exception as e:
-                            handle_human_move(instance, x, y, record_replay, players)
-                            
+                        except:
+                            handle_human_move(instance, x, y, record_replay, players)                       
                 add_hover_effect(instance)
-
             # test algorithm move
             elif current_player.TYPE == "Test Algorithm" and not testai.check_game_over(instance):
                 if instance.ai_delay:
@@ -499,6 +500,7 @@ def runGame(instance, game_number, record_replay):#main function
                 ai_row, ai_col = testai.ai_move(instance, players[current_player.get_player_id()-1].id)
                 testai.make_move((ai_row, ai_col), current_player.get_player_id(), instance)
                 players[current_player.get_player_id()-1].moves += 1
+
                 if current_player.get_player_id() == 1 and record_replay:
                     p1_moves.append((ai_row, ai_col))
                 elif record_replay:
@@ -538,6 +540,7 @@ def runGame(instance, game_number, record_replay):#main function
                     p1_moves.append(action)
                 elif record_replay:
                     p2_moves.append(action)
+
                 players[current_player.get_player_id() - 1].weighed_moves.append(score)
                 instance.board[action[0]][action[1]] = current_player.get_player_id()
                 game_over = check_win(action[0], action[1], current_player.get_player_id(), instance)
@@ -587,21 +590,32 @@ def runTraining(instance, game_number, record_replay):#main function
     # Main game loop
     global window_name, victory_text, current_player,player1,player2,running,winning_player
     mark_last_move_model=False 
-    for p in players: #players=[Human, AI]
+
+    if player1.allow_overrule:
+        print("Overruling is allowed for player 1")
+    else:
+        print("Overruling is not allowed for player 1")
+
+    if player2.TYPE=="AI-Model":
+        if player2.allow_overrule:
+            print("Overruling is allowed for player 2")
+        else:
+            print("Overruling is not allowed for player 2")
+
+    for p in players:
         if p.TYPE == "AI-Model":
             if p==player1:
                 p.ai.model.load_model(player1.AI_model.modelname)
             else:
                 p.ai.model.load_model(player2.AI_model.modelname)
             p.ai.train = True
-        if p.TYPE == "Human":
+        elif p.TYPE == "Human":
             p.ai.train = False
             mark_last_move_model=True
 
 
     instance.play_music=False
     pygame.display.set_icon(pygame.image.load('res/ico.png'))
-    os.environ['SDL_VIDEO_WINDOW_POS'] = "%d,%d" % (300,200)
 
     pygame.init()
     pygame.display.set_caption(window_name)
@@ -754,7 +768,6 @@ def runTraining(instance, game_number, record_replay):#main function
 def runReplay(instance, moves:dict=None):#main function
     # Main game loop
     global window_name, victory_text, current_player, running
-    os.environ['SDL_VIDEO_WINDOW_POS'] = "%d,%d" % (300,200)
     pygame.display.set_icon(pygame.image.load('res/ico.png'))
     pygame.init()
     pygame.display.set_caption(window_name)
