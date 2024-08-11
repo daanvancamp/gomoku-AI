@@ -1,7 +1,7 @@
 import operator
 import time
 import pygame
-from AI_model import AI_Model
+from AI_Model import AI_Model
 from music import start_muziek_vertraagd
 import testai
 import ai
@@ -123,7 +123,7 @@ class Player:
         self.final_move_loss = []
         self.avg_moves = 0
         
-    def load_model(self, model,is_training):
+    def load_model(self, model, is_training):
         self.AI_model = AI_Model(model,is_training)
         self.ai.model.load_model(model)
 
@@ -154,21 +154,22 @@ def reset_player_stats():
     for i in range(len(players)):
         players[i].reset_score()
 
+
 # Update win / loss stats of players: -1 = tie; 1 = player 1 won; 2 = player 2 won
-def update_player_stats(instance, winning_player,is_training):
-    global player1, player2
+def update_player_stats(instance, winning_player):
+    global player1, player2,players
+    AI_players=[p for p in players if p.TYPE=="AI-Model"]
     if winning_player > -1: # run if game was not a tie
-        if not is_training:#don't save the wins and losses caused by training
-            if winning_player == 1:
-                if player1.TYPE =="AI-Model":
-                    player1.AI_model.log_win()
-                if player2.TYPE =="AI-Model":
-                    player2.AI_model.log_loss()
-            elif winning_player == 2:
-                if player1.TYPE =="AI-Model":
-                    player1.AI_model.log_loss()
-                if player2.TYPE =="AI-Model":
-                    player2.AI_model.log_win()
+        if winning_player == 1:
+            if player1.TYPE =="AI-Model":
+                player1.AI_model.log_win()
+            if player2.TYPE =="AI-Model":
+                player2.AI_model.log_loss()
+        elif winning_player == 2:
+            if player1.TYPE =="AI-Model":
+                player1.AI_model.log_loss()
+            if player2.TYPE =="AI-Model":
+                player2.AI_model.log_win()
 
         for i in range(len(players)):
             if i == winning_player-1:
@@ -181,8 +182,8 @@ def update_player_stats(instance, winning_player,is_training):
             if instance.last_round:
                 players[i].calculate_win_rate(instance.current_game)
     else:
-        player1.AI_model.log_tie()
-        player2.AI_model.log_tie()
+        for player in AI_players:
+            player.AI_model.log_tie()
 
     for i in range(len(players)):
         players[i].calculate_score(0, False, instance.current_game)
@@ -566,7 +567,7 @@ def runGame(instance, game_number, record_replay):#main function
     # End game
     stats.log_message(victory_text)
     pygame.display.set_caption("Gomoku - Game: " + str(game_number) + " - " + victory_text)
-    update_player_stats(instance, winning_player,False)
+    update_player_stats(instance, winning_player)
     if record_replay:
         filereader.save_replay(p1_moves, p2_moves)
     
@@ -710,7 +711,7 @@ def runTraining(instance, game_number, record_replay):#main function
     # End game
     stats.log_message(victory_text)
     pygame.display.set_caption("Gomoku - Game: " + str(game_number) + " - " + victory_text)
-    update_player_stats(instance, winning_player,True)
+    update_player_stats(instance, winning_player)
     if record_replay:
         filereader.save_replay(p1_moves, p2_moves)
     # For any AI-Model, train for long memory and save model

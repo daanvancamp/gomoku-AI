@@ -50,7 +50,7 @@ def recognize_move():
 
 
 
-def initialiseer_spelbord_json_bestanden():
+def initialize_board_json_files():
     import json
     relevante_stukken=[]
     pads=[r".\board_gomoku\bord_na_zet.json",r".\board_gomoku\bord_voor_zet.json"]

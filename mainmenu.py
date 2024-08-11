@@ -8,7 +8,7 @@ from tkinter import filedialog
 import filereader
 import stats
 from PIL import Image, ImageTk
-from detect_pieces import initialiseer_spelbord_json_bestanden
+from detect_pieces import initialize_board_json_files
 from filereader import log_info_overruling
 import modelmanager
 import gomoku
@@ -167,22 +167,6 @@ def start_new_game():
     game_instance.show_overruling=var_show_overruling.get()
 
 
-    if var_playerType1.get() == "AI-Model":
-        gomoku.player1.load_model(var_model_player1.get())
-        gomoku.player1.set_allow_overrule(var_allow_overrule_player_1.get())
-    if var_playerType2.get() == "AI-Model":
-        gomoku.player2.load_model(var_model_player2.get())
-        gomoku.player2.set_allow_overrule(var_allow_overrule_player_2.get())
-    if var_startingPlayer.get() == "Player 1":
-        gomoku.current_player = gomoku.player1
-    else:
-        gomoku.current_player = gomoku.player2
-    
-    try:
-        initialiseer_spelbord_json_bestanden()
-    except:
-        raise Exception("error in function: initialiseer_spelbord_json_bestanden")
-
     game_instance.ai_delay = var_delay.get()
     stats.should_log = var_log.get()
     stats.setup_logging(var_playerType1.get(), var_playerType2.get())
@@ -190,10 +174,19 @@ def start_new_game():
     gomoku.player1.TYPE=var_playerType1.get()
     gomoku.player2.TYPE=var_playerType2.get()
 
-    if (gomoku.player1.TYPE == "AI-Model" ):
-        gomoku.player1.load_model(var_model_player1.get())
-    if (gomoku.player2.TYPE == "AI-Model" ):
-        gomoku.player2.load_model(var_model_player2.get())
+    if gomoku.player1.TYPE == "AI-Model":
+        gomoku.player1.load_model(var_model_player1.get(),False)
+        gomoku.player1.set_allow_overrule(var_allow_overrule_player_1.get())
+    if gomoku.player2.TYPE == "AI-Model":
+        gomoku.player2.load_model(var_model_player2.get(),False)
+        gomoku.player2.set_allow_overrule(var_allow_overrule_player_2.get())
+
+    if var_startingPlayer.get() == "Player 1":
+        gomoku.current_player = gomoku.player1
+    else:
+        gomoku.current_player = gomoku.player2
+    
+    initialize_board_json_files()
 
     root.wm_state('iconic')
         
@@ -210,7 +203,7 @@ def start_new_game():
         log_info_overruling("run "+str(i+1)+" begins:")
         if game_instance.use_recognition:
             try:
-                initialiseer_spelbord_json_bestanden()#geen stukken op bord
+                initialize_board_json_files()#geen stukken op bord
             except:
                 raise Exception("Error in function: initialiseer_spelbord_json_bestanden")
             
@@ -253,11 +246,11 @@ def start_new_training():
     gomoku.player1.TYPE=var_playerType1.get()
     gomoku.player2.TYPE=var_playerType2.get()
     
-    gomoku.player1.load_model(var_model_player1.get())#player 1 is always an AI-Model when training
+    gomoku.player1.load_model(var_model_player1.get(),True)#player 1 is always an AI-Model when training
     gomoku.player1.set_allow_overrule(var_allow_overrule_player_1.get())
 
     if gomoku.player2.TYPE == "AI-Model":
-        gomoku.player2.load_model(var_model_player2.get())
+        gomoku.player2.load_model(var_model_player2.get(),True)
         gomoku.player2.set_allow_overrule(var_allow_overrule_player_2.get())
 
     if var_startingPlayer.get() == "Player 1":
@@ -350,13 +343,13 @@ def create_new_model():
 
 def delete_model():
     for i in Lb1.curselection():
-        modelmanager_instance.delete_model(Lb1.get(i))
+        modelmanager_instance.get_model(Lb1.get(i)).delete_model()
     refresh_models()
     refresh_training_stats()
         
 def reset_all_stats():
     for i in Lb1.curselection():
-        modelmanager_instance.reset_stats(Lb1.get(i))
+        modelmanager_instance.get_model(Lb1.get(i)).reset_stats()
     refresh_models()
     refresh_training_stats()
 
