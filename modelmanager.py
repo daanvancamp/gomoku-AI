@@ -1,7 +1,7 @@
 import os
 import shutil
 import json
-from AI_model import AI_Model
+from AI_Model import AI_Model
 
 class ModelManagerMeta(type):
     """
@@ -78,31 +78,3 @@ class ModelManager(metaclass=ModelManagerMeta):
     
     def get_model(self, modelName):
         return AI_Model(modelName)
-
-    def reset_stats(self, modelName):
-         # Directory 
-        directory = modelName
-
-        path = os.path.join(self.parent_dir, directory) 
-
-        with open(path + self.name_config_file, 'w') as out_file:
-            json.dump(self.initial_json_data, out_file, sort_keys = True, indent = 4, ensure_ascii = False)
-        
-        print("The stats of the model " + modelName + " have been reset")
-    
-    def reset_end_states(self, modelName):
-         # Directory 
-        directory = modelName
-
-        path = os.path.join(self.parent_dir, directory) 
-
-        with open(path + self.name_config_file, 'r+') as file:
-            json_data = json.load(file)
-            json_data["losses"] = 0
-            json_data["wins"] = 0
-            json_data["ties"] = 0
-            file.seek(0)
-            json.dump(json_data, file, sort_keys = True, indent = 4, ensure_ascii = False)
-            print("updated values:",json_data)
-            file.truncate()
-        print("The end states of the model " + modelName + " have been reset")
