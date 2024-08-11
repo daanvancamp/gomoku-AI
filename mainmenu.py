@@ -410,23 +410,23 @@ def maintain_GUI():
         if var_playerType1.get()=="AI-Model":
             CbModel1.config(state="readonly")
             overrule_button_player_1.config(state=NORMAL)
-            label_value_number_of_training_loops_p1.grid()
+            label_value_number_of_training_loops_p1.config(state=NORMAL)
 
         else:
             CbModel1.config(state=DISABLED)
             overrule_button_player_1.config(state=DISABLED)
-            label_value_number_of_training_loops_p1.grid_remove()
+            label_value_number_of_training_loops_p1.config(state=DISABLED)
 
         if var_playerType2.get()=="AI-Model":
             CbModel2.config(state="readonly")
             overrule_button_player_2.config(state=NORMAL)
             overrule_button_player_2_tab2.config(state=NORMAL)
-            label_value_number_of_training_loops_p2.grid()
+            label_value_number_of_training_loops_p2.config(state=NORMAL)
         else:
             CbModel2.config(state=DISABLED)
             overrule_button_player_2.config(state=DISABLED)
             overrule_button_player_2_tab2.config(state=DISABLED)
-            label_value_number_of_training_loops_p2.grid_remove()
+            label_value_number_of_training_loops_p2.config(state=DISABLED)
 
         if var_start_from_file.get():
             label_load_state.grid()
