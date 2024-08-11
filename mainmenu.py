@@ -482,10 +482,15 @@ def maintain_GUI():
         else:
             button_show_overruling.config(state=DISABLED)
 
-        if var_playerType2.get()=="Human":
-            train_description.grid_remove() #a human will never play the game 3000 times to train the model
+        if not var_rep.get() and not var_start_from_file.get():
+            label_info_load_save_replay.config(state=DISABLED)
         else:
-            train_description.grid()
+            label_info_load_save_replay.config(state=NORMAL)
+
+        if var_playerType2.get()=="Human":
+            train_description.config(state="disabled") #a human will never play the game 3000 times to train the model
+        else:
+            train_description.config(state="normal")
         if var_playerType2.get()=="AI-Model":
             CbModelTrain2.config(state="readonly")
         else:
@@ -659,12 +664,14 @@ overrule_button_player_1_tab2.grid(row=4, column=0, sticky="w",padx=distance_fro
 
 train_opponent_label = ttk.Label(tab2, text="Train model against:", style="TLabel")
 train_opponent_label.grid(row=1, column=1, sticky="w")
-radiobutton7 = ttk.Radiobutton(tab2, text="Test Algorithm", variable=var_playerType2, value="Test Algorithm")
-radiobutton7.grid(row=2, column=1, sticky="w")
-radiobutton8 = ttk.Radiobutton(tab2, text="AI-Model", variable=var_playerType2, value="AI-Model", style="TRadiobutton")
-radiobutton8.grid(row=3, column=1, sticky="w")
+
 human_training_button=ttk.Radiobutton(tab2, text="Human", variable=var_playerType2, value="Human", style="TRadiobutton")
-human_training_button.grid(row=4, column=1,sticky="w")
+human_training_button.grid(row=2, column=1,sticky="w")
+radiobutton7 = ttk.Radiobutton(tab2, text="Test Algorithm", variable=var_playerType2, value="Test Algorithm")
+radiobutton7.grid(row=3, column=1, sticky="w")
+radiobutton8 = ttk.Radiobutton(tab2, text="AI-Model", variable=var_playerType2, value="AI-Model", style="TRadiobutton")
+radiobutton8.grid(row=4, column=1, sticky="w")
+
 CbModelTrain2 = ttk.Combobox(tab2, state="readonly", values=list_models,textvariable=var_model_player2)
 CbModelTrain2.grid(row=5, column=1, sticky="w")
 label_value_number_of_training_loops_tab2_p2 = ttk.Label(tab2, textvariable=var_number_of_training_loops_comboboxes_p2,style="TLabel")

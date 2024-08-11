@@ -5,11 +5,6 @@ from filereader import log_info_overruling
 import mainmenu
 from music import initialiseer_muziek
 
-#todo: make the error messages more clear, sometimes they are wrong, search "raise Exception"
-#todo: add a label to the main menu to show the number of training loops instead of just a number
-#todo: move the reset stats en reset end stats button to the bottom center
-#todo: delete the get_player_type and set_player_type functions
-#todo: add padding to the main menu
 def main():
     mainmenu.mainmenu_run()
     
