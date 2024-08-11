@@ -123,8 +123,8 @@ class Player:
         self.final_move_loss = []
         self.avg_moves = 0
         
-    def load_model(self, model):
-        self.AI_model = AI_Model(model)
+    def load_model(self, model,is_training):
+        self.AI_model = AI_Model(model,is_training)
         self.ai.model.load_model(model)
 
     def get_model_name(self):
