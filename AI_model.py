@@ -27,7 +27,6 @@ class AI_Model():
         self.path_config_file=self.path+self.name_config_file
         self.initial_json_data = json.load(open("data/templatemodel"+self.name_config_file,"r"))
 
-    
     def add_one_to_value_from_config_file(self,category,item):
         if os.path.exists(self.path_config_file):
             try:
@@ -52,11 +51,8 @@ class AI_Model():
         else:
             raise Exception("Config file not found, try to delete the model and create it again, or replace the config file with the template file")
 
-    def get_number_of_training_loops(self):
-        if self.number_of_training_loops is None:
-            return self.get_value_from_config_file("training stats","training loops")
-        else:
-            return self.number_of_training_loops
+    def get_number_of_training_loops(self,key):
+        return self.get_value_from_config_file("training stats",key)
 
     def log_number_of_training_loops(self,opponent):
         self.add_one_to_value_from_config_file("training stats","training loops")

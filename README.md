@@ -88,11 +88,17 @@ august 2024:
   **released version 1.0**
 
   added more info in the define tab
+
   fixed some crash issues and bugs
+
   buttons and labels are now grayed out instead of invisible
+
   restructured code, added class to save model stats
+
   added more stats to tab 4
+
   rewrited modelmanager class
+
   
   **released version 1.1**
 

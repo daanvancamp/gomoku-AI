@@ -16,8 +16,8 @@ import numpy as np
 
 #todo: make the GUI fullscreen, add webcam view
 
-WIDTH = 420 #origineel 230
-HEIGHT = 500 #origineel 315
+WIDTH = 410
+HEIGHT = 500
 
 game_instance = gomoku.GomokuGame(filereader.create_gomoku_game("consts.json"))
 modelmanager_instance = modelmanager.ModelManager()
@@ -53,7 +53,7 @@ tabControl.add(tab3, text='Replay old games')
 tabControl.add(tab4, text=' Models')
 tabControl.grid(row=0, sticky="w")
 
-style_numbers = ["georgia", 10, "white", 12, 2]#font, size, color, bold, underline
+style_numbers = ["times", 10, "white", 12, 2]#font, size, color, bold, underline
 
 input_canvas = Canvas(root, relief="groove", borderwidth=0, highlightthickness=0)
 input_canvas.grid(row=1, padx=2, pady=2)
@@ -113,7 +113,7 @@ var_startingPlayer=StringVar()
 var_startingPlayer.set("Player 1")
 
 var_number_of_training_loops=StringVar()
-var_number_of_training_loops.set(0)
+var_number_of_training_loops.set("0 (against H:0,T'A':0, AI:0 )")
 var_number_of_training_loops_comboboxes_p1=StringVar()
 var_number_of_training_loops_comboboxes_p1.set(0)
 var_number_of_training_loops_comboboxes_p2=StringVar()
@@ -507,7 +507,7 @@ def refresh_training_stats():
         last_selected_model=Lb1.get(i)
 
     model_class=modelmanager_instance.get_model(last_selected_model)
-    var_number_of_training_loops.set(model_class.get_number_of_training_loops())
+    var_number_of_training_loops.set(f"{model_class.get_number_of_training_loops("training loops")} (against H:{model_class.get_number_of_training_loops("training loops against Human")}, T'A':{model_class.get_number_of_training_loops("training loops against Test Algorithm")}, AI:{model_class.get_number_of_training_loops("training loops against AI-Model")} )")
 
     if Cb_choose_stats.get()== "Total":
         var_losses.set(model_class.get_number_of_losses("total end stats"))
@@ -532,14 +532,13 @@ def refresh_training_stats():
             var_relative_value_ties.set("N/A")
 
 def show_number_of_training_loops_comboboxes():
-    var_number_of_training_loops_comboboxes_p1.set("training loops: "+str(modelmanager_instance.get_model(var_model_player1.get()).get_number_of_training_loops()))
+    var_number_of_training_loops_comboboxes_p1.set("training loops: "+str(modelmanager_instance.get_model(var_model_player1.get()).get_number_of_training_loops("training loops")))
     
-    var_number_of_training_loops_comboboxes_p2.set("training loops: "+str(modelmanager_instance.get_model(var_model_player2.get()).get_number_of_training_loops()))
+    var_number_of_training_loops_comboboxes_p2.set("training loops: "+str(modelmanager_instance.get_model(var_model_player2.get()).get_number_of_training_loops("training loops")))
     
 Thread_maintain_GUI=Thread(target=maintain_GUI,daemon=True)#end when main program ends
 Thread_maintain_GUI.start()
 
-#style_numbers = ["georgia", 10, "white", 12, 2]#font, size, color, bold, underline (already defined)
 style2=ttk.Style()
 style2.configure("TButton", font=(style_numbers[0], style_numbers[1]),bg=style_numbers[2],ipadx=style_numbers[3],ipady=style_numbers[4],pady=15)#font=georgia, size=10;bg=white
 style2.configure("TRadiobutton",fg="white",bg="green")
@@ -771,7 +770,7 @@ label_relative_value_ties=ttk.Label(tab4, textvariable=var_relative_value_ties,s
 label_relative_value_ties.grid(row=8, column=2, sticky="w")
 
 frame_stats_buttons=ttk.Frame(tab4)
-frame_stats_buttons.grid(row=9, column=0, columnspan=3)
+frame_stats_buttons.grid(row=9, column=0, columnspan=3,pady=15)
 button_reset_stats=ttk.Button(frame_stats_buttons, text="Reset Stats", style="TButton", command=lambda: reset_all_stats())
 button_reset_stats.grid(row=0, column=0)
 button_reset_end_states=ttk.Button(frame_stats_buttons, text="Reset End States", style="TButton", command=lambda: reset_end_states())
