@@ -3,7 +3,7 @@ https://github.com/Mig26/gomoku-thesis-proj
 
 **The stable release is version 1.0. The recognition doesn't work in this version yet, but all the other features work perfectly, if not: report the bug.** That version is the compiled version of the python code. It is made for those who don't want to experience issues caused by features that are in development or those who just want to play it as fast as possible without having to install python or anything else.
 
-stable release:https://github.com/daanvancamp/gomoku-thesis-proj/releases/tag/v1.0
+stable release:https://github.com/daanvancamp/gomoku-thesis-proj/releases/tag/v1.1
 
 Note: the project is still under development. Some added features aren't stable as of right now, but overall it works better than the program of Mikko (from which I started). The project will hopefully be finished in april of 2025, so you can expect a complete version ultimately then, but it could be done earlier. **The stable version doesn't contain all latest features, but you can download it from the releases tab.** Right now, it is version 1.0. An executable will be release every few weeks.
 
@@ -67,9 +67,11 @@ august 2024:
   The code was completely restructured. Some performance improvements were also done. There are now 3 functions to run the game.
 
   **You can now choose if you want to allow overruling for each player. Of course, I also added an option in the GUI.**
-  **All the options that you can't choose because that would cause a crash are now hided.**
+  **All the options that you can't choose because that would cause a crash are now hidden.**
   
   splitted the run game function into 3 functions: runreplay, rungame,runtraining
+
+  **released version 0.1**
 
   added an option in the GUI to turn the music on and off.
   
@@ -83,7 +85,7 @@ august 2024:
   fixed a few general bugs
   **big performance and stability improvements, the GUI won't crash anymore. If it does, please report that.**
   
-  released version 1.0
+  **released version 1.0**
 
   added more info in the define tab
   fixed some crash issues and bugs
@@ -92,7 +94,7 @@ august 2024:
   added more stats to tab 4
   rewrited modelmanager class
   
-  released version 1.1
+  **released version 1.1**
 
 
 issues:
