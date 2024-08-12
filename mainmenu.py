@@ -53,7 +53,7 @@ tabControl.add(tab3, text='Replay old games')
 tabControl.add(tab4, text=' Models')
 tabControl.grid(row=0, sticky="w")
 
-style_numbers = ["times", 10, "white", 12, 2]#font, size, color, bold, underline
+style_numbers = ["georgia", 10, "white", 12, 2]#font, size, color, bold, underline
 
 input_canvas = Canvas(root, relief="groove", borderwidth=0, highlightthickness=0)
 input_canvas.grid(row=1, padx=2, pady=2)
