@@ -1,7 +1,7 @@
 # started from gomoku-thesis-proj, but we changed and improved almost everything.
 https://github.com/Mig26/gomoku-thesis-proj
 
-**The stable release is version 1.0. The recognition doesn't work in this version yet, but all the other features work perfectly, if not: report the bug.** That version is the compiled version of the python code. It is made for those who don't want to experience issues caused by features that are in development or those who just want to play it as fast as possible without having to install python or anything else.
+**The latest stable release is version 1.1. The recognition doesn't work in this version yet, but all the other features work perfectly, if not: report the bug.** That version is the compiled version of the python code. It is made for those who don't want to experience issues caused by features that are in development or those who just want to play it as fast as possible without having to install python or anything else.
 
 stable release:https://github.com/daanvancamp/gomoku-thesis-proj/releases/tag/v1.1
 
