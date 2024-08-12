@@ -101,7 +101,7 @@ august 2024:
 
   
   **released version 1.1**
-
+  added even more stats
 
 issues:
 
