@@ -351,14 +351,19 @@ def delete_model():
     refresh_training_stats()
         
 def reset_all_stats():
+    global last_selected_model
     for i in Lb1.curselection():
         modelmanager_instance.get_model(Lb1.get(i)).reset_stats(True)
+    if Lb1.curselection()==():
+        modelmanager_instance.get_model(last_selected_model).reset_stats(True)
     refresh_models()
     refresh_training_stats()
 
 def reset_end_states():
     for i in Lb1.curselection():
         modelmanager_instance.get_model(Lb1.get(i)).reset_end_states()
+    if Lb1.curselection()==():
+        modelmanager_instance.get_model(last_selected_model).reset_end_states()
     refresh_models()
     refresh_training_stats()
 def refresh_models():

@@ -1,23 +1,23 @@
 {
-    "games end stats": {
-        "losses": 2,
-        "ties": 2,
-        "wins": 10
+    "training stats": {
+        "training loops": 0,
+        "training loops against Human": 0,
+        "training loops against AI-Model": 0,
+        "training loops against Test Algorithm": 0
     },
     "total end stats": {
-        "losses": 9,
-        "ties": 2,
-        "wins": 27
+        "losses": 0,
+        "wins": 0,
+        "ties": 0
+    },
+    "games end stats": {
+        "wins": 0,
+        "losses": 0,
+        "ties": 0
     },
     "training loops end stats": {
-        "losses": 7,
-        "ties": 0,
-        "wins": 14
-    },
-    "training stats": {
-        "training loops": 26,
-        "training loops against AI-Model": 12,
-        "training loops against Human": 14,
-        "training loops against Test Algorithm": 0
+        "wins": 0,
+        "losses": 0,
+        "ties": 0
     }
 }
