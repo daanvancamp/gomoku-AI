@@ -82,6 +82,8 @@ august 2024:
   
   fixed a few general bugs
   **big performance and stability improvements, the GUI won't crash anymore. If it does, please report that.**
+  
+  released version 1.0
 
   added more info in the define tab
   fixed some crash issues and bugs
