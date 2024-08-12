@@ -1,3 +1,4 @@
+import os
 import sys
 from threading import Thread
 from time import sleep
@@ -775,6 +776,11 @@ button_reset_stats=ttk.Button(frame_stats_buttons, text="Reset Stats", style="TB
 button_reset_stats.grid(row=0, column=0)
 button_reset_end_states=ttk.Button(frame_stats_buttons, text="Reset End States", style="TButton", command=lambda: reset_end_states())
 button_reset_end_states.grid(row=0, column=1)
+
+#in development
+# embeded_tk_window = Frame(root, width = game_instance.WIDTH, height=game_instance.HEIGHT)
+# os.environ['SDL_WINDOWID'] = str(embeded_tk_window.winfo_id())
+# os.environ['SDL_VIDEODRIVER'] = 'windib'
 
 def mainmenu_run():
     root.mainloop()

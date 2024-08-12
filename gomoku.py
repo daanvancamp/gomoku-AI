@@ -457,6 +457,7 @@ def runGame(instance, game_number, record_replay):#main function
 
     pygame.display.set_icon(pygame.image.load('res/ico.png'))
     pygame.init()
+    # pygame.display.update()
     pygame.display.set_caption(window_name)
     mark_last_move_model=True
     instance.winning_cells = []

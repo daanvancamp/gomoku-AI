@@ -2,12 +2,12 @@
     "games end stats": {
         "losses": 2,
         "ties": 2,
-        "wins": 7
+        "wins": 10
     },
     "total end stats": {
         "losses": 9,
         "ties": 2,
-        "wins": 24
+        "wins": 27
     },
     "training loops end stats": {
         "losses": 7,
