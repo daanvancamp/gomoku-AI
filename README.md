@@ -5,7 +5,7 @@ https://github.com/Mig26/gomoku-thesis-proj
 
 stable release:https://github.com/daanvancamp/gomoku-thesis-proj/releases/tag/v1.1
 
-Note: the project is still under development. Some added features aren't stable as of right now, but overall it works better than the program of Mikko (from which I started). The project will hopefully be finished in april of 2025, so you can expect a complete version ultimately then, but it could be done earlier. **The stable version doesn't contain all latest features, but you can download it from the releases tab.** Right now, it is version 1.0. An executable will be release every few weeks.
+Note: the project is still under development. Some added features aren't stable as of right now, but overall it works better than the program of Mikko (from which I started). The project will hopefully be finished in april of 2025, so you can expect a complete version ultimately then, but it could be done earlier. **The stable version doesn't contain all latest features, but you can download it from the releases tab.**
 
 If you would just clone the repos, then you will most likely experience stability problems or bugs.
 
@@ -101,6 +101,7 @@ august 2024:
 
   
   **released version 1.1**
+  
   added even more stats
 
 issues:
