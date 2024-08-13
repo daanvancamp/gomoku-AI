@@ -1,6 +1,8 @@
 from concurrent.futures import thread
 import operator
+import os
 import time
+from tkinter import TOP, Frame, Tk
 import pygame
 from AI_Model import AI_Model
 from music import start_muziek_vertraagd
@@ -17,7 +19,7 @@ from detect_pieces import *
 window_name = "Gomoku"
 victory_text = ""
 mark_last_move_model = True
- 
+root_play_game=None
 #instructie: druk op de linkermuisknop wanneer je een zet hebt gedaan op het fysiek bord.
 
 class GomokuGame:
@@ -31,7 +33,7 @@ class GomokuGame:
         self.LINE_COL = values[5]
         self.SLEEP_BEFORE_END = values[6]
         self.board = [[0] * self.GRID_SIZE for _ in range(self.GRID_SIZE)] # 0 = empty, 1 = player 1, 2 = player 2. De waarden corresponderen aan de kleuren.
-        self.screen = pygame.display.set_mode((self.WIDTH, self.HEIGHT))
+        self.screen = None #embedding isn't possible when defined here
         self.winning_cells = []
         self.current_game = 0
         self.last_round = False
@@ -434,10 +436,16 @@ def add_hover_effect(instance):
             pygame.display.flip()
             sleep(0.1)#otherwise it will be flashing uncontrollably
 
+def pygame_loop(instance):
+    global root_play_game
+    instance.screen.fill((255, 255, 255))
+    pygame.display.flip()
+    root_play_game.update()
+    root_play_game.after(100, lambda: pygame_loop(instance))
 
 def runGame(instance, game_number, record_replay):#main function
     # Main game loop
-    global window_name, victory_text, current_player, player1, player2, running,current_player,p1_moves, p2_moves,winning_player
+    global window_name, victory_text, current_player, player1, player2, running,current_player,p1_moves, p2_moves,winning_player,root_play_game
     if instance.use_recognition:
         print("using recognition")
     else:
@@ -453,11 +461,26 @@ def runGame(instance, game_number, record_replay):#main function
             print("Overruling is allowed for player 2")
         else:
             print("Overruling is not allowed for player 2")
+    root_play_game = Tk()
+    root_play_game.attributes("-fullscreen", True)
 
+    button_win = Frame(root_play_game, width=500, height=25)
+    button_win.pack(side=TOP)
+
+    embed_pygame = Frame(root_play_game, width=instance.WIDTH, height=instance.HEIGHT)
+    embed_pygame.pack(side=TOP)
+
+    os.environ['SDL_WINDOWID'] = str(embed_pygame.winfo_id())
+    os.environ['SDL_VIDEODRIVER'] = 'windib'  # Probeer deze regel te verwijderen als het problemen veroorzaakt
+
+    pygame.display.init()
+    instance.screen = pygame.display.set_mode((instance.WIDTH, instance.HEIGHT))
+    
     pygame.display.set_icon(pygame.image.load('res/ico.png'))
-    pygame.init()
-    # pygame.display.update()
     pygame.display.set_caption(window_name)
+    pygame_loop(instance)
+    
+
     mark_last_move_model=True
     instance.winning_cells = []
     running = True
@@ -479,7 +502,6 @@ def runGame(instance, game_number, record_replay):#main function
                     elif (event.type == pygame.MOUSEBUTTONDOWN or event.type == pygame.K_UP or event.type == pygame.K_RIGHT) and event.button == 1: #kan zo gelaten worden. Wanneer op de muis wordt gedrukt,wordt de zet gelezen van het bestand
                         if instance.play_music:
                             Thread(target=lambda:pygame.mixer.music.fadeout(1000)).start()#don't block the main thread
-
                         if instance.use_recognition:
                             schrijf_relevante_stukken_na_zet_weg()
                             (x,y)=recognize_move()
@@ -574,8 +596,10 @@ def runGame(instance, game_number, record_replay):#main function
     if record_replay:
         filereader.save_replay(p1_moves, p2_moves)
     
+    #root_play_game.destroy()
     time.sleep(instance.SLEEP_BEFORE_END)#sleep before closing for SLEEP_BEFORE_END seconds
     reset_game(instance)
+
 
 
 
@@ -615,10 +639,14 @@ def runTraining(instance, game_number, record_replay):#main function
 
 
     instance.play_music=False
-    pygame.display.set_icon(pygame.image.load('res/ico.png'))
 
     pygame.init()
+    instance.screen = pygame.display.set_mode((instance.WIDTH, instance.HEIGHT))
+
+    pygame.display.set_icon(pygame.image.load('res/ico.png'))
     pygame.display.set_caption(window_name)
+    pygame.display.flip() 
+
     instance.winning_cells = []
     running = True
     winning_player = 0
@@ -768,8 +796,10 @@ def runTraining(instance, game_number, record_replay):#main function
 def runReplay(instance, moves:dict=None):#main function
     # Main game loop
     global window_name, victory_text, current_player, running
-    pygame.display.set_icon(pygame.image.load('res/ico.png'))
+
     pygame.init()
+    instance.screen = pygame.display.set_mode((instance.WIDTH, instance.HEIGHT))
+    pygame.display.set_icon(pygame.image.load('res/ico.png'))
     pygame.display.set_caption(window_name)
     pygame.display.flip() 
 
