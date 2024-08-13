@@ -360,6 +360,7 @@ def reset_all_stats():
     refresh_training_stats()
 
 def reset_end_states():
+    global last_selected_model
     for i in Lb1.curselection():
         modelmanager_instance.get_model(Lb1.get(i)).reset_end_states()
     if Lb1.curselection()==():
