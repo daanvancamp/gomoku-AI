@@ -34,7 +34,7 @@ class AI_Model():
                     data = json.load(file)
                     data[category][item] += 1
                     with open(self.path_config_file, "w") as file:
-                        json.dump(data, file, sort_keys = True, indent = 4, ensure_ascii = False)
+                        json.dump(data, file, indent = 4, ensure_ascii = False)
             except PermissionError:
                 print("Please close the file and try again")
         else:
@@ -114,7 +114,7 @@ class AI_Model():
 
     def reset_stats(self,print_info:bool):
         with open(self.path_config_file, 'w') as out_file:
-            json.dump(self.initial_json_data, out_file, sort_keys = False, indent = 4, ensure_ascii = False)
+            json.dump(self.initial_json_data, out_file, indent = 4, ensure_ascii = False)
         
         if print_info:
             print("The stats of the model " + self.modelname + " have been reset")
@@ -130,7 +130,7 @@ class AI_Model():
                     json_data[category][item] = 0
 
             file.seek(0)
-            json.dump(json_data, file, sort_keys = True, indent = 4, ensure_ascii = False)
+            json.dump(json_data, file, indent = 4, ensure_ascii = False)
             print("updated values:",json_data)
             file.truncate()
         print("The end states of the model " + self.modelname + " have been reset")
