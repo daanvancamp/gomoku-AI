@@ -13,7 +13,6 @@ import filereader
 from threading import Thread
 from time import sleep
 from detect_pieces import *
-import os
 
 window_name = "Gomoku"
 victory_text = ""

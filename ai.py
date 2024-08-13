@@ -7,8 +7,6 @@ import numpy as np
 import random
 from collections import deque
 from filereader import log_info_overruling
-#from gomoku import *
-#from globalvariables import *
 
 MAX_MEMORY = 1_000_0000          # origineel 1_000_000
 BATCH_SIZE = 10_000
@@ -18,22 +16,24 @@ EPSILON_DECAY_RATE = 0.999
 class ConvNet(nn.Module):
     def __init__(self, input_dim, hidden_dim, output_dim):
         super(ConvNet, self).__init__()
+        self.list_dropout_rates=[0.05,0.1,0.2,0.25,0.3,0.35,0.4,0.45,0.5]
         # Define your CNN architecture here
         self.layer1 = torch.nn.Sequential(
             torch.nn.Conv2d(3, hidden_dim, kernel_size=5, stride=1, padding=2),
             torch.nn.ReLU(),
             torch.nn.MaxPool2d(kernel_size=5, stride=1),
-            torch.nn.Dropout(p=0.05))
+            torch.nn.Dropout(p=self.list_dropout_rates[0]))
         self.layer2 = torch.nn.Sequential(
             torch.nn.Conv2d(input_dim * input_dim, hidden_dim, kernel_size=5, stride=1, padding=2),
             torch.nn.ReLU(),
             torch.nn.MaxPool2d(kernel_size=5, stride=1),
-            torch.nn.Dropout(p=0.1))
+            torch.nn.Dropout(p=self.list_dropout_rates[1]))
         self.layer3 = torch.nn.Sequential(
             torch.nn.Conv2d(hidden_dim, output_dim, kernel_size=5, padding=2),
             torch.nn.ReLU(),
             torch.nn.MaxPool2d(kernel_size=5),
-            torch.nn.Dropout(p=0.2))
+            torch.nn.Dropout(p=self.list_dropout_rates[2]))
+
         self.fc2 = torch.nn.Linear(input_dim * input_dim, input_dim * input_dim, bias=True)
         self.conv1 = nn.Conv2d(in_channels=input_dim, out_channels=input_dim, kernel_size=5, padding=2)
         self.conv2 = nn.Conv2d(in_channels=input_dim * input_dim, out_channels=input_dim * input_dim, kernel_size=5, padding=2)
@@ -48,7 +48,6 @@ class ConvNet(nn.Module):
     def load_model(self, folder,file_name='model.pth'):
         model_folder = './data/models/'+folder.strip()
         full_path = os.path.join(model_folder, file_name)
-        print("Full path model:",full_path)
         if os.path.isfile(full_path):
             print("A model already exists, loading model...")
             self.load_state_dict(torch.load(full_path,weights_only=False))
@@ -75,7 +74,6 @@ class GomokuAI:
         self.epsilon = 0.25
         self.memory = deque(maxlen=MAX_MEMORY)
         self.model = self.build_model(self.board_size)
-        #self.optimizer = optim.Adam(params=self.model.parameters(), lr=self.learning_rate) #veranderd naar SGD
         self.optimizer= optim.SGD(params=self.model.parameters(), lr=self.learning_rate)
         self.criterion = nn.MSELoss()
         self.loss = 0
@@ -85,7 +83,6 @@ class GomokuAI:
         self.threat_moves =[]
         self.valid_moves = []
         self.overruled_last_move = False
-
 
     def decrease_learning_rate(self):
         self.learning_rate *= 0.9999 #decrease learning rate
@@ -157,7 +154,7 @@ class GomokuAI:
             self.overruled_last_move = True
             return self.threat_moves
         else:
-            print("no threat moves were valid moves, returning valid moves","the model will choose on its own")
+            print("no threat moves were valid moves, returning valid moves:the model will choose on its own")
             log_info_overruling("no threat moves were valid moves, returning valid moves: "+"the model will choose on its own")
             self.overruled_last_move = False
             return self.valid_moves
@@ -169,7 +166,7 @@ class GomokuAI:
          current_player=self.current_player_id
          for row in range(len(board)):
             for col in range(len(board)):
-                if board[row][col] == 0:  # Lege cel
+                if board[row][col] == 0:
         
                     for drow, dcol in directions:
                         count = 0  
@@ -206,10 +203,9 @@ class GomokuAI:
                             else:
                                 break
             
-                        # Controleer op dreigende situaties
                         if  (count == 4 and open_ends >= 0) or adjacent_two == 2 or (count == 3 and open_ends >= 1):
                             winning_moves.append((row, col))
-                            break  # We hoeven niet verder te zoeken voor deze cel
+                            break
          if winning_moves:
             log_info_overruling("It will choose on its own, it can win in one move if it does the right move.")
             return True
@@ -217,7 +213,7 @@ class GomokuAI:
             log_info_overruling("no winning moves found")
             return False
 
-    def get_valid_moves(self, board)->list:#voeg de nodige parameters toe. #returns list of valid moves (overroelen ai kan hier gebeuren door de lijst met lengte 1 te maken.)
+    def get_valid_moves(self, board)->list:
         log_info_overruling("\n\nfunction get_valid_moves called")
         log_info_overruling("the involved player is player " + str(self.current_player_id))
         opponent = 3 - self.current_player_id  # 3-2=1 and 3-1=2 Player 1 is a one in the list and player 2 is a 2 in the list.
@@ -283,7 +279,6 @@ class GomokuAI:
                             else:
                                 break
     
-                        # Controleer op dreigende situaties
                         if (count == 3 and open_ends == 2) or (count == 4) or adjacent_two == 2 or three_and_one_pattern:
                             self.threat_moves.append((row, col))
                             log_info_overruling(f"player {opponent} has a threat at {row}, {col}")
@@ -349,9 +344,9 @@ class GomokuAI:
                     action = (pred_indices[0][idx], pred_indices[1][idx])
             else:
                 action = None
-        attempts=0#initialiseer
+        attempts=0
         max_attempts=70
-        while action is None:#Het programma blijft hier hangen!!!
+        while action is None:
             attempts+=1
             if attempts>max_attempts:
                   action = random.choice(valid_moves) #form: (x,y), move is completely random after max_attempts

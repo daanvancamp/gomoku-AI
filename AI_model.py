@@ -49,10 +49,7 @@ class AI_Model():
             except PermissionError:
                 print("Please close the file and try again")
         else:
-            raise Exception("Config file not found, try to delete the model and create it again, or replace the config file with the template file")
-
-    def get_number_of_training_loops(self,key):
-        return self.get_value_from_config_file("training stats",key)
+            pass #can occur when model is deleted
 
     def log_number_of_training_loops(self,opponent):
         self.add_one_to_value_from_config_file("training stats","training loops")
@@ -64,7 +61,6 @@ class AI_Model():
             self.number_of_training_loops_against_ai_model = self.get_value_from_config_file("training stats","training loops against AI-Model")
         elif opponent=="Test Algorithm":
             self.number_of_training_loops_against_test_algorithm = self.get_value_from_config_file("training stats","training loops against Test Algorithm")
-    
 
     def log_win(self):
         self.add_one_to_value_from_config_file("total end stats","wins")
@@ -73,7 +69,6 @@ class AI_Model():
         if self.training:
             self.add_one_to_value_from_config_file("training loops end stats","wins")
             self.wins_training = self.get_value_from_config_file("training loops end stats","wins")
-            
         else:
             self.add_one_to_value_from_config_file("games end stats","wins")
             self.wins_games = self.get_value_from_config_file("games end stats","wins")
@@ -102,7 +97,9 @@ class AI_Model():
             self.add_one_to_value_from_config_file("games end stats","ties")
             self.ties_games = self.get_value_from_config_file("games end stats","ties")
         
-        
+    def get_number_of_training_loops(self,key):
+        return self.get_value_from_config_file("training stats",key)
+    
     def get_number_of_wins(self,category):
         return self.get_value_from_config_file(category,"wins")
 

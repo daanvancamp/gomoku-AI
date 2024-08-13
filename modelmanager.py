@@ -27,21 +27,17 @@ class ModelManager(metaclass=ModelManagerMeta):
     def __init__(self):
         self.parent_dir = "data/models"
 
-    def create_new_model(self, modelName):
-        # Directory 
+    def create_new_model(self, modelName:str):
         directory = modelName
-  
-        # Path 
+
         path = os.path.join(self.parent_dir, directory) 
         
         if not os.path.isdir(path):
             os.mkdir(path)
             
         if not directory=="" and directory is not None:
-            if not os.path.exists(path):
-                print("Directory '% s' created" % path) 
-            else:
-                print("Directory already exists, please use a unique name")
+            print("Directory '% s' created" % path)
+
         else:
             print("Directory '% s' not created" % path,"please specify a valid name instead of an empty string")
         

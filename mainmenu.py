@@ -17,7 +17,7 @@ import numpy as np
 
 #todo: make the GUI fullscreen, add webcam view
 
-WIDTH = 410
+WIDTH = 470
 HEIGHT = 500
 
 game_instance = gomoku.GomokuGame(filereader.create_gomoku_game("consts.json"))
@@ -120,6 +120,8 @@ var_number_of_training_loops_comboboxes_p1.set(0)
 var_number_of_training_loops_comboboxes_p2=StringVar()
 var_number_of_training_loops_comboboxes_p2.set(0)
 
+var_layers=IntVar()
+var_layers.set(3)
 def set_player_type(player_id):
     if player_id == 1:
         newtype = var_playerType1.get()
@@ -166,7 +168,6 @@ def start_new_game():
     game_instance.use_recognition = var_use_recognition.get()
     game_instance.play_music = var_play_music.get()
     game_instance.show_overruling=var_show_overruling.get()
-
 
     game_instance.ai_delay = var_delay.get()
     stats.should_log = var_log.get()
@@ -335,7 +336,10 @@ def start_new_replay():
     else:
         print("Try again, please select a valid json file")
     game_over()
+
+def game_over():
     root.wm_state('normal')
+    game_instance.current_game = 0
 
 def create_new_model():
     modelmanager_instance.create_new_model(var_name_model.get())
@@ -718,7 +722,7 @@ i  = 0
 for model in models:
     Lb1.insert(i, model.split('\\')[-1])
     i+=1
-Lb1.grid(row=1, column=1,padx=distance_from_left_side)
+Lb1.grid(row=0, column=2,padx=distance_from_left_side)
 
 if "standaard" in models or "Standaard" in models:
     for item in models:
@@ -732,22 +736,21 @@ else:
     last_selected_model=models[0]
 
 
+button_NewModel = ttk.Button(tab4, text="Make New Model", style="TButton", command=lambda: create_new_model())
+button_NewModel.grid(row=1, column=1,sticky="w",pady=2,padx=distance_from_left_side)
+button_DeleteModel = ttk.Button(tab4, text="Delete Model", style="TButton", command=lambda: delete_model())
+button_DeleteModel.grid(row=1, column=2)
 
 nameModelLabel = ttk.Label(tab4, text="Name of model: ",style="TLabel")
 nameModelLabel.grid(row=2, column=0, sticky="w",pady=2,padx=distance_from_left_side)
 nameModelEntry = ttk.Entry(tab4, textvariable=var_name_model,style="TEntry")
 nameModelEntry.grid(row=2, column=1, sticky="w",pady=2,padx=distance_from_left_side)
 nameModelEntry.bind("<Return>",lambda event: create_new_model())#push enter to make a new model (easier)
-button_NewModel = ttk.Button(tab4, text="Make New Model", style="TButton", command=lambda: create_new_model())
-button_NewModel.grid(row=3, column=0,sticky="w",pady=2,padx=distance_from_left_side)
-button_DeleteModel = ttk.Button(tab4, text="Delete Model", style="TButton", command=lambda: delete_model())
-button_DeleteModel.grid(row=3, column=1)
-
 
 label_number_of_training_loops = ttk.Label(tab4, text="Training loops: ",style="TLabel")
-label_number_of_training_loops.grid(row=4, column=0, sticky="w",pady=2,padx=distance_from_left_side)
+label_number_of_training_loops.grid(row=4, column=0, sticky="w",pady=(20,0),padx=distance_from_left_side)
 label_value_number_of_training_loops_tab4 = ttk.Label(tab4, textvariable=var_number_of_training_loops,style="TLabel")
-label_value_number_of_training_loops_tab4.grid(row=4, column=1, sticky="w")
+label_value_number_of_training_loops_tab4.grid(row=4, column=1, sticky="w",pady=(30,0))
 
 stats_list=["Total","Games","Training"]
 Cb_choose_stats= ttk.Combobox(tab4, state="readonly", values=stats_list, textvariable=var_choose_stats)
