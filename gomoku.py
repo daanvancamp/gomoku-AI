@@ -771,6 +771,8 @@ def runReplay(instance, moves:dict=None):#main function
     pygame.display.set_icon(pygame.image.load('res/ico.png'))
     pygame.init()
     pygame.display.set_caption(window_name)
+    pygame.display.flip() 
+
 
     instance.winning_cells = []
     running = True

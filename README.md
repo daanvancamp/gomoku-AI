@@ -101,8 +101,13 @@ august 2024:
 
   
   **released version 1.1**
+
   added even more stats in the models tab
+
   fixed a crash issue where the program would crash after deleting a model
+
+  redesigned models tab
+
 
 issues:
 
