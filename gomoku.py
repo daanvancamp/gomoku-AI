@@ -401,9 +401,13 @@ class refresh():
     def __init__(self):
         pass
     def refresh_label(self,label,game_number):
-        lijst=["human","ai","test"]
-        info=lijst[1]if current_player.id==1 else lijst[0]
-        label.config(text="Gomoku - Game: " + str(0) + " - " +" - Current player: " + str(current_player.id) + " - " + "                  ")
+        if current_player.TYPE == "Human":
+            speler="Human         "
+        elif current_player.TYPE == "AI-Model":
+            speler="AI-Model      "
+        else:
+            speler="Test Algorithm"
+        label.config(text="Gomoku - Game: " + str(game_number) + " - " +" - Current player: " + str(current_player.id) + " - " + speler)
         label.update()
 
 def refresh_screen(game_number, current_player):
