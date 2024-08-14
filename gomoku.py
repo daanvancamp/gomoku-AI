@@ -41,6 +41,7 @@ class GomokuGame:
         self.use_recognition=False
         self.play_music = False
         self.show_overruling = False
+        self.show_hover_effect = None
         
     def set_board(self, board):
         self.board = board
@@ -243,6 +244,8 @@ def draw_board(instance,last_move_model=None):
         pygame.draw.line(instance.screen, (0, 255, 0),
                          (start_col * cell_size + cell_size // 2, start_row * cell_size + cell_size // 2),
                          (end_col * cell_size + cell_size // 2, end_row * cell_size + cell_size // 2), 5)
+    if instance.show_hover_effect:
+        add_hover_effect(instance)
 
 def reset_game(instance):
     global current_player
@@ -398,22 +401,13 @@ def refresh_screen(game_number, current_player):
     window_name = "Game: " + str(game_number) + " - " + str(current_player) #beurt start
     pygame.display.set_caption(window_name)
 
-def restart():
-    import sys
-    print("argv was",sys.argv)
-    print("sys.executable was", sys.executable)
-    print("restart now")
-
-    import os
-    os.execv(sys.executable, ['python'] + sys.argv)
-
-def initialize_fullscreen_GUI(instance):
-    global root_play_game, current_player
+def initialize_fullscreen_GUI(instance,game_mode):
+    global root_play_game, current_player,label_current_game_mode,current_player_label,embed_pygame
     if root_play_game is None:
         root_play_game = Tk()
 
         root_play_game.columnconfigure(0, weight=1)
-        root_play_game.columnconfigure(1, weight=2)
+        root_play_game.columnconfigure(1, weight=1)
         root_play_game.columnconfigure(2, weight=1)
 
         root_play_game.rowconfigure(0, weight=1)
@@ -424,13 +418,15 @@ def initialize_fullscreen_GUI(instance):
         root_play_game.config(bg="#357EC7")
         root_play_game.title("Gomoku")
 
-        current_player_label = Label(root_play_game, text="Current player: " + str(current_player.get_player_id()), bg="#357EC7")
+        font_labels=("Arial", 18)
+
+        current_player_label = Label(root_play_game, text="Current player: " + str(current_player.get_player_id()), bg="#357EC7",fg='white', font=font_labels)
         current_player_label.grid(row=0, column=0)
 
-        embed_pygame = Frame(root_play_game, width=instance.WIDTH, height=instance.HEIGHT)
+        embed_pygame = Frame(root_play_game, width=instance.WIDTH, height=instance.HEIGHT,borderwidth=6)
         embed_pygame.grid(row=1, column=1)
 
-        label_current_game_mode=Label(root_play_game, text="Current game mode: ")
+        label_current_game_mode=Label(root_play_game, text="Current game mode: "+ game_mode, bg="#357EC7",fg="white", font=font_labels)
         label_current_game_mode.grid(row=0, column=2)
 
         os.environ['SDL_WINDOWID'] = str(embed_pygame.winfo_id())
@@ -438,6 +434,9 @@ def initialize_fullscreen_GUI(instance):
     else:
         if not root_play_game.winfo_viewable():
             root_play_game.deiconify()
+
+        label_current_game_mode.configure(text="Current game mode: "+game_mode)
+        current_player_label.configure(text="Current player: " + str(current_player.get_player_id()))
     
     pygame.display.init()
     instance.screen = pygame.display.set_mode((instance.WIDTH, instance.HEIGHT))
@@ -483,11 +482,9 @@ def add_hover_effect(instance):
             cell_size = instance.CELL_SIZE
             pygame.draw.circle(instance.screen, HOVER_COLOR, (col * cell_size + cell_size // 2, row * cell_size + cell_size // 2), cell_size // 2 - 5)
             pygame.display.flip()
-            sleep(0.1)#otherwise it will be flashing uncontrollably
-
+            
 def pygame_loop(instance):
     global root_play_game
-    instance.screen.fill((255, 255, 255))
     pygame.display.flip()
     root_play_game.update()
     root_play_game.after(100, lambda: pygame_loop(instance))
@@ -512,7 +509,7 @@ def runGame(instance, game_number, record_replay):#main function
         else:
             print("Overruling is not allowed for player 2")
 
-    initialize_fullscreen_GUI(instance)
+    initialize_fullscreen_GUI(instance,"play game")
 
     mark_last_move_model=True
     instance.winning_cells = []
@@ -548,8 +545,7 @@ def runGame(instance, game_number, record_replay):#main function
                             handle_human_move(instance, x, y, record_replay, players, p1_moves, p2_moves) 
                         except:
                             handle_human_move(instance, x, y, record_replay, players)                       
-                if not instance.use_recognition:
-                    add_hover_effect(instance)
+
             # test algorithm move
             elif current_player.TYPE == "Test Algorithm" and not testai.check_game_over(instance):
                 if instance.ai_delay:
@@ -672,7 +668,7 @@ def runTraining(instance, game_number, record_replay):#main function
 
     instance.play_music=False
 
-    initialize_fullscreen_GUI(instance)
+    initialize_fullscreen_GUI(instance,"training")
 
     instance.winning_cells = []
     running = True
@@ -824,7 +820,7 @@ def runReplay(instance, moves:dict=None):#main function
     # Main game loop
     global window_name, victory_text, current_player, running
 
-    initialize_fullscreen_GUI(instance)
+    initialize_fullscreen_GUI(instance,"replay")
 
     instance.winning_cells = []
     running = True

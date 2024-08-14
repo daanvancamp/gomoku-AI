@@ -170,6 +170,7 @@ def start_new_game():
     game_instance.use_recognition = var_use_recognition.get()
     game_instance.play_music = var_play_music.get()
     game_instance.show_overruling=var_show_overruling.get()
+    game_instance.show_hover_effect=True
 
     game_instance.ai_delay = var_delay.get()
     stats.should_log = var_log.get()
@@ -247,6 +248,7 @@ def start_new_training():
     game_instance.use_recognition = False
     game_instance.play_music = False
     game_instance.show_overruling=False
+    game_instance.show_hover_effect=False
 
     gomoku.player1.TYPE="AI-Model"
     gomoku.player2.TYPE=var_playerType2.get()
@@ -307,7 +309,8 @@ def start_new_training():
 
 def start_new_replay():
     global game_instance
-    
+    game_instance.show_hover_effect=False
+
     log_info_overruling("\n\n\nnew session begins:")
    
     moves = filereader.load_replay(replay_path.get())
