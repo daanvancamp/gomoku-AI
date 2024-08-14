@@ -1,4 +1,5 @@
 import os
+import random
 import sys
 from threading import Thread
 from time import sleep
@@ -6,6 +7,7 @@ from tkinter import *
 from tkinter import ttk
 from tkinter import filedialog
 
+import pygame
 import filereader
 import stats
 from PIL import Image, ImageTk
@@ -191,6 +193,7 @@ def start_new_game():
     initialize_board_json_files()
 
     root.wm_state('iconic')
+
         
     valid_number = False
 
@@ -230,11 +233,11 @@ def start_new_game():
             print("Please select a valid file that contains the board in the following format and try again:")
             for i in range(15):
                 for b in range(15):
-                    print(0, end="")
+                    print(random.randint(0,2), end="")
                 print("\n",end="")
             print("The board can only contain 0, 1, or 2. 0 = empty, 1 = player 1, 2 = player 2.")
-    
     game_over()
+    gomoku.root_play_game.withdraw()
 
 
 def start_new_training():
@@ -383,20 +386,17 @@ def refresh_models():
     CbModelTrain1.configure(values=models)
     CbModelTrain2.configure(values=models)
 
-def game_over():
-    root.wm_state('normal')
-    game_instance.current_game = 0
-
 def quit_game():
-    sys.exit()#beeindig het programma volledig
+    sys.exit()#end the program
 
 def maintain_GUI():
-    #delete this optional thread if the program stutters or crashes on your computer
+    #add delay to this loop if the program stutters or crashes on your computer
     tab_text = "Play gomoku"
     last_value_repvar=True
     last_value_load_board_from_file=False
     while True:
         try:
+
             old_tab_text= tab_text
             current_tab = tabControl.index(tabControl.select())
             tab_text = tabControl.tab(current_tab, "text")
@@ -404,143 +404,146 @@ def maintain_GUI():
                 var_game_runs.set("3000")
             elif tab_text=="Play gomoku" and old_tab_text!=tab_text:
                 var_game_runs.set("1")
-        except:
-            pass
             
-        ##TAB 1##
-        if var_playerType1.get() == "Human" and var_playerType2.get() == "Human":
-            var_log.set(False)
-            var_rep.set(False)
-            logbutton.config(state=DISABLED)
-            replaybutton.config(state=DISABLED)
-        else:
-            logbutton.config(state=NORMAL)
-            replaybutton.config(state=NORMAL)
+            ##TAB 1##
+            if var_playerType1.get() == "Human" and var_playerType2.get() == "Human":
+                var_log.set(False)
+                var_rep.set(False)
+                logbutton.config(state=DISABLED)
+                replaybutton.config(state=DISABLED)
+            else:
+                logbutton.config(state=NORMAL)
+                replaybutton.config(state=NORMAL)
 
 
-        if var_playerType1.get()=="AI-Model":
-            CbModel1.config(state="readonly")
-            overrule_button_player_1.config(state=NORMAL)
-            label_value_number_of_training_loops_p1.config(state=NORMAL)
+            if var_playerType1.get()=="AI-Model":
+                CbModel1.config(state="readonly")
+                overrule_button_player_1.config(state=NORMAL)
+                label_value_number_of_training_loops_p1.config(state=NORMAL)
 
-        else:
-            CbModel1.config(state=DISABLED)
-            overrule_button_player_1.config(state=DISABLED)
-            label_value_number_of_training_loops_p1.config(state=DISABLED)
+            else:
+                CbModel1.config(state=DISABLED)
+                overrule_button_player_1.config(state=DISABLED)
+                label_value_number_of_training_loops_p1.config(state=DISABLED)
 
-        if var_playerType2.get()=="AI-Model":
-            CbModel2.config(state="readonly")
-            overrule_button_player_2.config(state=NORMAL)
-            overrule_button_player_2_tab2.config(state=NORMAL)
-            label_value_number_of_training_loops_p2.config(state=NORMAL)
-        else:
-            CbModel2.config(state=DISABLED)
-            overrule_button_player_2.config(state=DISABLED)
-            overrule_button_player_2_tab2.config(state=DISABLED)
-            label_value_number_of_training_loops_p2.config(state=DISABLED)
+            if var_playerType2.get()=="AI-Model":
+                CbModel2.config(state="readonly")
+                overrule_button_player_2.config(state=NORMAL)
+                overrule_button_player_2_tab2.config(state=NORMAL)
+                label_value_number_of_training_loops_p2.config(state=NORMAL)
+            else:
+                CbModel2.config(state=DISABLED)
+                overrule_button_player_2.config(state=DISABLED)
+                overrule_button_player_2_tab2.config(state=DISABLED)
+                label_value_number_of_training_loops_p2.config(state=DISABLED)
 
-        if var_start_from_file.get():
-            label_load_state.grid()
-            load_state_entry.grid()
-            button_browse_state_file.grid()
-        else:
-            label_load_state.grid_remove()
-            load_state_entry.grid_remove()
-            button_browse_state_file.grid_remove()
+            if var_start_from_file.get():
+                label_load_state.grid()
+                load_state_entry.grid()
+                button_browse_state_file.grid()
+            else:
+                label_load_state.grid_remove()
+                load_state_entry.grid_remove()
+                button_browse_state_file.grid_remove()
         
-        recognition_possible=(var_playerType1.get()=="Human" or var_playerType2.get()=="Human")and (var_playerType1.get()=="AI-Model" or var_playerType2.get()=="AI-Model" or var_playerType1.get()=="Test Algorithm" or var_playerType2.get()=="Test Algorithm")
-        if recognition_possible and not var_start_from_file.get():
-            use_recognition_button.config(state=NORMAL)
-            label_recognition.config(state=NORMAL)
-        else:
-            use_recognition_button.config(state=DISABLED)
-            label_recognition.config(state=DISABLED)
-        #tab 1, delaybutton#
-        if (var_playerType1.get()=="AI-Model" or var_playerType2.get()=="AI-Model" ) or (var_playerType1.get()=="Test Algorithm" or var_playerType2.get()=="Test Algorithm"):
-            delaybutton.config(state=NORMAL)
-        else:
-            delaybutton.config(state=DISABLED)
-        #tab1, music button#
-        if var_playerType1.get()=="Human" or var_playerType2.get()=="Human":
-            music_button.config(state=NORMAL)
-        else:
-            music_button.config(state=DISABLED)
+            recognition_possible=(var_playerType1.get()=="Human" or var_playerType2.get()=="Human")and (var_playerType1.get()=="AI-Model" or var_playerType2.get()=="AI-Model" or var_playerType1.get()=="Test Algorithm" or var_playerType2.get()=="Test Algorithm")
+            if recognition_possible and not var_start_from_file.get():
+                use_recognition_button.config(state=NORMAL)
+                label_recognition.config(state=NORMAL)
+            else:
+                use_recognition_button.config(state=DISABLED)
+                label_recognition.config(state=DISABLED)
+            #tab 1, delaybutton#
+            if (var_playerType1.get()=="AI-Model" or var_playerType2.get()=="AI-Model" ) or (var_playerType1.get()=="Test Algorithm" or var_playerType2.get()=="Test Algorithm"):
+                delaybutton.config(state=NORMAL)
+            else:
+                delaybutton.config(state=DISABLED)
+            #tab1, music button#
+            if var_playerType1.get()=="Human" or var_playerType2.get()=="Human":
+                music_button.config(state=NORMAL)
+            else:
+                music_button.config(state=DISABLED)
 
-        #starting player
-        if var_playerType1.get()==var_playerType2.get() and var_playerType1=="Test Algorithm": #option not relevant
-            playerstartLabel.config(state=DISABLED)
-            CbStartingPlayer.config(state=DISABLED)
-        else:
-            playerstartLabel.config(state=NORMAL)
-            CbStartingPlayer.config(state="readonly")
+            #starting player
+            if var_playerType1.get()==var_playerType2.get() and var_playerType1=="Test Algorithm": #option not relevant
+                playerstartLabel.config(state=DISABLED)
+                CbStartingPlayer.config(state=DISABLED)
+            else:
+                playerstartLabel.config(state="normal")
+                CbStartingPlayer.config(state="readonly")
 
-        if var_start_from_file.get()!=last_value_load_board_from_file and var_start_from_file.get()==True:
-            var_rep.set(False) #can't be used simultanously because if you would save a replay file, it wouldn't be complete (the moves that are loaded are gone)
+            if var_start_from_file.get()!=last_value_load_board_from_file and var_start_from_file.get()==True:
+                var_rep.set(False) #can't be used simultanously because if you would save a replay file, it wouldn't be complete (the moves that are loaded are gone)
             
-            last_value_load_board_from_file=var_start_from_file.get()
-            last_value_repvar=var_rep.get()
+                last_value_load_board_from_file=var_start_from_file.get()
+                last_value_repvar=var_rep.get()
 
-        if var_rep.get()!=last_value_repvar and var_rep.get()==True:
-            var_start_from_file.set(False)
+            if var_rep.get()!=last_value_repvar and var_rep.get()==True:
+                var_start_from_file.set(False)
 
-            last_value_load_board_from_file=var_start_from_file.get()
-            last_value_repvar=var_rep.get()
+                last_value_load_board_from_file=var_start_from_file.get()
+                last_value_repvar=var_rep.get()
 
-        list_artificial_players=["AI-Model","Test Algorithm"]
-        if var_playerType1.get() not in list_artificial_players and var_playerType2.get() not in list_artificial_players:
-            button_show_overruling.config(state=NORMAL)
-        else:
-            button_show_overruling.config(state=DISABLED)
+            list_artificial_players=["AI-Model","Test Algorithm"]
+            if var_playerType1.get() not in list_artificial_players and var_playerType2.get() not in list_artificial_players:
+                button_show_overruling.config(state=NORMAL)
+            else:
+                button_show_overruling.config(state=DISABLED)
 
-        if not var_rep.get() and not var_start_from_file.get():
-            label_info_load_save_replay.config(state=DISABLED)
-        else:
-            label_info_load_save_replay.config(state=NORMAL)
+            if not var_rep.get() and not var_start_from_file.get():
+                label_info_load_save_replay.config(state=DISABLED)
+            else:
+                label_info_load_save_replay.config(state=NORMAL)
 
-        if var_playerType2.get()=="Human":
-            train_description.config(state="disabled") #a human will never play the game 3000 times to train the model
-        else:
-            train_description.config(state="normal")
+            if var_playerType2.get()=="Human":
+                train_description.config(state=DISABLED) #a human will never play the game 3000 times to train the model
+            else:
+                train_description.config(state=NORMAL)
 
-        if var_playerType2.get()=="AI-Model":
-            CbModelTrain2.config(state="readonly")
-            label_value_number_of_training_loops_tab2_p2.config(state=NORMAL)
-        else:
-            CbModelTrain2.config(state=DISABLED)
-            label_value_number_of_training_loops_tab2_p2.config(state=DISABLED)
+            if var_playerType2.get()=="AI-Model":
+                CbModelTrain2.config(state="readonly")
+                label_value_number_of_training_loops_tab2_p2.config(state=NORMAL)
+            else:
+                CbModelTrain2.config(state=DISABLED)
+                label_value_number_of_training_loops_tab2_p2.config(state=DISABLED)
 
-        show_number_of_training_loops_comboboxes()
-        refresh_training_stats()
+            show_number_of_training_loops_comboboxes()
+            refresh_training_stats()
+        except Exception as e:
+            pass
 
 def refresh_training_stats():
     global last_selected_model #used to keep track of which model is selected, because it is unselected when selecting something in the  combobox
-    for i in Lb1.curselection():
-        last_selected_model=Lb1.get(i)
+    try:
+        for i in Lb1.curselection():
+            last_selected_model=Lb1.get(i)
 
-    model_class=modelmanager_instance.get_model(last_selected_model)
-    var_number_of_training_loops.set(f"{model_class.get_number_of_training_loops("training loops")} (against H:{model_class.get_number_of_training_loops("training loops against Human")}, T'A':{model_class.get_number_of_training_loops("training loops against Test Algorithm")}, AI:{model_class.get_number_of_training_loops("training loops against AI-Model")} )")
+        model_class=modelmanager_instance.get_model(last_selected_model)
+        var_number_of_training_loops.set(f"{model_class.get_number_of_training_loops("training loops")} (against H:{model_class.get_number_of_training_loops("training loops against Human")}, T'A':{model_class.get_number_of_training_loops("training loops against Test Algorithm")}, AI:{model_class.get_number_of_training_loops("training loops against AI-Model")} )")
 
-    if Cb_choose_stats.get()== "Total":
-        var_losses.set(model_class.get_number_of_losses("total end stats"))
-        var_wins.set(model_class.get_number_of_wins("total end stats"))
-        var_ties.set(model_class.get_number_of_ties("total end stats"))
-    elif Cb_choose_stats.get()== "Games":
-        var_losses.set(model_class.get_number_of_losses("games end stats"))
-        var_wins.set(model_class.get_number_of_wins("games end stats"))
-        var_ties.set(model_class.get_number_of_ties("games end stats"))
-    elif Cb_choose_stats.get()== "Training":
-        var_losses.set(model_class.get_number_of_losses("training loops end stats"))
-        var_wins.set(model_class.get_number_of_wins("training loops end stats"))
-        var_ties.set(model_class.get_number_of_ties("training loops end stats"))
+        if Cb_choose_stats.get()== "Total":
+            var_losses.set(model_class.get_number_of_losses("total end stats"))
+            var_wins.set(model_class.get_number_of_wins("total end stats"))
+            var_ties.set(model_class.get_number_of_ties("total end stats"))
+        elif Cb_choose_stats.get()== "Games":
+            var_losses.set(model_class.get_number_of_losses("games end stats"))
+            var_wins.set(model_class.get_number_of_wins("games end stats"))
+            var_ties.set(model_class.get_number_of_ties("games end stats"))
+        elif Cb_choose_stats.get()== "Training":
+            var_losses.set(model_class.get_number_of_losses("training loops end stats"))
+            var_wins.set(model_class.get_number_of_wins("training loops end stats"))
+            var_ties.set(model_class.get_number_of_ties("training loops end stats"))
     
-        total_sum=var_losses.get()+var_ties.get()+var_wins.get()
-        if total_sum>0:
-            for relative_value,value in zip([var_relative_value_losses,var_relative_value_wins,var_relative_value_ties],[var_losses,var_wins,var_ties]):
-                relative_value.set(str(np.round((value.get()/total_sum)*100))+"%")  
-        else:
-            var_relative_value_losses.set("N/A")
-            var_relative_value_wins.set("N/A")
-            var_relative_value_ties.set("N/A")
+            total_sum=var_losses.get()+var_ties.get()+var_wins.get()
+            if total_sum>0:
+                for relative_value,value in zip([var_relative_value_losses,var_relative_value_wins,var_relative_value_ties],[var_losses,var_wins,var_ties]):
+                    relative_value.set(str(np.round((value.get()/total_sum)*100))+"%")  
+            else:
+                var_relative_value_losses.set("N/A")
+                var_relative_value_wins.set("N/A")
+                var_relative_value_ties.set("N/A")
+    except Exception as e:
+        pass
 
 def show_number_of_training_loops_comboboxes():
     var_number_of_training_loops_comboboxes_p1.set("training loops: "+str(modelmanager_instance.get_model(var_model_player1.get()).get_number_of_training_loops("training loops")))
@@ -785,11 +788,6 @@ button_reset_stats=ttk.Button(frame_stats_buttons, text="Reset Stats", style="TB
 button_reset_stats.grid(row=0, column=0)
 button_reset_end_states=ttk.Button(frame_stats_buttons, text="Reset End States", style="TButton", command=lambda: reset_end_states())
 button_reset_end_states.grid(row=0, column=1)
-
-#in development
-# embeded_tk_window = Frame(root, width = game_instance.WIDTH, height=game_instance.HEIGHT)
-# os.environ['SDL_WINDOWID'] = str(embeded_tk_window.winfo_id())
-# os.environ['SDL_VIDEODRIVER'] = 'windib'
 
 def mainmenu_run():
     root.mainloop()

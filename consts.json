@@ -1,7 +1,7 @@
 {
     "gomoku" : [
         {
-            "cell_size": 32,
+            "cell_size": 42,
             "grid_size": 15,
             "p1col": "(0, 0, 0)",
             "p2col": "(255, 255, 255)",
