@@ -1,4 +1,6 @@
+from calendar import c
 from concurrent.futures import thread
+from logging import root
 import operator
 import os
 import time
@@ -74,6 +76,8 @@ class Player:
         self.AI_model=None
         
     def __str__(self) -> str:
+        if self.TYPE =="human":
+            return f"Player {self.id}: {self.TYPE}  "
         return f"Player {self.id}: {self.TYPE}"
 
     def set_player_id(self, player_id):
@@ -393,14 +397,25 @@ def convert_to_one_hot(board, player_id):
         one_hot_board[2] = (board == 1).astype(np.float32)
     return one_hot_board
 
+class refresh():
+    def __init__(self):
+        pass
+    def refresh_label(self,label,game_number):
+        lijst=["human","ai","test"]
+        info=lijst[1]if current_player.id==1 else lijst[0]
+        label.config(text="Gomoku - Game: " + str(0) + " - " +" - Current player: " + str(current_player.id) + " - " + "                  ")
+        label.update()
+
 def refresh_screen(game_number, current_player):
     global current_player_label, root_play_game
-    pygame.display.flip
+    pygame.display.flip()
+    refresh().refresh_label(current_player_label,game_number)
+
+def pygame_loop():
+    global current_player_label, root_play_game, current_player, current_player_label
+    pygame.display.flip()
     root_play_game.update()
-    current_player_info = "Game: " + str(game_number) + " - " + str(current_player)
-    current_player_label.config(text=current_player_info)
-    current_player_label.update()
-    pygame.display.set_caption(current_player_info)
+    root_play_game.after(100, pygame_loop)
 
 def initialize_fullscreen_GUI(instance,game_mode):
     global root_play_game, current_player,label_current_game_mode,current_player_label,embed_pygame
@@ -419,10 +434,10 @@ def initialize_fullscreen_GUI(instance,game_mode):
         root_play_game.config(bg="#357EC7")
         root_play_game.title("Gomoku")
 
-        font_labels=("Arial", 18)
+        font_labels=("Arial", 10)
 
         current_player_label = Label(root_play_game, text="Current player: " + str(current_player.get_player_id()), bg="#357EC7",fg='white', font=font_labels)
-        current_player_label.grid(row=0, column=0)
+        current_player_label.grid(row=0, column=0, sticky="nw")
 
         embed_pygame = Frame(root_play_game, width=instance.WIDTH, height=instance.HEIGHT,borderwidth=6)
         embed_pygame.grid(row=1, column=1)
@@ -446,6 +461,7 @@ def initialize_fullscreen_GUI(instance,game_mode):
     
     pygame.display.set_icon(pygame.image.load('res/ico.png'))
     pygame.display.set_caption(window_name)
+    pygame_loop()
     
 def handle_human_move(instance, x, y, record_replay, players,p1_moves=None, p2_moves=None):
     global victory_text, winning_player, running,current_player,root_play_game
@@ -482,7 +498,7 @@ def add_hover_effect(instance):
         if instance.board[row][col] == 0:#cell is empty
             cell_size = instance.CELL_SIZE
             pygame.draw.circle(instance.screen, HOVER_COLOR, (col * cell_size + cell_size // 2, row * cell_size + cell_size // 2), cell_size // 2 - 5)
-            pygame.display.flip()
+            #pygame.display.flip()
 
 def runGame(instance, game_number, record_replay):#main function
     # Main game loop
