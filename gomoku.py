@@ -2,7 +2,8 @@ from concurrent.futures import thread
 import operator
 import os
 import time
-from tkinter import TOP, Frame, Label, Tk
+from tkinter import TOP, Frame, Label, StringVar, Tk
+import tkinter
 import pygame
 from AI_Model import AI_Model
 from music import start_muziek_vertraagd
@@ -20,7 +21,7 @@ window_name = "Gomoku"
 victory_text = ""
 mark_last_move_model = True
 root_play_game=None
-#instructie: druk op de linkermuisknop wanneer je een zet hebt gedaan op het fysiek bord.
+current_player_label=None
 
 class GomokuGame:
     def __init__(self, values):
@@ -73,10 +74,7 @@ class Player:
         self.AI_model=None
         
     def __str__(self) -> str:
-        if self.AI_model is not None:
-            return f"Player{self.id},(type={self.TYPE}, model={self.AI_model.modelname})"
-        else:
-            return f"Player{self.id},(type={self.TYPE})"
+        return f"Player {self.id}: {self.TYPE}"
 
     def set_player_id(self, player_id):
         self.id = int(player_id) #id can be 1 or 2 corresponding to human or AI
@@ -229,7 +227,6 @@ def draw_board(instance,last_move_model=None):
 
             elif instance.board[row][col] == 2:
                 if is_move_model(row,col,last_move_model) and mark_last_move_model:
-                    #red (R,G,B)
                     pygame.draw.circle(instance.screen, instance.P2COL, (col * cell_size + cell_size // 2, row * cell_size + cell_size // 2), radius_big_circle)
                     pygame.draw.circle(instance.screen, red, (col * cell_size + cell_size // 2, row * cell_size + cell_size // 2), radius_small_circle)
                     if instance.show_overruling and player2.ai.overruled_last_move:
@@ -374,7 +371,7 @@ def check_win(row, col, playerID, instance):
             return True
     return False
 
-def check_board_full(instance):# checkt of het bord vol is
+def check_board_full(instance):
     board = instance.board
     grid_size = instance.GRID_SIZE
     for row in range(grid_size):
@@ -383,7 +380,7 @@ def check_board_full(instance):# checkt of het bord vol is
                 return False
     return True
 
-def convert_to_one_hot(board, player_id):#vermijd dat ai denkt dat de getallen iets betekenen.
+def convert_to_one_hot(board, player_id):
     board = np.array(board)
     height, width = board.shape
     one_hot_board = np.zeros((3, height, width), dtype=np.float32)
@@ -397,9 +394,13 @@ def convert_to_one_hot(board, player_id):#vermijd dat ai denkt dat de getallen i
     return one_hot_board
 
 def refresh_screen(game_number, current_player):
-    pygame.display.flip()#refresh
-    window_name = "Game: " + str(game_number) + " - " + str(current_player) #beurt start
-    pygame.display.set_caption(window_name)
+    global current_player_label, root_play_game
+    pygame.display.flip
+    root_play_game.update()
+    current_player_info = "Game: " + str(game_number) + " - " + str(current_player)
+    current_player_label.config(text=current_player_info)
+    current_player_label.update()
+    pygame.display.set_caption(current_player_info)
 
 def initialize_fullscreen_GUI(instance,game_mode):
     global root_play_game, current_player,label_current_game_mode,current_player_label,embed_pygame
@@ -437,6 +438,8 @@ def initialize_fullscreen_GUI(instance,game_mode):
 
         label_current_game_mode.configure(text="Current game mode: "+game_mode)
         current_player_label.configure(text="Current player: " + str(current_player.get_player_id()))
+        label_current_game_mode.update()
+        current_player_label.update()
     
     pygame.display.init()
     instance.screen = pygame.display.set_mode((instance.WIDTH, instance.HEIGHT))
@@ -444,10 +447,8 @@ def initialize_fullscreen_GUI(instance,game_mode):
     pygame.display.set_icon(pygame.image.load('res/ico.png'))
     pygame.display.set_caption(window_name)
     
-    pygame_loop(instance)
-
 def handle_human_move(instance, x, y, record_replay, players,p1_moves=None, p2_moves=None):
-    global victory_text, winning_player, running,current_player
+    global victory_text, winning_player, running,current_player,root_play_game
     col = x // instance.CELL_SIZE 
     row = y // instance.CELL_SIZE
     if instance.GRID_SIZE > row >= 0 == instance.board[row][col] and 0 <= col < instance.GRID_SIZE:
@@ -482,12 +483,6 @@ def add_hover_effect(instance):
             cell_size = instance.CELL_SIZE
             pygame.draw.circle(instance.screen, HOVER_COLOR, (col * cell_size + cell_size // 2, row * cell_size + cell_size // 2), cell_size // 2 - 5)
             pygame.display.flip()
-            
-def pygame_loop(instance):
-    global root_play_game
-    pygame.display.flip()
-    root_play_game.update()
-    root_play_game.after(100, lambda: pygame_loop(instance))
 
 def runGame(instance, game_number, record_replay):#main function
     # Main game loop
