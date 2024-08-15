@@ -397,19 +397,28 @@ def convert_to_one_hot(board, player_id):
 class fullscreen_GUI():
     def __init__(self):
         pass
-    def refresh_label(self,label,game_number):
+
+    def hide_GUI(self):
+        global root_play_game
+        root_play_game.withdraw()
+
+    def refresh_labels(self,label,game_number):
         if current_player.TYPE == "Human":
             player_text="Human         "
         elif current_player.TYPE == "AI-Model":
             player_text="AI-Model      "
         else:
             player_text="Test Algorithm"
-        label.config(text="Gomoku - Game: " + str(game_number) + " - " +" - Current player: " + str(current_player.id) + " - " + player_text)
+
+        label.config(text="Current player: " + str(current_player.id) + " - " + player_text)
         label.update()
+
+        current_game_label.config(text="Game: " + str(game_number))
+        current_game_label.update()
 
     def refresh_screen(self,game_number):
         global current_player_label, root_play_game
-        self.refresh_label(current_player_label,game_number)
+        self.refresh_labels(current_player_label,game_number)
         pygame.display.flip()
 
     def pygame_loop(self):
@@ -419,13 +428,13 @@ class fullscreen_GUI():
         root_play_game.after(100, self.pygame_loop)
 
     def initialize_fullscreen_GUI(self,instance,game_mode):
-        global root_play_game, current_player,label_current_game_mode,current_player_label,embed_pygame
+        global root_play_game, current_player,label_current_game_mode,current_player_label,embed_pygame,current_game_label
         if root_play_game is None:
             root_play_game = Tk()
 
-            root_play_game.columnconfigure(0, weight=0)
-            root_play_game.columnconfigure(1, weight=2)
-            root_play_game.columnconfigure(2, weight=0)
+            root_play_game.columnconfigure(0, weight=1)
+            root_play_game.columnconfigure(1, weight=1)
+            root_play_game.columnconfigure(2, weight=1)
 
             root_play_game.rowconfigure(0, weight=1)
             root_play_game.rowconfigure(1, weight=1)
@@ -435,16 +444,20 @@ class fullscreen_GUI():
             root_play_game.config(bg="#357EC7")
             root_play_game.title("Gomoku")
 
-            font_labels=("Arial", 17)
+            font_labels=("Arial", 18)
 
-            current_player_label = Label(root_play_game, text="Current player: " + str(current_player.id), bg="#357EC7",fg='white', font=font_labels,width=45)
-            current_player_label.grid(row=0, column=0, sticky="nw")
+            frame_info=Frame(root_play_game,bg="#357EC7")
+            frame_info.grid(row=0, column=0,sticky="w")
+            current_player_label = Label(frame_info, text="Current player: " + str(current_player.id), bg="#357EC7",fg='white', font=font_labels,padx=40,pady=2,width=25)
+            current_player_label.grid(row=0, column=0, sticky="w")
+            current_game_label=Label(frame_info, text="Game: " + str(0), bg="#357EC7",fg='white', font=font_labels,padx=40,pady=2,width=15)
+            current_game_label.grid(row=1, column=0, sticky="w")
 
             embed_pygame = Frame(root_play_game, width=instance.WIDTH, height=instance.HEIGHT)
             embed_pygame.grid(row=1, column=1,sticky="w")
 
             label_current_game_mode=Label(root_play_game, text="Current game mode: "+ game_mode, bg="#357EC7",fg="white", font=font_labels,width=25)
-            label_current_game_mode.grid(row=0, column=2,sticky="e")
+            label_current_game_mode.grid(row=0, column=2,sticky="e",padx=(0,10))
 
             os.environ['SDL_WINDOWID'] = str(embed_pygame.winfo_id())
             os.environ['SDL_VIDEODRIVER'] = 'windib'
@@ -456,6 +469,7 @@ class fullscreen_GUI():
             current_player_label.configure(text="Current player: " + str(current_player.id))
             label_current_game_mode.update()
             current_player_label.update()
+
     
         pygame.display.init()
         instance.screen = pygame.display.set_mode((instance.WIDTH, instance.HEIGHT))
@@ -504,7 +518,7 @@ def add_hover_effect(instance):
 def runGame(instance, game_number, record_replay):#main function
     # Main game loop
     global window_name, victory_text, current_player, player1, player2, running,current_player,p1_moves, p2_moves,winning_player,root_play_game
-    GUI=fullscreen_GUI()
+
     if instance.use_recognition:
         print("using recognition")
     else:
@@ -521,7 +535,8 @@ def runGame(instance, game_number, record_replay):#main function
             print("Overruling is allowed for player 2")
         else:
             print("Overruling is not allowed for player 2")
-
+    
+    GUI=fullscreen_GUI()
     GUI.initialize_fullscreen_GUI(instance,"play game")
 
     mark_last_move_model=True

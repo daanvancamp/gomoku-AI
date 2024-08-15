@@ -7,7 +7,6 @@ from tkinter import *
 from tkinter import ttk
 from tkinter import filedialog
 
-import pygame
 import filereader
 import stats
 from PIL import Image, ImageTk
@@ -19,7 +18,7 @@ import numpy as np
 
 #todo: make the GUI fullscreen, add webcam view
 
-WIDTH = 470
+WIDTH = 505
 HEIGHT = 500
 
 game_instance = gomoku.GomokuGame(filereader.create_gomoku_game("consts.json"))
@@ -174,10 +173,12 @@ def start_new_game():
 
     game_instance.ai_delay = var_delay.get()
     stats.should_log = var_log.get()
-    stats.setup_logging(var_playerType1.get(), var_playerType2.get())
+    
         
     gomoku.player1.TYPE=var_playerType1.get()
     gomoku.player2.TYPE=var_playerType2.get()
+
+    stats.setup_logging(gomoku.player1.TYPE, gomoku.player2.TYPE)
 
     if gomoku.player1.TYPE == "AI-Model":
         gomoku.player1.load_model(var_model_player1.get(),False)
@@ -238,8 +239,6 @@ def start_new_game():
                 print("\n",end="")
             print("The board can only contain 0, 1, or 2. 0 = empty, 1 = player 1, 2 = player 2.")
     game_over()
-    gomoku.root_play_game.withdraw()
-
 
 def start_new_training():
     global game_instance
@@ -331,7 +330,7 @@ def start_new_replay():
 
         game_instance.ai_delay = var_delay.get()
         stats.should_log = var_log.get()
-        stats.setup_logging(str(gomoku.player1), str(gomoku.player2))
+        stats.setup_logging(gomoku.player1.TYPE, gomoku.player2.TYPE)
         root.wm_state('iconic')
 
         try:               
@@ -341,9 +340,11 @@ def start_new_replay():
             raise Exception("There is an error in the main function/loop, it can be anything." , str(e)) 
     else:
         print("Try again, please select a valid json file")
+    
     game_over()
 
 def game_over():
+    gomoku.fullscreen_GUI().hide_GUI()
     root.wm_state('normal')
     game_instance.current_game = 0
 
