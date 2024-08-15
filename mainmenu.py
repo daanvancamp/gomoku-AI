@@ -16,8 +16,6 @@ import modelmanager
 import gomoku
 import numpy as np
 
-#todo: make the GUI fullscreen, add webcam view
-
 WIDTH = 505
 HEIGHT = 500
 
@@ -37,7 +35,6 @@ except TclError:
     print("icoon kon niet geladen worden.")
     pass
 
-# Maak een Style object aan
 style2 = ttk.Style()
 style2.theme_use('default')
 style2.configure('TNotebook.Tab', background="#357EC7")
@@ -196,7 +193,7 @@ def start_new_game():
         gomoku.current_player = gomoku.player2
     
     initialize_board_json_files()
-
+    
     root.wm_state('iconic')
 
         
@@ -213,7 +210,7 @@ def start_new_game():
         log_info_overruling("run "+str(i+1)+" begins:")
         if game_instance.use_recognition:
             try:
-                initialize_board_json_files()#geen stukken op bord
+                initialize_board_json_files()
             except:
                 raise Exception("Error in function: initialiseer_spelbord_json_bestanden")
             
@@ -231,7 +228,7 @@ def start_new_game():
 
         if (board_loaded and var_start_from_file.get()) or not var_start_from_file.get():
             try:
-                gomoku.runGame(game_instance, i,GUI) #kan als hoofdprogramma beschouwd worden (één spel is één run)
+                gomoku.runGame(game_instance, i,GUI) #main function
             except Exception as e:
                 print("error in gomoku.run")
                 raise Exception("There is an error in the main function/loop, it can be anything." , str(e))
@@ -345,7 +342,7 @@ def start_new_replay():
         root.wm_state('iconic')
         GUI=gomoku.fullscreen_GUI(game_instance,"Replay")
         try:
-            gomoku.runReplay(game_instance,GUI,moves) #kan als hoofdprogramma beschouwd worden (��n spel is ��n run)
+            gomoku.runReplay(game_instance,GUI,moves) #main function
         except Exception as e:
             print("error in gomoku.run, herschrijf die functie.")
             raise Exception("There is an error in the main function/loop, it can be anything." , str(e)) 
@@ -550,14 +547,14 @@ def refresh_training_stats():
             var_wins.set(model_class.get_number_of_wins("training loops end stats"))
             var_ties.set(model_class.get_number_of_ties("training loops end stats"))
     
-            total_sum=var_losses.get()+var_ties.get()+var_wins.get()
-            if total_sum>0:
-                for relative_value,value in zip([var_relative_value_losses,var_relative_value_wins,var_relative_value_ties],[var_losses,var_wins,var_ties]):
-                    relative_value.set(str(np.round((value.get()/total_sum)*100))+"%")  
-            else:
-                var_relative_value_losses.set("N/A")
-                var_relative_value_wins.set("N/A")
-                var_relative_value_ties.set("N/A")
+        total_sum=var_losses.get()+var_ties.get()+var_wins.get()
+        if total_sum>0:
+            for relative_value,value in zip([var_relative_value_losses,var_relative_value_wins,var_relative_value_ties],[var_losses,var_wins,var_ties]):
+                relative_value.set(str(np.round((value.get()/total_sum)*100,2))+"%")  
+        else:
+            var_relative_value_losses.set("N/A")
+            var_relative_value_wins.set("N/A")
+            var_relative_value_ties.set("N/A")
     except Exception as e:
         pass
 
@@ -651,7 +648,7 @@ use_recognition_button=ttk.Checkbutton(tab1, text="use recognition(experimental)
 use_recognition_button.grid(row=14, column=1, sticky="w")
 
 
-label_recognition=ttk.Label(tab1, text="*only turn on when you have a physical board, a webcam and the other repository.",style="TLabel",wraplength=300)
+label_recognition=ttk.Label(tab1, text="*only turn on when you have a physical board, a webcam and the other repository.",style="TLabel",wraplength=WIDTH-15)
 label_recognition.grid(row=15, column=0, sticky="w",columnspan=2, padx=distance_from_left_side)
 
 
@@ -673,7 +670,7 @@ button_3.grid(row=1, column=0, sticky="e")
 root.bind("<Escape>", lambda event: quit_game())
 root.bind("<q>", lambda event: quit_game())
 
-label_info_load_save_replay=ttk.Label(tab1,wraplength=300, text="(1)(2)The save replay function can't be used when loading a board, because that would create a wrong replay file.",style="TLabel")
+label_info_load_save_replay=ttk.Label(tab1,wraplength=WIDTH-15, text="(1)(2)The save replay function can't be used when loading a board, because that would create a wrong replay file.",style="TLabel")
 label_info_load_save_replay.grid(row=17, column=0, sticky="w",columnspan=2,pady=5,padx=distance_from_left_side)
 
 ttk.Label(tab2)
@@ -760,22 +757,26 @@ else:
     Lb1.activate(0)
     last_selected_model=models[0]
 
+frame_buttons=ttk.Frame(tab4)
+frame_buttons.grid(row=0, column=0, columnspan=2,sticky='e')
 
-button_NewModel = ttk.Button(tab4, text="Make New Model", style="TButton", command=lambda: create_new_model())
-button_NewModel.grid(row=1, column=1,sticky="w",pady=2,padx=distance_from_left_side)
-button_DeleteModel = ttk.Button(tab4, text="Delete Model", style="TButton", command=lambda: delete_model())
-button_DeleteModel.grid(row=1, column=2)
+button_NewModel = ttk.Button(frame_buttons, text="Make New Model", style="TButton", command=lambda: create_new_model())
+button_NewModel.grid(row=0, column=1,sticky="n",pady=2,padx=distance_from_left_side)
+nameModelLabel = ttk.Label(frame_buttons, text="Name of model: ",style="TLabel")
+nameModelLabel.grid(row=1, column=0, sticky="w",pady=2,padx=distance_from_left_side)
+nameModelEntry = ttk.Entry(frame_buttons, textvariable=var_name_model,style="TEntry")
+nameModelEntry.grid(row=1, column=1, sticky="w",pady=2,padx=distance_from_left_side)
+nameModelEntry.bind("<Return>",lambda event: create_new_model())#push enter to create a new model (easier)
 
-nameModelLabel = ttk.Label(tab4, text="Name of model: ",style="TLabel")
-nameModelLabel.grid(row=2, column=0, sticky="w",pady=2,padx=distance_from_left_side)
-nameModelEntry = ttk.Entry(tab4, textvariable=var_name_model,style="TEntry")
-nameModelEntry.grid(row=2, column=1, sticky="w",pady=2,padx=distance_from_left_side)
-nameModelEntry.bind("<Return>",lambda event: create_new_model())#push enter to make a new model (easier)
+button_DeleteModel = ttk.Button(frame_buttons, text="Delete Model", style="TButton", command=lambda: delete_model())
+button_DeleteModel.grid(row=0, column=0,sticky="n")
+
+
 
 label_number_of_training_loops = ttk.Label(tab4, text="Training loops: ",style="TLabel")
-label_number_of_training_loops.grid(row=4, column=0, sticky="w",pady=(20,0),padx=distance_from_left_side)
+label_number_of_training_loops.grid(row=4, column=0, sticky="w",padx=(distance_from_left_side,0),pady=(30,10))
 label_value_number_of_training_loops_tab4 = ttk.Label(tab4, textvariable=var_number_of_training_loops,style="TLabel")
-label_value_number_of_training_loops_tab4.grid(row=4, column=1, sticky="w",pady=(30,0))
+label_value_number_of_training_loops_tab4.grid(row=4, column=1, sticky="w",pady=(30,10))
 
 stats_list=["Total","Games","Training"]
 Cb_choose_stats= ttk.Combobox(tab4, state="readonly", values=stats_list, textvariable=var_choose_stats)
