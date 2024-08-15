@@ -169,7 +169,13 @@ def start_new_game():
     game_instance.use_recognition = var_use_recognition.get()
     game_instance.play_music = var_play_music.get()
     game_instance.show_overruling=var_show_overruling.get()
-    game_instance.show_hover_effect=True
+    game_instance.record_replay=var_rep.get()
+
+
+    if game_instance.use_recognition:
+        game_instance.show_hover_effect=False
+    else:
+        game_instance.show_hover_effect=True
 
     game_instance.ai_delay = var_delay.get()
     stats.should_log = var_log.get()
@@ -225,9 +231,11 @@ def start_new_game():
             else:
                 board_loaded=False
             game_instance.set_board(board)
+
+        GUI=gomoku.fullscreen_GUI()
         if (board_loaded and var_start_from_file.get()) or not var_start_from_file.get():
             try:
-                gomoku.runGame(game_instance, i, var_rep.get()) #kan als hoofdprogramma beschouwd worden (één spel is één run)
+                gomoku.runGame(game_instance, i,GUI) #kan als hoofdprogramma beschouwd worden (één spel is één run)
             except Exception as e:
                 print("error in gomoku.run")
                 raise Exception("There is an error in the main function/loop, it can be anything." , str(e))
@@ -238,7 +246,7 @@ def start_new_game():
                     print(random.randint(0,2), end="")
                 print("\n",end="")
             print("The board can only contain 0, 1, or 2. 0 = empty, 1 = player 1, 2 = player 2.")
-    game_over()
+    game_over(GUI)
 
 def start_new_training():
     global game_instance
@@ -247,11 +255,16 @@ def start_new_training():
     game_instance.use_recognition = False
     game_instance.play_music = False
     game_instance.show_overruling=False
-    game_instance.show_hover_effect=False
+    game_instance.record_replay=True
 
     gomoku.player1.TYPE="AI-Model"
     gomoku.player2.TYPE=var_playerType2.get()
     
+    if gomoku.player1.TYPE=="Human" and gomoku.player2.TYPE=="Human":
+        game_instance.show_hover_effect=True
+    else:
+        game_instance.show_hover_effect=False
+
     gomoku.player1.load_model(var_model_player1.get(),True)#player 1 is always an AI-Model when training
     gomoku.player1.set_allow_overrule(var_allow_overrule_player_1.get())
 
@@ -284,8 +297,9 @@ def start_new_training():
             stats.log_message(f"Game  {i+1} begins.")
             game_instance.current_game = i+1
             game_instance.last_round = (i+1 == runs)
+            GUI=gomoku.fullscreen_GUI()
             try:
-                gomoku.runTraining(game_instance, i, True) #kan als hoofdprogramma beschouwd worden (één spel is één run)
+                gomoku.runTraining(game_instance, i,GUI) #main function
             except Exception as e:
                 print("error in gomoku.run, herschrijf die functie.")
                 raise Exception("There is an error in the main function/loop, it can be anything." , str(e))
@@ -303,7 +317,7 @@ def start_new_training():
     except ValueError:
         print("Most likely: Game runs value invalid, try again.")
     
-    game_over()
+    game_over(GUI)
 
 
 def start_new_replay():
@@ -332,19 +346,19 @@ def start_new_replay():
         stats.should_log = var_log.get()
         stats.setup_logging(gomoku.player1.TYPE, gomoku.player2.TYPE)
         root.wm_state('iconic')
-
+        GUI=gomoku.fullscreen_GUI()
         try:               
-            gomoku.runReplay(game_instance, moves) #kan als hoofdprogramma beschouwd worden (��n spel is ��n run)
+            gomoku.runReplay(game_instance,GUI,moves) #kan als hoofdprogramma beschouwd worden (��n spel is ��n run)
         except Exception as e:
             print("error in gomoku.run, herschrijf die functie.")
             raise Exception("There is an error in the main function/loop, it can be anything." , str(e)) 
     else:
         print("Try again, please select a valid json file")
     
-    game_over()
+    game_over(GUI)
 
-def game_over():
-    gomoku.fullscreen_GUI().hide_GUI()
+def game_over(GUI):
+    GUI.hide_GUI()
     root.wm_state('normal')
     game_instance.current_game = 0
 
