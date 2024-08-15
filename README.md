@@ -83,17 +83,16 @@ august 2024:
   You could always win when you started from the ends and made your way to the middle. The model sometimes didn't block it. It turned out that it was the result of a small bug in the overruling.**
   
   fixed a few general bugs
-  **big performance and stability improvements, the GUI won't crash anymore. If it does, please report that.**
+
+  **big performance and stability improvements, the GUI won't crash anymore. If it does, please report that.** There was no event loop when there was no Human in the game. So one click would cause the GUI to crash.
   
   **released version 1.0**
-
-  added more info in the define tab
 
   fixed some crash issues and bugs
 
   buttons and labels are now grayed out instead of invisible
 
-  restructured code, added class to save model stats
+  restructured code, added class to save model stats: new module
 
   added more stats to tab 4
 
@@ -106,7 +105,15 @@ august 2024:
 
   fixed a crash issue where the program would crash after deleting a model
 
-  redesigned models tab
+  fixed other bugs and crash issues
+
+  embedded the pygame window into a bigger, fullscreen tkinter window that shows all necessary information
+
+  added an option in the GUI so you can now choose if you want to see graphs after training the model
+
+  stability improvements
+
+
 
 
 issues:
