@@ -142,11 +142,11 @@ def write_relevant_pieces_to_file(pad)->None:
     else:
         print("Geen stukken van de relevante kleur gevonden, controleer beeldherkenning indien je fysiek wel een zet hebt uitgevoerd.")
 
-def schrijf_relevante_stukken_voor_zet_weg () :
+def write_relevant_pieces_before_move_to_file () :
     path_relevant_pieces_before_move=r".\bord_gomoku\bord_voor_zet.json"
     write_relevant_pieces_to_file(path_relevant_pieces_before_move)
 
-def schrijf_relevante_stukken_na_zet_weg () :
+def write_relevant_pieces_after_move_to_file () :
     path_relevant_pieces_after_move=r".\bord_gomoku\bord_na_zet.json"
     write_relevant_pieces_to_file(path_relevant_pieces_after_move)
 

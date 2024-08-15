@@ -395,11 +395,11 @@ def convert_to_one_hot(board, player_id):
 
 class fullscreen_GUI():
     def __init__(self):
-        # Define a video capture object 
+        # Define a video capture object
         self.vid = cv2.VideoCapture(0, cv2.CAP_DSHOW)
         
         # Declare the width and height in variables 
-        width, height = 800, 600
+        width, height = 300, 300
   
         # Set the width and height 
         self.vid.set(cv2.CAP_PROP_FRAME_WIDTH, width) 
@@ -470,19 +470,21 @@ class fullscreen_GUI():
 
             embed_pygame = Frame(root_play_game, width=instance.WIDTH, height=instance.HEIGHT)
             embed_pygame.grid(row=0, column=1,rowspan=2)
+
+            button_capture_image = Button(root_play_game, text="Capture Image (in development)", command=lambda : self.determine_move(instance),width=25, bg="green",fg="white", font=font_labels)
+            button_capture_image.grid(row=1, column=1,sticky="s",pady=(0,90))
             
-            size_webcam_frame=400
+            size_webcam_frame=500
+            frame_webcam=Frame(root_play_game,bg="#357EC7")
+            frame_webcam.grid(row=0, rowspan=2,column=2,sticky="e")
 
-            label_webcam_image=Label(root_play_game,text="Webcam photo view (in development)", bg="#357EC7",fg="white", font=font_labels)
-            label_webcam_image.grid(row=0, column=2,sticky="ne")
+            label_webcam_image=Label(frame_webcam,text="Webcam photo view (in development)", bg="#357EC7",fg="white", font=font_labels)
+            label_webcam_image.grid(row=0, column=0,sticky="e",padx=10)
 
-            label_webcam_view=Label(root_play_game,text="Webcam view", bg="#357EC7",fg="white", font=font_labels,width=size_webcam_frame,height=size_webcam_frame)
-            label_webcam_view.grid(row=1, column=2,sticky="ne")
+            label_webcam_view=Label(frame_webcam,text="Webcam view", bg="#357EC7",fg="white", font=font_labels,width=size_webcam_frame,height=size_webcam_frame)
+            label_webcam_view.grid(row=1, column=0,sticky="e")
 
-            button_capture_image = Button(root_play_game, text="Capture Image (in development)", command=lambda : self.determine_move(instance))
-            button_capture_image.grid(row=1, column=2,sticky="s")
-
-            list_recognition_widgets=[label_webcam_view,label_webcam_image,button_capture_image,label_recognition_info]
+            list_recognition_widgets=[label_webcam_view,label_webcam_image,button_capture_image,label_recognition_info,frame_webcam]
             if not instance.use_recognition:
                 for widget in list_recognition_widgets:
                     widget.grid_remove()
@@ -522,6 +524,8 @@ class fullscreen_GUI():
             self.vid=cv2.VideoCapture(0, cv2.CAP_DSHOW)
             self.show_webcam_view()
         try:
+
+            frame=self.crop_to_square(frame)
             # Convert image from one color space to other 
             opencv_image = cv2.cvtColor(frame, cv2.COLOR_BGR2RGBA) 
   
@@ -542,9 +546,10 @@ class fullscreen_GUI():
     def determine_move(self,instance):
         if instance.play_music:
             Thread(target=lambda:pygame.mixer.music.fadeout(1000)).start()#don't block the main thread
-        schrijf_relevante_stukken_na_zet_weg()
+        write_relevant_pieces_after_move_to_file()
         (x,y)=recognize_move()
-        schrijf_relevante_stukken_voor_zet_weg()
+        write_relevant_pieces_before_move_to_file()
+        self.show_image()
         if (x,y) ==(None,None):
             return #don't do anything
         x,y=(x,y)
@@ -552,8 +557,40 @@ class fullscreen_GUI():
         try:
             handle_human_move(instance, x, y , players, p1_moves, p2_moves) 
         except:
-            handle_human_move(instance, x, y, players)   
- 
+            handle_human_move(instance, x, y, players)
+
+    def show_image(self):
+        try:
+            # Capture the video frame by frame 
+            _, frame = self.vid.read() 
+        except:
+            self.vid=cv2.VideoCapture(0, cv2.CAP_DSHOW)
+            self.show_image()
+
+        frame=self.crop_to_square(frame)
+        # Convert image from one color space to other 
+        opencv_image = cv2.cvtColor(frame, cv2.COLOR_BGR2RGBA) 
+  
+        # Capture the latest frame and transform to image 
+        captured_image = Image.fromarray(opencv_image)
+  
+        # Convert captured image to photoimage 
+        photo_image = ImageTk.PhotoImage(image=captured_image,master=root_play_game)
+  
+        # Displaying photoimage in the label 
+        label_webcam_image.photo_image = photo_image
+  
+        # Configure image in the label
+        root_play_game.after(0,label_webcam_image.config(image=photo_image))
+
+    def crop_to_square(self,frame):
+        height, width = frame.shape[:2]
+        smallest_side = min(height, width)
+        start_x = (width - smallest_side) // 2 
+        start_y = (height - smallest_side) // 2
+        square_frame = frame[start_y:start_y + smallest_side, start_x:start_x + smallest_side]
+        return square_frame
+
 def handle_human_move(instance, x, y, players,p1_moves=None, p2_moves=None):
     global victory_text, winning_player, running,current_player,root_play_game
     col = x // instance.CELL_SIZE 
@@ -635,9 +672,9 @@ def runGame(instance:GomokuGame, game_number,GUI):#main function
                         if instance.play_music:
                             Thread(target=lambda:pygame.mixer.music.fadeout(1000)).start()#don't block the main thread
                         if instance.use_recognition:
-                            schrijf_relevante_stukken_na_zet_weg()
+                            write_relevant_pieces_after_move_to_file()
                             (x,y)=recognize_move()
-                            schrijf_relevante_stukken_voor_zet_weg()
+                            write_relevant_pieces_before_move_to_file()
                             if (x,y) ==(None,None):
                                 continue #don't do anything
                         else:
