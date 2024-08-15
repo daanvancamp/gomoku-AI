@@ -170,12 +170,7 @@ def start_new_game():
     game_instance.play_music = var_play_music.get()
     game_instance.show_overruling=var_show_overruling.get()
     game_instance.record_replay=var_rep.get()
-
-
-    if game_instance.use_recognition:
-        game_instance.show_hover_effect=False
-    else:
-        game_instance.show_hover_effect=True
+    game_instance.show_hover_effect= not game_instance.use_recognition
 
     game_instance.ai_delay = var_delay.get()
     stats.should_log = var_log.get()

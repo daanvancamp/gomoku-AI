@@ -396,7 +396,7 @@ def convert_to_one_hot(board, player_id):
 class fullscreen_GUI():
     def __init__(self):
         # Define a video capture object 
-        self.vid = cv2.VideoCapture(0) 
+        self.vid = cv2.VideoCapture(0, cv2.CAP_DSHOW)
         
         # Declare the width and height in variables 
         width, height = 800, 600
@@ -519,7 +519,7 @@ class fullscreen_GUI():
             # Capture the video frame by frame 
             _, frame = self.vid.read() 
         except:
-            self.vid=cv2.VideoCapture(0)
+            self.vid=cv2.VideoCapture(0, cv2.CAP_DSHOW)
             self.show_webcam_view()
         try:
             # Convert image from one color space to other 
