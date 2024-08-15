@@ -1,5 +1,6 @@
 import operator
 import os
+import sys
 import time
 from tkinter import Button, Frame, Label, Tk
 import cv2
@@ -395,6 +396,7 @@ def convert_to_one_hot(board, player_id):
 
 class fullscreen_GUI():
     def __init__(self):
+        self.game_number = 0
         # Define a video capture object
         self.vid = cv2.VideoCapture(0, cv2.CAP_DSHOW)
         
@@ -409,7 +411,7 @@ class fullscreen_GUI():
         global root_play_game
         root_play_game.withdraw()
 
-    def refresh_labels(self,label,game_number):
+    def refresh_labels(self):
         if current_player.TYPE == "Human":
             player_text="Human         "
         elif current_player.TYPE == "AI-Model":
@@ -417,15 +419,16 @@ class fullscreen_GUI():
         else:
             player_text="Test Algorithm"
 
-        label.config(text="Current player: " + str(current_player.id) + " - " + player_text)
-        label.update()
+        current_player_label.config(text="Current player: " + str(current_player.id) + " : " + player_text)
+        current_player_label.update()
 
-        current_game_label.config(text="Game: " + str(game_number))
+        current_game_label.config(text="Game: " + str(self.game_number))
         current_game_label.update()
 
     def refresh_screen(self,game_number):
         global current_player_label, root_play_game
-        self.refresh_labels(current_player_label,game_number)
+        self.game_number = game_number
+        self.refresh_labels()
         pygame.display.flip()
 
     def pygame_loop(self,instance):
@@ -435,8 +438,8 @@ class fullscreen_GUI():
         root_play_game.after(100, lambda: self.pygame_loop(instance))
 
         if instance.use_recognition:
-            root_play_game.after(10,self.show_webcam_view)
-
+            root_play_game.after(150,lambda: self.show_webcam_view(label_webcam_view))
+    
     def initialize_fullscreen_GUI(self,instance:GomokuGame,game_mode):
         global root_play_game, current_player,label_current_game_mode,current_player_label,embed_pygame,current_game_label,label_webcam_view,label_webcam_image,list_recognition_widgets,label_recognition_info
         if root_play_game is None:
@@ -484,7 +487,7 @@ class fullscreen_GUI():
             label_webcam_view=Label(frame_webcam,text="Webcam view", bg="#357EC7",fg="white", font=font_labels,width=size_webcam_frame,height=size_webcam_frame)
             label_webcam_view.grid(row=1, column=0,sticky="e")
 
-            list_recognition_widgets=[label_webcam_view,label_webcam_image,button_capture_image,label_recognition_info,frame_webcam]
+            list_recognition_widgets=[label_webcam_view,label_webcam_image,button_capture_image,label_recognition_info,frame_webcam,button_capture_image]
             if not instance.use_recognition:
                 for widget in list_recognition_widgets:
                     widget.grid_remove()
@@ -516,30 +519,26 @@ class fullscreen_GUI():
         pygame.display.set_caption(window_name)
         self.pygame_loop(instance)
 
-    def show_webcam_view(self):
+    def show_webcam_view(self,label):
         try:
             # Capture the video frame by frame 
             _, frame = self.vid.read() 
         except:
             self.vid=cv2.VideoCapture(0, cv2.CAP_DSHOW)
-            self.show_webcam_view()
+            self.show_webcam_view(label)
         try:
 
             frame=self.crop_to_square(frame)
-            # Convert image from one color space to other 
+
             opencv_image = cv2.cvtColor(frame, cv2.COLOR_BGR2RGBA) 
   
-            # Capture the latest frame and transform to image 
             captured_image = Image.fromarray(opencv_image) 
   
-            # Convert captured image to photoimage 
             photo_image = ImageTk.PhotoImage(image=captured_image,master=root_play_game)
   
-            # Displaying photoimage in the label 
-            label_webcam_view.photo_image = photo_image 
+            label.photo_image = photo_image 
   
-            # Configure image in the label
-            root_play_game.after(0,label_webcam_view.config(image=photo_image)) 
+            root_play_game.after(0,label.config(image=photo_image)) 
         except:
             pass
 
@@ -549,39 +548,16 @@ class fullscreen_GUI():
         write_relevant_pieces_after_move_to_file()
         (x,y)=recognize_move()
         write_relevant_pieces_before_move_to_file()
-        self.show_image()
+        self.show_webcam_view(label_webcam_image)
         if (x,y) ==(None,None):
+            root_play_game.after(0,label_recognition_info.config(text="No move was recognized, try again later."))
             return #don't do anything
         x,y=(x,y)
-
+        root_play_game.after(0,label_recognition_info.config(text="Your move was successfully recognized."))
         try:
             handle_human_move(instance, x, y , players, p1_moves, p2_moves) 
         except:
             handle_human_move(instance, x, y, players)
-
-    def show_image(self):
-        try:
-            # Capture the video frame by frame 
-            _, frame = self.vid.read() 
-        except:
-            self.vid=cv2.VideoCapture(0, cv2.CAP_DSHOW)
-            self.show_image()
-
-        frame=self.crop_to_square(frame)
-        # Convert image from one color space to other 
-        opencv_image = cv2.cvtColor(frame, cv2.COLOR_BGR2RGBA) 
-  
-        # Capture the latest frame and transform to image 
-        captured_image = Image.fromarray(opencv_image)
-  
-        # Convert captured image to photoimage 
-        photo_image = ImageTk.PhotoImage(image=captured_image,master=root_play_game)
-  
-        # Displaying photoimage in the label 
-        label_webcam_image.photo_image = photo_image
-  
-        # Configure image in the label
-        root_play_game.after(0,label_webcam_image.config(image=photo_image))
 
     def crop_to_square(self,frame):
         height, width = frame.shape[:2]
@@ -590,6 +566,7 @@ class fullscreen_GUI():
         start_y = (height - smallest_side) // 2
         square_frame = frame[start_y:start_y + smallest_side, start_x:start_x + smallest_side]
         return square_frame
+
 
 def handle_human_move(instance, x, y, players,p1_moves=None, p2_moves=None):
     global victory_text, winning_player, running,current_player,root_play_game
