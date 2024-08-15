@@ -44,12 +44,13 @@ def log_win(players):
             logging.info(log)
 
 def plot_graph(data: dict, data_name='data', title='title'):
+    # plt.figure(figsize=(10, 6))
     for k, v in data.items():
         plt.plot(np.round(v), 'o', label=k)
         running_avg = np.cumsum(v) / (np.arange(len(v)) + 1)
         plt.plot(running_avg, label=f'{k} avg')
         plt.ylabel(data_name)
-
+        plt.xlabel('round')
     plt.legend()
     plt.title(title)
     plt.show()

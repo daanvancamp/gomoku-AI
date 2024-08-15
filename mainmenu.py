@@ -81,6 +81,8 @@ var_play_music=BooleanVar()
 var_play_music.set(False)
 var_show_overruling=BooleanVar()
 var_show_overruling.set(True)
+var_show_graphs=BooleanVar()
+var_show_graphs.set(False)
 
 var_losses=IntVar()
 var_losses.set(0)
@@ -206,7 +208,7 @@ def start_new_game():
             valid_number=True
         except:
             print("invalid number, try again")
-
+    GUI=gomoku.fullscreen_GUI(game_instance,"Play Game")
     for i in range(runs):
         log_info_overruling("run "+str(i+1)+" begins:")
         if game_instance.use_recognition:
@@ -227,7 +229,6 @@ def start_new_game():
                 board_loaded=False
             game_instance.set_board(board)
 
-        GUI=gomoku.fullscreen_GUI()
         if (board_loaded and var_start_from_file.get()) or not var_start_from_file.get():
             try:
                 gomoku.runGame(game_instance, i,GUI) #kan als hoofdprogramma beschouwd worden (één spel is één run)
@@ -251,6 +252,7 @@ def start_new_training():
     game_instance.play_music = False
     game_instance.show_overruling=False
     game_instance.record_replay=True
+    game_instance.show_graphs=var_show_graphs.get()
 
     gomoku.player1.TYPE="AI-Model"
     gomoku.player2.TYPE=var_playerType2.get()
@@ -286,13 +288,13 @@ def start_new_training():
         stats.should_log = var_log.get()
         stats.setup_logging(gomoku.player1.TYPE, gomoku.player2.TYPE)
         root.wm_state('iconic')
+        GUI=gomoku.fullscreen_GUI(game_instance,"Training")
         for i in range(runs):
             log_info_overruling("run "+str(i+1)+" begins:")
             
             stats.log_message(f"Game  {i+1} begins.")
             game_instance.current_game = i+1
             game_instance.last_round = (i+1 == runs)
-            GUI=gomoku.fullscreen_GUI()
             try:
                 gomoku.runTraining(game_instance, i,GUI) #main function
             except Exception as e:
@@ -311,7 +313,7 @@ def start_new_training():
               
     except ValueError:
         print("Most likely: Game runs value invalid, try again.")
-    
+    print("game over")
     game_over(GUI)
 
 
@@ -341,8 +343,8 @@ def start_new_replay():
         stats.should_log = var_log.get()
         stats.setup_logging(gomoku.player1.TYPE, gomoku.player2.TYPE)
         root.wm_state('iconic')
-        GUI=gomoku.fullscreen_GUI()
-        try:               
+        GUI=gomoku.fullscreen_GUI(game_instance,"Replay")
+        try:
             gomoku.runReplay(game_instance,GUI,moves) #kan als hoofdprogramma beschouwd worden (��n spel is ��n run)
         except Exception as e:
             print("error in gomoku.run, herschrijf die functie.")
@@ -353,6 +355,7 @@ def start_new_replay():
     game_over(GUI)
 
 def game_over(GUI):
+    print("hide_GUI")
     GUI.hide_GUI()
     root.wm_state('normal')
     game_instance.current_game = 0
@@ -644,7 +647,7 @@ music_button=ttk.Checkbutton(tab1, text="Play music", variable=var_play_music,st
 music_button.grid(row=12, column=1, sticky="w")
 button_show_overruling=ttk.Checkbutton(tab1, text="Show overruling", variable=var_show_overruling,style="TCheckbutton")
 button_show_overruling.grid(row=13, column=1, sticky="w")
-use_recognition_button=ttk.Checkbutton(tab1, text="use recognition*", variable=var_use_recognition,style="TCheckbutton")
+use_recognition_button=ttk.Checkbutton(tab1, text="use recognition(experimental)*", variable=var_use_recognition,style="TCheckbutton")
 use_recognition_button.grid(row=14, column=1, sticky="w")
 
 
@@ -712,10 +715,16 @@ gamerunsentry2 = ttk.Entry(tab2, textvariable=var_game_runs,style="TEntry")
 gamerunsentry2.grid(row=9, column=0, sticky="w",pady=2,padx=distance_from_left_side)
 replaybutton2 = ttk.Checkbutton(tab2, text="Save replays", variable=var_rep,style="TCheckbutton")
 replaybutton2.grid(row=10, column=0, sticky="w",pady=2,padx=distance_from_left_side)
+show_graphs_checkbutton=ttk.Checkbutton(tab2, text="Show graphs*", variable=var_show_graphs,style="TCheckbutton")
+show_graphs_checkbutton.grid(row=11, column=0, sticky="w",pady=2,padx=distance_from_left_side)
 
 
-train_description = Label(tab2, text="It is recommended to run at least 3 000 games per training session.", font=(style_numbers[0], style_numbers[1]), wraplength=WIDTH-5, justify=LEFT)#origineel width-5
-train_description.grid(row=11, column=0, sticky="w",columnspan=2,padx=distance_from_left_side)
+
+train_description = Label(tab2, text="It is recommended to run at least 3 000 games per training session.", font=(style_numbers[0], style_numbers[1]), wraplength=WIDTH-15)
+train_description.grid(row=12, column=0, sticky="w",columnspan=2,padx=distance_from_left_side)
+
+info_show_graphs=ttk.Label(tab2, text="*Don't forget to MANUALLY close the graphs at the end of each training session if you enable it.",style="TLabel",foreground="red",wraplength=WIDTH-15)
+info_show_graphs.grid(row=13, column=0, sticky="w",columnspan=2,padx=distance_from_left_side)
 
 ttk.Label(tab3)
 replaylabel = ttk.Label(tab3, text="Choose the replay file: ",style="TLabel")

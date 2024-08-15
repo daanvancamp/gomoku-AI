@@ -45,6 +45,7 @@ class GomokuGame:
         self.show_overruling = False
         self.show_hover_effect = None
         self.record_replay=False
+        self.show_graphs=False
         
     def set_board(self, board):
         self.board = board
@@ -79,9 +80,6 @@ class Player:
         if self.TYPE =="human":
             return f"Player {self.id}: {self.TYPE}  "
         return f"Player {self.id}: {self.TYPE}"
-    
-    def get_player_id(self):
-        return self.id
 
     def calculate_score(self, max_score, is_winner, game_number):
         if max_score > 0:
@@ -195,17 +193,10 @@ def update_player_stats(instance, winning_player):
                           f"{players[1].TYPE} {players[1].id}:\nwins: {players[1].wins} - win rate: {players[1].win_rate} - average score: {players[1].avg_score} - weighed score: {sum(players[1].weighed_scores)/len(players[1].weighed_scores)} - average moves: {players[1].avg_moves}.")
 
 
-
-def is_move_model(row,col,last_move_model) -> bool:
-    if (row,col)==last_move_model:
-        return True
-    else:
-        return False
-
 # Function to draw the game board
 def draw_board(instance,last_move_model=None):
     global mark_last_move_model, player1, player2
-    instance.screen.fill(instance.BOARD_COL)#background color
+    instance.screen.fill(instance.BOARD_COL)#screen needs to be cleared before drawing
     cell_size = instance.CELL_SIZE#cell_size=30
     radius_big_circle=cell_size//2 - 5#radius_big_circle=15
     radius_small_circle=cell_size//3 - 5#radius_small_circle=10
@@ -217,7 +208,7 @@ def draw_board(instance,last_move_model=None):
             pygame.draw.rect(instance.screen, instance.LINE_COL, (col * cell_size, row * cell_size, cell_size, cell_size), 1)
 
             if instance.board[row][col] == 1:
-                if is_move_model(row,col,last_move_model) and mark_last_move_model:
+                if (row,col)==last_move_model and mark_last_move_model:
                     pygame.draw.circle(instance.screen, instance.P1COL, (col * cell_size + cell_size // 2, row * cell_size + cell_size // 2), radius_big_circle)
                     pygame.draw.circle(instance.screen, red, (col * cell_size + cell_size // 2, row * cell_size + cell_size // 2), radius_small_circle)
 
@@ -227,7 +218,7 @@ def draw_board(instance,last_move_model=None):
                     pygame.draw.circle(instance.screen, instance.P1COL, (col * cell_size + cell_size // 2, row * cell_size + cell_size // 2), radius_big_circle)
 
             elif instance.board[row][col] == 2:
-                if is_move_model(row,col,last_move_model) and mark_last_move_model:
+                if (row,col)==last_move_model and mark_last_move_model:
                     pygame.draw.circle(instance.screen, instance.P2COL, (col * cell_size + cell_size // 2, row * cell_size + cell_size // 2), radius_big_circle)
                     pygame.draw.circle(instance.screen, red, (col * cell_size + cell_size // 2, row * cell_size + cell_size // 2), radius_small_circle)
                     if instance.show_overruling and player2.ai.overruled_last_move:
@@ -243,7 +234,20 @@ def draw_board(instance,last_move_model=None):
                          (start_col * cell_size + cell_size // 2, start_row * cell_size + cell_size // 2),
                          (end_col * cell_size + cell_size // 2, end_row * cell_size + cell_size // 2), 5)
     if instance.show_hover_effect:
-        add_hover_effect(instance)
+        ## adds hover effects to cells when mouse hovers over them##
+        mouse_pos = pygame.mouse.get_pos()
+        x,y = mouse_pos
+        col = x // instance.CELL_SIZE
+        row = y // instance.CELL_SIZE
+        HOVER_COLOR = (211, 211, 211)
+        if instance.GRID_SIZE > row >= 0 == instance.board[row][col] and 0 <= col < instance.GRID_SIZE:
+            if instance.board[row][col] == 0:#cell is empty
+                cell_size = instance.CELL_SIZE
+                pygame.draw.circle(instance.screen, HOVER_COLOR, (col * cell_size + cell_size // 2, row * cell_size + cell_size // 2), radius_big_circle)
+                if current_player.id==1:
+                    pygame.draw.circle(instance.screen, instance.P1COL, (col * cell_size + cell_size // 2, row * cell_size + cell_size // 2), radius_smallest_circle)
+                elif current_player.id==2:
+                    pygame.draw.circle(instance.screen, instance.P2COL, (col * cell_size + cell_size // 2, row * cell_size + cell_size // 2), radius_smallest_circle)
 
 def reset_game(instance):
     global current_player
@@ -251,7 +255,7 @@ def reset_game(instance):
     current_player = player1
 
 def calculate_score(board: tuple, board_size=15):
-    directions = [(0, 1), (0, -1), (1, 0), (-1, 0), (1, 1), (-1, -1), (1, -1), (-1, 1)]#richtingen om te controleren of er 5 stukkenp een rij zijn.
+    directions = [(0, 1), (0, -1), (1, 0), (-1, 0), (1, 1), (-1, -1), (1, -1), (-1, 1)]
     score_board = filereader.load_scores("consts.json")
     scored_board = np.zeros((board_size, board_size))
     for row in range(len(board[0])):
@@ -395,52 +399,21 @@ def convert_to_one_hot(board, player_id):
     return one_hot_board
 
 class fullscreen_GUI():
-    def __init__(self):
+    def __init__(self,instance:GomokuGame,game_mode):
         self.game_number = 0
-        # Define a video capture object
+
+        self.game_instance = instance
+
         self.vid = cv2.VideoCapture(0, cv2.CAP_DSHOW)
         
-        # Declare the width and height in variables 
         width, height = 300, 300
   
-        # Set the width and height 
         self.vid.set(cv2.CAP_PROP_FRAME_WIDTH, width) 
-        self.vid.set(cv2.CAP_PROP_FRAME_HEIGHT, height) 
+        self.vid.set(cv2.CAP_PROP_FRAME_HEIGHT, height)
+        self.game_mode = game_mode
+        self.initialize_fullscreen_GUI(game_mode)
 
-    def hide_GUI(self):
-        global root_play_game
-        root_play_game.withdraw()
-
-    def refresh_labels(self):
-        if current_player.TYPE == "Human":
-            player_text="Human         "
-        elif current_player.TYPE == "AI-Model":
-            player_text="AI-Model      "
-        else:
-            player_text="Test Algorithm"
-
-        current_player_label.config(text="Current player: " + str(current_player.id) + " : " + player_text)
-        current_player_label.update()
-
-        current_game_label.config(text="Game: " + str(self.game_number))
-        current_game_label.update()
-
-    def refresh_screen(self,game_number):
-        global current_player_label, root_play_game
-        self.game_number = game_number
-        self.refresh_labels()
-        pygame.display.flip()
-
-    def pygame_loop(self,instance):
-        global current_player_label, root_play_game, current_player, current_player_label
-        pygame.display.flip()
-        root_play_game.update()
-        root_play_game.after(100, lambda: self.pygame_loop(instance))
-
-        if instance.use_recognition:
-            root_play_game.after(150,lambda: self.show_webcam_view(label_webcam_view))
-    
-    def initialize_fullscreen_GUI(self,instance:GomokuGame,game_mode):
+    def initialize_fullscreen_GUI(self,game_mode):
         global root_play_game, current_player,label_current_game_mode,current_player_label,embed_pygame,current_game_label,label_webcam_view,label_webcam_image,list_recognition_widgets,label_recognition_info
         if root_play_game is None:
             root_play_game = Tk()
@@ -471,10 +444,10 @@ class fullscreen_GUI():
             label_recognition_info=Label(root_play_game,text="", bg="#357EC7",fg="white", font=font_labels)
             label_recognition_info.grid(row=0, column=1,sticky="n")
 
-            embed_pygame = Frame(root_play_game, width=instance.WIDTH, height=instance.HEIGHT)
+            embed_pygame = Frame(root_play_game, width=self.game_instance.WIDTH, height=self.game_instance.HEIGHT)
             embed_pygame.grid(row=0, column=1,rowspan=2)
 
-            button_capture_image = Button(root_play_game, text="Capture Image (in development)", command=lambda : self.determine_move(instance),width=25, bg="green",fg="white", font=font_labels)
+            button_capture_image = Button(root_play_game, text="Capture Image (in development)", command=lambda : self.determine_move(),width=25, bg="green",fg="white", font=font_labels)
             button_capture_image.grid(row=1, column=1,sticky="s",pady=(0,90))
             
             size_webcam_frame=500
@@ -488,7 +461,7 @@ class fullscreen_GUI():
             label_webcam_view.grid(row=1, column=0,sticky="e")
 
             list_recognition_widgets=[label_webcam_view,label_webcam_image,button_capture_image,label_recognition_info,frame_webcam,button_capture_image]
-            if not instance.use_recognition:
+            if not self.game_instance.use_recognition:
                 for widget in list_recognition_widgets:
                     widget.grid_remove()
 
@@ -503,7 +476,7 @@ class fullscreen_GUI():
             label_current_game_mode.update()
             current_player_label.update()
 
-            if instance.use_recognition:
+            if self.game_instance.use_recognition:
                 for widget in list_recognition_widgets:
                     if not widget.winfo_viewable():
                         widget.grid()
@@ -513,11 +486,47 @@ class fullscreen_GUI():
                         widget.grid_remove()
 
         pygame.display.init()
-        instance.screen = pygame.display.set_mode((instance.WIDTH, instance.HEIGHT))
+        self.game_instance.screen = pygame.display.set_mode((self.game_instance.WIDTH, self.game_instance.HEIGHT))
     
         pygame.display.set_icon(pygame.image.load('res/ico.png'))
         pygame.display.set_caption(window_name)
-        self.pygame_loop(instance)
+        self.pygame_loop()
+
+
+    def hide_GUI(self):
+        global root_play_game
+        root_play_game.withdraw()
+
+    def refresh_labels(self):
+        if current_player.TYPE == "Human":
+            player_text="Human         "
+        elif current_player.TYPE == "AI-Model":
+            player_text="AI-Model      "
+        else:
+            player_text="Test Algorithm"
+
+        current_player_label.config(text="Current player: " + str(current_player.id) + " : " + player_text)
+        current_player_label.update()
+
+        current_game_label.config(text="Game: " + str(self.game_number))
+        current_game_label.update()
+
+    def refresh_screen(self,game_number):
+        global current_player_label, root_play_game
+        self.game_number = game_number
+        self.refresh_labels()
+        pygame.display.flip()
+
+    def pygame_loop(self):
+        global current_player_label, root_play_game, current_player, current_player_label
+        pygame.display.flip()
+        root_play_game.update()
+        root_play_game.after(100, lambda: self.pygame_loop())
+
+        if self.game_instance.use_recognition:
+            root_play_game.after(150,lambda: self.show_webcam_view(label_webcam_view))
+    
+    
 
     def show_webcam_view(self,label):
         try:
@@ -542,8 +551,8 @@ class fullscreen_GUI():
         except:
             pass
 
-    def determine_move(self,instance):
-        if instance.play_music:
+    def determine_move(self):
+        if self.game_instance.play_music:
             Thread(target=lambda:pygame.mixer.music.fadeout(1000)).start()#don't block the main thread
         write_relevant_pieces_after_move_to_file()
         (x,y)=recognize_move()
@@ -555,9 +564,9 @@ class fullscreen_GUI():
         x,y=(x,y)
         root_play_game.after(0,label_recognition_info.config(text="Your move was successfully recognized."))
         try:
-            handle_human_move(instance, x, y , players, p1_moves, p2_moves) 
+            handle_human_move(self.game_instance, x, y , players, p1_moves, p2_moves) 
         except:
-            handle_human_move(instance, x, y, players)
+            handle_human_move(self.game_instance, x, y, players)
 
     def crop_to_square(self,frame):
         height, width = frame.shape[:2]
@@ -592,20 +601,7 @@ def handle_human_move(instance, x, y, players,p1_moves=None, p2_moves=None):
             current_player = players[2 - current_player.id]  #current_player kan 2 zijn of 1, maar in beide gevallen zal er van speler gewisseld worden.
             #logging_players()    
 
-def add_hover_effect(instance):
-    ## adds hover effects to cells when mouse hovers over them##
-    mouse_pos = pygame.mouse.get_pos()
-    x,y = mouse_pos
-    col = x // instance.CELL_SIZE
-    row = y // instance.CELL_SIZE
-    HOVER_COLOR = (211, 211, 211)
-    if instance.GRID_SIZE > row >= 0 == instance.board[row][col] and 0 <= col < instance.GRID_SIZE:
-        if instance.board[row][col] == 0:#cell is empty
-            cell_size = instance.CELL_SIZE
-            pygame.draw.circle(instance.screen, HOVER_COLOR, (col * cell_size + cell_size // 2, row * cell_size + cell_size // 2), cell_size // 2 - 5)
-            #pygame.display.flip()
-
-def runGame(instance:GomokuGame, game_number,GUI):#main function
+def runGame(instance:GomokuGame, game_number,GUI:fullscreen_GUI):#main function
     # Main game loop
     global window_name, victory_text, current_player, player1, player2, running,current_player,p1_moves, p2_moves,winning_player,root_play_game
 
@@ -626,8 +622,6 @@ def runGame(instance:GomokuGame, game_number,GUI):#main function
         else:
             print("Overruling is not allowed for player 2")
     
-    GUI.initialize_fullscreen_GUI(instance,"play game")
-
     mark_last_move_model=True
     instance.winning_cells = []
     running = True
@@ -785,8 +779,6 @@ def runTraining(instance:GomokuGame, game_number,GUI):#main function
 
     instance.play_music=False
 
-    GUI.initialize_fullscreen_GUI(instance,"training")
-
     instance.winning_cells = []
     running = True
     winning_player = 0
@@ -901,14 +893,13 @@ def runTraining(instance:GomokuGame, game_number,GUI):#main function
     loss_data = {}
     move_loss_data = {}
     for p in players:
+        handle_events()
         if p.TYPE == "AI-Model":
             p.ai.remember(instance.board, p.final_action, p.score, instance.board, True)
             p.ai.train_long_memory()
             p.score_loss.append(p.ai.loss)
             move_loss = [float(val) for val in p.move_loss]
             p.final_move_loss.append(sum(move_loss)/len(move_loss))
-            print("model saving")
-            handle_events()
             p.ai.model.save_model(p.AI_model.modelname) #only saves after each round
             p.final_move_scores.append(sum(p.weighed_moves)/len(p.weighed_moves))
             stats.log_message(f"{p.TYPE} {p.id}: score loss: {float(p.ai.loss)}")
@@ -923,12 +914,13 @@ def runTraining(instance:GomokuGame, game_number,GUI):#main function
                 stats.log_message(f"{p.TYPE} {p.id}: average score loss: {sum([float(val) for val in p.score_loss]) / len([float(val) for val in p.score_loss])}")
                 stats.log_message(f"{p.TYPE} {p.id}: average move loss: {sum(p.final_move_loss) / len(p.final_move_loss)}")
             p.reset_all_stats()#purely for testing purposes
-    if len(data) > 0:
-        stats.plot_graph(data, 'accuracy')
-    if len(loss_data) > 0:
-        stats.plot_graph(loss_data, 'loss data')
-    if len(move_loss_data) > 0:
-        stats.plot_graph(move_loss_data, 'loss data')
+    if instance.show_graphs:
+        if len(data) > 0:
+            stats.plot_graph(data, 'accuracy')
+        if len(loss_data) > 0:
+            stats.plot_graph(loss_data, 'loss data')
+        if len(move_loss_data) > 0:
+            stats.plot_graph(move_loss_data, 'loss data')
     time.sleep(instance.SLEEP_BEFORE_END)#sleep before closing for SLEEP_BEFORE_END seconds
     reset_game(instance)
     
@@ -936,8 +928,6 @@ def runTraining(instance:GomokuGame, game_number,GUI):#main function
 def runReplay(instance:GomokuGame,GUI, moves:dict=None):#main function
     # Main game loop
     global window_name, victory_text, current_player, running
-
-    GUI.initialize_fullscreen_GUI(instance,"replay")
 
     instance.winning_cells = []
     running = True

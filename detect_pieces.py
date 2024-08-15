@@ -130,7 +130,7 @@ def write_relevant_pieces_to_file(pad)->None:
         all_pieces = set((stuk['color'], stuk['coordinates'][0], stuk['coordinates'][1]) for stuk in data['pieces'])
     
         for kleur, x, y in all_pieces:
-            if (kleur, x, y) not in lijst_stukken and kleur == COLOR_TO_DETECT:
+            if (kleur, x, y) not in relevant_pieces and kleur == COLOR_TO_DETECT:
                 relevant_pieces.append((x, y))
         if len(relevant_pieces) > 0:
             print(f"Relevante stukken: {relevant_pieces}")
