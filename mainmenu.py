@@ -29,7 +29,7 @@ modelmanager_instance = modelmanager.ModelManager()
 root = Tk()
 root.geometry(str(WIDTH) + "x" + str(HEIGHT))
 root.title("Gomoku -- Main Menu")
-root.configure(background='green')
+root.configure(background="#357EC7")
 root.attributes("-topmost", True)
 
 try:
@@ -41,7 +41,7 @@ except TclError:
 # Maak een Style object aan
 style2 = ttk.Style()
 style2.theme_use('default')
-style2.configure('TNotebook.Tab', background='green')
+style2.configure('TNotebook.Tab', background="#357EC7")
 
 tabControl = ttk.Notebook(root)
 

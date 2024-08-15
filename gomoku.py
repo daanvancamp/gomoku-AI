@@ -79,9 +79,6 @@ class Player:
         if self.TYPE =="human":
             return f"Player {self.id}: {self.TYPE}  "
         return f"Player {self.id}: {self.TYPE}"
-
-    def set_player_id(self, player_id):
-        self.id = int(player_id) #id can be 1 or 2 corresponding to human or AI
     
     def get_player_id(self):
         return self.id
@@ -99,7 +96,7 @@ class Player:
             self.weighed_scores.append(0)
         print(f"score: {self.score}")
         self.sum_score += self.score
-        self.avg_score = self.sum_score / game_number
+        self.avg_score = self.sum_score / game_number+1
         self.all_moves.append(self.moves)
         self.avg_moves = sum(self.all_moves) / len(self.all_moves)
 
@@ -149,11 +146,11 @@ current_player = player1
 
 def logging_players():
     print("Logging players")
-    print("Player 1 : " + str(player1.get_player_id()))
+    print("Player 1 : " + str(player1.id))
     print("Player 1 : " + str(player1.TYPE))   
-    print("Player 2 : " + str(player2.get_player_id()))
+    print("Player 2 : " + str(player2.id))
     print("Player 2 : " + str(player2.TYPE))
-    print("Current player : " + str(current_player.get_player_id()))
+    print("Current player : " + str(current_player.id))
 
 def reset_player_stats():
     for i in range(len(players)):
@@ -397,90 +394,90 @@ def convert_to_one_hot(board, player_id):
         one_hot_board[2] = (board == 1).astype(np.float32)
     return one_hot_board
 
-class refresh():
+class fullscreen_GUI():
     def __init__(self):
         pass
     def refresh_label(self,label,game_number):
         if current_player.TYPE == "Human":
-            speler="Human         "
+            player_text="Human         "
         elif current_player.TYPE == "AI-Model":
-            speler="AI-Model      "
+            player_text="AI-Model      "
         else:
-            speler="Test Algorithm"
-        label.config(text="Gomoku - Game: " + str(game_number) + " - " +" - Current player: " + str(current_player.id) + " - " + speler)
+            player_text="Test Algorithm"
+        label.config(text="Gomoku - Game: " + str(game_number) + " - " +" - Current player: " + str(current_player.id) + " - " + player_text)
         label.update()
 
-def refresh_screen(game_number, current_player):
-    global current_player_label, root_play_game
-    pygame.display.flip()
-    refresh().refresh_label(current_player_label,game_number)
+    def refresh_screen(self,game_number):
+        global current_player_label, root_play_game
+        self.refresh_label(current_player_label,game_number)
+        pygame.display.flip()
 
-def pygame_loop():
-    global current_player_label, root_play_game, current_player, current_player_label
-    pygame.display.flip()
-    root_play_game.update()
-    root_play_game.after(100, pygame_loop)
+    def pygame_loop(self):
+        global current_player_label, root_play_game, current_player, current_player_label
+        pygame.display.flip()
+        root_play_game.update()
+        root_play_game.after(100, self.pygame_loop)
 
-def initialize_fullscreen_GUI(instance,game_mode):
-    global root_play_game, current_player,label_current_game_mode,current_player_label,embed_pygame
-    if root_play_game is None:
-        root_play_game = Tk()
+    def initialize_fullscreen_GUI(self,instance,game_mode):
+        global root_play_game, current_player,label_current_game_mode,current_player_label,embed_pygame
+        if root_play_game is None:
+            root_play_game = Tk()
 
-        root_play_game.columnconfigure(0, weight=1)
-        root_play_game.columnconfigure(1, weight=1)
-        root_play_game.columnconfigure(2, weight=1)
+            root_play_game.columnconfigure(0, weight=0)
+            root_play_game.columnconfigure(1, weight=2)
+            root_play_game.columnconfigure(2, weight=0)
 
-        root_play_game.rowconfigure(0, weight=1)
-        root_play_game.rowconfigure(1, weight=1)
-        root_play_game.rowconfigure(2, weight=1)
+            root_play_game.rowconfigure(0, weight=1)
+            root_play_game.rowconfigure(1, weight=1)
+            root_play_game.rowconfigure(2, weight=1)
 
-        root_play_game.attributes("-fullscreen", True)
-        root_play_game.config(bg="#357EC7")
-        root_play_game.title("Gomoku")
+            root_play_game.attributes("-fullscreen", True)
+            root_play_game.config(bg="#357EC7")
+            root_play_game.title("Gomoku")
 
-        font_labels=("Arial", 10)
+            font_labels=("Arial", 17)
 
-        current_player_label = Label(root_play_game, text="Current player: " + str(current_player.get_player_id()), bg="#357EC7",fg='white', font=font_labels)
-        current_player_label.grid(row=0, column=0, sticky="nw")
+            current_player_label = Label(root_play_game, text="Current player: " + str(current_player.id), bg="#357EC7",fg='white', font=font_labels,width=45)
+            current_player_label.grid(row=0, column=0, sticky="nw")
 
-        embed_pygame = Frame(root_play_game, width=instance.WIDTH, height=instance.HEIGHT,borderwidth=6)
-        embed_pygame.grid(row=1, column=1)
+            embed_pygame = Frame(root_play_game, width=instance.WIDTH, height=instance.HEIGHT)
+            embed_pygame.grid(row=1, column=1,sticky="w")
 
-        label_current_game_mode=Label(root_play_game, text="Current game mode: "+ game_mode, bg="#357EC7",fg="white", font=font_labels)
-        label_current_game_mode.grid(row=0, column=2)
+            label_current_game_mode=Label(root_play_game, text="Current game mode: "+ game_mode, bg="#357EC7",fg="white", font=font_labels,width=25)
+            label_current_game_mode.grid(row=0, column=2,sticky="e")
 
-        os.environ['SDL_WINDOWID'] = str(embed_pygame.winfo_id())
-        os.environ['SDL_VIDEODRIVER'] = 'windib'
-    else:
-        if not root_play_game.winfo_viewable():
-            root_play_game.deiconify()
+            os.environ['SDL_WINDOWID'] = str(embed_pygame.winfo_id())
+            os.environ['SDL_VIDEODRIVER'] = 'windib'
+        else:
+            if not root_play_game.winfo_viewable():
+                root_play_game.deiconify()
 
-        label_current_game_mode.configure(text="Current game mode: "+game_mode)
-        current_player_label.configure(text="Current player: " + str(current_player.get_player_id()))
-        label_current_game_mode.update()
-        current_player_label.update()
+            label_current_game_mode.configure(text="Current game mode: "+game_mode)
+            current_player_label.configure(text="Current player: " + str(current_player.id))
+            label_current_game_mode.update()
+            current_player_label.update()
     
-    pygame.display.init()
-    instance.screen = pygame.display.set_mode((instance.WIDTH, instance.HEIGHT))
+        pygame.display.init()
+        instance.screen = pygame.display.set_mode((instance.WIDTH, instance.HEIGHT))
     
-    pygame.display.set_icon(pygame.image.load('res/ico.png'))
-    pygame.display.set_caption(window_name)
-    pygame_loop()
+        pygame.display.set_icon(pygame.image.load('res/ico.png'))
+        pygame.display.set_caption(window_name)
+        self.pygame_loop()
     
 def handle_human_move(instance, x, y, record_replay, players,p1_moves=None, p2_moves=None):
     global victory_text, winning_player, running,current_player,root_play_game
     col = x // instance.CELL_SIZE 
     row = y // instance.CELL_SIZE
     if instance.GRID_SIZE > row >= 0 == instance.board[row][col] and 0 <= col < instance.GRID_SIZE:
-        instance.board[row][col] = current_player.get_player_id()
-        if current_player.get_player_id() == 1 and record_replay:
+        instance.board[row][col] = current_player.id
+        if current_player.id == 1 and record_replay:
             p1_moves.append((row, col))
         elif record_replay:
             p2_moves.append((row, col))
-        players[current_player.get_player_id() - 1].moves += 1
-        if check_win(row, col, current_player.get_player_id(), instance):
-            victory_text = f"Player {current_player.get_player_id()} wins!"
-            winning_player = current_player.get_player_id()
+        players[current_player.id - 1].moves += 1
+        if check_win(row, col, current_player.id, instance):
+            victory_text = f"Player {current_player.id} wins!"
+            winning_player = current_player.id
             running = False
         else:
             #logging_players()
@@ -488,7 +485,7 @@ def handle_human_move(instance, x, y, record_replay, players,p1_moves=None, p2_m
                 Thread(target=start_muziek_vertraagd).start()
 
             # Switch player if neither player have won
-            current_player = players[2 - current_player.get_player_id()]  #current_player kan 2 zijn of 1, maar in beide gevallen zal er van speler gewisseld worden.
+            current_player = players[2 - current_player.id]  #current_player kan 2 zijn of 1, maar in beide gevallen zal er van speler gewisseld worden.
             #logging_players()    
 
 def add_hover_effect(instance):
@@ -507,6 +504,7 @@ def add_hover_effect(instance):
 def runGame(instance, game_number, record_replay):#main function
     # Main game loop
     global window_name, victory_text, current_player, player1, player2, running,current_player,p1_moves, p2_moves,winning_player,root_play_game
+    GUI=fullscreen_GUI()
     if instance.use_recognition:
         print("using recognition")
     else:
@@ -524,7 +522,7 @@ def runGame(instance, game_number, record_replay):#main function
         else:
             print("Overruling is not allowed for player 2")
 
-    initialize_fullscreen_GUI(instance,"play game")
+    GUI.initialize_fullscreen_GUI(instance,"play game")
 
     mark_last_move_model=True
     instance.winning_cells = []
@@ -565,32 +563,32 @@ def runGame(instance, game_number, record_replay):#main function
             elif current_player.TYPE == "Test Algorithm" and not testai.check_game_over(instance):
                 if instance.ai_delay:
                     time.sleep(random.uniform(0.25, 1.0))   # randomize ai "thinking" time
-                ai_row, ai_col = testai.ai_move(instance, players[current_player.get_player_id()-1].id)
-                testai.make_move((ai_row, ai_col), current_player.get_player_id(), instance)
-                players[current_player.get_player_id()-1].moves += 1
+                ai_row, ai_col = testai.ai_move(instance, players[current_player.id-1].id)
+                testai.make_move((ai_row, ai_col), current_player.id, instance)
+                players[current_player.id-1].moves += 1
 
-                if current_player.get_player_id() == 1 and record_replay:
+                if current_player.id == 1 and record_replay:
                     p1_moves.append((ai_row, ai_col))
                 elif record_replay:
                     p2_moves.append((ai_row, ai_col))
 
-                if check_win(ai_row, ai_col, current_player.get_player_id(), instance):
-                    victory_text = f"AI-Model {players[current_player.get_player_id()-1].id} wins!"
-                    winning_player = current_player.get_player_id()
+                if check_win(ai_row, ai_col, current_player.id, instance):
+                    victory_text = f"AI-Model {players[current_player.id-1].id} wins!"
+                    winning_player = current_player.id
                     running = False
                 else:
-                    current_player = players[2 - current_player.get_player_id()]
+                    current_player = players[2 - current_player.id]
                     #logging_players()   
             
             # AI model
             elif current_player.TYPE == "AI-Model":
                 if instance.ai_delay:
                     time.sleep(random.uniform(0.25, 1.0))   # randomize AI "thinking" time
-                one_hot_board = convert_to_one_hot(instance.board, players[current_player.get_player_id()-1].id)
-                DVC_AI = players[current_player.get_player_id()-1].ai#player1.ai or player2.ai #always an instance of GomokuAI
+                one_hot_board = convert_to_one_hot(instance.board, players[current_player.id-1].id)
+                DVC_AI = players[current_player.id-1].ai#player1.ai or player2.ai #always an instance of GomokuAI
                 DVC_AI.set_game(one_hot_board)
                 max_score, scores, scores_normalized = calculate_score(instance.board)
-                DVC_AI.current_player_id=current_player.get_player_id()
+                DVC_AI.current_player_id=current_player.id
                 action = DVC_AI.get_action(instance.board, one_hot_board, scores_normalized)
                
                 np_scores = np.array(scores).reshape(15, 15)
@@ -604,23 +602,23 @@ def runGame(instance, game_number, record_replay):#main function
                     score = 0
                 else:
                     score = short_score / max_score
-                if current_player.get_player_id() == 1 and record_replay:
+                if current_player.id == 1 and record_replay:
                     p1_moves.append(action)
                 elif record_replay:
                     p2_moves.append(action)
 
-                players[current_player.get_player_id() - 1].weighed_moves.append(score)
-                instance.board[action[0]][action[1]] = current_player.get_player_id()
-                game_over = check_win(action[0], action[1], current_player.get_player_id(), instance)
-                players[current_player.get_player_id()-1].final_action = action
-                players[current_player.get_player_id() - 1].moves += 1
+                players[current_player.id - 1].weighed_moves.append(score)
+                instance.board[action[0]][action[1]] = current_player.id
+                game_over = check_win(action[0], action[1], current_player.id, instance)
+                players[current_player.id-1].final_action = action
+                players[current_player.id - 1].moves += 1
                 if game_over:
-                    victory_text = f"AI-Model {players[current_player.get_player_id() - 1].id} wins!"
-                    winning_player = current_player.get_player_id()
+                    victory_text = f"AI-Model {players[current_player.id - 1].id} wins!"
+                    winning_player = current_player.id
                     print("player that has won:",winning_player)
                     running = False
                 else:
-                    current_player = players[2 - current_player.get_player_id()]
+                    current_player = players[2 - current_player.id]
                     #print("Na switch player AI!!!!!!!!!!!")
                     #logging_players()    
             try:
@@ -628,7 +626,7 @@ def runGame(instance, game_number, record_replay):#main function
             except :
                 draw_board(instance)
 
-            refresh_screen(game_number, current_player)
+            GUI.refresh_screen(game_number)
                 
         else:
             victory_text = "TIE"
@@ -683,7 +681,8 @@ def runTraining(instance, game_number, record_replay):#main function
 
     instance.play_music=False
 
-    initialize_fullscreen_GUI(instance,"training")
+    GUI=fullscreen_GUI()
+    GUI.initialize_fullscreen_GUI(instance,"training")
 
     instance.winning_cells = []
     running = True
@@ -715,32 +714,32 @@ def runTraining(instance, game_number, record_replay):#main function
             elif current_player.TYPE == "Test Algorithm" and not testai.check_game_over(instance):
                 if instance.ai_delay:
                     time.sleep(random.uniform(0.25, 1.0))   # randomize ai "thinking" time
-                ai_row, ai_col = testai.ai_move(instance, players[current_player.get_player_id()-1].id)
-                testai.make_move((ai_row, ai_col), current_player.get_player_id(), instance)
-                players[current_player.get_player_id()-1].moves += 1
-                if current_player.get_player_id() == 1 and record_replay:
+                ai_row, ai_col = testai.ai_move(instance, players[current_player.id-1].id)
+                testai.make_move((ai_row, ai_col), current_player.id, instance)
+                players[current_player.id-1].moves += 1
+                if current_player.id == 1 and record_replay:
                     p1_moves.append((ai_row, ai_col))
                 elif record_replay:
                     p2_moves.append((ai_row, ai_col))
-                if check_win(ai_row, ai_col, current_player.get_player_id(), instance):
-                    victory_text = f"AI-Model {players[current_player.get_player_id()-1].id} wins!"
-                    winning_player = current_player.get_player_id()
+                if check_win(ai_row, ai_col, current_player.id, instance):
+                    victory_text = f"AI-Model {players[current_player.id-1].id} wins!"
+                    winning_player = current_player.id
                     running = False
                 else:
-                    current_player = players[2 - current_player.get_player_id()]
+                    current_player = players[2 - current_player.id]
                     #logging_players()   
             
             # AI-Model
             elif current_player.TYPE == "AI-Model":
                 if instance.ai_delay:
                     time.sleep(random.uniform(0.25, 1.0))   # randomize AI "thinking" time
-                one_hot_board = convert_to_one_hot(instance.board, players[current_player.get_player_id()-1].id)
+                one_hot_board = convert_to_one_hot(instance.board, players[current_player.id-1].id)
                 handle_events()
-                mm_ai = players[current_player.get_player_id()-1].ai
+                mm_ai = players[current_player.id-1].ai
                 mm_ai.set_game(one_hot_board)
                 old_state = instance.board
                 max_score, scores, scores_normalized = calculate_score(instance.board)
-                mm_ai.current_player_id=current_player.get_player_id()
+                mm_ai.current_player_id=current_player.id
                 pygame.event.get()
                 action = mm_ai.get_action(instance.board, one_hot_board, scores_normalized)
                 if mark_last_move_model:
@@ -754,13 +753,13 @@ def runTraining(instance, game_number, record_replay):#main function
                     score = 0
                 else:
                     score = short_score / max_score
-                if current_player.get_player_id() == 1 and record_replay:
+                if current_player.id == 1 and record_replay:
                     p1_moves.append(action)
                 elif record_replay:
                     p2_moves.append(action)
-                players[current_player.get_player_id() - 1].weighed_moves.append(score)
-                instance.board[action[0]][action[1]] = current_player.get_player_id()
-                game_over = check_win(action[0], action[1], current_player.get_player_id(), instance)
+                players[current_player.id - 1].weighed_moves.append(score)
+                instance.board[action[0]][action[1]] = current_player.id
+                game_over = check_win(action[0], action[1], current_player.id, instance)
                 next_max_score, next_scores, next_scores_normalized = calculate_score(instance.board)
             
                 mm_ai.remember(old_state, action, score, instance.board, game_over)
@@ -770,18 +769,18 @@ def runTraining(instance, game_number, record_replay):#main function
                 current_player.final_action = action
                 current_player.moves += 1
                 if game_over:
-                    victory_text = f"AI-Model {players[current_player.get_player_id() - 1].id} wins!"
-                    winning_player = current_player.get_player_id()
+                    victory_text = f"AI-Model {players[current_player.id - 1].id} wins!"
+                    winning_player = current_player.id
                     running = False
                 else:
-                    current_player = players[2 - current_player.get_player_id()]
+                    current_player = players[2 - current_player.id]
                     #logging_players()    
             try:
                 draw_board(instance,last_move)
             except:
                 draw_board(instance)
             handle_events()
-            refresh_screen(game_number, current_player)
+            GUI.refresh_screen(game_number)
                 
         else:
             victory_text = "TIE"
@@ -835,7 +834,8 @@ def runReplay(instance, moves:dict=None):#main function
     # Main game loop
     global window_name, victory_text, current_player, running
 
-    initialize_fullscreen_GUI(instance,"replay")
+    GUI=fullscreen_GUI()
+    GUI.initialize_fullscreen_GUI(instance,"replay")
 
     instance.winning_cells = []
     running = True
@@ -850,22 +850,22 @@ def runReplay(instance, moves:dict=None):#main function
         handle_events()
         if not check_board_full(instance):
             #Replay
-            if players[current_player.get_player_id() - 1].TYPE == "Replay":
+            if players[current_player.id - 1].TYPE == "Replay":
                 if instance.ai_delay:
                     time.sleep(random.uniform(0.25, 1.0))   # randomize ai "thinking" time
-                instance.board[position[move_id][0]][position[move_id][1]] = current_player.get_player_id()
+                instance.board[position[move_id][0]][position[move_id][1]] = current_player.id
                 last_move = position[move_id]
-                if check_win(position[move_id][0], position[move_id][1], current_player.get_player_id(), instance):
-                    victory_text = f"AI model {players[current_player.get_player_id()-1].id} wins!"
+                if check_win(position[move_id][0], position[move_id][1], current_player.id, instance):
+                    victory_text = f"AI model {players[current_player.id-1].id} wins!"
                     running = False
                 else:
-                    current_player = players[2 - current_player.get_player_id()]
+                    current_player = players[2 - current_player.id]
                     move_id += 1
             try:
                 draw_board(instance,last_move)
             except:
                 draw_board(instance)
-            refresh_screen(0, current_player)
+            GUI.refresh_screen(0)
                 
         else:
             victory_text = "TIE"
