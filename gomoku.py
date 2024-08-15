@@ -1,11 +1,9 @@
-from calendar import c
-from concurrent.futures import thread
-from logging import root
 import operator
 import os
 import time
-from tkinter import TOP, Frame, Label, StringVar, Tk
-import tkinter
+from tkinter import Frame, Label, Tk
+import cv2
+from PIL import Image, ImageTk 
 import pygame
 from AI_Model import AI_Model
 from music import start_muziek_vertraagd
@@ -428,7 +426,7 @@ class fullscreen_GUI():
         root_play_game.after(100, self.pygame_loop)
 
     def initialize_fullscreen_GUI(self,instance,game_mode):
-        global root_play_game, current_player,label_current_game_mode,current_player_label,embed_pygame,current_game_label
+        global root_play_game, current_player,label_current_game_mode,current_player_label,embed_pygame,current_game_label,label_webcam_view
         if root_play_game is None:
             root_play_game = Tk()
 
@@ -459,6 +457,9 @@ class fullscreen_GUI():
             label_current_game_mode=Label(root_play_game, text="Current game mode: "+ game_mode, bg="#357EC7",fg="white", font=font_labels,width=25)
             label_current_game_mode.grid(row=0, column=2,sticky="e",padx=(0,10))
 
+            label_webcam_view=Label(root_play_game,text="Webcam view comes here", bg="#357EC7",fg="white", font=font_labels)
+            label_webcam_view.grid(row=2, column=0,sticky="w")
+
             os.environ['SDL_WINDOWID'] = str(embed_pygame.winfo_id())
             os.environ['SDL_VIDEODRIVER'] = 'windib'
         else:
@@ -477,7 +478,26 @@ class fullscreen_GUI():
         pygame.display.set_icon(pygame.image.load('res/ico.png'))
         pygame.display.set_caption(window_name)
         self.pygame_loop()
-    
+
+    def show_webcam_view(self):
+        vid = cv2.VideoCapture(0) 
+        # Capture the video frame by frame 
+        _, frame = vid.read() 
+        if frame is None or not _:
+            return
+        # Convert image from one color space to other
+        opencv_image = cv2.cvtColor(frame, cv2.COLOR_BGR2RGBA) 
+  
+        # Capture the latest frame and transform to image 
+        captured_image = Image.fromarray(opencv_image) 
+  
+        # Convert captured image to photoimage 
+        photo_image = ImageTk.PhotoImage(image=captured_image) 
+  
+        # Displaying photoimage in the label 
+        label_webcam_view.photo_image = photo_image 
+        label_webcam_view.configure(image=photo_image)
+ 
 def handle_human_move(instance, x, y, record_replay, players,p1_moves=None, p2_moves=None):
     global victory_text, winning_player, running,current_player,root_play_game
     col = x // instance.CELL_SIZE 
