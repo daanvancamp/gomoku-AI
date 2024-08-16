@@ -169,7 +169,6 @@ def start_new_game():
     game_instance.play_music = var_play_music.get()
     game_instance.show_overruling=var_show_overruling.get()
     game_instance.record_replay=var_rep.get()
-    game_instance.show_hover_effect= not game_instance.use_recognition
 
     game_instance.ai_delay = var_delay.get()
     stats.should_log = var_log.get()
@@ -177,6 +176,11 @@ def start_new_game():
         
     gomoku.player1.TYPE=var_playerType1.get()
     gomoku.player2.TYPE=var_playerType2.get()
+
+    if (gomoku.player1.TYPE=="Human" or gomoku.player2.TYPE=="Human") and not game_instance.use_recognition:
+        game_instance.show_hover_effect=True
+    else:
+        game_instance.show_hover_effect=False
 
     stats.setup_logging(gomoku.player1.TYPE, gomoku.player2.TYPE)
 
@@ -256,7 +260,7 @@ def start_new_training():
     gomoku.player1.TYPE="AI-Model"
     gomoku.player2.TYPE=var_playerType2.get()
     
-    if gomoku.player1.TYPE=="Human" and gomoku.player2.TYPE=="Human":
+    if gomoku.player1.TYPE=="Human" or gomoku.player2.TYPE=="Human":
         game_instance.show_hover_effect=True
     else:
         game_instance.show_hover_effect=False
@@ -558,7 +562,7 @@ def refresh_training_stats():
         total_sum=var_losses.get()+var_ties.get()+var_wins.get()
         if total_sum>0:
             for relative_value,value in zip([var_relative_value_losses,var_relative_value_wins,var_relative_value_ties],[var_losses,var_wins,var_ties]):
-                relative_value.set(str(np.round((value.get()/total_sum)*100,2))+"%")  
+                relative_value.set(str(np.round(((value.get()/total_sum)*100),2))+"%")  
         else:
             var_relative_value_losses.set("N/A")
             var_relative_value_wins.set("N/A")
