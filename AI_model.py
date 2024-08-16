@@ -25,6 +25,7 @@ class AI_Model():
         self.directory = self.modelname
         self.path = os.path.join(self.parent_dir, self.directory)
         self.path_config_file=self.path+self.name_config_file
+
         self.initial_json_data = json.load(open("data/templatemodel"+self.name_config_file,"r"))
 
     def add_one_to_value_from_config_file(self,category,item):

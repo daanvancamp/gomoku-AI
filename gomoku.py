@@ -7,7 +7,7 @@ import cv2
 from PIL import Image, ImageTk 
 import pygame
 from AI_Model import AI_Model
-from music import start_muziek_vertraagd
+from music import start_music_delayed
 import testai
 import ai
 import random
@@ -46,6 +46,8 @@ class GomokuGame:
         self.show_hover_effect = None
         self.record_replay=False
         self.show_graphs=False
+        self.GUI=None
+        self.game_mode=None
         
     def set_board(self, board):
         self.board = board
@@ -123,8 +125,8 @@ class Player:
         self.final_move_loss = []
         self.avg_moves = 0
         
-    def load_model(self, model, is_training):
-        self.AI_model = AI_Model(model,is_training)
+    def load_model(self, model):
+        self.AI_model = AI_Model(model,self.ai.train)
         self.ai.model.load_model(model)
 
     def get_model_name(self):
@@ -399,10 +401,12 @@ def convert_to_one_hot(board, player_id):
     return one_hot_board
 
 class fullscreen_GUI():
-    def __init__(self,instance:GomokuGame,game_mode):
+    def __init__(self,instance:GomokuGame):
         self.game_number = 0
 
         self.game_instance = instance
+        self.game_mode = self.game_instance.game_mode
+
 
         self.vid = cv2.VideoCapture(0, cv2.CAP_DSHOW)
         
@@ -410,11 +414,11 @@ class fullscreen_GUI():
   
         self.vid.set(cv2.CAP_PROP_FRAME_WIDTH, width) 
         self.vid.set(cv2.CAP_PROP_FRAME_HEIGHT, height)
-        self.game_mode = game_mode
-        self.initialize_fullscreen_GUI(game_mode)
 
-    def initialize_fullscreen_GUI(self,game_mode):
-        global root_play_game, current_player,label_current_game_mode,current_player_label,embed_pygame,current_game_label,label_webcam_view,label_webcam_image,list_recognition_widgets,label_recognition_info
+        self.initialize_fullscreen_GUI()
+
+    def initialize_fullscreen_GUI(self):
+        global root_play_game, current_player,label_current_game_mode,current_player_label,embed_pygame,current_game_label,label_webcam_video,label_webcam_image,list_recognition_widgets,label_recognition_info
         if root_play_game is None:
             root_play_game = Tk()
 
@@ -433,13 +437,14 @@ class fullscreen_GUI():
             font_labels=("Arial", 18)
 
             frame_info=Frame(root_play_game,bg="#357EC7")
-            frame_info.grid(row=0, column=0,sticky="w")
+            frame_info.grid(row=0, column=0)
             current_player_label = Label(frame_info, text="Current player: " + str(current_player.id), bg="#357EC7",fg='white', font=font_labels,padx=40,pady=2,width=25)
             current_player_label.grid(row=0, column=0, sticky="w")
+            label_current_game_mode=Label(frame_info, text="Current game mode: "+ self.game_mode, bg="#357EC7",fg="white", font=font_labels,width=25)
+            label_current_game_mode.grid(row=1, column=0,sticky="w")
             current_game_label=Label(frame_info, text="Game: " + str(0), bg="#357EC7",fg='white', font=font_labels,padx=40,pady=2,width=15)
-            current_game_label.grid(row=1, column=0, sticky="w")
-            label_current_game_mode=Label(frame_info, text="Current game mode: "+ game_mode, bg="#357EC7",fg="white", font=font_labels,width=25)
-            label_current_game_mode.grid(row=2, column=0,sticky="w")
+            current_game_label.grid(row=2, column=0, sticky="w")
+            
 
             label_recognition_info=Label(root_play_game,text="", bg="#357EC7",fg="white", font=font_labels)
             label_recognition_info.grid(row=0, column=1,sticky="n")
@@ -457,13 +462,14 @@ class fullscreen_GUI():
             label_webcam_image=Label(frame_webcam,text="Webcam photo view (in development)", bg="#357EC7",fg="white", font=font_labels)
             label_webcam_image.grid(row=0, column=0,sticky="e",padx=10)
 
-            label_webcam_view=Label(frame_webcam,text="Webcam view", bg="#357EC7",fg="white", font=font_labels,width=size_webcam_frame,height=size_webcam_frame)
-            label_webcam_view.grid(row=1, column=0,sticky="e")
+            label_webcam_video=Label(frame_webcam,text="Webcam view", bg="#357EC7",fg="white", font=font_labels,width=size_webcam_frame,height=size_webcam_frame)
+            label_webcam_video.grid(row=1, column=0,sticky="e")
 
-            list_recognition_widgets=[label_webcam_view,label_webcam_image,button_capture_image,label_recognition_info,frame_webcam,button_capture_image]
+            list_recognition_widgets=[label_webcam_video,label_webcam_image,button_capture_image,label_recognition_info,frame_webcam,button_capture_image]
             if not self.game_instance.use_recognition:
                 for widget in list_recognition_widgets:
                     widget.grid_remove()
+                root_play_game.columnconfigure(2, weight=0)
 
             os.environ['SDL_WINDOWID'] = str(embed_pygame.winfo_id())
             os.environ['SDL_VIDEODRIVER'] = 'windib'
@@ -471,16 +477,18 @@ class fullscreen_GUI():
             if not root_play_game.winfo_viewable():
                 root_play_game.deiconify()
 
-            label_current_game_mode.configure(text="Current game mode: "+game_mode)
+            label_current_game_mode.configure(text="Current game mode: "+ self.game_mode)
             current_player_label.configure(text="Current player: " + str(current_player.id))
             label_current_game_mode.update()
             current_player_label.update()
 
             if self.game_instance.use_recognition:
+                root_play_game.columnconfigure(2, weight=1)
                 for widget in list_recognition_widgets:
                     if not widget.winfo_viewable():
                         widget.grid()
             else:
+                root_play_game.columnconfigure(2, weight=0)
                 for widget in list_recognition_widgets:
                     if widget.winfo_viewable():
                         widget.grid_remove()
@@ -524,9 +532,16 @@ class fullscreen_GUI():
         root_play_game.after(100, lambda: self.pygame_loop())
 
         if self.game_instance.use_recognition:
-            root_play_game.after(150,lambda: self.show_webcam_view(label_webcam_view))
+            root_play_game.after(150,lambda: self.show_webcam_view(label_webcam_video))
     
-    
+    def crop_to_square(self,frame):
+        height, width = frame.shape[:2]
+        smallest_side = min(height, width)
+        start_x = (width - smallest_side) // 2 
+        start_y = (height - smallest_side) // 2
+        square_frame = frame[start_y:start_y + smallest_side, start_x:start_x + smallest_side]
+        return square_frame
+
 
     def show_webcam_view(self,label):
         try:
@@ -568,13 +583,7 @@ class fullscreen_GUI():
         except:
             handle_human_move(self.game_instance, x, y, players)
 
-    def crop_to_square(self,frame):
-        height, width = frame.shape[:2]
-        smallest_side = min(height, width)
-        start_x = (width - smallest_side) // 2 
-        start_y = (height - smallest_side) // 2
-        square_frame = frame[start_y:start_y + smallest_side, start_x:start_x + smallest_side]
-        return square_frame
+    
 
 
 def handle_human_move(instance, x, y, players,p1_moves=None, p2_moves=None):
@@ -595,15 +604,15 @@ def handle_human_move(instance, x, y, players,p1_moves=None, p2_moves=None):
         else:
             #logging_players()
             if instance.play_music:
-                Thread(target=start_muziek_vertraagd).start()
+                Thread(target=start_music_delayed).start()
 
             # Switch player if neither player have won
             current_player = players[2 - current_player.id]  #current_player kan 2 zijn of 1, maar in beide gevallen zal er van speler gewisseld worden.
             #logging_players()    
 
-def runGame(instance:GomokuGame, game_number,GUI:fullscreen_GUI):#main function
+def runGame(instance:GomokuGame, game_number):#main function
     # Main game loop
-    global window_name, victory_text, current_player, player1, player2, running,current_player,p1_moves, p2_moves,winning_player,root_play_game
+    global window_name, victory_text, current_player, player1, player2, running,current_player,p1_moves, p2_moves,winning_player
 
     if instance.use_recognition:
         print("using recognition")
@@ -723,7 +732,7 @@ def runGame(instance:GomokuGame, game_number,GUI:fullscreen_GUI):#main function
             except :
                 draw_board(instance)
 
-            GUI.refresh_screen(game_number)
+            instance.GUI.refresh_screen(game_number)
                 
         else:
             victory_text = "TIE"
@@ -750,7 +759,7 @@ def handle_events():
                 elif event.type == pygame.QUIT:
                     pygame.quit()
 
-def runTraining(instance:GomokuGame, game_number,GUI):#main function
+def runTraining(instance:GomokuGame, game_number):#main function
     # Main game loop
     global window_name, victory_text, current_player,player1,player2,running,winning_player,root_play_game
     mark_last_move_model=False 
@@ -768,10 +777,7 @@ def runTraining(instance:GomokuGame, game_number,GUI):#main function
 
     for p in players:
         if p.TYPE == "AI-Model":
-            if p==player1:
-                p.ai.model.load_model(player1.AI_model.modelname)
-            else:
-                p.ai.model.load_model(player2.AI_model.modelname)
+            p.ai.model.load_model(p.AI_model.modelname)
             p.ai.train = True
         elif p.TYPE == "Human":
             p.ai.train = False
@@ -875,7 +881,7 @@ def runTraining(instance:GomokuGame, game_number,GUI):#main function
             except:
                 draw_board(instance)
             handle_events()
-            GUI.refresh_screen(game_number)
+            instance.GUI.refresh_screen(game_number)
                 
         else:
             victory_text = "TIE"
@@ -925,7 +931,7 @@ def runTraining(instance:GomokuGame, game_number,GUI):#main function
     reset_game(instance)
     
 
-def runReplay(instance:GomokuGame,GUI, moves:dict=None):#main function
+def runReplay(instance:GomokuGame, moves:dict=None):#main function
     # Main game loop
     global window_name, victory_text, current_player, running
 
@@ -944,7 +950,7 @@ def runReplay(instance:GomokuGame,GUI, moves:dict=None):#main function
             #Replay
             if players[current_player.id - 1].TYPE == "Replay":
                 if instance.ai_delay:
-                    time.sleep(random.uniform(0.25, 1.0))   # randomize ai "thinking" time
+                    time.sleep(random.uniform(0.25, 0.9))   # randomize ai "thinking" time
                 instance.board[position[move_id][0]][position[move_id][1]] = current_player.id
                 last_move = position[move_id]
                 if check_win(position[move_id][0], position[move_id][1], current_player.id, instance):
@@ -957,7 +963,7 @@ def runReplay(instance:GomokuGame,GUI, moves:dict=None):#main function
                 draw_board(instance,last_move)
             except:
                 draw_board(instance)
-            GUI.refresh_screen(0)
+            instance.GUI.refresh_screen(0)
                 
         else:
             victory_text = "TIE"

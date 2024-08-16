@@ -64,7 +64,7 @@ july 2024:
   
 august 2024:
 
-  The code was completely restructured. Some performance improvements were also done. There are now 3 functions to run the game.
+  The code was completely restructured. There are now 3 functions to run the game.
 
   **You can now choose if you want to allow overruling for each player. Of course, I also added an option in the GUI.**
   **All the options that you can't choose because that would cause a crash are now hidden.**
@@ -112,6 +112,14 @@ august 2024:
   added an option in the GUI so you can now choose if you want to see graphs after training the model
 
   stability improvements
+
+  visual improvements in the small GUI
+
+  cleaned up code
+
+  solved an issue  where the fullscreen GUI would flicker
+
+
 
 
 

@@ -181,10 +181,10 @@ def start_new_game():
     stats.setup_logging(gomoku.player1.TYPE, gomoku.player2.TYPE)
 
     if gomoku.player1.TYPE == "AI-Model":
-        gomoku.player1.load_model(var_model_player1.get(),False)
+        gomoku.player1.load_model(var_model_player1.get())
         gomoku.player1.set_allow_overrule(var_allow_overrule_player_1.get())
     if gomoku.player2.TYPE == "AI-Model":
-        gomoku.player2.load_model(var_model_player2.get(),False)
+        gomoku.player2.load_model(var_model_player2.get())
         gomoku.player2.set_allow_overrule(var_allow_overrule_player_2.get())
 
     if var_startingPlayer.get() == "Player 1":
@@ -205,7 +205,9 @@ def start_new_game():
             valid_number=True
         except:
             print("invalid number, try again")
-    GUI=gomoku.fullscreen_GUI(game_instance,"Play Game")
+
+    game_instance.game_mode="Play Game"
+    game_instance.GUI=gomoku.fullscreen_GUI(game_instance)
     for i in range(runs):
         log_info_overruling("run "+str(i+1)+" begins:")
         if game_instance.use_recognition:
@@ -228,7 +230,7 @@ def start_new_game():
 
         if (board_loaded and var_start_from_file.get()) or not var_start_from_file.get():
             try:
-                gomoku.runGame(game_instance, i,GUI) #main function
+                gomoku.runGame(game_instance, i) #main function
             except Exception as e:
                 print("error in gomoku.run")
                 raise Exception("There is an error in the main function/loop, it can be anything." , str(e))
@@ -239,7 +241,7 @@ def start_new_game():
                     print(random.randint(0,2), end="")
                 print("\n",end="")
             print("The board can only contain 0, 1, or 2. 0 = empty, 1 = player 1, 2 = player 2.")
-    game_over(GUI)
+    game_over(game_instance.GUI)
 
 def start_new_training():
     global game_instance
@@ -259,11 +261,11 @@ def start_new_training():
     else:
         game_instance.show_hover_effect=False
 
-    gomoku.player1.load_model(var_model_player1.get(),True)#player 1 is always an AI-Model when training
+    gomoku.player1.load_model(var_model_player1.get())#player 1 is always an AI-Model when training
     gomoku.player1.set_allow_overrule(var_allow_overrule_player_1.get())
 
     if gomoku.player2.TYPE == "AI-Model":
-        gomoku.player2.load_model(var_model_player2.get(),True)
+        gomoku.player2.load_model(var_model_player2.get())
         gomoku.player2.set_allow_overrule(var_allow_overrule_player_2.get())
 
     if var_startingPlayer.get() == "Player 1":
@@ -285,7 +287,9 @@ def start_new_training():
         stats.should_log = var_log.get()
         stats.setup_logging(gomoku.player1.TYPE, gomoku.player2.TYPE)
         root.wm_state('iconic')
-        GUI=gomoku.fullscreen_GUI(game_instance,"Training")
+
+        game_instance.game_mode="Training"
+        game_instance.GUI=gomoku.fullscreen_GUI(game_instance)
         for i in range(runs):
             log_info_overruling("run "+str(i+1)+" begins:")
             
@@ -293,7 +297,7 @@ def start_new_training():
             game_instance.current_game = i+1
             game_instance.last_round = (i+1 == runs)
             try:
-                gomoku.runTraining(game_instance, i,GUI) #main function
+                gomoku.runTraining(game_instance, i) #main function
             except Exception as e:
                 print("error in gomoku.run, herschrijf die functie.")
                 raise Exception("There is an error in the main function/loop, it can be anything." , str(e))
@@ -311,7 +315,7 @@ def start_new_training():
     except ValueError:
         print("Most likely: Game runs value invalid, try again.")
     print("game over")
-    game_over(GUI)
+    game_over(game_instance.GUI)
 
 
 def start_new_replay():
@@ -340,20 +344,21 @@ def start_new_replay():
         stats.should_log = var_log.get()
         stats.setup_logging(gomoku.player1.TYPE, gomoku.player2.TYPE)
         root.wm_state('iconic')
-        GUI=gomoku.fullscreen_GUI(game_instance,"Replay")
+
+        game_instance.game_mode="Replay"
+        game_instance.GUI=gomoku.fullscreen_GUI(game_instance)
         try:
-            gomoku.runReplay(game_instance,GUI,moves) #main function
+            gomoku.runReplay(game_instance,moves) #main function
         except Exception as e:
             print("error in gomoku.run, herschrijf die functie.")
             raise Exception("There is an error in the main function/loop, it can be anything." , str(e)) 
     else:
         print("Try again, please select a valid json file")
     
-    game_over(GUI)
+    game_over(game_instance.GUI)
 
 def game_over(GUI):
-    print("hide_GUI")
-    GUI.hide_GUI()
+    game_instance.GUI.hide_GUI()
     root.wm_state('normal')
     game_instance.current_game = 0
 
@@ -417,6 +422,9 @@ def maintain_GUI():
                 var_game_runs.set("3000")
             elif tab_text=="Play gomoku" and old_tab_text!=tab_text:
                 var_game_runs.set("1")
+                var_delay.set(False)
+            elif tab_text=="Replay old games" and old_tab_text!=tab_text:
+                var_delay.set(True)
             
             ##TAB 1##
             if var_playerType1.get() == "Human" and var_playerType2.get() == "Human":
@@ -604,7 +612,7 @@ CbModel1 = ttk.Combobox(tab1, state="readonly", values=list_models,textvariable=
 CbModel2 = ttk.Combobox(tab1, state="readonly", values=list_models,textvariable=var_model_player2)
 
 CbModel1.grid(row=6, column=0, sticky="w",padx=distance_from_left_side)
-CbModel2.grid(row=6, column=1)
+CbModel2.grid(row=6, column=1,sticky="w",padx=distance_from_left_side)
 
 label_value_number_of_training_loops_p1 = ttk.Label(tab1, textvariable=var_number_of_training_loops_comboboxes_p1,style="TLabel")
 label_value_number_of_training_loops_p1.grid(row=8, column=0, sticky="w",padx=distance_from_left_side)
@@ -676,7 +684,7 @@ label_info_load_save_replay.grid(row=17, column=0, sticky="w",columnspan=2,pady=
 ttk.Label(tab2)
 #row 0
 button_2 = ttk.Button(tab2, text="Train", style="TButton", command=lambda: start_new_training())
-button_2.grid(row=0, column=1, sticky="e",padx=distance_from_left_side)
+button_2.grid(row=0, column=1, sticky="e")
 
 #column 0
 label_model=ttk.Label(tab2, text="AI-Model: ",style="TLabel")
