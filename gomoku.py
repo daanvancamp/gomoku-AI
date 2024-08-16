@@ -407,13 +407,13 @@ class fullscreen_GUI():
         self.game_instance = instance
         self.game_mode = self.game_instance.game_mode
 
-
-        self.vid = cv2.VideoCapture(0, cv2.CAP_DSHOW)
+        if self.game_instance.use_recognition:
+            self.vid = cv2.VideoCapture(0, cv2.CAP_DSHOW)
         
-        width, height = 300, 300
+            width, height = 300, 300
   
-        self.vid.set(cv2.CAP_PROP_FRAME_WIDTH, width) 
-        self.vid.set(cv2.CAP_PROP_FRAME_HEIGHT, height)
+            self.vid.set(cv2.CAP_PROP_FRAME_WIDTH, width) 
+            self.vid.set(cv2.CAP_PROP_FRAME_HEIGHT, height)
 
         self.initialize_fullscreen_GUI()
 
