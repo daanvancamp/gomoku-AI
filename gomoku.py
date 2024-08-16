@@ -6,7 +6,7 @@ from tkinter import Button, Frame, Label, Tk
 import cv2
 from PIL import Image, ImageTk 
 import pygame
-from AI_Model import AI_Model
+from AI_model import AI_Model
 from music import start_music_delayed
 import testai
 import ai

@@ -1,7 +1,7 @@
 import os
 import shutil
 import json
-from  AI_Model import AI_Model
+from  AI_model import AI_Model
 
 class ModelManagerMeta(type):
     """
