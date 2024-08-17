@@ -2,7 +2,7 @@ import operator
 import os
 import sys
 import time
-from tkinter import Button, Frame, Label, Tk
+from tkinter import Button, Frame, Label, Tk,messagebox as mb
 import cv2
 from PIL import Image, ImageTk 
 import pygame
@@ -51,6 +51,7 @@ class GomokuGame:
         self.running=None
         self.stop_game=False
         self.quit_program=False
+        self.show_dialog=False
 
         
     def set_board(self, board):
@@ -426,12 +427,29 @@ class fullscreen_GUI():
     def quit_program(self):
         self.game_instance.quit_program = True
         self.stop_game()
+
     def stop_game(self):
         if self.vid is not None:
             self.vid.release()
         self.game_instance.running=False
         self.game_instance.stop_game=True
+    
+    def show_dialog_next_game(self):
+        if self.game_instance.show_dialog:
+            res=mb.askquestion(title='Start next game',message='Do you want to start the next game automatically?')
+            if res.strip().lower() == 'yes' :
+                pass
+            else :
+                mb.showinfo(message="Press any key to start the next game, you can wait as long as you want",title="Next game")
+            
+                self.key_pressed = False
+                root_play_game.bind("<Key>", lambda event: self.on_key_press())
+                while not self.key_pressed:
+                    root_play_game.update()
 
+    def on_key_press(self):
+        self.key_pressed = True
+                
     def initialize_fullscreen_GUI(self):
         global root_play_game, current_player,label_current_game_mode,current_player_label,embed_pygame,current_game_label,label_webcam_video,label_webcam_image,list_recognition_widgets,label_recognition_info
         if root_play_game is None:
@@ -765,6 +783,8 @@ def runGame(instance:GomokuGame, game_number):#main function
         update_player_stats(instance, winning_player)
         time.sleep(instance.SLEEP_BEFORE_END)#sleep before closing for SLEEP_BEFORE_END seconds
     
+    instance.GUI.show_dialog_next_game()
+
     reset_game(instance)
 
 
@@ -995,6 +1015,7 @@ def runReplay(instance:GomokuGame, moves:dict=None):#main function
         stats.log_message(victory_text)
         time.sleep(instance.SLEEP_BEFORE_END)#sleep before closing for SLEEP_BEFORE_END seconds
     
+    instance.GUI.show_dialog_next_game()
     reset_game(instance)
 
 

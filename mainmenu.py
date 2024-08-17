@@ -82,6 +82,8 @@ var_show_overruling=BooleanVar()
 var_show_overruling.set(True)
 var_show_graphs=BooleanVar()
 var_show_graphs.set(False)
+var_show_dialog=BooleanVar()
+var_show_dialog.set(False)
 
 var_losses=IntVar()
 var_losses.set(0)
@@ -169,8 +171,9 @@ def start_new_game():
     
     game_instance.use_recognition = var_use_recognition.get()
     game_instance.play_music = var_play_music.get()
-    game_instance.show_overruling=var_show_overruling.get()
-    game_instance.record_replay=var_rep.get()
+    game_instance.show_overruling = var_show_overruling.get()
+    game_instance.record_replay = var_rep.get()
+    game_instance.show_dialog = var_show_dialog.get()
 
     game_instance.ai_delay = var_delay.get()
     stats.should_log = var_log.get()
@@ -231,6 +234,7 @@ def start_new_game():
             if board is not None:
                 board_loaded=True
             else:
+                label_unvalid_file.config(text="Board file not valid, try again with another file.")
                 board_loaded=False
             game_instance.set_board(board)
 
@@ -331,6 +335,8 @@ def start_new_training():
 def start_new_replay():
     global game_instance
     game_instance.show_hover_effect=False
+    game_instance.show_dialog = var_show_dialog.get()
+
 
     log_info_overruling("\n\n\nnew session begins:")
    
@@ -369,7 +375,8 @@ def start_new_replay():
 
 def game_over():
     global game_instance
-    game_instance.GUI.hide_GUI()
+    if game_instance.GUI is not None:
+        game_instance.GUI.hide_GUI()
     root.wm_state('normal')
     game_instance.current_game = 0
     if game_instance.quit_program:
@@ -600,6 +607,8 @@ ttk.Label(tab1)
 
 button_1 = ttk.Button(tab1, text="New Game", command=lambda: start_new_game(), style="TButton")
 button_1.grid(row=0, column=0, sticky="w", padx=distance_from_left_side)
+checkbox_show_dialog=ttk.Checkbutton(tab1, text="Show dialog after each game", variable=var_show_dialog,style="TCheckbutton")
+checkbox_show_dialog.grid(row=0, column=1, sticky="w")
 
 player1typelabel = ttk.Label(tab1,style="TLabel", text="Player 1(black)")
 player1typelabel.grid(row=2, column=0, sticky="w", padx=distance_from_left_side)
@@ -646,6 +655,7 @@ gamerunslabel.grid(row=10, column=0, sticky="w",padx=distance_from_left_side)
 gamerunsentry = ttk.Entry(tab1, textvariable=var_game_runs,style="TEntry")
 gamerunsentry.grid(row=10, column=1, sticky="w")
 
+
 playerstartLabel = ttk.Label(tab1, text="Player to start: ",style="TLabel")
 playerstartLabel.grid(row=11, column=0, sticky="w", padx=distance_from_left_side)
 CbStartingPlayer = ttk.Combobox(tab1, state="readonly", values=["Player 1", "Player 2"], textvariable=var_startingPlayer)
@@ -678,6 +688,9 @@ bottomframe.grid(row=16, column=0, sticky="w",columnspan=3, padx=distance_from_l
 
 start_from_file_button=ttk.Checkbutton(bottomframe, text="Load game situation(2)", variable=var_start_from_file,style="TCheckbutton")
 start_from_file_button.grid(row=0, column=0, sticky="w")
+label_unvalid_file=ttk.Label(bottomframe, text="",style="TLabel")
+label_unvalid_file.grid(row=0, column=1, sticky="e")
+
 label_load_state=ttk.Label(bottomframe, text="Choose file board state: ",style="TLabel")
 label_load_state.grid(row=1, column=0, sticky="w")
 load_state_entry = ttk.Entry(bottomframe, textvariable=state_board_path, width=30,style="TEntry")
@@ -753,6 +766,8 @@ delaybutton2 = ttk.Checkbutton(tab3, text="Use AI Delay", variable=var_delay, st
 delaybutton2.grid(row=2, column=0, sticky="w",pady=2,padx=distance_from_left_side)
 button_5 = ttk.Button(tab3, text="Play", style="TButton", command=lambda: start_new_replay())
 button_5.grid(row=3, column=0, sticky="w",pady=2,padx=distance_from_left_side)
+checkbox_show_dialog_tab3=ttk.Checkbutton(tab3, text="Show dialog after each game", variable=var_show_dialog,style="TCheckbutton")
+checkbox_show_dialog_tab3.grid(row=3, column=1, sticky="w")
 
 
 ttk.Label(tab4)
