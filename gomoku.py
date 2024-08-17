@@ -50,6 +50,7 @@ class GomokuGame:
         self.game_mode=None
         self.running=None
         self.stop_game=False
+        self.quit_program=False
 
         
     def set_board(self, board):
@@ -422,7 +423,9 @@ class fullscreen_GUI():
 
         self.initialize_fullscreen_GUI()
     
-
+    def quit_program(self):
+        self.game_instance.quit_program = True
+        self.stop_game()
     def stop_game(self):
         if self.vid is not None:
             self.vid.release()
@@ -434,6 +437,8 @@ class fullscreen_GUI():
         if root_play_game is None:
             root_play_game = Tk()
             root_play_game.bind("<Escape>", lambda event: self.stop_game())
+            root_play_game.bind("<q>", lambda event: self.quit_program())
+
 
             root_play_game.columnconfigure(0, weight=1)
             root_play_game.columnconfigure(1, weight=1)
@@ -762,8 +767,6 @@ def runGame(instance:GomokuGame, game_number):#main function
     
     reset_game(instance)
 
-    return instance.stop_game
-
 
 def handle_events():
     if not player1.TYPE == "Human" and  not player2.TYPE == "Human":
@@ -947,8 +950,6 @@ def runTraining(instance:GomokuGame, game_number):#main function
         time.sleep(instance.SLEEP_BEFORE_END)#sleep before closing for SLEEP_BEFORE_END seconds
     
     reset_game(instance)
-
-    return instance.stop_game
 
 def runReplay(instance:GomokuGame, moves:dict=None):#main function
     # Main game loop

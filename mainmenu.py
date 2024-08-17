@@ -28,6 +28,8 @@ root.geometry(str(WIDTH) + "x" + str(HEIGHT))
 root.title("Gomoku -- Main Menu")
 root.configure(background="#357EC7")
 root.attributes("-topmost", True)
+root.bind("<Escape>", lambda event: quit_game())
+root.bind("<q>", lambda event: quit_game())
 
 try:
     root.wm_iconphoto(False, ImageTk.PhotoImage(Image.open('res/ico.png')))
@@ -234,8 +236,8 @@ def start_new_game():
 
         if (board_loaded and var_start_from_file.get()) or not var_start_from_file.get():
             try:
-                output=gomoku.runGame(game_instance, i) #main function
-                if output:
+                gomoku.runGame(game_instance, i) #main function
+                if game_instance.stop_game:
                     break
             except Exception as e:
                 print("error in gomoku.run")
@@ -303,8 +305,8 @@ def start_new_training():
             game_instance.current_game = i+1
             game_instance.last_round = (i+1 == runs)
             try:
-                output=gomoku.runTraining(game_instance, i) #main function
-                if output:
+                gomoku.runTraining(game_instance, i) #main function
+                if game_instance.stop_game:
                     break
             except Exception as e:
                 print("error in gomoku.run, herschrijf die functie.")
@@ -370,6 +372,8 @@ def game_over():
     game_instance.GUI.hide_GUI()
     root.wm_state('normal')
     game_instance.current_game = 0
+    if game_instance.quit_program:
+        quit_game()
 
 def create_new_model():
     modelmanager_instance.create_new_model(var_name_model.get())
@@ -684,8 +688,6 @@ button_browse_state_file.grid(row=2, column=1, sticky="w")
 
 button_3 = ttk.Button(input_canvas, text="Quit Game(ESC/Q)", style="TButton", command=lambda: quit_game())
 button_3.grid(row=1, column=0, sticky="e")
-root.bind("<Escape>", lambda event: quit_game())
-root.bind("<q>", lambda event: quit_game())
 
 label_info_load_save_replay=ttk.Label(tab1,wraplength=WIDTH-15, text="(1)(2)The save replay function can't be used when loading a board, because that would create a wrong replay file.",style="TLabel")
 label_info_load_save_replay.grid(row=17, column=0, sticky="w",columnspan=2,pady=5,padx=distance_from_left_side)
