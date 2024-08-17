@@ -119,6 +119,8 @@ august 2024:
 
   solved an issue  where the fullscreen GUI would flicker
 
+  You can now safely exit the fullscreen GUI by pressing escape.
+
 
 
 

@@ -48,6 +48,9 @@ class GomokuGame:
         self.show_graphs=False
         self.GUI=None
         self.game_mode=None
+        self.running=None
+        self.stop_game=False
+
         
     def set_board(self, board):
         self.board = board
@@ -414,13 +417,23 @@ class fullscreen_GUI():
   
             self.vid.set(cv2.CAP_PROP_FRAME_WIDTH, width) 
             self.vid.set(cv2.CAP_PROP_FRAME_HEIGHT, height)
+        else:
+            self.vid = None
 
         self.initialize_fullscreen_GUI()
+    
+
+    def stop_game(self):
+        if self.vid is not None:
+            self.vid.release()
+        self.game_instance.running=False
+        self.game_instance.stop_game=True
 
     def initialize_fullscreen_GUI(self):
         global root_play_game, current_player,label_current_game_mode,current_player_label,embed_pygame,current_game_label,label_webcam_video,label_webcam_image,list_recognition_widgets,label_recognition_info
         if root_play_game is None:
             root_play_game = Tk()
+            root_play_game.bind("<Escape>", lambda event: self.stop_game())
 
             root_play_game.columnconfigure(0, weight=1)
             root_play_game.columnconfigure(1, weight=1)
@@ -496,8 +509,6 @@ class fullscreen_GUI():
         pygame.display.init()
         self.game_instance.screen = pygame.display.set_mode((self.game_instance.WIDTH, self.game_instance.HEIGHT))
     
-        pygame.display.set_icon(pygame.image.load('res/ico.png'))
-        pygame.display.set_caption(window_name)
         self.pygame_loop()
 
 
@@ -585,9 +596,8 @@ class fullscreen_GUI():
 
     
 
-
 def handle_human_move(instance, x, y, players,p1_moves=None, p2_moves=None):
-    global victory_text, winning_player, running,current_player,root_play_game
+    global victory_text, winning_player,current_player,root_play_game
     col = x // instance.CELL_SIZE 
     row = y // instance.CELL_SIZE
     if instance.GRID_SIZE > row >= 0 == instance.board[row][col] and 0 <= col < instance.GRID_SIZE:
@@ -600,7 +610,7 @@ def handle_human_move(instance, x, y, players,p1_moves=None, p2_moves=None):
         if check_win(row, col, current_player.id, instance):
             victory_text = f"Player {current_player.id} wins!"
             winning_player = current_player.id
-            running = False
+            instance.running = False
         else:
             #logging_players()
             if instance.play_music:
@@ -612,7 +622,7 @@ def handle_human_move(instance, x, y, players,p1_moves=None, p2_moves=None):
 
 def runGame(instance:GomokuGame, game_number):#main function
     # Main game loop
-    global window_name, victory_text, current_player, player1, player2, running,current_player,p1_moves, p2_moves,winning_player
+    global window_name, victory_text, current_player, player1, player2, current_player,p1_moves, p2_moves,winning_player
 
     if instance.use_recognition:
         print("using recognition")
@@ -633,21 +643,22 @@ def runGame(instance:GomokuGame, game_number):#main function
     
     mark_last_move_model=True
     instance.winning_cells = []
-    running = True
+    instance.running = True
+    instance.stop_game = False
     winning_player = 0
 
     if instance.record_replay:
         p1_moves = []
         p2_moves = []
 
-    while running:
+    while instance.running:
         handle_events()
         if not check_board_full(instance):
             # Human move
             if current_player.TYPE == "Human":
                 for event in pygame.event.get():
                     if event.type == pygame.QUIT:
-                        running = False 
+                        instance.running = False 
                     elif (event.type == pygame.MOUSEBUTTONDOWN or event.type == pygame.K_UP or event.type == pygame.K_RIGHT) and event.button == 1: #kan zo gelaten worden. Wanneer op de muis wordt gedrukt,wordt de zet gelezen van het bestand
                         if instance.play_music:
                             Thread(target=lambda:pygame.mixer.music.fadeout(1000)).start()#don't block the main thread
@@ -681,7 +692,7 @@ def runGame(instance:GomokuGame, game_number):#main function
                 if check_win(ai_row, ai_col, current_player.id, instance):
                     victory_text = f"AI-Model {players[current_player.id-1].id} wins!"
                     winning_player = current_player.id
-                    running = False
+                    instance.running = False
                 else:
                     current_player = players[2 - current_player.id]
                     #logging_players()   
@@ -722,7 +733,7 @@ def runGame(instance:GomokuGame, game_number):#main function
                     victory_text = f"AI-Model {players[current_player.id - 1].id} wins!"
                     winning_player = current_player.id
                     print("player that has won:",winning_player)
-                    running = False
+                    instance.running = False
                 else:
                     current_player = players[2 - current_player.id]
                     #print("Na switch player AI!!!!!!!!!!!")
@@ -737,18 +748,21 @@ def runGame(instance:GomokuGame, game_number):#main function
         else:
             victory_text = "TIE"
             winning_player = -1
-            running = False
+            instance.running = False
 
     # End game
-    stats.log_message(victory_text)
-    pygame.display.set_caption("Gomoku - Game: " + str(game_number) + " - " + victory_text)
-    update_player_stats(instance, winning_player)
-    
+   
     if instance.record_replay:
         filereader.save_replay(p1_moves, p2_moves)
     
-    time.sleep(instance.SLEEP_BEFORE_END)#sleep before closing for SLEEP_BEFORE_END seconds
+    if not instance.stop_game:
+        stats.log_message(victory_text)
+        update_player_stats(instance, winning_player)
+        time.sleep(instance.SLEEP_BEFORE_END)#sleep before closing for SLEEP_BEFORE_END seconds
+    
     reset_game(instance)
+
+    return instance.stop_game
 
 
 def handle_events():
@@ -761,7 +775,7 @@ def handle_events():
 
 def runTraining(instance:GomokuGame, game_number):#main function
     # Main game loop
-    global window_name, victory_text, current_player,player1,player2,running,winning_player,root_play_game
+    global window_name, victory_text, current_player,player1,player2,winning_player,root_play_game
     mark_last_move_model=False 
 
     if player1.allow_overrule:
@@ -786,14 +800,15 @@ def runTraining(instance:GomokuGame, game_number):#main function
     instance.play_music=False
 
     instance.winning_cells = []
-    running = True
+    instance.running = True
+    instance.stop_game = False
     winning_player = 0
 
     if instance.record_replay:
         p1_moves = []
         p2_moves = []
 
-    while running:
+    while instance.running:
         handle_events()
         # Check if board is full    
         if not check_board_full(instance):
@@ -802,7 +817,7 @@ def runTraining(instance:GomokuGame, game_number):#main function
                 # Handle events
                 for event in pygame.event.get():
                     if event.type == pygame.QUIT:
-                        running = False 
+                        instance.running = False 
                         #druk op linkermuisknop om te zetten
                     elif (event.type == pygame.MOUSEBUTTONDOWN or event.type == pygame.K_UP or event.type == pygame.K_RIGHT) and event.button == 1: #kan zo gelaten worden. Wanneer op de muis wordt gedrukt,wordt de zet gelezen van het bestand
                         Thread(target=lambda:pygame.mixer.music.fadeout(1000)).start()#don't block the main thread
@@ -825,7 +840,7 @@ def runTraining(instance:GomokuGame, game_number):#main function
                 if check_win(ai_row, ai_col, current_player.id, instance):
                     victory_text = f"AI-Model {players[current_player.id-1].id} wins!"
                     winning_player = current_player.id
-                    running = False
+                    instance.running = False
                 else:
                     current_player = players[2 - current_player.id]
                     #logging_players()   
@@ -841,7 +856,6 @@ def runTraining(instance:GomokuGame, game_number):#main function
                 old_state = instance.board
                 max_score, scores, scores_normalized = calculate_score(instance.board)
                 mm_ai.current_player_id=current_player.id
-                pygame.event.get()
                 action = mm_ai.get_action(instance.board, one_hot_board, scores_normalized)
                 if mark_last_move_model:
                     last_move=action #=last move for example :(3,6)
@@ -872,7 +886,7 @@ def runTraining(instance:GomokuGame, game_number):#main function
                 if game_over:
                     victory_text = f"AI-Model {players[current_player.id - 1].id} wins!"
                     winning_player = current_player.id
-                    running = False
+                    instance.running = False
                 else:
                     current_player = players[2 - current_player.id]
                     #logging_players()    
@@ -886,57 +900,63 @@ def runTraining(instance:GomokuGame, game_number):#main function
         else:
             victory_text = "TIE"
             winning_player = -1
-            running = False
+            instance.running = False
 
     # End game
-    stats.log_message(victory_text)
-    pygame.display.set_caption("Gomoku - Game: " + str(game_number) + " - " + victory_text)
-    update_player_stats(instance, winning_player)
+
     if instance.record_replay:
         filereader.save_replay(p1_moves, p2_moves)
     # For any AI-Model, train for long memory and save model
-    data = {}
-    loss_data = {}
-    move_loss_data = {}
-    for p in players:
-        handle_events()
-        if p.TYPE == "AI-Model":
-            p.ai.remember(instance.board, p.final_action, p.score, instance.board, True)
-            p.ai.train_long_memory()
-            p.score_loss.append(p.ai.loss)
-            move_loss = [float(val) for val in p.move_loss]
-            p.final_move_loss.append(sum(move_loss)/len(move_loss))
-            p.ai.model.save_model(p.AI_model.modelname) #only saves after each round
-            p.final_move_scores.append(sum(p.weighed_moves)/len(p.weighed_moves))
-            stats.log_message(f"{p.TYPE} {p.id}: score loss: {float(p.ai.loss)}")
-            stats.log_message(f"{p.TYPE} {p.id}: move loss: {sum(p.move_loss)/len(p.move_loss)}")
-        p.reset_score()
-        if instance.last_round:
+    if not instance.stop_game:
+        stats.log_message(victory_text)#only log when game isn't interrupted
+        update_player_stats(instance, winning_player)
+
+        data = {}
+        loss_data = {}
+        move_loss_data = {}
+        for p in players:
+            handle_events()
             if p.TYPE == "AI-Model":
-                data[f"{p.TYPE} {p.id}: game accuracy"] = p.weighed_scores
-                data[f"{p.TYPE} {p.id}: move accuracy"] = p.final_move_scores
-                loss_data[f"{p.TYPE} {p.id}: score loss"] = [float(val) for val in p.score_loss]
-                move_loss_data[f"{p.TYPE} {p.id}: move loss"] = p.final_move_loss
-                stats.log_message(f"{p.TYPE} {p.id}: average score loss: {sum([float(val) for val in p.score_loss]) / len([float(val) for val in p.score_loss])}")
-                stats.log_message(f"{p.TYPE} {p.id}: average move loss: {sum(p.final_move_loss) / len(p.final_move_loss)}")
-            p.reset_all_stats()#purely for testing purposes
-    if instance.show_graphs:
-        if len(data) > 0:
-            stats.plot_graph(data, 'accuracy')
-        if len(loss_data) > 0:
-            stats.plot_graph(loss_data, 'loss data')
-        if len(move_loss_data) > 0:
-            stats.plot_graph(move_loss_data, 'loss data')
-    time.sleep(instance.SLEEP_BEFORE_END)#sleep before closing for SLEEP_BEFORE_END seconds
-    reset_game(instance)
+                p.ai.remember(instance.board, p.final_action, p.score, instance.board, True)
+                p.ai.train_long_memory()
+                p.score_loss.append(p.ai.loss)
+                move_loss = [float(val) for val in p.move_loss]
+                p.final_move_loss.append(sum(move_loss)/len(move_loss))
+                p.ai.model.save_model(p.AI_model.modelname) #only saves after each round
+                p.final_move_scores.append(sum(p.weighed_moves)/len(p.weighed_moves))
+                stats.log_message(f"{p.TYPE} {p.id}: score loss: {float(p.ai.loss)}")
+                stats.log_message(f"{p.TYPE} {p.id}: move loss: {sum(p.move_loss)/len(p.move_loss)}")
+            p.reset_score()
+            if instance.last_round:
+                if p.TYPE == "AI-Model":
+                    data[f"{p.TYPE} {p.id}: game accuracy"] = p.weighed_scores
+                    data[f"{p.TYPE} {p.id}: move accuracy"] = p.final_move_scores
+                    loss_data[f"{p.TYPE} {p.id}: score loss"] = [float(val) for val in p.score_loss]
+                    move_loss_data[f"{p.TYPE} {p.id}: move loss"] = p.final_move_loss
+                    stats.log_message(f"{p.TYPE} {p.id}: average score loss: {sum([float(val) for val in p.score_loss]) / len([float(val) for val in p.score_loss])}")
+                    stats.log_message(f"{p.TYPE} {p.id}: average move loss: {sum(p.final_move_loss) / len(p.final_move_loss)}")
+                p.reset_all_stats()#purely for testing purposes
+        if instance.show_graphs:
+            if len(data) > 0:
+                stats.plot_graph(data, 'accuracy')
+            if len(loss_data) > 0:
+                stats.plot_graph(loss_data, 'loss data')
+            if len(move_loss_data) > 0:
+                stats.plot_graph(move_loss_data, 'loss data')
+
+        time.sleep(instance.SLEEP_BEFORE_END)#sleep before closing for SLEEP_BEFORE_END seconds
     
+    reset_game(instance)
+
+    return instance.stop_game
 
 def runReplay(instance:GomokuGame, moves:dict=None):#main function
     # Main game loop
-    global window_name, victory_text, current_player, running
+    global window_name, victory_text, current_player
 
     instance.winning_cells = []
-    running = True
+    instance.running = True
+    instance.stop_game = False
 
     if moves is not None:#always true for now
         move_id = 0
@@ -944,7 +964,7 @@ def runReplay(instance:GomokuGame, moves:dict=None):#main function
     else:
         pass
         
-    while running:
+    while instance.running:
         handle_events()
         if not check_board_full(instance):
             #Replay
@@ -955,7 +975,7 @@ def runReplay(instance:GomokuGame, moves:dict=None):#main function
                 last_move = position[move_id]
                 if check_win(position[move_id][0], position[move_id][1], current_player.id, instance):
                     victory_text = f"AI model {players[current_player.id-1].id} wins!"
-                    running = False
+                    instance.running = False
                 else:
                     current_player = players[2 - current_player.id]
                     move_id += 1
@@ -967,13 +987,15 @@ def runReplay(instance:GomokuGame, moves:dict=None):#main function
                 
         else:
             victory_text = "TIE"
-            running = False
+            instance.running = False
 
     # End game
-    stats.log_message(victory_text)
-    pygame.display.set_caption("Gomoku - Game: " + victory_text)
-    time.sleep(instance.SLEEP_BEFORE_END)#sleep before closing for SLEEP_BEFORE_END seconds
+    if not instance.stop_game:
+        stats.log_message(victory_text)
+        time.sleep(instance.SLEEP_BEFORE_END)#sleep before closing for SLEEP_BEFORE_END seconds
+    
     reset_game(instance)
+
 
 
 pygame.quit()

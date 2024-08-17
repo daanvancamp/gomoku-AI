@@ -234,7 +234,9 @@ def start_new_game():
 
         if (board_loaded and var_start_from_file.get()) or not var_start_from_file.get():
             try:
-                gomoku.runGame(game_instance, i) #main function
+                output=gomoku.runGame(game_instance, i) #main function
+                if output:
+                    break
             except Exception as e:
                 print("error in gomoku.run")
                 raise Exception("There is an error in the main function/loop, it can be anything." , str(e))
@@ -245,7 +247,7 @@ def start_new_game():
                     print(random.randint(0,2), end="")
                 print("\n",end="")
             print("The board can only contain 0, 1, or 2. 0 = empty, 1 = player 1, 2 = player 2.")
-    game_over(game_instance.GUI)
+    game_over()
 
 def start_new_training():
     global game_instance
@@ -301,7 +303,9 @@ def start_new_training():
             game_instance.current_game = i+1
             game_instance.last_round = (i+1 == runs)
             try:
-                gomoku.runTraining(game_instance, i) #main function
+                output=gomoku.runTraining(game_instance, i) #main function
+                if output:
+                    break
             except Exception as e:
                 print("error in gomoku.run, herschrijf die functie.")
                 raise Exception("There is an error in the main function/loop, it can be anything." , str(e))
@@ -319,7 +323,7 @@ def start_new_training():
     except ValueError:
         print("Most likely: Game runs value invalid, try again.")
     print("game over")
-    game_over(game_instance.GUI)
+    game_over()
 
 
 def start_new_replay():
@@ -359,9 +363,10 @@ def start_new_replay():
     else:
         print("Try again, please select a valid json file")
     
-    game_over(game_instance.GUI)
+    game_over()
 
-def game_over(GUI):
+def game_over():
+    global game_instance
     game_instance.GUI.hide_GUI()
     root.wm_state('normal')
     game_instance.current_game = 0
