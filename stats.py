@@ -1,6 +1,5 @@
 import logging
 import math
-from matplotlib.ticker import FuncFormatter
 import numpy as np
 import datetime
 import os
