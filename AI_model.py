@@ -111,26 +111,32 @@ class AI_Model():
         return self.get_value_from_config_file(category,"ties")
 
     def reset_stats(self,print_info:bool):
-        with open(self.path_config_file, 'w') as out_file:
-            json.dump(self.initial_json_data, out_file, indent = 4, ensure_ascii = False)
+        try:
+            with open(self.path_config_file, 'w') as out_file:
+                json.dump(self.initial_json_data, out_file, indent = 4, ensure_ascii = False)
+        except PermissionError:
+            print("Please close the file and try again")
         
         if print_info:
             print("The stats of the model " + self.modelname + " have been reset")
     
     def reset_end_states(self):
-        with open(self.path_config_file, 'r+') as file:
-            json_data = json.load(file)
-            list_categories=["total end stats","games end stats","training loops end stats"]
-            list_items=["wins","losses","ties"]
+        try:
+            with open(self.path_config_file, 'r+') as file:
+                json_data = json.load(file)
+                list_categories=["total end stats","games end stats","training loops end stats"]
+                list_items=["wins","losses","ties"]
 
-            for category in list_categories:
-                for item in list_items:
-                    json_data[category][item] = 0
+                for category in list_categories:
+                    for item in list_items:
+                        json_data[category][item] = 0
 
-            file.seek(0)
-            json.dump(json_data, file, indent = 4, ensure_ascii = False)
-            print("updated values:",json_data)
-            file.truncate()
-        print("The end states of the model " + self.modelname + " have been reset")
+                file.seek(0)
+                json.dump(json_data, file, indent = 4, ensure_ascii = False)
+                print("updated values:",json_data)
+                file.truncate()
+            print("The end states of the model " + self.modelname + " have been reset")
+        except PermissionError:
+            print("Please close the file and try again")
 
 

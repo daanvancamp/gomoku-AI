@@ -6,6 +6,7 @@ from time import sleep
 from tkinter import *
 from tkinter import ttk
 from tkinter import filedialog
+from customtkinter import *
 
 import filereader
 import stats

@@ -51,8 +51,11 @@ def initialize_board_json_files():
     paths=[path_pieces_after_move,path_pieces_before_move]
 
     for pad in paths:
-        with open(pad, 'w') as json_file:
-            json.dump({'stukken': relevant_pieces}, json_file)#zie lees_van_json
+        try:
+            with open(pad, 'w') as json_file:
+                json.dump({'stukken': relevant_pieces}, json_file)#zie lees_van_json
+        except PermissionError:
+            print("Please close the file and try again")
 
 def check_delay_data():
     global path_pieces_after_move
@@ -98,8 +101,13 @@ def check_delay_data():
             print("delay is ok")
     
 def read_from_json_file(path)-> List[Tuple[int, int]]:
-    with open(path, 'r') as json_file:
-        data = json.load(json_file)
+    try:
+        with open(path, 'r') as json_file:
+            data = json.load(json_file)
+    except PermissionError:
+        print("Please close the file and try again")
+        return None
+
     return data["stukken"]#zie json.dump in schrijf_relevante_stukken_weg (dictionary naar lijst van tuples)
 
 def get_relevant_move () -> List[Tuple[int, int]]:
@@ -134,8 +142,11 @@ def write_relevant_pieces_to_file(pad)->None:
                 relevant_pieces.append((x, y))
         if len(relevant_pieces) > 0:
             print(f"Relevante stukken: {relevant_pieces}")
-            with open(pad, 'w') as json_file:
-                json.dump({'stukken': relevant_pieces}, json_file)
+            try:
+                with open(pad, 'w') as json_file:
+                    json.dump({'stukken': relevant_pieces}, json_file)
+            except PermissionError:
+                print("Please close the file and try again")
 
         if relevant_pieces is None:
             print("Geen stukken van de relevante kleur gevonden, controleer beeldherkenning indien je fysiek wel een zet hebt uitgevoerd.")
@@ -156,8 +167,8 @@ def read_detected_pieces() -> Dict[str, Any]:
     try:
         with open(file_path, 'r') as json_file:
             return json.load(json_file)
-    except Exception as e:
-        print(f"Error reading {file_path}: {e}")
+    except PermissionError:
+        print("Please close the file and try again")
         return {}
 
 
