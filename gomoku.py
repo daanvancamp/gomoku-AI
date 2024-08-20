@@ -207,9 +207,14 @@ def draw_board(instance,last_move_model=None):
     radius_smallest_circle=cell_size//4 - 5#radius_smallest_circle=5
     red=(255,0,0) #R=255, G=0, B=0
     green=(0,255,0)
+    cells_to_mark=[(7,7),(11,11),(3,3),(3,11),(11,3)]
     for row in range(instance.GRID_SIZE):#grid_size=15
         for col in range(instance.GRID_SIZE):
-            pygame.draw.rect(instance.screen, instance.LINE_COL, (col * cell_size, row * cell_size, cell_size, cell_size), 1)
+            if (row,col) in cells_to_mark:
+                pygame.draw.rect(instance.screen, instance.LINE_COL, (col * cell_size, row * cell_size, cell_size, cell_size), 2)
+            else:
+                pygame.draw.rect(instance.screen, instance.LINE_COL, (col * cell_size, row * cell_size, cell_size, cell_size), 1)
+
 
             if instance.board[row][col] == 1:
                 if (row,col)==last_move_model and mark_last_move_model:
@@ -469,7 +474,6 @@ class fullscreen_GUI():
         self.initialize_session()
 
         if self.root_play_game is None:
-            print("declaring")
             self.root_play_game = Tk()
             self.root_play_game.bind("<Escape>", lambda event: self.stop_game())
             self.root_play_game.bind("<q>", lambda event: self.quit_program())
