@@ -503,7 +503,7 @@ class fullscreen_GUI():
             self.frame_info=Frame(self.root_play_game,bg="#357EC7")
             self.frame_info.grid(row=0, column=0)
             self.current_player_label = Label(self.frame_info, textvariable=self.var_current_player, bg="#357EC7",fg='white', font=font_labels,pady=2,width=25)
-            self.current_player_label.grid(row=0, column=0, sticky="w",padx=(distance_from_left_side,0))
+            self.current_player_label.grid(row=0, column=0, sticky="w",padx=(distance_from_left_side,0),columnspan=2)
             self.label_current_game_mode=Label(self.frame_info, text="Current game mode: "+ self.game_mode, bg="#357EC7",fg="white", font=font_labels,width=25)
             self.label_current_game_mode.grid(row=1, column=0,sticky="w",padx=(distance_from_left_side,0))
             self.current_game_label=Label(self.frame_info, text="Game: " + str(0), bg="#357EC7",fg='white', font=font_labels,pady=2)
