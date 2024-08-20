@@ -159,7 +159,7 @@ def reset_player_stats():
         players[i].reset_score()
 
 # Update win / loss stats of players: -1 = tie; 1 = player 1 won; 2 = player 2 won
-def update_player_stats(instance, winning_player):
+def update_player_stats(instance:GomokuGame, winning_player):
     global player1, player2,players
     instance.GUI.update_wins(winning_player)
     AI_players=[p for p in players if p.TYPE=="AI-Model"]
@@ -198,7 +198,7 @@ def update_player_stats(instance, winning_player):
 
 
 # Function to draw the game board
-def draw_board(instance,last_move_model=None):
+def draw_board(instance:GomokuGame,last_move_model=None):
     global mark_last_move_model, player1, player2
     instance.screen.fill(instance.BOARD_COL)#screen needs to be cleared before drawing
     cell_size = instance.CELL_SIZE#cell_size=30
@@ -258,12 +258,12 @@ def draw_board(instance,last_move_model=None):
                 elif current_player.id==2:
                     pygame.draw.circle(instance.screen, instance.P2COL, (col * cell_size + cell_size // 2, row * cell_size + cell_size // 2), radius_smallest_circle)
 
-def reset_game(instance):
+def reset_game(instance:GomokuGame):
     global current_player
     instance.board = [[0] * instance.GRID_SIZE for _ in range(instance.GRID_SIZE)]
     current_player = player1
 
-def calculate_score(board: tuple, board_size=15):
+def calculate_score(board, board_size=15):
     directions = [(0, 1), (0, -1), (1, 0), (-1, 0), (1, 1), (-1, -1), (1, -1), (-1, 1)]
     score_board = filereader.load_scores("consts.json")
     scored_board = np.zeros((board_size, board_size))
@@ -347,7 +347,7 @@ def calculate_score(board: tuple, board_size=15):
         scores_normalized.append(new_normalized_score)
     return max_score, scored_board, scores_normalized#return de hoogste score, het board met scores, de scores genormaliseerd
 
-def check_win(row, col, playerID, instance):
+def check_win(row, col, playerID, instance: GomokuGame):
     directions = [(0, 1), (1, 0), (1, 1), (1, -1)]
     for drow, dcol in directions:
         winning_cells = [(row, col)]
@@ -385,7 +385,7 @@ def check_win(row, col, playerID, instance):
             return True
     return False
 
-def check_board_full(instance):
+def check_board_full(instance:GomokuGame):
     board = instance.board
     grid_size = instance.GRID_SIZE
     for row in range(grid_size):
@@ -489,6 +489,10 @@ class fullscreen_GUI():
             self.var_wins_player2.set(self.wins_player2)
             self.var_draws.set(self.draws)
 
+            self.var_current_game=StringVar(master=self.root_play_game)
+
+            self.var_current_game_mode=StringVar(master=self.root_play_game)
+
             #self.root_play_game.columnconfigure(0, weight=1)
             self.root_play_game.columnconfigure(1, weight=1)
             self.root_play_game.columnconfigure(2, weight=1)
@@ -508,9 +512,9 @@ class fullscreen_GUI():
             self.frame_info.grid(row=0, column=0)
             self.current_player_label = Label(self.frame_info, textvariable=self.var_current_player, bg="#357EC7",fg='white', font=font_labels,pady=2,width=25)
             self.current_player_label.grid(row=0, column=0, sticky="w",padx=(distance_from_left_side,0),columnspan=2)
-            self.label_current_game_mode=Label(self.frame_info, text="Current game mode: "+ self.game_mode, bg="#357EC7",fg="white", font=font_labels,width=25)
+            self.label_current_game_mode=Label(self.frame_info, textvariable=self.var_current_game_mode, bg="#357EC7",fg="white", font=font_labels,width=25)
             self.label_current_game_mode.grid(row=1, column=0,sticky="w",padx=(distance_from_left_side,0))
-            self.current_game_label=Label(self.frame_info, text="Game: " + str(0), bg="#357EC7",fg='white', font=font_labels,pady=2)
+            self.current_game_label=Label(self.frame_info, textvariable=self.var_current_game, bg="#357EC7",fg='white', font=font_labels,pady=2)
             self.current_game_label.grid(row=2, column=0, sticky="w",padx=(distance_from_left_side,0))
 
             self.frame_stats=Frame(self.frame_info,bg="#357EC7")
@@ -573,9 +577,6 @@ class fullscreen_GUI():
             if not self.root_play_game.winfo_viewable():
                 self.root_play_game.deiconify()
 
-            self.label_current_game_mode.configure(text="Current game mode: "+ self.game_mode)
-            self.label_current_game_mode.update()
-
             if self.game_mode==self.game_instance.game_modes[2]:#when replaying
                 for widget in self.widgets_to_hide_replay:
                     widget.grid_remove()
@@ -593,6 +594,10 @@ class fullscreen_GUI():
                 for widget in self.list_recognition_widgets:
                     if widget.winfo_viewable():
                         widget.grid_remove()
+
+        
+        self.var_current_game_mode.set("Game mode: " + self.game_mode)
+        self.label_current_game_mode.update()
 
         pygame.display.init()
         self.game_instance.screen = pygame.display.set_mode((self.game_instance.WIDTH, self.game_instance.HEIGHT))
@@ -614,7 +619,7 @@ class fullscreen_GUI():
         self.var_current_player.set("Current player: " + str(current_player.id) + " : " + player_text)
         self.current_player_label.update()
 
-        self.current_game_label.config(text="Game: " + str(self.game_number))
+        self.var_current_game.set("Game: " + str(self.game_number+1))
         self.current_game_label.update()
 
     def refresh_screen(self,game_number):
@@ -626,7 +631,7 @@ class fullscreen_GUI():
         global current_player
         pygame.display.flip()
         self.root_play_game.update()
-        self.root_play_game.after(100, lambda: self.pygame_loop())
+        self.root_play_game.after(100, self.pygame_loop)
 
         if self.game_instance.use_recognition:
             self.root_play_game.after(150,lambda: self.show_webcam_view(self.label_webcam_video))
@@ -677,13 +682,13 @@ class fullscreen_GUI():
         x,y=(x,y)
         self.root_play_game.after(0,self.label_recognition_info.config(text="Your move was successfully recognized.",fg="green"))
         try:
-            handle_human_move(self.game_instance, x, y , players, p1_moves, p2_moves) 
+            handle_human_move(self.game_instance, x, y , players, p1_moves, p2_moves)
         except:
             handle_human_move(self.game_instance, x, y, players)
 
     
 
-def handle_human_move(instance, x, y, players,p1_moves=None, p2_moves=None):
+def handle_human_move(instance:GomokuGame, x, y, players,p1_moves=None, p2_moves=None):
     global victory_text, winning_player,current_player
     col = x // instance.CELL_SIZE 
     row = y // instance.CELL_SIZE
@@ -739,7 +744,7 @@ def runGame(instance:GomokuGame, game_number):#main function
         p2_moves = []
 
     while instance.running:
-        handle_events()
+        handle_pygame_events()
         if not check_board_full(instance):
             # Human move
             if current_player.TYPE == "Human":
@@ -847,7 +852,7 @@ def runGame(instance:GomokuGame, game_number):#main function
     reset_game(instance)
 
 
-def handle_events():
+def handle_pygame_events():
     if not player1.TYPE == "Human" and  not player2.TYPE == "Human":
             for event in pygame.event.get():
                 if event.type == pygame.MOUSEBUTTONDOWN:
@@ -891,7 +896,7 @@ def runTraining(instance:GomokuGame, game_number):#main function
         p2_moves = []
 
     while instance.running:
-        handle_events()
+        handle_pygame_events()
         # Check if board is full    
         if not check_board_full(instance):
             # Human move
@@ -932,7 +937,7 @@ def runTraining(instance:GomokuGame, game_number):#main function
                 if instance.ai_delay:
                     time.sleep(random.uniform(0.25, 1.0))   # randomize AI "thinking" time
                 one_hot_board = convert_to_one_hot(instance.board, players[current_player.id-1].id)
-                handle_events()
+                handle_pygame_events()
                 mm_ai = players[current_player.id-1].ai
                 mm_ai.set_game(one_hot_board)
                 old_state = instance.board
@@ -976,7 +981,7 @@ def runTraining(instance:GomokuGame, game_number):#main function
                 draw_board(instance,last_move)
             except:
                 draw_board(instance)
-            handle_events()
+            handle_pygame_events()
             instance.GUI.refresh_screen(game_number)
                 
         else:
@@ -997,7 +1002,7 @@ def runTraining(instance:GomokuGame, game_number):#main function
         loss_data = {}
         move_loss_data = {}
         for p in players:
-            handle_events()
+            handle_pygame_events()
             if p.TYPE == "AI-Model":
                 p.ai.remember(instance.board, p.final_action, p.score, instance.board, True)
                 p.ai.train_long_memory()
@@ -1045,12 +1050,12 @@ def runReplay(instance:GomokuGame, moves:dict=None):#main function
         pass
         
     while instance.running:
-        handle_events()
+        handle_pygame_events()
         if not check_board_full(instance):
             #Replay
             if players[current_player.id - 1].TYPE == "Replay":
                 if instance.ai_delay:
-                    time.sleep(random.uniform(0.25, 0.9))   # randomize ai "thinking" time
+                    time.sleep(random.uniform(0.25, 1.0))   # randomize ai "thinking" time
                 instance.board[position[move_id][0]][position[move_id][1]] = current_player.id
                 last_move = position[move_id]
                 if check_win(position[move_id][0], position[move_id][1], current_player.id, instance):
