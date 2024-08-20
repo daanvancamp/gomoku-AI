@@ -1,4 +1,3 @@
-import os
 import random
 import sys
 from threading import Thread
@@ -6,7 +5,6 @@ from time import sleep
 from tkinter import *
 from tkinter import ttk
 from tkinter import filedialog
-from customtkinter import *
 
 import filereader
 import stats
@@ -17,10 +15,11 @@ import modelmanager
 import gomoku
 import numpy as np
 
-WIDTH = 505
+WIDTH = 540
 HEIGHT = 500
 
 game_instance = gomoku.GomokuGame(filereader.create_gomoku_game("consts.json"))
+game_instance.GUI = gomoku.fullscreen_GUI(game_instance)
 modelmanager_instance = modelmanager.ModelManager()
 
 
@@ -57,7 +56,7 @@ tabControl.grid(row=0, sticky="w")
 
 style_numbers = ["georgia", 10, "white", 12, 2]#font, size, color, bold, underline
 
-input_canvas = Canvas(root, relief="groove", borderwidth=0, highlightthickness=0)
+input_canvas = Canvas(root, relief="groove", borderwidth=0, highlightthickness=0,bg="#357EC7")
 input_canvas.grid(row=1, padx=2, pady=2)
 var_playerType1 = StringVar()
 var_playerType2 = StringVar()
@@ -216,8 +215,8 @@ def start_new_game():
         except:
             print("invalid number, try again")
 
-    game_instance.game_mode="Play Game"
-    game_instance.GUI=gomoku.fullscreen_GUI(game_instance)
+    game_instance.game_mode=game_instance.game_modes[0]
+    game_instance.GUI.initialize_fullscreen_GUI()
     for i in range(runs):
         log_info_overruling("run "+str(i+1)+" begins:")
         if game_instance.use_recognition:
@@ -301,8 +300,9 @@ def start_new_training():
         stats.setup_logging(gomoku.player1.TYPE, gomoku.player2.TYPE)
         root.wm_state('iconic')
 
-        game_instance.game_mode="Training"
-        game_instance.GUI=gomoku.fullscreen_GUI(game_instance)
+        game_instance.game_mode=game_instance.game_modes[1]
+        game_instance.GUI.initialize_fullscreen_GUI()
+
         for i in range(runs):
             log_info_overruling("run "+str(i+1)+" begins:")
             
@@ -362,8 +362,9 @@ def start_new_replay():
         stats.setup_logging(gomoku.player1.TYPE, gomoku.player2.TYPE)
         root.wm_state('iconic')
 
-        game_instance.game_mode="Replay"
-        game_instance.GUI=gomoku.fullscreen_GUI(game_instance)
+        game_instance.game_mode=game_instance.game_modes[2]
+        game_instance.GUI.initialize_fullscreen_GUI()
+
         try:
             gomoku.runReplay(game_instance,moves) #main function
         except Exception as e:
@@ -376,7 +377,7 @@ def start_new_replay():
 
 def game_over():
     global game_instance
-    if game_instance.GUI is not None:
+    if game_instance.GUI.root_play_game is not None:
         game_instance.GUI.hide_GUI()
     root.wm_state('normal')
     game_instance.current_game = 0
@@ -446,7 +447,14 @@ def maintain_GUI():
                 var_delay.set(False)
             elif tab_text=="Replay old games" and old_tab_text!=tab_text:
                 var_delay.set(True)
-            
+
+            if tab_text=="Train":
+                label_shortcuts.config(text="In game shortcuts: esc = return to this menu, q = terminate program")
+            elif tab_text=="Replay old games":
+                label_shortcuts.config(text="In game shortcuts: esc = return to this menu, q = terminate program")
+            elif tab_text=="Play gomoku":
+                label_shortcuts.config(text="In game shortcuts: esc = return to this menu, q = terminate program , space = skip the current round")
+
             ##TAB 1##
             if var_playerType1.get() == "Human" and var_playerType2.get() == "Human":
                 var_log.set(False)
@@ -690,18 +698,20 @@ bottomframe.grid(row=16, column=0, sticky="w",columnspan=3, padx=distance_from_l
 start_from_file_button=ttk.Checkbutton(bottomframe, text="Load game situation(2)", variable=var_start_from_file,style="TCheckbutton")
 start_from_file_button.grid(row=0, column=0, sticky="w")
 label_unvalid_file=ttk.Label(bottomframe, text="",style="TLabel")
-label_unvalid_file.grid(row=0, column=1, sticky="e")
+label_unvalid_file.grid(row=0, column=1, sticky="e",columnspan=2)
 
 label_load_state=ttk.Label(bottomframe, text="Choose file board state: ",style="TLabel")
 label_load_state.grid(row=1, column=0, sticky="w")
-load_state_entry = ttk.Entry(bottomframe, textvariable=state_board_path, width=30,style="TEntry")
-load_state_entry.grid(row=2, column=0, sticky="w")
+load_state_entry = ttk.Entry(bottomframe, textvariable=state_board_path, width=50,style="TEntry")
+load_state_entry.grid(row=2, column=0, sticky="w",columnspan=2)
 button_browse_state_file = ttk.Button(bottomframe, text="...",style="TButton", command=lambda: browse_state_files())
-button_browse_state_file.grid(row=2, column=1, sticky="w")
+button_browse_state_file.grid(row=2, column=2, sticky="w")
 
 
 button_3 = ttk.Button(input_canvas, text="Quit Game(ESC/Q)", style="TButton", command=lambda: quit_game())
-button_3.grid(row=1, column=0, sticky="e")
+button_3.grid(row=1, column=0)
+label_shortcuts=Label(input_canvas, text="In game shortcuts: esc = return to this menu, q = terminate program , space = skip the current round",wraplength=WIDTH-15,bg="#357EC7",font=(style_numbers[0],style_numbers[1]),fg="white")
+label_shortcuts.grid(row=2, column=0)
 
 label_info_load_save_replay=ttk.Label(tab1,wraplength=WIDTH-15, text="(1)(2)The save replay function can't be used when loading a board, because that would create a wrong replay file.",style="TLabel")
 label_info_load_save_replay.grid(row=17, column=0, sticky="w",columnspan=2,pady=5,padx=distance_from_left_side)

@@ -1,8 +1,7 @@
 import operator
 import os
-import sys
 import time
-from tkinter import Button, Frame, Label, Tk,messagebox as mb
+from tkinter import Button, Frame, IntVar, Label, Tk,messagebox as mb
 import cv2
 from PIL import Image, ImageTk 
 import pygame
@@ -15,14 +14,11 @@ import stats
 import numpy as np
 import filereader
 from threading import Thread
-from time import sleep
 from detect_pieces import *
 
 window_name = "Gomoku"
 victory_text = ""
 mark_last_move_model = True
-root_play_game=None
-current_player_label=None
 
 class GomokuGame:
     def __init__(self, values):
@@ -47,11 +43,12 @@ class GomokuGame:
         self.record_replay=False
         self.show_graphs=False
         self.GUI=None
-        self.game_mode=None
         self.running=None
         self.stop_game=False
         self.quit_program=False
         self.show_dialog=False
+        self.skip_current_round = False
+        self.game_modes=["Play Game","Training","Replay"]
 
         
     def set_board(self, board):
@@ -161,10 +158,10 @@ def reset_player_stats():
     for i in range(len(players)):
         players[i].reset_score()
 
-
 # Update win / loss stats of players: -1 = tie; 1 = player 1 won; 2 = player 2 won
 def update_player_stats(instance, winning_player):
     global player1, player2,players
+    instance.GUI.update_wins(winning_player)
     AI_players=[p for p in players if p.TYPE=="AI-Model"]
     if winning_player > -1: # run if game was not a tie
         if winning_player == 1:
@@ -407,26 +404,18 @@ def convert_to_one_hot(board, player_id):
 
 class fullscreen_GUI():
     def __init__(self,instance:GomokuGame):
-        self.game_number = 0
-
         self.game_instance = instance
-        self.game_mode = self.game_instance.game_mode
-
-        if self.game_instance.use_recognition:
-            self.vid = cv2.VideoCapture(0, cv2.CAP_DSHOW)
-        
-            width, height = 300, 300
-  
-            self.vid.set(cv2.CAP_PROP_FRAME_WIDTH, width) 
-            self.vid.set(cv2.CAP_PROP_FRAME_HEIGHT, height)
-        else:
-            self.vid = None
-
-        self.initialize_fullscreen_GUI()
+        self.root_play_game = None
+        self.game_mode = None
     
     def quit_program(self):
         self.game_instance.quit_program = True
         self.stop_game()
+
+    def skip_current_round(self):
+        if self.game_mode==self.game_instance.game_modes[0]:#when playing
+            self.game_instance.running = False
+            self.game_instance.skip_current_round = True
 
     def stop_game(self):
         if self.vid is not None:
@@ -443,89 +432,154 @@ class fullscreen_GUI():
                 mb.showinfo(message="Press any key to start the next game, you can wait as long as you want",title="Next game")
             
                 self.key_pressed = False
-                root_play_game.bind("<Key>", lambda event: self.on_key_press())
+                self.root_play_game.bind("<Key>", lambda event: self.on_key_press())
                 while not self.key_pressed:
-                    root_play_game.update()
+                    self.root_play_game.update()
 
     def on_key_press(self):
         self.key_pressed = True
+     
+    def update_wins(self,winner=None):
+        if winner == 1:
+            self.wins_player1 += 1
+            self.var_wins_player1.set(self.wins_player1)
+        elif winner == 2:
+            self.wins_player2 += 1
+            self.var_wins_player2.set(self.wins_player2)
+        else:
+            self.draws += 1
+            self.var_draws.set(self.draws)
+
+    def initialize_tkinter_vars(self):
+
+        self.wins_player1 = 0
+        self.wins_player2 = 0
+        self.draws = 0
+
+        self.var_wins_player1 = IntVar(master=self.root_play_game)
+        self.var_wins_player2 = IntVar(master=self.root_play_game)
+        self.var_draws = IntVar(master=self.root_play_game)
+
+        self.var_wins_player1.set(self.wins_player1)
+        self.var_wins_player2.set(self.wins_player2)
+        self.var_draws.set(self.draws)
+
+    def initialize_session(self):
+        self.game_number = 0
+        self.game_mode = self.game_instance.game_mode
                 
+        if self.game_instance.use_recognition:
+            self.vid = cv2.VideoCapture(0, cv2.CAP_DSHOW)
+        else:
+            self.vid = None
+
     def initialize_fullscreen_GUI(self):
-        global root_play_game, current_player,label_current_game_mode,current_player_label,embed_pygame,current_game_label,label_webcam_video,label_webcam_image,list_recognition_widgets,label_recognition_info
-        if root_play_game is None:
-            root_play_game = Tk()
-            root_play_game.bind("<Escape>", lambda event: self.stop_game())
-            root_play_game.bind("<q>", lambda event: self.quit_program())
+        global current_player
+
+        self.initialize_session()
+
+        if self.root_play_game is None:
+            print("declaring")
+            self.root_play_game = Tk()
+            self.root_play_game.bind("<Escape>", lambda event: self.stop_game())
+            self.root_play_game.bind("<q>", lambda event: self.quit_program())
+            self.root_play_game.bind("<space>", lambda event: self.skip_current_round())
+
+            self.initialize_tkinter_vars()
+
+            #self.root_play_game.columnconfigure(0, weight=1)
+            self.root_play_game.columnconfigure(1, weight=1)
+            self.root_play_game.columnconfigure(2, weight=1)
 
 
-            root_play_game.columnconfigure(0, weight=1)
-            root_play_game.columnconfigure(1, weight=1)
-            root_play_game.columnconfigure(2, weight=1)
+            self.root_play_game.rowconfigure(0, weight=1)
+            self.root_play_game.rowconfigure(1, weight=1)
 
-
-            root_play_game.rowconfigure(0, weight=1)
-            root_play_game.rowconfigure(1, weight=1)
-
-            root_play_game.attributes("-fullscreen", True)
-            root_play_game.config(bg="#357EC7")
-            root_play_game.title("Gomoku")
+            self.root_play_game.attributes("-fullscreen", True)
+            self.root_play_game.config(bg="#357EC7")
+            self.root_play_game.title("Gomoku")
 
             font_labels=("Arial", 18)
+            distance_from_left_side=20
 
-            frame_info=Frame(root_play_game,bg="#357EC7")
+            frame_info=Frame(self.root_play_game,bg="#357EC7")
             frame_info.grid(row=0, column=0)
-            current_player_label = Label(frame_info, text="Current player: " + str(current_player.id), bg="#357EC7",fg='white', font=font_labels,padx=40,pady=2,width=25)
-            current_player_label.grid(row=0, column=0, sticky="w")
-            label_current_game_mode=Label(frame_info, text="Current game mode: "+ self.game_mode, bg="#357EC7",fg="white", font=font_labels,width=25)
-            label_current_game_mode.grid(row=1, column=0,sticky="w")
-            current_game_label=Label(frame_info, text="Game: " + str(0), bg="#357EC7",fg='white', font=font_labels,padx=40,pady=2,width=15)
-            current_game_label.grid(row=2, column=0, sticky="w")
+            self.current_player_label = Label(frame_info, text="Current player: " + str(current_player.id), bg="#357EC7",fg='white', font=font_labels,pady=2,width=25)
+            self.current_player_label.grid(row=0, column=0, sticky="w",padx=(distance_from_left_side,0))
+            self.label_current_game_mode=Label(frame_info, text="Current game mode: "+ self.game_mode, bg="#357EC7",fg="white", font=font_labels,width=25)
+            self.label_current_game_mode.grid(row=1, column=0,sticky="w",padx=(distance_from_left_side,0))
+            self.current_game_label=Label(frame_info, text="Game: " + str(0), bg="#357EC7",fg='white', font=font_labels,pady=2)
+            self.current_game_label.grid(row=2, column=0, sticky="w",padx=(distance_from_left_side,0))
+
+            frame_stats=Frame(frame_info,bg="#357EC7")
+            frame_stats.grid(row=3, column=0, sticky="sw",pady=50)
+
+
+            label_player1=Label(frame_stats, text="Player 1", bg="#357EC7",fg='white', font=font_labels,pady=2,width=10)
+            label_player1.grid(row=0, column=1, sticky="sw")
+            label_player2=Label(frame_stats, text="Player 2", bg="#357EC7",fg='white', font=font_labels,pady=2,width=10)
+            label_player2.grid(row=0, column=2, sticky="sw")
+
+            label_wins=Label(frame_stats, text="Wins: ", bg="#357EC7",fg='white', font=font_labels,pady=2)
+            label_wins.grid(row=1, column=0, sticky="sw",padx=(distance_from_left_side,0))
+
+            self.label_wins_player1=Label(frame_stats, textvariable=self.var_wins_player1, bg="#357EC7",fg='white', font=font_labels,pady=2)
+            self.label_wins_player1.grid(row=1, column=1)
+            self.label_wins_player2=Label(frame_stats, textvariable=self.var_wins_player2, bg="#357EC7",fg='white', font=font_labels,pady=2)
+            self.label_wins_player2.grid(row=1, column=2)
+
+            label_draws=Label(frame_stats, text="Draws: ", bg="#357EC7",fg='white', font=font_labels,pady=10)
+            label_draws.grid(row=2, column=0, sticky="sw",padx=(distance_from_left_side,0))
             
+            self.label_value_draws=Label(frame_stats, textvariable=self.var_draws, bg="#357EC7",fg='white', font=font_labels,pady=10)
+            self.label_value_draws.grid(row=2, column=1,columnspan=2)
 
-            label_recognition_info=Label(root_play_game,text="", bg="#357EC7",fg="white", font=font_labels)
-            label_recognition_info.grid(row=0, column=1,sticky="n")
+            self.label_recognition_info=Label(self.root_play_game,text="", bg="#357EC7",fg="white", font=font_labels)
+            self.label_recognition_info.grid(row=0, column=1,sticky="n")
 
-            embed_pygame = Frame(root_play_game, width=self.game_instance.WIDTH, height=self.game_instance.HEIGHT)
+            embed_pygame = Frame(self.root_play_game, width=self.game_instance.WIDTH, height=self.game_instance.HEIGHT)
             embed_pygame.grid(row=0, column=1,rowspan=2)
 
-            button_capture_image = Button(root_play_game, text="Capture Image (in development)", command=lambda : self.determine_move(),width=25, bg="green",fg="white", font=font_labels)
-            button_capture_image.grid(row=1, column=1,sticky="s",pady=(0,90))
+            self.button_capture_image = Button(self.root_play_game, text="Capture Image (in development)", command=self.determine_move,width=25, bg="green",fg="white", font=font_labels)
+            self.button_capture_image.grid(row=1, column=1,sticky="s",pady=(0,90))
             
             size_webcam_frame=500
-            frame_webcam=Frame(root_play_game,bg="#357EC7")
-            frame_webcam.grid(row=0, rowspan=2,column=2,sticky="e")
+            self.frame_webcam=Frame(self.root_play_game,bg="#357EC7")
+            self.frame_webcam.grid(row=0, rowspan=2,column=2,sticky="e")
 
-            label_webcam_image=Label(frame_webcam,text="Webcam photo view (in development)", bg="#357EC7",fg="white", font=font_labels)
-            label_webcam_image.grid(row=0, column=0,sticky="e",padx=10)
+            self.label_webcam_image=Label(self.frame_webcam,text="Webcam photo view (in development)", bg="#357EC7",fg="white", font=font_labels)
+            self.label_webcam_image.grid(row=0, column=0,sticky="e",padx=10)
 
-            label_webcam_video=Label(frame_webcam,text="Webcam view", bg="#357EC7",fg="white", font=font_labels,width=size_webcam_frame,height=size_webcam_frame)
-            label_webcam_video.grid(row=1, column=0,sticky="e")
+            self.label_webcam_video=Label(self.frame_webcam,text="Webcam view", bg="#357EC7",fg="white", font=font_labels,width=size_webcam_frame,height=size_webcam_frame)
+            self.label_webcam_video.grid(row=1, column=0,sticky="e")
 
-            list_recognition_widgets=[label_webcam_video,label_webcam_image,button_capture_image,label_recognition_info,frame_webcam,button_capture_image]
+            self.list_recognition_widgets=[self.label_webcam_video,self.label_webcam_image,self.button_capture_image,self.label_recognition_info,self.frame_webcam,self.button_capture_image]
             if not self.game_instance.use_recognition:
-                for widget in list_recognition_widgets:
+                for widget in self.list_recognition_widgets:
                     widget.grid_remove()
-                root_play_game.columnconfigure(2, weight=0)
+                self.root_play_game.columnconfigure(2, weight=0)
 
             os.environ['SDL_WINDOWID'] = str(embed_pygame.winfo_id())
             os.environ['SDL_VIDEODRIVER'] = 'windib'
-        else:
-            if not root_play_game.winfo_viewable():
-                root_play_game.deiconify()
 
-            label_current_game_mode.configure(text="Current game mode: "+ self.game_mode)
-            current_player_label.configure(text="Current player: " + str(current_player.id))
-            label_current_game_mode.update()
-            current_player_label.update()
+        else:
+            self.initialize_tkinter_vars()
+            if not self.root_play_game.winfo_viewable():
+                self.root_play_game.deiconify()
+
+            self.label_current_game_mode.configure(text="Current game mode: "+ self.game_mode)
+            self.current_player_label.configure(text="Current player: " + str(current_player.id))
+            self.label_current_game_mode.update()
+            self.current_player_label.update()
 
             if self.game_instance.use_recognition:
-                root_play_game.columnconfigure(2, weight=1)
-                for widget in list_recognition_widgets:
+                self.root_play_game.columnconfigure(2, weight=1)
+                for widget in self.list_recognition_widgets:
                     if not widget.winfo_viewable():
                         widget.grid()
             else:
-                root_play_game.columnconfigure(2, weight=0)
-                for widget in list_recognition_widgets:
+                self.root_play_game.columnconfigure(2, weight=0)
+                for widget in self.list_recognition_widgets:
                     if widget.winfo_viewable():
                         widget.grid_remove()
 
@@ -536,8 +590,7 @@ class fullscreen_GUI():
 
 
     def hide_GUI(self):
-        global root_play_game
-        root_play_game.withdraw()
+        self.root_play_game.withdraw()
 
     def refresh_labels(self):
         if current_player.TYPE == "Human":
@@ -547,26 +600,25 @@ class fullscreen_GUI():
         else:
             player_text="Test Algorithm"
 
-        current_player_label.config(text="Current player: " + str(current_player.id) + " : " + player_text)
-        current_player_label.update()
+        self.current_player_label.config(text="Current player: " + str(current_player.id) + " : " + player_text)
+        self.current_player_label.update()
 
-        current_game_label.config(text="Game: " + str(self.game_number))
-        current_game_label.update()
+        self.current_game_label.config(text="Game: " + str(self.game_number))
+        self.current_game_label.update()
 
     def refresh_screen(self,game_number):
-        global current_player_label, root_play_game
         self.game_number = game_number
         self.refresh_labels()
         pygame.display.flip()
 
     def pygame_loop(self):
-        global current_player_label, root_play_game, current_player, current_player_label
+        global current_player
         pygame.display.flip()
-        root_play_game.update()
-        root_play_game.after(100, lambda: self.pygame_loop())
+        self.root_play_game.update()
+        self.root_play_game.after(100, lambda: self.pygame_loop())
 
         if self.game_instance.use_recognition:
-            root_play_game.after(150,lambda: self.show_webcam_view(label_webcam_video))
+            self.root_play_game.after(150,lambda: self.show_webcam_view(self.label_webcam_video))
     
     def crop_to_square(self,frame):
         height, width = frame.shape[:2]
@@ -575,7 +627,6 @@ class fullscreen_GUI():
         start_y = (height - smallest_side) // 2
         square_frame = frame[start_y:start_y + smallest_side, start_x:start_x + smallest_side]
         return square_frame
-
 
     def show_webcam_view(self,label):
         try:
@@ -592,26 +643,28 @@ class fullscreen_GUI():
   
             captured_image = Image.fromarray(opencv_image) 
   
-            photo_image = ImageTk.PhotoImage(image=captured_image,master=root_play_game)
+            photo_image = ImageTk.PhotoImage(image=captured_image,master=self.root_play_game)
   
             label.photo_image = photo_image 
   
-            root_play_game.after(0,label.config(image=photo_image)) 
+            self.root_play_game.after(0,label.config(image=photo_image)) 
         except:
             pass
 
     def determine_move(self):
         if self.game_instance.play_music:
             Thread(target=lambda:pygame.mixer.music.fadeout(1000)).start()#don't block the main thread
-        write_relevant_pieces_after_move_to_file()
-        (x,y)=recognize_move()
-        write_relevant_pieces_before_move_to_file()
-        self.show_webcam_view(label_webcam_image)
+        #write_relevant_pieces_after_move_to_file()
+        #(x,y)=recognize_move()
+      
+        (x,y)=(None,None)
+        #write_relevant_pieces_before_move_to_file()
+        self.show_webcam_view(self.label_webcam_image)
         if (x,y) ==(None,None):
-            root_play_game.after(0,label_recognition_info.config(text="No move was recognized, try again later."))
+            self.root_play_game.after(0,self.label_recognition_info.config(text="No move was recognized, try again later.",fg="red"))
             return #don't do anything
         x,y=(x,y)
-        root_play_game.after(0,label_recognition_info.config(text="Your move was successfully recognized."))
+        self.root_play_game.after(0,self.label_recognition_info.config(text="Your move was successfully recognized.",fg="green"))
         try:
             handle_human_move(self.game_instance, x, y , players, p1_moves, p2_moves) 
         except:
@@ -620,7 +673,7 @@ class fullscreen_GUI():
     
 
 def handle_human_move(instance, x, y, players,p1_moves=None, p2_moves=None):
-    global victory_text, winning_player,current_player,root_play_game
+    global victory_text, winning_player,current_player
     col = x // instance.CELL_SIZE 
     row = y // instance.CELL_SIZE
     if instance.GRID_SIZE > row >= 0 == instance.board[row][col] and 0 <= col < instance.GRID_SIZE:
@@ -645,7 +698,7 @@ def handle_human_move(instance, x, y, players,p1_moves=None, p2_moves=None):
 
 def runGame(instance:GomokuGame, game_number):#main function
     # Main game loop
-    global window_name, victory_text, current_player, player1, player2, current_player,p1_moves, p2_moves,winning_player
+    global window_name, victory_text, current_player, player1, player2,p1_moves, p2_moves,winning_player
 
     if instance.use_recognition:
         print("using recognition")
@@ -683,17 +736,14 @@ def runGame(instance:GomokuGame, game_number):#main function
                     if event.type == pygame.QUIT:
                         instance.running = False 
                     elif (event.type == pygame.MOUSEBUTTONDOWN or event.type == pygame.K_UP or event.type == pygame.K_RIGHT) and event.button == 1: #kan zo gelaten worden. Wanneer op de muis wordt gedrukt,wordt de zet gelezen van het bestand
-                        if instance.play_music:
-                            Thread(target=lambda:pygame.mixer.music.fadeout(1000)).start()#don't block the main thread
-                        if instance.use_recognition:
-                            write_relevant_pieces_after_move_to_file()
-                            (x,y)=recognize_move()
-                            write_relevant_pieces_before_move_to_file()
-                            if (x,y) ==(None,None):
-                                continue #don't do anything
-                        else:
+                        
+                        if not instance.use_recognition:
                             x,y=event.pos
 
+                            if instance.play_music:
+                                Thread(target=lambda:pygame.mixer.music.fadeout(1000)).start()#don't block the main thread
+                        else:
+                            continue
                         try:
                             handle_human_move(instance, x, y, players, p1_moves, p2_moves) 
                         except:
@@ -774,16 +824,14 @@ def runGame(instance:GomokuGame, game_number):#main function
             instance.running = False
 
     # End game
-   
-    if instance.record_replay:
-        filereader.save_replay(p1_moves, p2_moves)
     
-    if not instance.stop_game:
+    if not instance.stop_game and not instance.skip_current_round:
+        if instance.record_replay:
+            filereader.save_replay(p1_moves, p2_moves)
         stats.log_message(victory_text)
         update_player_stats(instance, winning_player)
         time.sleep(instance.SLEEP_BEFORE_END)#sleep before closing for SLEEP_BEFORE_END seconds
-    
-    instance.GUI.show_dialog_next_game()
+        instance.GUI.show_dialog_next_game()
 
     reset_game(instance)
 
@@ -798,7 +846,7 @@ def handle_events():
 
 def runTraining(instance:GomokuGame, game_number):#main function
     # Main game loop
-    global window_name, victory_text, current_player,player1,player2,winning_player,root_play_game
+    global window_name, victory_text, current_player,player1,player2,winning_player
     mark_last_move_model=False 
 
     if player1.allow_overrule:
@@ -925,12 +973,12 @@ def runTraining(instance:GomokuGame, game_number):#main function
             winning_player = -1
             instance.running = False
 
-    # End game
-
-    if instance.record_replay:
-        filereader.save_replay(p1_moves, p2_moves)
+    
     # For any AI-Model, train for long memory and save model
     if not instance.stop_game:
+        if instance.record_replay:
+            filereader.save_replay(p1_moves, p2_moves)
+
         stats.log_message(victory_text)#only log when game isn't interrupted
         update_player_stats(instance, winning_player)
 
@@ -1013,9 +1061,9 @@ def runReplay(instance:GomokuGame, moves:dict=None):#main function
     # End game
     if not instance.stop_game:
         stats.log_message(victory_text)
+        instance.GUI.show_dialog_next_game()
         time.sleep(instance.SLEEP_BEFORE_END)#sleep before closing for SLEEP_BEFORE_END seconds
-    
-    instance.GUI.show_dialog_next_game()
+
     reset_game(instance)
 
 
