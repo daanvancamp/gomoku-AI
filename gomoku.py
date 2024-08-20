@@ -1,7 +1,7 @@
 import operator
 import os
 import time
-from tkinter import Button, Frame, IntVar, Label, Tk,messagebox as mb
+from tkinter import Button, Frame, IntVar, Label, Tk,messagebox as mb,StringVar
 import cv2
 from PIL import Image, ImageTk 
 import pygame
@@ -450,20 +450,6 @@ class fullscreen_GUI():
             self.draws += 1
             self.var_draws.set(self.draws)
 
-    def initialize_tkinter_vars(self):
-
-        self.wins_player1 = 0
-        self.wins_player2 = 0
-        self.draws = 0
-
-        self.var_wins_player1 = IntVar(master=self.root_play_game)
-        self.var_wins_player2 = IntVar(master=self.root_play_game)
-        self.var_draws = IntVar(master=self.root_play_game)
-
-        self.var_wins_player1.set(self.wins_player1)
-        self.var_wins_player2.set(self.wins_player2)
-        self.var_draws.set(self.draws)
-
     def initialize_session(self):
         self.game_number = 0
         self.game_mode = self.game_instance.game_mode
@@ -472,6 +458,10 @@ class fullscreen_GUI():
             self.vid = cv2.VideoCapture(0, cv2.CAP_DSHOW)
         else:
             self.vid = None
+
+        self.wins_player1 = 0
+        self.wins_player2 = 0
+        self.draws = 0
 
     def initialize_fullscreen_GUI(self):
         global current_player
@@ -485,7 +475,15 @@ class fullscreen_GUI():
             self.root_play_game.bind("<q>", lambda event: self.quit_program())
             self.root_play_game.bind("<space>", lambda event: self.skip_current_round())
 
-            self.initialize_tkinter_vars()
+            self.var_current_player=StringVar(master=self.root_play_game)
+            self.var_current_player.set("Current player: " + str(current_player.id))
+            self.var_wins_player1 = IntVar(master=self.root_play_game)
+            self.var_wins_player2 = IntVar(master=self.root_play_game)
+            self.var_draws = IntVar(master=self.root_play_game)
+
+            self.var_wins_player1.set(self.wins_player1)
+            self.var_wins_player2.set(self.wins_player2)
+            self.var_draws.set(self.draws)
 
             #self.root_play_game.columnconfigure(0, weight=1)
             self.root_play_game.columnconfigure(1, weight=1)
@@ -502,43 +500,43 @@ class fullscreen_GUI():
             font_labels=("Arial", 18)
             distance_from_left_side=20
 
-            frame_info=Frame(self.root_play_game,bg="#357EC7")
-            frame_info.grid(row=0, column=0)
-            self.current_player_label = Label(frame_info, text="Current player: " + str(current_player.id), bg="#357EC7",fg='white', font=font_labels,pady=2,width=25)
+            self.frame_info=Frame(self.root_play_game,bg="#357EC7")
+            self.frame_info.grid(row=0, column=0)
+            self.current_player_label = Label(self.frame_info, textvariable=self.var_current_player, bg="#357EC7",fg='white', font=font_labels,pady=2,width=25)
             self.current_player_label.grid(row=0, column=0, sticky="w",padx=(distance_from_left_side,0))
-            self.label_current_game_mode=Label(frame_info, text="Current game mode: "+ self.game_mode, bg="#357EC7",fg="white", font=font_labels,width=25)
+            self.label_current_game_mode=Label(self.frame_info, text="Current game mode: "+ self.game_mode, bg="#357EC7",fg="white", font=font_labels,width=25)
             self.label_current_game_mode.grid(row=1, column=0,sticky="w",padx=(distance_from_left_side,0))
-            self.current_game_label=Label(frame_info, text="Game: " + str(0), bg="#357EC7",fg='white', font=font_labels,pady=2)
+            self.current_game_label=Label(self.frame_info, text="Game: " + str(0), bg="#357EC7",fg='white', font=font_labels,pady=2)
             self.current_game_label.grid(row=2, column=0, sticky="w",padx=(distance_from_left_side,0))
 
-            frame_stats=Frame(frame_info,bg="#357EC7")
-            frame_stats.grid(row=3, column=0, sticky="sw",pady=50)
+            self.frame_stats=Frame(self.frame_info,bg="#357EC7")
+            self.frame_stats.grid(row=3, column=0, sticky="sw",pady=50)
 
 
-            label_player1=Label(frame_stats, text="Player 1", bg="#357EC7",fg='white', font=font_labels,pady=2,width=10)
-            label_player1.grid(row=0, column=1, sticky="sw")
-            label_player2=Label(frame_stats, text="Player 2", bg="#357EC7",fg='white', font=font_labels,pady=2,width=10)
-            label_player2.grid(row=0, column=2, sticky="sw")
+            self.label_player1=Label(self.frame_stats, text="Player 1", bg="#357EC7",fg='white', font=font_labels,pady=2,width=10)
+            self.label_player1.grid(row=0, column=1, sticky="sw")
+            self.label_player2=Label(self.frame_stats, text="Player 2", bg="#357EC7",fg='white', font=font_labels,pady=2,width=10)
+            self.label_player2.grid(row=0, column=2, sticky="sw")
 
-            label_wins=Label(frame_stats, text="Wins: ", bg="#357EC7",fg='white', font=font_labels,pady=2)
-            label_wins.grid(row=1, column=0, sticky="sw",padx=(distance_from_left_side,0))
+            self.label_wins=Label(self.frame_stats, text="Wins: ", bg="#357EC7",fg='white', font=font_labels,pady=2)
+            self.label_wins.grid(row=1, column=0, sticky="sw",padx=(distance_from_left_side,0))
 
-            self.label_wins_player1=Label(frame_stats, textvariable=self.var_wins_player1, bg="#357EC7",fg='white', font=font_labels,pady=2)
+            self.label_wins_player1=Label(self.frame_stats, textvariable=self.var_wins_player1, bg="#357EC7",fg='white', font=font_labels,pady=2)
             self.label_wins_player1.grid(row=1, column=1)
-            self.label_wins_player2=Label(frame_stats, textvariable=self.var_wins_player2, bg="#357EC7",fg='white', font=font_labels,pady=2)
+            self.label_wins_player2=Label(self.frame_stats, textvariable=self.var_wins_player2, bg="#357EC7",fg='white', font=font_labels,pady=2)
             self.label_wins_player2.grid(row=1, column=2)
 
-            label_draws=Label(frame_stats, text="Draws: ", bg="#357EC7",fg='white', font=font_labels,pady=10)
-            label_draws.grid(row=2, column=0, sticky="sw",padx=(distance_from_left_side,0))
+            self.label_draws=Label(self.frame_stats, text="Draws: ", bg="#357EC7",fg='white', font=font_labels,pady=10)
+            self.label_draws.grid(row=2, column=0, sticky="sw",padx=(distance_from_left_side,0))
             
-            self.label_value_draws=Label(frame_stats, textvariable=self.var_draws, bg="#357EC7",fg='white', font=font_labels,pady=10)
+            self.label_value_draws=Label(self.frame_stats, textvariable=self.var_draws, bg="#357EC7",fg='white', font=font_labels,pady=10)
             self.label_value_draws.grid(row=2, column=1,columnspan=2)
 
             self.label_recognition_info=Label(self.root_play_game,text="", bg="#357EC7",fg="white", font=font_labels)
             self.label_recognition_info.grid(row=0, column=1,sticky="n")
 
-            embed_pygame = Frame(self.root_play_game, width=self.game_instance.WIDTH, height=self.game_instance.HEIGHT)
-            embed_pygame.grid(row=0, column=1,rowspan=2)
+            self.embed_pygame = Frame(self.root_play_game, width=self.game_instance.WIDTH, height=self.game_instance.HEIGHT)
+            self.embed_pygame.grid(row=0, column=1,rowspan=2)
 
             self.button_capture_image = Button(self.root_play_game, text="Capture Image (in development)", command=self.determine_move,width=25, bg="green",fg="white", font=font_labels)
             self.button_capture_image.grid(row=1, column=1,sticky="s",pady=(0,90))
@@ -558,19 +556,28 @@ class fullscreen_GUI():
                 for widget in self.list_recognition_widgets:
                     widget.grid_remove()
                 self.root_play_game.columnconfigure(2, weight=0)
+            
+            self.widgets_to_hide_replay=[self.current_player_label,self.current_game_label,self.frame_stats]
+            if self.game_mode==self.game_instance.game_modes[2]:#when replaying
+                for widget in self.widgets_to_hide_replay:
+                    widget.grid_remove()
 
-            os.environ['SDL_WINDOWID'] = str(embed_pygame.winfo_id())
+            os.environ['SDL_WINDOWID'] = str(self.embed_pygame.winfo_id())
             os.environ['SDL_VIDEODRIVER'] = 'windib'
 
         else:
-            self.initialize_tkinter_vars()
             if not self.root_play_game.winfo_viewable():
                 self.root_play_game.deiconify()
 
             self.label_current_game_mode.configure(text="Current game mode: "+ self.game_mode)
-            self.current_player_label.configure(text="Current player: " + str(current_player.id))
             self.label_current_game_mode.update()
-            self.current_player_label.update()
+
+            if self.game_mode==self.game_instance.game_modes[2]:#when replaying
+                for widget in self.widgets_to_hide_replay:
+                    widget.grid_remove()
+            else:
+                for widget in self.widgets_to_hide_replay:
+                    widget.grid()
 
             if self.game_instance.use_recognition:
                 self.root_play_game.columnconfigure(2, weight=1)
@@ -600,7 +607,7 @@ class fullscreen_GUI():
         else:
             player_text="Test Algorithm"
 
-        self.current_player_label.config(text="Current player: " + str(current_player.id) + " : " + player_text)
+        self.var_current_player.set("Current player: " + str(current_player.id) + " : " + player_text)
         self.current_player_label.update()
 
         self.current_game_label.config(text="Game: " + str(self.game_number))
