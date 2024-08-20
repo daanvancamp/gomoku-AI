@@ -349,6 +349,8 @@ def start_new_replay():
         replay_loaded=True
     
     if replay_loaded:
+        label_info_replay_file_loaded.config(text="Replay file succesfully loaded",fg="green")
+
         game_instance.use_recognition = False
         game_instance.play_music = False
 
@@ -371,8 +373,9 @@ def start_new_replay():
             print("error in gomoku.run, herschrijf die functie.")
             raise Exception("There is an error in the main function/loop, it can be anything." , str(e)) 
     else:
-        print("Try again, please select a valid json file")
-    
+        print("Try again, please select a valid json file and make sure that it's not opened")
+        label_info_replay_file_loaded.config(text="Try again, please select a valid json file and make sure that it's not opened in another program",fg="red")
+        
     game_over()
 
 def game_over():
@@ -616,7 +619,7 @@ ttk.Label(tab1)
 
 button_1 = ttk.Button(tab1, text="New Game", command=lambda: start_new_game(), style="TButton")
 button_1.grid(row=0, column=0, sticky="w", padx=distance_from_left_side)
-checkbox_show_dialog=ttk.Checkbutton(tab1, text="Show dialog after each game", variable=var_show_dialog,style="TCheckbutton")
+checkbox_show_dialog=ttk.Checkbutton(tab1, text="Show dialog before starting next game", variable=var_show_dialog,style="TCheckbutton")
 checkbox_show_dialog.grid(row=0, column=1, sticky="w")
 
 player1typelabel = ttk.Label(tab1,style="TLabel", text="Player 1(black)")
@@ -777,8 +780,11 @@ delaybutton2 = ttk.Checkbutton(tab3, text="Use AI Delay", variable=var_delay, st
 delaybutton2.grid(row=2, column=0, sticky="w",pady=2,padx=distance_from_left_side)
 button_5 = ttk.Button(tab3, text="Play", style="TButton", command=lambda: start_new_replay())
 button_5.grid(row=3, column=0, sticky="w",pady=2,padx=distance_from_left_side)
-checkbox_show_dialog_tab3=ttk.Checkbutton(tab3, text="Show dialog after each game", variable=var_show_dialog,style="TCheckbutton")
+checkbox_show_dialog_tab3=ttk.Checkbutton(tab3, text="Show dialog before starting next game", variable=var_show_dialog,style="TCheckbutton")
 checkbox_show_dialog_tab3.grid(row=3, column=1, sticky="w")
+
+label_info_replay_file_loaded=Label(tab3, text="",foreground="red",wraplength=WIDTH-20,font=(style_numbers[0],style_numbers[1]))
+label_info_replay_file_loaded.grid(row=4, column=0, sticky="w",columnspan=2,padx=distance_from_left_side)
 
 
 ttk.Label(tab4)

@@ -4,8 +4,6 @@ from threading import Thread
 from filereader import log_info_overruling
 import mainmenu
 from music import initialiseer_muziek
-#todo:integrate error messages
-#todo: update stats
 #todo: update readme
 #use stringvars instead of .config
 def main():

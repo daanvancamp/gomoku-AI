@@ -135,7 +135,7 @@ august 2024:
 
 issues:
 
-There are no issues at the moment.
+You shouldn't experience any issues at the moment.
 
 roadmap(in descending priority):
 

@@ -89,7 +89,7 @@ def load_replay(file):
             moves[position] = player
         return moves
     except (KeyError, json.decoder.JSONDecodeError):
-        print("Error loading replay file.")
+        print("Error while loading replay file.")
     except PermissionError:
         print("Please close the file and try again")
     except:
