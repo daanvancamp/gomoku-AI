@@ -1,11 +1,11 @@
 # started from gomoku-thesis-proj, but we changed and improved almost everything.
 https://github.com/Mig26/gomoku-thesis-proj
 
-**The latest stable release is version 1.4. The recognition doesn't work in this version yet, but all the other features work perfectly, if not: report the bug.** That version is the compiled version of the python code. It is made for those who don't want to experience issues caused by features that are in development or those who just want to play it as fast as possible without having to install python or anything else.
+**The latest stable release is version 1.4. The recognition doesn't work in this version yet, but all the other features should work perfectly, if not: please report the bug.** That version is the compiled version of the python code. It is made for those who don't want to experience issues caused by features that are in development or those who just want to play it as fast as possible without having to install python or anything else.
 
 stable release:https://github.com/daanvancamp/gomoku-thesis-proj/releases/tag/v1.4
 
-Note: the project is still under development. Some added features aren't stable as of right now, but overall it works better than the program of Mikko (from which I started). The project will hopefully be finished in april of 2025, so you can expect a complete version ultimately then, but it could be done earlier. **The stable version doesn't contain all latest features, but you can download it from the releases tab.** Right now, it is version 1.0. An executable will be release every few weeks.
+Note: the project is still under development. Some added features aren't stable as of right now, but overall it works better than the program of Mikko (from which I started). The project will hopefully be finished in april of 2025, so you can expect a complete version ultimately then, but it could be done earlier. **The stable version doesn't contain all latest features, but you can download it from the releases tab.** Right now, it is version 1.0. An executable will be released every few weeks.
 
 If you would just clone the repos, then you will most likely experience stability problems or bugs.
 
@@ -138,7 +138,7 @@ You shouldn't experience any issues at the moment.
 
 roadmap(in descending priority):
 
--We are working on integrating the two programs. We will integrate them when the recognition is stable.
+-We are currently working on integrating the two programs.
 
 -coming soon, but it's done as of right now.
 
