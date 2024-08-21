@@ -9,7 +9,9 @@ Note: the project is still under development. Some added features aren't stable 
 
 If you would just clone the repos, then you will most likely experience stability problems or bugs.
 
-I added support for physical boards via webcam, you can easily turn the recogniton via webcam on and off. There's a built-in checkbox for that. It is turned off by default. I also optimized a few things. The code for the webcam can be found here. You need to run both programs simultaneously if you want to use the recognition, otherwise, it won't work as expected. The data is transfered via a json file. A file is used to save system resources; a thread puts more strain on the hardware. A constant connection with the webcam is also recommended because it takes about 5 seconds to connect to the webcam. The program should run perfectly fine on a relatively low-spec computer. https://github.com/daanvancamp/vijf_op_een_rij_beeldherkenning The usage of the recognition feature can be controlled via a checkbox.
+I added support for physical boards via webcam, you can easily turn the recogniton via webcam on and off. There's a built-in checkbox for that. It is turned off by default. I also optimized a few things. The code for the webcam can be found here. You need to run both programs simultaneously if you want to use the recognition, otherwise, it won't work as expected. The data is transfered via a json file. A file is used to save system resources; a thread puts more strain on the hardware. A constant connection with the webcam is also recommended because it takes about 5 seconds to connect to the webcam. The program should run perfectly fine on a relatively low-spec computer. 
+https://github.com/daanvancamp/five_in_a_row_recognition
+The usage of the recognition feature can be controlled via a checkbox.
 We are working on integrating the two programs. We will integrate them when the recognition is stable and functional.
 
 
@@ -129,7 +131,8 @@ august 2024:
 
 
   **released version 1.4**
-
+  
+  first implementation of the integrated recognition
 
 
 **issues:**
