@@ -14,12 +14,13 @@ from filereader import log_info_overruling
 import modelmanager
 import gomoku
 import numpy as np
+import game_window
 
 WIDTH = 540
 HEIGHT = 500
 
 game_instance = gomoku.GomokuGame(filereader.create_gomoku_game("consts.json"))
-game_instance.GUI = gomoku.fullscreen_GUI(game_instance)
+game_instance.GUI = game_window.Game_Window(game_instance)
 modelmanager_instance = modelmanager.ModelManager()
 
 
