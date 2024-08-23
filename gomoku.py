@@ -417,6 +417,7 @@ class fullscreen_GUI():
         self.corners_to_be_found=self.BOARD_SIZE - 1
         self.old_pieces=[]
         self.pieces=None
+        self.vid = None
     
     def quit_program(self):
         self.game_instance.quit_program = True
@@ -464,8 +465,9 @@ class fullscreen_GUI():
         self.game_number = 0
         self.game_mode = self.game_instance.game_mode
                 
-        if self.game_instance.use_recognition:
+        if self.game_instance.use_recognition and self.vid is None:
             self.vid = cv2.VideoCapture(1, cv2.CAP_DSHOW)
+
         else:
             self.vid = None
 
@@ -656,6 +658,7 @@ class fullscreen_GUI():
         except:
             self.vid=cv2.VideoCapture(1, cv2.CAP_DSHOW)
             self.show_webcam_view(label)
+            
         try:
 
             frame=self.crop_to_square(frame)
@@ -970,6 +973,11 @@ def runGame(instance:GomokuGame, game_number):#main function
         if not check_board_full(instance):
             # Human move
             if current_player.TYPE == "Human":
+
+                if instance.use_recognition and not instance.GUI.vid.isOpened():
+                    mb.showerror(title="Is your webcam connected?",message="Could not open webcam, please attach a webcam to the computer and try again")
+                    instance.GUI.stop_game()
+
                 for event in pygame.event.get():
                     if event.type == pygame.QUIT:
                         instance.running = False 
