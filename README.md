@@ -5,9 +5,9 @@ https://github.com/Mig26/gomoku-thesis-proj
 
 stable release:https://github.com/daanvancamp/gomoku-thesis-proj/releases/tag/v1.4
 
-Note: the project is still under development. Some added features aren't stable as of right now, but overall it works better than the program of Mikko (from which I started). The project will hopefully be finished in april of 2025, so you can expect a complete version ultimately then, but it could be done earlier. **The stable version doesn't contain all latest features, but you can download it from the releases tab.** Right now, it is version 1.0. An executable will be released every few weeks.
+Note: the project is still under development. Some added features aren't stable as of right now, but overall it works better than the program of Mikko (from which I started). The project will hopefully be finished in april of 2025, so you can expect a complete version ultimately then, but it could be done earlier. **The stable version doesn't contain all latest features, but you can download it from the releases tab.** An executable will be released every few weeks.
 
-If you would just clone the repos, then you will most likely experience stability problems or bugs.
+If you clone the repos, then you will most likely experience stability problems or bugs.
 
 I added support for physical boards via webcam, you can easily turn the recogniton via webcam on and off. There's a built-in checkbox for that. It is turned off by default. I also optimized a few things. The code for the webcam can be found here. You need to run both programs simultaneously if you want to use the recognition, otherwise, it won't work as expected. The data is transfered via a json file. A file is used to save system resources; a thread puts more strain on the hardware. A constant connection with the webcam is also recommended because it takes about 5 seconds to connect to the webcam. The program should run perfectly fine on a relatively low-spec computer. 
 https://github.com/daanvancamp/five_in_a_row_recognition
