@@ -9,16 +9,16 @@ import pygame
 import os
 import playboard_processor
 
-class Game_Window():
+class Game_Window(Tk):
     def __init__(self,instance:gomoku.GomokuGame):
+        super().__init__()
         self.game_instance = instance
         self.root_play_game = None
         self.game_mode = None
-
-
         self.vid = None
         BOARD_SIZE=self.game_instance.GRID_SIZE
         self.Playboard_processor = playboard_processor.PlayBoardProcessor(BOARD_SIZE)
+        self.initialize_fullscreen_GUI()
     
     def quit_program(self):
         self.game_instance.quit_program = True

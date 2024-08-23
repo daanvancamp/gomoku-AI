@@ -1,0 +1,874 @@
+import random
+import sys
+from threading import Thread
+from time import sleep
+from tkinter import *
+from tkinter import ttk
+from tkinter import filedialog
+
+import filereader
+import stats
+from PIL import Image, ImageTk
+from filereader import log_info_overruling
+import modelmanager
+import gomoku
+import numpy as np
+from UI import game_window
+
+WIDTH = 540
+HEIGHT = 500
+
+game_instance = gomoku.GomokuGame(filereader.create_gomoku_game("consts.json"))
+modelmanager_instance = modelmanager.ModelManager()
+
+
+class GomokuApp(Tk):
+  def __init__(self):
+    super().__init__()
+    self.geometry(str(WIDTH) + "x" + str(HEIGHT))
+    self.title("Gomoku -- Main Menu")
+    self.configure(background="#357EC7")
+    self.attributes("-topmost", True)
+    self.bind("<Escape>", lambda event: quit_game())
+    self.bind("<q>", lambda event: quit_game())
+    self.root = Tk()
+    
+    try:
+        self.root.wm_iconphoto(False, ImageTk.PhotoImage(Image.open('res/ico.png')))
+    except TclError:
+        print("icoon kon niet geladen worden.")
+        pass
+    
+    self.style2 = ttk.Style()
+    self.style2.theme_use('default')
+    self.style2.configure('TNotebook.Tab', background="#357EC7")
+
+    self.tabControl = ttk.Notebook(self.root)
+
+    self.tab1 = ttk.Frame(self.tabControl)
+    self.tab2 = ttk.Frame(self.tabControl)
+    self.tab3 = ttk.Frame(self.tabControl)
+    self.tab4 = ttk.Frame(self.tabControl)
+
+    self.tabControl.add(self.tab1, text='Play gomoku')
+    self.tabControl.add(self.tab2, text='Train')
+    self.tabControl.add(self.tab3, text='Replay old games')
+    self.tabControl.add(self.tab4, text=' Models')
+    self.tabControl.grid(row=0, sticky="w")
+
+    self.style_numbers = ["georgia", 10, "white", 12, 2]#font, size, color, bold, underline
+
+    self.input_canvas = Canvas(self.root, relief="groove", borderwidth=0, highlightthickness=0,bg="#357EC7")
+    self.input_canvas.grid(row=1, padx=2, pady=2)
+    self.var_playerType1 = StringVar()
+    self.var_playerType2 = StringVar()
+    self.var_playerType1.set("Human")
+    self.var_playerType2.set("AI-Model")
+    self.var_game_runs = StringVar()
+    self.var_game_runs.set("1")
+    self.var_delay = BooleanVar()
+    self.var_delay.set(False)
+    self.var_log = BooleanVar()
+    self.var_log.set(False)
+    self.var_rep = BooleanVar()
+    self.var_rep.set(True)
+    self.replay_path = StringVar()
+    self.replay_path.set(r".\data\replays")
+    self.var_allow_overrule_player_1=BooleanVar()
+    self.var_allow_overrule_player_1.set(True)
+    self.var_allow_overrule_player_2=BooleanVar()
+    self.var_allow_overrule_player_2.set(True)
+    self.var_play_music=BooleanVar()
+    self.var_play_music.set(False)
+    self.var_show_overruling=BooleanVar()
+    self.var_show_overruling.set(True)
+    self.var_show_graphs=BooleanVar()
+    self.var_show_graphs.set(False)
+    self.var_show_dialog=BooleanVar()
+    self.var_show_dialog.set(False)
+
+    self.var_losses=IntVar()
+    self.var_losses.set(0)
+    self.var_wins=IntVar()
+    self.var_wins.set(0)
+    self.var_ties=IntVar()
+    self.var_ties.set(0)
+
+    self.var_relative_value_losses = StringVar()
+    self.var_relative_value_losses.set("0%")
+
+    self.var_relative_value_wins = StringVar()
+    self.var_relative_value_wins.set("0%")
+
+    self.var_relative_value_ties = StringVar()
+    self.var_relative_value_ties.set("0%")
+
+    self.var_choose_stats=StringVar()
+
+    self.var_start_from_file=BooleanVar()
+    self.var_start_from_file.set(False)
+    self.state_board_path=StringVar()
+    self.state_board_path.set(r".\test_situations\specific_situation.txt")
+    self.var_name_model=StringVar()
+    self.var_model_player1=StringVar()
+    self.var_model_player2=StringVar()
+    self.var_use_recognition=BooleanVar()
+    self.var_use_recognition.set(False)
+    self.var_model_player1.set("standaard")
+    self.var_model_player2.set("standaard")
+    self.var_startingPlayer=StringVar()
+    self.var_startingPlayer.set("Player 1")
+
+    self.var_number_of_training_loops=StringVar()
+    self.var_number_of_training_loops.set("0 (against H:0,T'A':0, AI:0 )")
+    self.var_number_of_training_loops_comboboxes_p1=StringVar()
+    self.var_number_of_training_loops_comboboxes_p1.set(0)
+    self.var_number_of_training_loops_comboboxes_p2=StringVar()
+    self.var_number_of_training_loops_comboboxes_p2.set(0)
+
+    self.var_layers=IntVar()
+    self.var_layers.set(3)
+    
+    distance_from_left_side=10
+    ### TABS ###
+    ttk.Label(self.tab1)
+
+    self.button_1 = ttk.Button(self.tab1, text="New Game", command=lambda: start_new_game(), style="TButton")
+    self.button_1.grid(row=0, column=0, sticky="w", padx=distance_from_left_side)
+    self.checkbox_show_dialog=ttk.Checkbutton(self.tab1, text="Show dialog before starting next game", variable=self.var_show_dialog,style="TCheckbutton")
+    self.checkbox_show_dialog.grid(row=0, column=1, sticky="w")
+
+    self.player1typelabel = ttk.Label(self.tab1,style="TLabel", text="Player 1(black)")
+    self.player1typelabel.grid(row=2, column=0, sticky="w", padx=distance_from_left_side)
+    self.player2typelabel = ttk.Label(self.tab1, text="Player 2(white)", style="TLabel")
+    self.player2typelabel.grid(row=2, column=1, sticky="w", padx=distance_from_left_side)
+
+    self.radiobutton1 = ttk.Radiobutton(self.tab1, text="Human", variable=self.var_playerType1, value="Human", command=lambda: set_player_type(0),style="TRadiobutton")
+    self.radiobutton1.grid(row=3, column=0, sticky="w", padx=distance_from_left_side)
+    self.radiobutton2 = ttk.Radiobutton(self.tab1, text="Test Algorithm", variable=self.var_playerType1, value="Test Algorithm", command=lambda: set_player_type(0),style="TRadiobutton")
+    self.radiobutton2.grid(row=4, column=0, sticky="w", padx=distance_from_left_side)
+    self.radiobutton3 = ttk.Radiobutton(self.tab1, text="AI-Model", variable=self.var_playerType1, value="AI-Model", command=lambda: set_player_type(0),style="TRadiobutton")
+    self.radiobutton3.grid(row=5, column=0, sticky="w", padx=distance_from_left_side)
+
+    self.radiobutton4 = ttk.Radiobutton(self.tab1, text="Human", variable=self.var_playerType2, value="Human", command=lambda: set_player_type(1),style="TRadiobutton")
+    self.radiobutton4.grid(row=3, column=1, sticky="w")
+    self.radiobutton5 = ttk.Radiobutton(self.tab1, text="Test Algorithm", variable=self.var_playerType2, value="Test Algorithm", command=lambda: set_player_type(1),style="TRadiobutton")
+    self.radiobutton5.grid(row=4, column=1, sticky="w")
+    self.radiobutton6 = ttk.Radiobutton(self.tab1, text="AI-Model", variable=self.var_playerType2, value="AI-Model", command=lambda: set_player_type(1),style="TRadiobutton")
+    self.radiobutton6.grid(row=5, column=1, sticky="w")
+
+    self.list_models = modelmanager_instance.get_list_models()
+    self.CbModel1 = ttk.Combobox(self.tab1, state="readonly", values=self.list_models,textvariable=self.var_model_player1)
+    self.CbModel2 = ttk.Combobox(self.tab1, state="readonly", values=self.list_models,textvariable=self.var_model_player2)
+
+    self.CbModel1.grid(row=6, column=0, sticky="w",padx=distance_from_left_side)
+    self.CbModel2.grid(row=6, column=1,sticky="w",padx=distance_from_left_side)
+
+    self.label_value_number_of_training_loops_p1 = ttk.Label(self.tab1, textvariable=self.var_number_of_training_loops_comboboxes_p1,style="TLabel")
+    self.label_value_number_of_training_loops_p1.grid(row=8, column=0, sticky="w",padx=distance_from_left_side)
+
+    self.label_value_number_of_training_loops_p2 = ttk.Label(self.tab1, textvariable=self.var_number_of_training_loops_comboboxes_p2,style="TLabel")
+    self.label_value_number_of_training_loops_p2.grid(row=8, column=1, sticky="w")
+
+
+    self.overrule_button_player_1=ttk.Checkbutton(self.tab1, text="Allow overrule", variable=self.var_allow_overrule_player_1,style="TCheckbutton")
+    self.overrule_button_player_1.grid(row=9, column=0, sticky="w",padx=distance_from_left_side)
+
+    self.overrule_button_player_2=ttk.Checkbutton(self.tab1, text="Allow overrule", variable=self.var_allow_overrule_player_2,style="TCheckbutton")
+    self.overrule_button_player_2.grid(row=9, column=1, sticky="w")
+
+
+    self.gamerunslabel = ttk.Label(self.tab1, text="Number of games: ",style="TLabel")
+    self.gamerunslabel.grid(row=10, column=0, sticky="w",padx=distance_from_left_side)
+    self.gamerunsentry = ttk.Entry(self.tab1, textvariable=self.var_game_runs,style="TEntry")
+    self.gamerunsentry.grid(row=10, column=1, sticky="w")
+
+
+    self.playerstartLabel = ttk.Label(self.tab1, text="Player to start: ",style="TLabel")
+    self.playerstartLabel.grid(row=11, column=0, sticky="w", padx=distance_from_left_side)
+    self.CbStartingPlayer = ttk.Combobox(self.tab1, state="readonly", values=["Player 1", "Player 2"], textvariable=self.var_startingPlayer)
+    self.CbStartingPlayer.current(0)
+    self.CbStartingPlayer.grid(row=11, column=1, sticky="w")
+
+    #column 0
+    self.logbutton = ttk.Checkbutton(self.tab1, text="Create log file", variable=self.var_log,style="TCheckbutton") 
+    self.logbutton.grid(row=12, column=0, sticky="w",padx=distance_from_left_side)
+    self.replaybutton = ttk.Checkbutton(self.tab1, text="Save replays(1)", variable=self.var_rep,style="TCheckbutton") 
+    self.replaybutton.grid(row=13, column=0, sticky="w",padx=distance_from_left_side)
+    self.delaybutton = ttk.Checkbutton(self.tab1, text="Use AI Delay", variable=self.var_delay,style="TCheckbutton")
+    self.delaybutton.grid(row=14, column=0, sticky="w",padx=distance_from_left_side)
+
+    #column1
+    self.music_button=ttk.Checkbutton(self.tab1, text="Play music", variable=self.var_play_music,style="TCheckbutton")
+    self.music_button.grid(row=12, column=1, sticky="w")
+    self.button_show_overruling=ttk.Checkbutton(self.tab1, text="Show overruling", variable=self.var_show_overruling,style="TCheckbutton")
+    self.button_show_overruling.grid(row=13, column=1, sticky="w")
+    self.use_recognition_button=ttk.Checkbutton(self.tab1, text="use recognition(experimental)*", variable=self.var_use_recognition,style="TCheckbutton")
+    self.use_recognition_button.grid(row=14, column=1, sticky="w")
+
+
+    self.label_recognition=ttk.Label(self.tab1, text="*only turn on when you have a physical board, a webcam and the other repository.",style="TLabel",wraplength=WIDTH-15)
+    self.label_recognition.grid(row=15, column=0, sticky="w",columnspan=2, padx=distance_from_left_side)
+
+
+    self.bottomframe = Frame(self.tab1, highlightbackground="blue", highlightthickness=3, borderwidth=1)
+    self.bottomframe.grid(row=16, column=0, sticky="w",columnspan=3, padx=distance_from_left_side, pady=15)
+
+    self.start_from_file_button=ttk.Checkbutton(self.bottomframe, text="Load game situation(2)", variable=self.var_start_from_file,style="TCheckbutton")
+    self.start_from_file_button.grid(row=0, column=0, sticky="w")
+    self.label_unvalid_file=ttk.Label(self.bottomframe, text="",style="TLabel")
+    self.label_unvalid_file.grid(row=0, column=1, sticky="e",columnspan=2)
+
+    self.label_load_state=ttk.Label(self.bottomframe, text="Choose file board state: ",style="TLabel")
+    self.label_load_state.grid(row=1, column=0, sticky="w")
+    self.load_state_entry = ttk.Entry(self.bottomframe, textvariable=self.state_board_path, width=50,style="TEntry")
+    self.load_state_entry.grid(row=2, column=0, sticky="w",columnspan=2)
+    self.button_browse_state_file = ttk.Button(self.bottomframe, text="...",style="TButton", command=lambda: browse_state_files())
+    self.button_browse_state_file.grid(row=2, column=2, sticky="w")
+
+
+    self.button_3 = ttk.Button(self.input_canvas, text="Quit Game(ESC/Q)", style="TButton", command=lambda: quit_game())
+    self.button_3.grid(row=1, column=0)
+    self.label_shortcuts=Label(self.input_canvas, text="In game shortcuts: esc = return to this menu, q = terminate program , space = skip the current round",wraplength=WIDTH-15,bg="#357EC7",font=(self.style_numbers[0],self.style_numbers[1]),fg="white")
+    self.label_shortcuts.grid(row=2, column=0)
+
+    self.label_info_load_save_replay=ttk.Label(self.tab1,wraplength=WIDTH-15, text="(1)(2)The save replay function can't be used when loading a board, because that would create a wrong replay file.",style="TLabel")
+    self.label_info_load_save_replay.grid(row=17, column=0, sticky="w",columnspan=2,pady=5,padx=distance_from_left_side)
+
+    ttk.Label(self.tab2)
+    #row 0
+    self.button_2 = ttk.Button(self.tab2, text="Train", style="TButton", command=lambda: start_new_training())
+    self.button_2.grid(row=0, column=1, sticky="e")
+
+    #column 0
+    self.label_model=ttk.Label(self.tab2, text="AI-Model: ",style="TLabel")
+    self.label_model.grid(row=1, column=0, sticky="w",padx=distance_from_left_side,pady=1)
+    self.CbModelTrain1 = ttk.Combobox(self.tab2, state="readonly", values=self.list_models,textvariable=self.var_model_player1)
+    self.CbModelTrain1.grid(row=2, column=0, sticky="w",padx=distance_from_left_side,pady=1)
+    self.label_value_number_of_training_loops_tab2_p1 = ttk.Label(self.tab2, textvariable=self.var_number_of_training_loops_comboboxes_p1,style="TLabel")
+    self.label_value_number_of_training_loops_tab2_p1.grid(row=3, column=0, sticky="w",padx=distance_from_left_side,pady=1)
+    self.overrule_button_player_1_tab2=ttk.Checkbutton(self.tab2, text="Allow overrule", variable=self.var_allow_overrule_player_1,style="TCheckbutton")
+    self.overrule_button_player_1_tab2.grid(row=4, column=0, sticky="w",padx=distance_from_left_side)
+
+
+    self.train_opponent_label = ttk.Label(self.tab2, text="Train model against:", style="TLabel")
+    self.train_opponent_label.grid(row=1, column=1, sticky="w")
+
+    self.human_training_button=ttk.Radiobutton(self.tab2, text="Human", variable=self.var_playerType2, value="Human", style="TRadiobutton")
+    self.human_training_button.grid(row=2, column=1,sticky="w")
+    self.radiobutton7 = ttk.Radiobutton(self.tab2, text="Test Algorithm", variable=self.var_playerType2, value="Test Algorithm")
+    self.radiobutton7.grid(row=3, column=1, sticky="w")
+    self.radiobutton8 = ttk.Radiobutton(self.tab2, text="AI-Model", variable=self.var_playerType2, value="AI-Model", style="TRadiobutton")
+    self.radiobutton8.grid(row=4, column=1, sticky="w")
+
+    self.CbModelTrain2 = ttk.Combobox(self.tab2, state="readonly", values=self.list_models,textvariable=self.var_model_player2)
+    self.CbModelTrain2.grid(row=5, column=1, sticky="w")
+    self.label_value_number_of_training_loops_tab2_p2 = ttk.Label(self.tab2, textvariable=self.var_number_of_training_loops_comboboxes_p2,style="TLabel")
+    self.label_value_number_of_training_loops_tab2_p2.grid(row=6, column=1, sticky="w")
+    self.overrule_button_player_2_tab2=ttk.Checkbutton(self.tab2, text="Allow overrule", variable=self.var_allow_overrule_player_2,style="TCheckbutton")
+    self.overrule_button_player_2_tab2.grid(row=7, column=1, sticky="w")
+
+    self.gamerunslabel = ttk.Label(self.tab2, text="Number of games: ",style="TLabel")
+    self.gamerunslabel.grid(row=8, column=0, sticky="w",pady=2,padx=distance_from_left_side)
+    self.gamerunsentry2 = ttk.Entry(self.tab2, textvariable=self.var_game_runs,style="TEntry")
+    self.gamerunsentry2.grid(row=9, column=0, sticky="w",pady=2,padx=distance_from_left_side)
+    self.replaybutton2 = ttk.Checkbutton(self.tab2, text="Save replays", variable=self.var_rep,style="TCheckbutton")
+    self.replaybutton2.grid(row=10, column=0, sticky="w",pady=2,padx=distance_from_left_side)
+    self.show_graphs_checkbutton=ttk.Checkbutton(self.tab2, text="Show graphs*", variable=self.var_show_graphs,style="TCheckbutton")
+    self.show_graphs_checkbutton.grid(row=11, column=0, sticky="w",pady=2,padx=distance_from_left_side)
+
+
+
+    self.train_description = Label(self.tab2, text="It is recommended to run at least 3 000 games per training session.", font=(self.style_numbers[0], self.style_numbers[1]), wraplength=WIDTH-15)
+    self.train_description.grid(row=12, column=0, sticky="w",columnspan=2,padx=distance_from_left_side)
+
+    self.info_show_graphs=ttk.Label(self.tab2, text="*Don't forget to MANUALLY close the graphs at the end of each training session if you enable it.",style="TLabel",foreground="red",wraplength=WIDTH-15)
+    self.info_show_graphs.grid(row=13, column=0, sticky="w",columnspan=2,padx=distance_from_left_side)
+
+    ttk.Label(self.tab3)
+    self.replaylabel = ttk.Label(self.tab3, text="Choose the replay file: ",style="TLabel")
+    self.replaylabel.grid(row=0, column=0, sticky="w",pady=2,padx=distance_from_left_side)
+    self.replayentry = ttk.Entry(self.tab3, textvariable=self.replay_path, width=30,style="TEntry")
+    self.replayentry.grid(row=1, column=0, sticky="w",pady=2,padx=distance_from_left_side)
+    self.button_4 = ttk.Button(self.tab3, text="...",style="TButton", command=lambda: browse_files())
+    self.button_4.grid(row=1, column=1, sticky="w")
+    self.delaybutton2 = ttk.Checkbutton(self.tab3, text="Use AI Delay", variable=self.var_delay, style="TCheckbutton")
+    self.delaybutton2.grid(row=2, column=0, sticky="w",pady=2,padx=distance_from_left_side)
+    self.button_5 = ttk.Button(self.tab3, text="Play", style="TButton", command=lambda: start_new_replay())
+    self.button_5.grid(row=3, column=0, sticky="w",pady=2,padx=distance_from_left_side)
+    self.checkbox_show_dialog_tab3=ttk.Checkbutton(self.tab3, text="Show dialog before starting next game", variable=self.var_show_dialog,style="TCheckbutton")
+    self.checkbox_show_dialog_tab3.grid(row=3, column=1, sticky="w")
+
+    self.label_info_replay_file_loaded=Label(self.tab3, text="",foreground="red",wraplength=WIDTH-20,font=(self.style_numbers[0],self.style_numbers[1]))
+    self.label_info_replay_file_loaded.grid(row=4, column=0, sticky="w",columnspan=2,padx=distance_from_left_side)
+
+
+    ttk.Label(self.tab4)
+    self.Lb1 = Listbox(self.tab4)
+
+    models = modelmanager_instance.get_list_models()
+    i  = 0
+    for model in models:
+        self.Lb1.insert(i, model.split('\\')[-1])
+        i+=1
+    self.Lb1.grid(row=0, column=2,padx=distance_from_left_side)
+
+    if "standaard" in models or "Standaard" in models:
+        for item in models:
+            if item=="standaard"or item=="Standaard":
+                self.Lb1.selection_set(models.index(item))
+                self.Lb1.activate(models.index(item))
+                last_selected_model=item
+    else:
+        self.Lb1.selection_set(0)
+        self.Lb1.activate(0)
+        last_selected_model=models[0]
+
+    self.frame_buttons=ttk.Frame(self.tab4)
+    self.frame_buttons.grid(row=0, column=0, columnspan=2,sticky='e')
+
+    self.button_NewModel = ttk.Button(self.frame_buttons, text="Make New Model", style="TButton", command=lambda: create_new_model())
+    self.button_NewModel.grid(row=0, column=1,sticky="n",pady=2,padx=distance_from_left_side)
+    self.nameModelLabel = ttk.Label(self.frame_buttons, text="Name of model: ",style="TLabel")
+    self.nameModelLabel.grid(row=1, column=0, sticky="w",pady=2,padx=distance_from_left_side)
+    self.nameModelEntry = ttk.Entry(self.frame_buttons, textvariable=self.var_name_model,style="TEntry")
+    self.nameModelEntry.grid(row=1, column=1, sticky="w",pady=2,padx=distance_from_left_side)
+    self.nameModelEntry.bind("<Return>",lambda event: create_new_model())#push enter to create a new model (easier)
+
+    self.button_DeleteModel = ttk.Button(self.frame_buttons, text="Delete Model", style="TButton", command=lambda: delete_model())
+    self.button_DeleteModel.grid(row=0, column=0,sticky="n")
+
+    self.label_number_of_training_loops = ttk.Label(self.tab4, text="Training loops: ",style="TLabel")
+    self.label_number_of_training_loops.grid(row=4, column=0, sticky="w",padx=(distance_from_left_side,0),pady=(30,10))
+    self.label_value_number_of_training_loops_tab4 = ttk.Label(self.tab4, textvariable=self.var_number_of_training_loops,style="TLabel")
+    self.label_value_number_of_training_loops_tab4.grid(row=4, column=1, sticky="w",pady=(30,10))
+
+    self.stats_list=["Total","Games","Training"]
+    self.Cb_choose_stats= ttk.Combobox(self.tab4, state="readonly", values=self.stats_list, textvariable=self.var_choose_stats)
+    self.Cb_choose_stats.current(0)
+    self.Cb_choose_stats.grid(row=5, column=0, sticky="w",pady=2,padx=distance_from_left_side)
+
+
+    self.label_losses=ttk.Label(self.tab4, text="Losses: ",style="TLabel")
+    self.label_losses.grid(row=6, column=0, sticky="w")
+    self.label_value_losses_tab4 = ttk.Label(self.tab4, textvariable=self.var_losses,style="TLabel")
+    self.label_value_losses_tab4.grid(row=6, column=1, sticky="w")
+    self.label_relative_value_losses=ttk.Label(self.tab4, textvariable=self.var_relative_value_losses,style="TLabel")
+    self.label_relative_value_losses.grid(row=6, column=2, sticky="w")
+
+    self.label_wins=ttk.Label(self.tab4, text="Wins: ",style="TLabel")
+    self.label_wins.grid(row=7, column=0, sticky="w",padx=distance_from_left_side)
+    self.label_value_wins_tab4 = ttk.Label(self.tab4, textvariable=self.var_wins,style="TLabel")
+    self.label_value_wins_tab4.grid(row=7, column=1, sticky="w")
+    self.label_relative_value_wins=ttk.Label(self.tab4, textvariable=self.var_relative_value_wins,style="TLabel")
+    self.label_relative_value_wins.grid(row=7, column=2, sticky="w")
+
+    self.label_ties=ttk.Label(self.tab4, text="Ties: ",style="TLabel")
+    self.label_ties.grid(row=8, column=0, sticky="w",padx=distance_from_left_side)
+    self.label_value_ties_tab4 = ttk.Label(self.tab4, textvariable=self.var_ties,style="TLabel")
+    self.label_value_ties_tab4.grid(row=8, column=1, sticky="w")
+    self.label_relative_value_ties=ttk.Label(self.tab4, textvariable=self.var_relative_value_ties,style="TLabel")
+    self.label_relative_value_ties.grid(row=8, column=2, sticky="w")
+
+    self.frame_stats_buttons=ttk.Frame(self.tab4)
+    self.frame_stats_buttons.grid(row=9, column=0, columnspan=3,pady=15)
+    self.button_reset_stats=ttk.Button(self.frame_stats_buttons, text="Reset Stats", style="TButton", command=lambda: reset_all_stats())
+    self.button_reset_stats.grid(row=0, column=0)
+    self.button_reset_end_states=ttk.Button(self.frame_stats_buttons, text="Reset End States", style="TButton", command=lambda: reset_end_states())
+    self.button_reset_end_states.grid(row=0, column=1)
+
+
+
+    def set_player_type(player_id):
+        if player_id == 1:
+            newtype = self.var_playerType1.get()
+        else:
+            newtype = self.var_playerType2.get()
+        gomoku.players[player_id-1].TYPE=newtype
+
+    def quit_game():
+        sys.exit() #end the program
+
+
+
+
+
+
+# def set_game_instance(new_instance):
+#     global game_instance
+#     game_instance = new_instance
+
+# def browse_state_files():
+#     file_path = filedialog.askopenfilename(filetypes=[("txt File", "*.txt")],initialdir=r".\test_situations")
+#     state_board_path.set(file_path)
+
+# def browse_files():
+#     file_path = filedialog.askopenfilename(filetypes=[("Json File", "*.json")],initialdir=r".\data\replays")
+#     replay_path.set(file_path)
+   
+
+# def run():
+#     gomoku.run(game_instance)
+
+# def load_board_from_file()->list[list[int]]:
+#     try:
+#         with open(state_board_path.get(), "r") as file:
+#             board = [[0] * 15 for _ in range(15)] # 0 = empty, 1 = player 1, 2 = player 2.
+#             for row in range(15):
+#                 line = file.readline().replace("\n", "").replace(" ", "") # remove \n and spaces
+#                 for col in range(15):      
+#                     board[row][col]=int(line[col])
+#                     if int(line[col]) not in [0, 1, 2]:
+#                         return None
+#         print("board loaded")
+#         return board
+#     except:
+#         return None
+
+
+    def start_new_game():
+        global game_instance
+        log_info_overruling("\n\n\nnew session begins:")
+    
+        game_instance.use_recognition = self.var_use_recognition.get()
+        game_instance.play_music = self.var_play_music.get()
+        game_instance.show_overruling = self.var_show_overruling.get()
+        game_instance.record_replay = self.var_rep.get()
+        game_instance.show_dialog = self.var_show_dialog.get()
+
+        game_instance.ai_delay = self.var_delay.get()
+        stats.should_log = self.var_log.get()
+    
+        
+        gomoku.player1.TYPE=self.var_playerType1.get()
+        gomoku.player2.TYPE=self.var_playerType2.get()
+
+        if (gomoku.player1.TYPE=="Human" or gomoku.player2.TYPE=="Human") and not game_instance.use_recognition:
+            game_instance.show_hover_effect=True
+        else:
+            game_instance.show_hover_effect=False
+
+        stats.setup_logging(gomoku.player1.TYPE, gomoku.player2.TYPE)
+
+        if gomoku.player1.TYPE == "AI-Model":
+            gomoku.player1.load_model(self.var_model_player1.get())
+            gomoku.player1.set_allow_overrule(self.var_allow_overrule_player_1.get())
+        if gomoku.player2.TYPE == "AI-Model":
+            gomoku.player2.load_model(self.var_model_player2.get())
+            gomoku.player2.set_allow_overrule(self.var_allow_overrule_player_2.get())
+
+        if self.var_startingPlayer.get() == "Player 1":
+            gomoku.current_player = gomoku.player1
+        else:
+            gomoku.current_player = gomoku.player2
+        
+        self.root.wm_state('iconic')
+
+        
+        valid_number = False
+
+        while not valid_number:
+            try:
+                runs = int(self.var_game_runs.get())
+                valid_number=True
+            except:
+                print("invalid number, try again")
+
+        game_instance.game_mode=game_instance.game_modes[0]
+        game_instance.GUI.initialize_fullscreen_GUI()
+        for i in range(runs):
+            log_info_overruling("run "+str(i+1)+" begins:")
+            stats.log_message(f"Game  {i+1} begins.")
+
+            game_instance.current_game = i+1
+            game_instance.last_round = (i+1 == runs)
+            board_loaded=None
+            if self.var_start_from_file.get():
+                board = self.load_board_from_file()
+                if board is not None:
+                    board_loaded=True
+                else:
+                    self.label_unvalid_file.config(text="Board file not valid, try again with another file.")
+                    board_loaded=False
+                game_instance.set_board(board)
+
+            if (board_loaded and self.var_start_from_file.get()) or not self.var_start_from_file.get():
+                try:
+                    self.game_window = game_window.Game_Window(game_instance)
+                    gomoku.runGame(game_instance, i) #main function
+                    if game_instance.stop_game:
+                        break
+                except Exception as e:
+                    print("error in gomoku.run")
+                    raise Exception("There is an error in the main function/loop, it can be anything." , str(e))
+            else:
+                print("Please select a valid file that contains the board in the following format and try again:")
+                for i in range(15):
+                    for b in range(15):
+                        print(random.randint(0,2), end="")
+                    print("\n",end="")
+                print("The board can only contain 0, 1, or 2. 0 = empty, 1 = player 1, 2 = player 2.")
+        self.game_over()
+
+# def start_new_training():
+#     global game_instance
+#     log_info_overruling("\n\n\nnew session begins:")
+    
+#     game_instance.use_recognition = False
+#     game_instance.play_music = False
+#     game_instance.show_overruling=False
+#     game_instance.record_replay=True
+#     game_instance.show_graphs=var_show_graphs.get()
+
+#     gomoku.player1.TYPE="AI-Model"
+#     gomoku.player2.TYPE=var_playerType2.get()
+    
+#     if gomoku.player1.TYPE=="Human" or gomoku.player2.TYPE=="Human":
+#         game_instance.show_hover_effect=True
+#     else:
+#         game_instance.show_hover_effect=False
+
+#     gomoku.player1.load_model(var_model_player1.get())#player 1 is always an AI-Model when training
+#     gomoku.player1.set_allow_overrule(var_allow_overrule_player_1.get())
+
+#     if gomoku.player2.TYPE == "AI-Model":
+#         gomoku.player2.load_model(var_model_player2.get())
+#         gomoku.player2.set_allow_overrule(var_allow_overrule_player_2.get())
+
+#     if var_startingPlayer.get() == "Player 1":
+#         gomoku.current_player = gomoku.player1
+#     else:
+#         gomoku.current_player = gomoku.player2
+
+
+#     try:
+#         valid_number = False
+#         while not valid_number:
+#             try:
+#                 runs = int(var_game_runs.get())
+#                 valid_number=True
+#             except:
+#                 print("invalid number, try again")
+
+#         game_instance.ai_delay = False #never wait when training
+#         stats.should_log = var_log.get()
+#         stats.setup_logging(gomoku.player1.TYPE, gomoku.player2.TYPE)
+#         root.wm_state('iconic')
+
+#         game_instance.game_mode=game_instance.game_modes[1]
+#         game_instance.GUI.initialize_fullscreen_GUI()
+
+#         for i in range(runs):
+#             log_info_overruling("run "+str(i+1)+" begins:")
+            
+#             stats.log_message(f"Game  {i+1} begins.")
+#             game_instance.current_game = i+1
+#             game_instance.last_round = (i+1 == runs)
+#             try:
+#                 gomoku.runTraining(game_instance, i) #main function
+#                 if game_instance.stop_game:
+#                     break
+#             except Exception as e:
+#                 print("error in gomoku.run, herschrijf die functie.")
+#                 raise Exception("There is an error in the main function/loop, it can be anything." , str(e))
+
+#             if gomoku.player1.TYPE == "AI-Model":
+#                 #gomoku.player1 is an object of the class Player, ai is an object of the class gomokuAI and ai.decrease_learning_rate() is a method of the class gomokuAI
+#                 gomoku.player1.ai.decrease_learning_rate()#todo: calculate decrease rate based on number of training rounds
+#                 gomoku.player1.AI_model.log_number_of_training_loops(gomoku.player2.TYPE)
+#             if gomoku.player2.TYPE == "AI-Model":
+#                 #gomoku.player2 is an object of the class Player, ai is an object of the class gomokuAI and ai.decrease_learning_rate() is a method of the class gomokuAI
+#                 gomoku.player2.ai.decrease_learning_rate()
+#                 gomoku.player2.AI_model.log_number_of_training_loops(gomoku.player1.TYPE)
+#                 #arguments: model_name, number_of_additional_training_loops, opponent
+              
+#     except ValueError:
+#         print("Most likely: Game runs value invalid, try again.")
+#     print("game over")
+#     game_over()
+
+
+# def start_new_replay():
+#     global game_instance
+#     game_instance.show_hover_effect=False
+#     game_instance.show_dialog = var_show_dialog.get()
+
+
+#     log_info_overruling("\n\n\nnew session begins:")
+   
+#     moves = filereader.load_replay(replay_path.get())
+
+#     if moves is None:
+#         replay_loaded=False
+#     else:
+#         replay_loaded=True
+    
+#     if replay_loaded:
+#         label_info_replay_file_loaded.config(text="Replay file succesfully loaded",fg="green")
+
+#         game_instance.use_recognition = False
+#         game_instance.play_music = False
+
+#         gomoku.player1.TYPE = "Replay"
+#         gomoku.player2.TYPE = "Replay"
+
+#         gomoku.current_player = gomoku.player1
+
+#         game_instance.ai_delay = var_delay.get()
+#         stats.should_log = var_log.get()
+#         stats.setup_logging(gomoku.player1.TYPE, gomoku.player2.TYPE)
+#         root.wm_state('iconic')
+
+#         game_instance.game_mode=game_instance.game_modes[2]
+#         game_instance.GUI.initialize_fullscreen_GUI()
+
+#         try:
+#             gomoku.runReplay(game_instance,moves) #main function
+#         except Exception as e:
+#             print("error in gomoku.run, herschrijf die functie.")
+#             raise Exception("There is an error in the main function/loop, it can be anything." , str(e)) 
+#     else:
+#         print("Try again, please select a valid json file and make sure that it's not opened")
+#         label_info_replay_file_loaded.config(text="Try again, please select a valid json file and make sure that it's not opened in another program",fg="red")
+        
+#     game_over()
+
+# def game_over():
+#     global game_instance
+#     if game_instance.GUI.root_play_game is not None:
+#         game_instance.GUI.hide_GUI()
+#     root.wm_state('normal')
+#     game_instance.current_game = 0
+#     if game_instance.quit_program:
+#         quit_game()
+
+# def create_new_model():
+#     modelmanager_instance.create_new_model(var_name_model.get())
+#     refresh_models()
+#     refresh_training_stats()
+
+# def delete_model():
+#     global last_selected_model
+#     for i in Lb1.curselection():
+#         modelmanager_instance.delete_model(Lb1.get(i))
+#     refresh_models()
+#     last_selected_model=Lb1.get(0)
+#     refresh_training_stats()
+        
+# def reset_all_stats():
+#     global last_selected_model
+#     for i in Lb1.curselection():
+#         modelmanager_instance.get_model(Lb1.get(i)).reset_stats(True)
+#     if Lb1.curselection()==():
+#         modelmanager_instance.get_model(last_selected_model).reset_stats(True)
+#     refresh_models()
+#     refresh_training_stats()
+
+# def reset_end_states():
+#     global last_selected_model
+#     for i in Lb1.curselection():
+#         modelmanager_instance.get_model(Lb1.get(i)).reset_end_states()
+#     if Lb1.curselection()==():
+#         modelmanager_instance.get_model(last_selected_model).reset_end_states()
+#     refresh_models()
+#     refresh_training_stats()
+# def refresh_models():
+#     Lb1.delete(0,END)
+#     i = 0
+#     models = modelmanager_instance.get_list_models()
+#     for model in models:
+#         Lb1.insert(i, model)
+#         i+=1
+#     CbModel1.configure(values=models)
+#     CbModel2.configure(values=models)
+#     CbModelTrain1.configure(values=models)
+#     CbModelTrain2.configure(values=models)
+
+# def quit_game():
+#     sys.exit()#end the program
+
+# def maintain_GUI():
+#     #add delay to this loop if the program stutters or crashes on your computer
+#     tab_text = "Play gomoku"
+#     last_value_repvar=True
+#     last_value_load_board_from_file=False
+#     while True:
+#         try:
+
+#             old_tab_text= tab_text
+#             current_tab = tabControl.index(tabControl.select())
+#             tab_text = tabControl.tab(current_tab, "text")
+#             if tab_text=="Train" and old_tab_text!=tab_text:
+#                 var_game_runs.set("3000")
+#             elif tab_text=="Play gomoku" and old_tab_text!=tab_text:
+#                 var_game_runs.set("1")
+#                 var_delay.set(False)
+#             elif tab_text=="Replay old games" and old_tab_text!=tab_text:
+#                 var_delay.set(True)
+
+#             if tab_text=="Train":
+#                 label_shortcuts.config(text="In game shortcuts: esc = return to this menu, q = terminate program")
+#             elif tab_text=="Replay old games":
+#                 label_shortcuts.config(text="In game shortcuts: esc = return to this menu, q = terminate program")
+#             elif tab_text=="Play gomoku":
+#                 label_shortcuts.config(text="In game shortcuts: esc = return to this menu, q = terminate program , space = skip the current round")
+
+#             ##TAB 1##
+#             if var_playerType1.get() == "Human" and var_playerType2.get() == "Human":
+#                 var_log.set(False)
+#                 var_rep.set(False)
+#                 logbutton.config(state=DISABLED)
+#                 replaybutton.config(state=DISABLED)
+#             else:
+#                 logbutton.config(state=NORMAL)
+#                 replaybutton.config(state=NORMAL)
+
+
+#             if var_playerType1.get()=="AI-Model":
+#                 CbModel1.config(state="readonly")
+#                 overrule_button_player_1.config(state=NORMAL)
+#                 label_value_number_of_training_loops_p1.config(state=NORMAL)
+
+#             else:
+#                 CbModel1.config(state=DISABLED)
+#                 overrule_button_player_1.config(state=DISABLED)
+#                 label_value_number_of_training_loops_p1.config(state=DISABLED)
+
+#             if var_playerType2.get()=="AI-Model":
+#                 CbModel2.config(state="readonly")
+#                 overrule_button_player_2.config(state=NORMAL)
+#                 overrule_button_player_2_tab2.config(state=NORMAL)
+#                 label_value_number_of_training_loops_p2.config(state=NORMAL)
+#             else:
+#                 CbModel2.config(state=DISABLED)
+#                 overrule_button_player_2.config(state=DISABLED)
+#                 overrule_button_player_2_tab2.config(state=DISABLED)
+#                 label_value_number_of_training_loops_p2.config(state=DISABLED)
+
+#             if var_start_from_file.get():
+#                 label_load_state.grid()
+#                 load_state_entry.grid()
+#                 button_browse_state_file.grid()
+#             else:
+#                 label_load_state.grid_remove()
+#                 load_state_entry.grid_remove()
+#                 button_browse_state_file.grid_remove()
+        
+#             recognition_possible=(var_playerType1.get()=="Human" or var_playerType2.get()=="Human")and (var_playerType1.get()=="AI-Model" or var_playerType2.get()=="AI-Model" or var_playerType1.get()=="Test Algorithm" or var_playerType2.get()=="Test Algorithm")
+#             if recognition_possible and not var_start_from_file.get():
+#                 use_recognition_button.config(state=NORMAL)
+#                 label_recognition.config(state=NORMAL)
+#             else:
+#                 use_recognition_button.config(state=DISABLED)
+#                 label_recognition.config(state=DISABLED)
+#             #tab 1, delaybutton#
+#             if (var_playerType1.get()=="AI-Model" or var_playerType2.get()=="AI-Model" ) or (var_playerType1.get()=="Test Algorithm" or var_playerType2.get()=="Test Algorithm"):
+#                 delaybutton.config(state=NORMAL)
+#             else:
+#                 delaybutton.config(state=DISABLED)
+#             #tab1, music button#
+#             if var_playerType1.get()=="Human" or var_playerType2.get()=="Human":
+#                 music_button.config(state=NORMAL)
+#             else:
+#                 music_button.config(state=DISABLED)
+
+#             #starting player
+#             if var_playerType1.get()==var_playerType2.get() and var_playerType1=="Test Algorithm": #option not relevant
+#                 playerstartLabel.config(state=DISABLED)
+#                 CbStartingPlayer.config(state=DISABLED)
+#             else:
+#                 playerstartLabel.config(state="normal")
+#                 CbStartingPlayer.config(state="readonly")
+
+#             if var_start_from_file.get()!=last_value_load_board_from_file and var_start_from_file.get()==True:
+#                 var_rep.set(False) #can't be used simultanously because if you would save a replay file, it wouldn't be complete (the moves that are loaded are gone)
+            
+#                 last_value_load_board_from_file=var_start_from_file.get()
+#                 last_value_repvar=var_rep.get()
+
+#             if var_rep.get()!=last_value_repvar and var_rep.get()==True:
+#                 var_start_from_file.set(False)
+
+#                 last_value_load_board_from_file=var_start_from_file.get()
+#                 last_value_repvar=var_rep.get()
+
+#             list_artificial_players=["AI-Model","Test Algorithm"]
+#             if var_playerType1.get() not in list_artificial_players and var_playerType2.get() not in list_artificial_players:
+#                 button_show_overruling.config(state=NORMAL)
+#             else:
+#                 button_show_overruling.config(state=DISABLED)
+
+#             if not var_rep.get() and not var_start_from_file.get():
+#                 label_info_load_save_replay.config(state=DISABLED)
+#             else:
+#                 label_info_load_save_replay.config(state=NORMAL)
+
+#             if var_playerType2.get()=="Human":
+#                 train_description.config(state=DISABLED) #a human will never play the game 3000 times to train the model
+#             else:
+#                 train_description.config(state=NORMAL)
+
+#             if var_playerType2.get()=="AI-Model":
+#                 CbModelTrain2.config(state="readonly")
+#                 label_value_number_of_training_loops_tab2_p2.config(state=NORMAL)
+#             else:
+#                 CbModelTrain2.config(state=DISABLED)
+#                 label_value_number_of_training_loops_tab2_p2.config(state=DISABLED)
+
+#             show_number_of_training_loops_comboboxes()
+#             refresh_training_stats()
+#         except Exception as e:
+#             pass
+
+# def refresh_training_stats():
+#     global last_selected_model #used to keep track of which model is selected, because it is unselected when selecting something in the  combobox
+#     try:
+#         for i in Lb1.curselection():
+#             last_selected_model=Lb1.get(i)
+
+#         model_class=modelmanager_instance.get_model(last_selected_model)
+#         var_number_of_training_loops.set(f"{model_class.get_number_of_training_loops("training loops")} (against H:{model_class.get_number_of_training_loops("training loops against Human")}, T'A':{model_class.get_number_of_training_loops("training loops against Test Algorithm")}, AI:{model_class.get_number_of_training_loops("training loops against AI-Model")} )")
+
+#         if Cb_choose_stats.get()== "Total":
+#             var_losses.set(model_class.get_number_of_losses("total end stats"))
+#             var_wins.set(model_class.get_number_of_wins("total end stats"))
+#             var_ties.set(model_class.get_number_of_ties("total end stats"))
+#         elif Cb_choose_stats.get()== "Games":
+#             var_losses.set(model_class.get_number_of_losses("games end stats"))
+#             var_wins.set(model_class.get_number_of_wins("games end stats"))
+#             var_ties.set(model_class.get_number_of_ties("games end stats"))
+#         elif Cb_choose_stats.get()== "Training":
+#             var_losses.set(model_class.get_number_of_losses("training loops end stats"))
+#             var_wins.set(model_class.get_number_of_wins("training loops end stats"))
+#             var_ties.set(model_class.get_number_of_ties("training loops end stats"))
+    
+#         total_sum=var_losses.get()+var_ties.get()+var_wins.get()
+#         if total_sum>0:
+#             for relative_value,value in zip([var_relative_value_losses,var_relative_value_wins,var_relative_value_ties],[var_losses,var_wins,var_ties]):
+#                 relative_value.set(str(np.round(((value.get()/total_sum)*100),2))+"%")  
+#         else:
+#             var_relative_value_losses.set("N/A")
+#             var_relative_value_wins.set("N/A")
+#             var_relative_value_ties.set("N/A")
+#     except Exception as e:
+#         pass
+
+# def show_number_of_training_loops_comboboxes():
+#     var_number_of_training_loops_comboboxes_p1.set("training loops: "+str(modelmanager_instance.get_model(var_model_player1.get()).get_number_of_training_loops("training loops")))
+    
+#     var_number_of_training_loops_comboboxes_p2.set("training loops: "+str(modelmanager_instance.get_model(var_model_player2.get()).get_number_of_training_loops("training loops")))
+    
+# Thread_maintain_GUI=Thread(target=maintain_GUI,daemon=True)#end when main program ends
+# Thread_maintain_GUI.start()
+
+# style2=ttk.Style()
+# style2.configure("TButton", font=(style_numbers[0], style_numbers[1]),bg=style_numbers[2],ipadx=style_numbers[3],ipady=style_numbers[4],pady=15)#font=georgia, size=10;bg=white
+# style2.configure("TRadiobutton",fg="white",bg="green")
+# style2.configure("TEntry",fg="white",bg="green")
+# style2.configure("TLabel", font=(style_numbers[0], style_numbers[1]),fg="white",bg="green")#font=georgia, size=10
+# style2.configure("TCheckbutton", font=(style_numbers[0], style_numbers[1]),fg="white",bg="green")#font=georgia, size=10
+
+
+
+# def mainmenu_run():
+#     root.mainloop()

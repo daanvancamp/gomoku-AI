@@ -3,7 +3,7 @@ import os
 from threading import Thread
 from filereader import log_info_overruling
 import sys
-from UI import mainmenu
+from UI import mainmenu_window
 from music import initialiseer_muziek
 
 
@@ -30,4 +30,6 @@ if __name__ == '__main__':
     log_new_run()
     check_paths()
     initialiseer_muziek()
-    main()
+    app = mainmenu_window.GomokuApp()
+    app.mainloop()
+    
