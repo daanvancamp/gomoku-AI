@@ -2,7 +2,8 @@ from datetime import datetime
 import os
 from threading import Thread
 from filereader import log_info_overruling
-import mainmenu
+import sys
+from UI import mainmenu
 from music import initialiseer_muziek
 
 

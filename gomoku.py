@@ -1,10 +1,6 @@
-import datetime
 import operator
-import os
 import time
-from tkinter import Button, Frame, IntVar, Label, Tk,messagebox as mb,StringVar
-import cv2
-from PIL import Image, ImageTk 
+from tkinter import messagebox as mb
 import pygame
 from AI_model import AI_Model
 from music import start_music_delayed
@@ -15,7 +11,6 @@ import stats
 import numpy as np
 import filereader
 from threading import Thread
-from detect_pieces import *
 
 window_name = "Gomoku"
 victory_text = ""
@@ -28,15 +23,18 @@ class GomokuGame:
         self.CELL_SIZE = self.WIDTH // self.GRID_SIZE
         self.P1COL = values[2]
         self.P2COL = values[3]
-        self.BOARD_COL = values[4]
-        self.LINE_COL = values[5]
-        self.SLEEP_BEFORE_END = values[6]
+        self.HOVER_COLOR = values[4]
+        self.BOARD_COL = values[5]
+        self.LINE_COL = values[6]
+        self.SLEEP_BEFORE_END = values[7]
+
         self.board = [[0] * self.GRID_SIZE for _ in range(self.GRID_SIZE)] # 0 = empty, 1 = player 1, 2 = player 2. De waarden corresponderen aan de kleuren.
         self.screen = None #embedding isn't possible when defined here
         self.winning_cells = []
         self.current_game = 0
         self.last_round = False
         self.ai_delay = False
+
         self.use_recognition=False
         self.play_music = False
         self.show_overruling = False
@@ -44,6 +42,7 @@ class GomokuGame:
         self.record_replay=False
         self.show_graphs=False
         self.GUI=None
+
         self.running=None
         self.stop_game=False
         self.quit_program=False
@@ -208,6 +207,16 @@ def draw_board(instance:GomokuGame,last_move_model=None):
     radius_smallest_circle=cell_size//4 - 5#radius_smallest_circle=5
     red=(255,0,0) #R=255, G=0, B=0
     green=(0,255,0)
+    cyan=(0,255,255)
+    magenta=(255,0,255)
+
+    if not instance.use_recognition:
+        color_show_overruling=green
+        color_mark_last_move=red
+    else:
+        color_show_overruling=cyan
+        color_mark_last_move=magenta
+
     cells_to_mark=[(7,7),(11,11),(3,3),(3,11),(11,3)]
     for row in range(instance.GRID_SIZE):#grid_size=15
         for col in range(instance.GRID_SIZE):
@@ -220,19 +229,19 @@ def draw_board(instance:GomokuGame,last_move_model=None):
             if instance.board[row][col] == 1:
                 if (row,col)==last_move_model and mark_last_move_model:
                     pygame.draw.circle(instance.screen, instance.P1COL, (col * cell_size + cell_size // 2, row * cell_size + cell_size // 2), radius_big_circle)
-                    pygame.draw.circle(instance.screen, red, (col * cell_size + cell_size // 2, row * cell_size + cell_size // 2), radius_small_circle)
+                    pygame.draw.circle(instance.screen, color_mark_last_move, (col * cell_size + cell_size // 2, row * cell_size + cell_size // 2), radius_small_circle)
 
                     if instance.show_overruling and player1.ai.overruled_last_move:
-                        pygame.draw.circle(instance.screen, green, (col * cell_size + cell_size // 2, row * cell_size + cell_size // 2), radius_smallest_circle)
+                        pygame.draw.circle(instance.screen, color_show_overruling, (col * cell_size + cell_size // 2, row * cell_size + cell_size // 2), radius_smallest_circle)
                 else:
                     pygame.draw.circle(instance.screen, instance.P1COL, (col * cell_size + cell_size // 2, row * cell_size + cell_size // 2), radius_big_circle)
 
             elif instance.board[row][col] == 2:
                 if (row,col)==last_move_model and mark_last_move_model:
                     pygame.draw.circle(instance.screen, instance.P2COL, (col * cell_size + cell_size // 2, row * cell_size + cell_size // 2), radius_big_circle)
-                    pygame.draw.circle(instance.screen, red, (col * cell_size + cell_size // 2, row * cell_size + cell_size // 2), radius_small_circle)
+                    pygame.draw.circle(instance.screen, color_mark_last_move, (col * cell_size + cell_size // 2, row * cell_size + cell_size // 2), radius_small_circle)
                     if instance.show_overruling and player2.ai.overruled_last_move:
-                        pygame.draw.circle(instance.screen, green, (col * cell_size + cell_size // 2, row * cell_size + cell_size // 2), radius_smallest_circle)
+                        pygame.draw.circle(instance.screen, color_show_overruling, (col * cell_size + cell_size // 2, row * cell_size + cell_size // 2), radius_smallest_circle)
                 else:
                     pygame.draw.circle(instance.screen, instance.P2COL, (col * cell_size + cell_size // 2, row * cell_size + cell_size // 2), radius_big_circle)
 
@@ -249,11 +258,11 @@ def draw_board(instance:GomokuGame,last_move_model=None):
         x,y = mouse_pos
         col = x // instance.CELL_SIZE
         row = y // instance.CELL_SIZE
-        HOVER_COLOR = (211, 211, 211)
+
         if instance.GRID_SIZE > row >= 0 == instance.board[row][col] and 0 <= col < instance.GRID_SIZE:
             if instance.board[row][col] == 0:#cell is empty
                 cell_size = instance.CELL_SIZE
-                pygame.draw.circle(instance.screen, HOVER_COLOR, (col * cell_size + cell_size // 2, row * cell_size + cell_size // 2), radius_big_circle)
+                pygame.draw.circle(instance.screen, instance.HOVER_COLOR, (col * cell_size + cell_size // 2, row * cell_size + cell_size // 2), radius_big_circle)
                 if current_player.id==1:
                     pygame.draw.circle(instance.screen, instance.P1COL, (col * cell_size + cell_size // 2, row * cell_size + cell_size // 2), radius_smallest_circle)
                 elif current_player.id==2:
