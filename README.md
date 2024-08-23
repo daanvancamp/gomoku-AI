@@ -24,7 +24,7 @@ These improvements are more extensively described in the commits, read them if y
 
 June 2024:
 
-  added support for webcams
+  started adding support for webcams
   
 july 2024:
 
@@ -134,12 +134,15 @@ august 2024:
   
   first implementation of the integrated recognition
 
+  restructured, the fullscreen GUI and the recognition are now each part of their own module.
+
 
 **issues:**
 
 You shouldn't experience any issues at the moment.
 
-roadmap(in descending priority):
+
+**roadmap(in descending priority):**
 
 -We are currently working on integrating the two programs.
 
