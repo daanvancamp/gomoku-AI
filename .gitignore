@@ -8,3 +8,7 @@ logs/
 /dist
 /main.spec
 /UI/__pycache__
+/model_management/__pycache__
+/utils/__pycache__
+/game/__pycache__
+/NN/__pycache__
