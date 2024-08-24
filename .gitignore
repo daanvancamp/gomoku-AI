@@ -8,3 +8,5 @@ logs/
 /dist
 /main.spec
 /UI/__pycache__
+/model_management/__pycache__
+/utils/__pycache__
