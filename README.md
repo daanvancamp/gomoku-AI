@@ -136,7 +136,11 @@ august 2024:
 
   restructured, the fullscreen GUI and the recognition are now each part of their own module.
   
-  added folders
+  added folders to the repository
+
+  visual improvements in the game window
+
+  The mainmenu is now fullscreen
 
 
 **issues:**
