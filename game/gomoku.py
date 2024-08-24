@@ -41,7 +41,7 @@ class GomokuGame:
         self.show_hover_effect = None
         self.record_replay=False
         self.show_graphs=False
-        self.GUI=None
+        self.Gamewindow=None
 
         self.running=None
         self.stop_game=False
@@ -161,7 +161,7 @@ def reset_player_stats():
 # Update win / loss stats of players: -1 = tie; 1 = player 1 won; 2 = player 2 won
 def update_player_stats(instance:GomokuGame, winning_player):
     global player1, player2,players
-    instance.GUI.update_wins(winning_player)
+    instance.Gamewindow.update_wins(winning_player)
     AI_players=[p for p in players if p.TYPE=="AI-Model"]
     if winning_player > -1: # run if game was not a tie
         if winning_player == 1:
@@ -196,77 +196,6 @@ def update_player_stats(instance:GomokuGame, winning_player):
         stats.log_message(f"\nStatistics:\n{players[0].TYPE} {players[0].id}:\nwins: {players[0].wins} - win rate: {players[0].win_rate} - average score: {players[0].avg_score} - weighed score: {sum(players[0].weighed_scores)/len(players[0].weighed_scores)} - average moves: {players[0].avg_moves}.\n"
                           f"{players[1].TYPE} {players[1].id}:\nwins: {players[1].wins} - win rate: {players[1].win_rate} - average score: {players[1].avg_score} - weighed score: {sum(players[1].weighed_scores)/len(players[1].weighed_scores)} - average moves: {players[1].avg_moves}.")
 
-
-# Function to draw the game board
-def draw_board(instance:GomokuGame,last_move_model=None):
-    global mark_last_move_model, player1, player2
-    instance.screen.fill(instance.BOARD_COL)#screen needs to be cleared before drawing
-    cell_size = instance.CELL_SIZE#cell_size=30
-    radius_big_circle=cell_size//2 - 5#radius_big_circle=15
-    radius_small_circle=cell_size//3 - 5#radius_small_circle=10
-    radius_smallest_circle=cell_size//4 - 5#radius_smallest_circle=5
-    red=(255,0,0) #R=255, G=0, B=0
-    green=(0,255,0)
-    cyan=(0,255,255)
-    magenta=(255,0,255)
-
-    if not instance.use_recognition:
-        color_show_overruling=green
-        color_mark_last_move=red
-    else:
-        color_show_overruling=cyan
-        color_mark_last_move=magenta
-
-    cells_to_mark=[(7,7),(11,11),(3,3),(3,11),(11,3)]
-    for row in range(instance.GRID_SIZE):#grid_size=15
-        for col in range(instance.GRID_SIZE):
-            if (row,col) in cells_to_mark:
-                pygame.draw.rect(instance.screen, instance.LINE_COL, (col * cell_size, row * cell_size, cell_size, cell_size), 2)
-            else:
-                pygame.draw.rect(instance.screen, instance.LINE_COL, (col * cell_size, row * cell_size, cell_size, cell_size), 1)
-
-
-            if instance.board[row][col] == 1:
-                if (row,col)==last_move_model and mark_last_move_model:
-                    pygame.draw.circle(instance.screen, instance.P1COL, (col * cell_size + cell_size // 2, row * cell_size + cell_size // 2), radius_big_circle)
-                    pygame.draw.circle(instance.screen, color_mark_last_move, (col * cell_size + cell_size // 2, row * cell_size + cell_size // 2), radius_small_circle)
-
-                    if instance.show_overruling and player1.ai.overruled_last_move:
-                        pygame.draw.circle(instance.screen, color_show_overruling, (col * cell_size + cell_size // 2, row * cell_size + cell_size // 2), radius_smallest_circle)
-                else:
-                    pygame.draw.circle(instance.screen, instance.P1COL, (col * cell_size + cell_size // 2, row * cell_size + cell_size // 2), radius_big_circle)
-
-            elif instance.board[row][col] == 2:
-                if (row,col)==last_move_model and mark_last_move_model:
-                    pygame.draw.circle(instance.screen, instance.P2COL, (col * cell_size + cell_size // 2, row * cell_size + cell_size // 2), radius_big_circle)
-                    pygame.draw.circle(instance.screen, color_mark_last_move, (col * cell_size + cell_size // 2, row * cell_size + cell_size // 2), radius_small_circle)
-                    if instance.show_overruling and player2.ai.overruled_last_move:
-                        pygame.draw.circle(instance.screen, color_show_overruling, (col * cell_size + cell_size // 2, row * cell_size + cell_size // 2), radius_smallest_circle)
-                else:
-                    pygame.draw.circle(instance.screen, instance.P2COL, (col * cell_size + cell_size // 2, row * cell_size + cell_size // 2), radius_big_circle)
-
-    # Draw the winning line
-    if instance.winning_cells:
-        start_row, start_col = instance.winning_cells[0]#start_cell=(0,0)
-        end_row, end_col = instance.winning_cells[-1]#end_cell=(15,15)
-        pygame.draw.line(instance.screen, (0, 255, 0),
-                         (start_col * cell_size + cell_size // 2, start_row * cell_size + cell_size // 2),
-                         (end_col * cell_size + cell_size // 2, end_row * cell_size + cell_size // 2), 5)
-    if instance.show_hover_effect:
-        ## adds hover effects to cells when mouse hovers over them##
-        mouse_pos = pygame.mouse.get_pos()
-        x,y = mouse_pos
-        col = x // instance.CELL_SIZE
-        row = y // instance.CELL_SIZE
-
-        if instance.GRID_SIZE > row >= 0 == instance.board[row][col] and 0 <= col < instance.GRID_SIZE:
-            if instance.board[row][col] == 0:#cell is empty
-                cell_size = instance.CELL_SIZE
-                pygame.draw.circle(instance.screen, instance.HOVER_COLOR, (col * cell_size + cell_size // 2, row * cell_size + cell_size // 2), radius_big_circle)
-                if current_player.id==1:
-                    pygame.draw.circle(instance.screen, instance.P1COL, (col * cell_size + cell_size // 2, row * cell_size + cell_size // 2), radius_smallest_circle)
-                elif current_player.id==2:
-                    pygame.draw.circle(instance.screen, instance.P2COL, (col * cell_size + cell_size // 2, row * cell_size + cell_size // 2), radius_smallest_circle)
 
 def reset_game(instance:GomokuGame):
     global current_player
@@ -479,10 +408,10 @@ def runGame(instance:GomokuGame, game_number):#main function
             # Human move
             if current_player.TYPE == "Human":
 
-                if instance.use_recognition and instance.GUI.vid is not None:
-                    if not instance.GUI.vid.isOpened():
+                if instance.use_recognition and instance.Gamewindow.vid is not None:
+                    if not instance.Gamewindow.vid.isOpened():
                         mb.showerror(title="Is your webcam connected?",message="Could not open webcam, please attach a webcam to the computer and try again")
-                        instance.GUI.stop_game()
+                        instance.Gamewindow.stop_game()
 
                 for event in pygame.event.get():
                     if event.type == pygame.QUIT:
@@ -564,11 +493,11 @@ def runGame(instance:GomokuGame, game_number):#main function
                     #print("Na switch player AI!!!!!!!!!!!")
                     #logging_players()    
             try:
-                draw_board(instance,last_move_model)
+                instance.Gamewindow.draw_board(instance,last_move_model)
             except :
-                draw_board(instance)
+                instance.Gamewindow.draw_board(instance)
 
-            instance.GUI.refresh_screen(game_number)
+            instance.Gamewindow.refresh_screen(game_number)
                 
         else:
             victory_text = "TIE"
@@ -583,7 +512,7 @@ def runGame(instance:GomokuGame, game_number):#main function
         stats.log_message(victory_text)
         update_player_stats(instance, winning_player)
         time.sleep(instance.SLEEP_BEFORE_END)#sleep before closing for SLEEP_BEFORE_END seconds
-        instance.GUI.show_dialog_next_game()
+        instance.Gamewindow.show_dialog_next_game()
 
     reset_game(instance)
 
@@ -714,11 +643,11 @@ def runTraining(instance:GomokuGame, game_number):#main function
                     current_player = players[2 - current_player.id]
                     #logging_players()    
             try:
-                draw_board(instance,last_move)
+                instance.Gamewindow.draw_board(instance,last_move)
             except:
-                draw_board(instance)
+                instance.Gamewindow.draw_board(instance)
             handle_pygame_events()
-            instance.GUI.refresh_screen(game_number)
+            instance.Gamewindow.refresh_screen(game_number)
                 
         else:
             victory_text = "TIE"
@@ -801,10 +730,10 @@ def runReplay(instance:GomokuGame, moves:dict=None):#main function
                     current_player = players[2 - current_player.id]
                     move_id += 1
             try:
-                draw_board(instance,last_move)
+                instance.Gamewindow.draw_board(instance,last_move)
             except:
-                draw_board(instance)
-            instance.GUI.refresh_screen(0)
+                instance.Gamewindow.draw_board(instance)
+            instance.Gamewindow.refresh_screen(0)
                 
         else:
             victory_text = "TIE"
@@ -813,7 +742,7 @@ def runReplay(instance:GomokuGame, moves:dict=None):#main function
     # End game
     if not instance.stop_game:
         stats.log_message(victory_text)
-        instance.GUI.show_dialog_next_game()
+        instance.Gamewindow.show_dialog_next_game()
         time.sleep(instance.SLEEP_BEFORE_END)#sleep before closing for SLEEP_BEFORE_END seconds
 
     reset_game(instance)

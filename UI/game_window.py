@@ -7,10 +7,11 @@ import pygame
 import os
 from game import playboard_processor,gomoku
 
-class Game_Window(Tk):
-    def __init__(self,instance:gomoku.GomokuGame):
+class Game_Window(Frame):
+    def __init__(self,instance:gomoku.GomokuGame,master):
         super().__init__()
-        self.withdraw()
+        self.grid()
+        self.config(bg="black")
         self.game_instance = instance
         self.game_mode = None
         self.vid = None
@@ -21,7 +22,6 @@ class Game_Window(Tk):
         self.draws = 0
 
         self.initialize_game_window()
-
     
     def quit_program(self):
         self.game_instance.quit_program = True
@@ -107,9 +107,7 @@ class Game_Window(Tk):
         self.rowconfigure(0, weight=1)
         self.rowconfigure(1, weight=1)
 
-        self.attributes("-fullscreen", True)
         self.config(bg="#357EC7")
-        self.title("Gomoku")
 
         font_labels=("Arial", 18)
         distance_from_left_side=20
@@ -179,12 +177,14 @@ class Game_Window(Tk):
         os.environ['SDL_WINDOWID'] = str(self.embed_pygame.winfo_id())
         os.environ['SDL_VIDEODRIVER'] = 'windib'
 
-    
-    def open_game_window(self):
-        self.initialize_session()
+        pygame.display.init()
+        self.game_instance.screen = pygame.display.set_mode((self.game_instance.WIDTH, self.game_instance.HEIGHT))
+        self.draw_board(self.game_instance)
 
-        if not self.winfo_viewable():
-                self.deiconify()
+        self.pygame_loop()
+    
+    def restart_game_window(self):
+        self.initialize_session()
 
         if self.game_mode==self.game_instance.game_modes[2]:#when replaying
             for widget in self.widgets_to_hide_replay:
@@ -211,9 +211,6 @@ class Game_Window(Tk):
         self.game_instance.screen = pygame.display.set_mode((self.game_instance.WIDTH, self.game_instance.HEIGHT))
     
         self.pygame_loop()
-
-    def hide_GUI(self):
-        self.withdraw()
 
     def refresh_labels(self):
         if gomoku.current_player.TYPE == "Human":
@@ -292,6 +289,75 @@ class Game_Window(Tk):
         else:
             self.after(0,self.label_recognition_info.config(text="No move was recognized, try again later.",fg="red"))
             return #don't do anything
+
+    def draw_board(self,instance:gomoku.GomokuGame,last_move_model=None):
+        instance.screen.fill(instance.BOARD_COL)#screen needs to be cleared before drawing
+        cell_size = instance.CELL_SIZE#cell_size=30
+        radius_big_circle=cell_size//2 - 5#radius_big_circle=15
+        radius_small_circle=cell_size//3 - 5#radius_small_circle=10
+        radius_smallest_circle=cell_size//4 - 5#radius_smallest_circle=5
+        red=(255,0,0) #R=255, G=0, B=0
+        green=(0,255,0)
+        cyan=(0,255,255)
+        magenta=(255,0,255)
+
+        if not instance.use_recognition:
+            color_show_overruling=green
+            color_mark_last_move=red
+        else:
+            color_show_overruling=cyan
+            color_mark_last_move=magenta
+
+        cells_to_mark=[(7,7),(11,11),(3,3),(3,11),(11,3)]
+        for row in range(instance.GRID_SIZE):#grid_size=15
+            for col in range(instance.GRID_SIZE):
+                if (row,col) in cells_to_mark:
+                    pygame.draw.rect(instance.screen, instance.LINE_COL, (col * cell_size, row * cell_size, cell_size, cell_size), 2)
+                else:
+                    pygame.draw.rect(instance.screen, instance.LINE_COL, (col * cell_size, row * cell_size, cell_size, cell_size), 1)
+
+
+                if instance.board[row][col] == 1:
+                    if (row,col)==last_move_model and gomoku.mark_last_move_model:
+                        pygame.draw.circle(instance.screen, instance.P1COL, (col * cell_size + cell_size // 2, row * cell_size + cell_size // 2), radius_big_circle)
+                        pygame.draw.circle(instance.screen, color_mark_last_move, (col * cell_size + cell_size // 2, row * cell_size + cell_size // 2), radius_small_circle)
+
+                        if instance.show_overruling and gomoku.player1.ai.overruled_last_move:
+                            pygame.draw.circle(instance.screen, color_show_overruling, (col * cell_size + cell_size // 2, row * cell_size + cell_size // 2), radius_smallest_circle)
+                    else:
+                        pygame.draw.circle(instance.screen, instance.P1COL, (col * cell_size + cell_size // 2, row * cell_size + cell_size // 2), radius_big_circle)
+
+                elif instance.board[row][col] == 2:
+                    if (row,col)==last_move_model and gomoku.mark_last_move_model:
+                        pygame.draw.circle(instance.screen, instance.P2COL, (col * cell_size + cell_size // 2, row * cell_size + cell_size // 2), radius_big_circle)
+                        pygame.draw.circle(instance.screen, color_mark_last_move, (col * cell_size + cell_size // 2, row * cell_size + cell_size // 2), radius_small_circle)
+                        if instance.show_overruling and gomoku.player2.ai.overruled_last_move:
+                            pygame.draw.circle(instance.screen, color_show_overruling, (col * cell_size + cell_size // 2, row * cell_size + cell_size // 2), radius_smallest_circle)
+                    else:
+                        pygame.draw.circle(instance.screen, instance.P2COL, (col * cell_size + cell_size // 2, row * cell_size + cell_size // 2), radius_big_circle)
+
+        # Draw the winning line
+        if instance.winning_cells:
+            start_row, start_col = instance.winning_cells[0]#start_cell=(0,0)
+            end_row, end_col = instance.winning_cells[-1]#end_cell=(15,15)
+            pygame.draw.line(instance.screen, (0, 255, 0),
+                             (start_col * cell_size + cell_size // 2, start_row * cell_size + cell_size // 2),
+                             (end_col * cell_size + cell_size // 2, end_row * cell_size + cell_size // 2), 5)
+        if instance.show_hover_effect:
+            ## adds hover effects to cells when mouse hovers over them##
+            mouse_pos = pygame.mouse.get_pos()
+            x,y = mouse_pos
+            col = x // instance.CELL_SIZE
+            row = y // instance.CELL_SIZE
+
+            if instance.GRID_SIZE > row >= 0 == instance.board[row][col] and 0 <= col < instance.GRID_SIZE:
+                if instance.board[row][col] == 0:#cell is empty
+                    cell_size = instance.CELL_SIZE
+                    pygame.draw.circle(instance.screen, instance.HOVER_COLOR, (col * cell_size + cell_size // 2, row * cell_size + cell_size // 2), radius_big_circle)
+                    if gomoku.current_player.id==1:
+                        pygame.draw.circle(instance.screen, instance.P1COL, (col * cell_size + cell_size // 2, row * cell_size + cell_size // 2), radius_smallest_circle)
+                    elif gomoku.current_player.id==2:
+                        pygame.draw.circle(instance.screen, instance.P2COL, (col * cell_size + cell_size // 2, row * cell_size + cell_size // 2), radius_smallest_circle)
 
         
 

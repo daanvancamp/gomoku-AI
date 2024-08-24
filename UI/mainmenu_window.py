@@ -1,3 +1,4 @@
+from ast import Lambda
 import random
 import sys
 from threading import Thread
@@ -25,7 +26,6 @@ class GomokuApp(Tk):
 	def __init__(self):
 		#type annotation
 		#self.game_window:game_window.Game_Window = game_window.Game_Window(game_instance)
-		game_instance.GUI = game_window.Game_Window(game_instance)
 
 		super().__init__()
 		self.title("Gomoku -- Main Menu")
@@ -33,11 +33,13 @@ class GomokuApp(Tk):
 		self.attributes("-topmost", True)
 		self.bind("<Escape>", lambda event: self.quit_game())
 		self.bind("<q>", lambda event: self.quit_game())
-		self.attributes("-fullscreen", True)
+		self.attributes("-fullscreen", False)#temporarily set to false because it is easier to test
+		game_instance.Gamewindow = game_window.Game_Window(game_instance,self)
+
 
 
 		self.tk_setPalette(background='white', foreground='black',
-               activeBackground='green', activeForeground='red')
+			   activeBackground='green', activeForeground='red')
 
 		Thread_maintain_GUI=Thread(target=self.maintain_GUI,daemon=True)#end when main program ends
 		Thread_maintain_GUI.start()
@@ -47,10 +49,11 @@ class GomokuApp(Tk):
 		self.frame3 = Frame(self,width=WIDTH,height=HEIGHT,bg="white")
 		self.frame4 = Frame(self,width=WIDTH,height=HEIGHT,bg="white")
 
-		self.frame1.grid(row=0,column=0)
-		self.frame2.grid(row=0,column=1)
-		self.frame3.grid(row=1,column=0)
-		self.frame4.grid(row=1,column=1)
+		#only enable if you want to test, don't enable in production
+		# self.frame1.grid(row=0,column=0)
+		# self.frame2.grid(row=0,column=1)
+		# self.frame3.grid(row=1,column=0)
+		# self.frame4.grid(row=1,column=1)
 
 
 		self.var_playerType1 = StringVar()
@@ -124,6 +127,23 @@ class GomokuApp(Tk):
 		distance_from_left_side=10
 		### TABS ###
 		self.style_numbers = ["georgia", 10, "white", 12, 2]#font, size, color, bold, underline
+
+
+		self.menubar=Menu(self)
+		self.new_game_menu=Menu(self.menubar,tearoff=0)
+
+		self.new_game_menu.add_command(label="Play", command=lambda:self.add_frame_to_grid(self.frame1))
+		self.new_game_menu.add_command(label="Train", command=lambda:self.add_frame_to_grid(self.frame2))
+		self.new_game_menu.add_command(label="Replay", command=lambda:self.add_frame_to_grid(self.frame3))
+
+		self.menubar.add_cascade(label="New Game",menu=self.new_game_menu)
+
+		self.models_menu=Menu(self.menubar,tearoff=0)
+		self.models_menu.add_command(label="models", command=lambda:self.add_frame_to_grid(self.frame4))
+
+		self.menubar.add_cascade(label="Models",menu=self.models_menu)
+		self.config(menu=self.menubar)
+
 
 		self.button_1 = Button(self.frame1, text="New Game", command=lambda: self.start_new_game())
 		self.button_1.grid(row=0, column=0, sticky="w", padx=distance_from_left_side)
@@ -374,10 +394,31 @@ class GomokuApp(Tk):
 				newtype = self.var_playerType2.get()
 			gomoku.players[player_id-1].TYPE=newtype
 
-	def quit_game():
+	def quit_game(self):
 		sys.exit() #end the program
 
 
+	def my_decorator(func):
+		def wrapper(*args, **kwargs):
+			# Actie die je aan het begin van de functie wilt uitvoeren
+			print("Actie aan het begin van de functie")
+		
+			# Oproepen van de oorspronkelijke functie
+			result = func(*args, **kwargs)
+		
+			return result
+		return wrapper
+
+	def add_frame_to_grid(self,frame):
+		game_instance.Gamewindow.stop_game()
+		self.remove_all_widgets()
+		frame.grid(row=0,column=0)
+
+
+	def remove_all_widgets(self):
+		for widget in self.winfo_children():
+			if widget.winfo_ismapped():  # Controleer of de widget zichtbaar is
+				widget.grid_remove()
 
 	def browse_state_files(self):
 		file_path = filedialog.askopenfilename(filetypes=[("txt File", "*.txt")],initialdir=r".\test_situations")
@@ -446,9 +487,6 @@ class GomokuApp(Tk):
 		else:
 			gomoku.current_player = gomoku.player2
 		
-		self.wm_state('iconic')
-
-		
 		valid_number = False
 
 		while not valid_number:
@@ -459,7 +497,7 @@ class GomokuApp(Tk):
 				print("invalid number, try again")
 
 		game_instance.game_mode=game_instance.game_modes[0]
-		game_instance.GUI.open_game_window()
+		game_instance.Gamewindow.restart_game_window()
 		for i in range(runs):
 			filereader.log_info_overruling("run "+str(i+1)+" begins:")
 			stats.log_message(f"Game  {i+1} begins.")
@@ -537,10 +575,9 @@ class GomokuApp(Tk):
 			game_instance.ai_delay = False #never wait when training
 			stats.should_log = self.var_log.get()
 			stats.setup_logging(gomoku.player1.TYPE, gomoku.player2.TYPE)
-			self.wm_state('iconic')
 
 			game_instance.game_mode=game_instance.game_modes[1]
-			game_instance.GUI.open_game_window()
+			game_instance.Gamewindow.restart_game_window()
 
 			for i in range(runs):
 				filereader.log_info_overruling("run "+str(i+1)+" begins:")
@@ -601,10 +638,9 @@ class GomokuApp(Tk):
 			game_instance.ai_delay = self.var_delay.get()
 			stats.should_log = self.var_log.get()
 			stats.setup_logging(gomoku.player1.TYPE, gomoku.player2.TYPE)
-			self.wm_state('iconic')
 
 			game_instance.game_mode=game_instance.game_modes[2]
-			game_instance.GUI.open_game_window()
+			game_instance.Gamewindow.open_game_window()
 
 			try:
 				gomoku.runReplay(game_instance,moves) #main function
@@ -619,8 +655,6 @@ class GomokuApp(Tk):
 
 	def game_over(self):
 		global game_instance
-		game_instance.GUI.hide_GUI()
-		self.wm_state('normal')
 		game_instance.current_game = 0
 		if game_instance.quit_program:
 			self.quit_game()
