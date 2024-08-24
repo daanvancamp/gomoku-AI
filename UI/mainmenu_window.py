@@ -2,7 +2,7 @@ import random
 import sys
 from threading import Thread
 from tkinter import *
-from tkinter import ttk
+from tkinter.ttk import Combobox
 from tkinter import filedialog
 
 import numpy as np
@@ -34,6 +34,10 @@ class GomokuApp(Tk):
 		self.bind("<Escape>", lambda event: self.quit_game())
 		self.bind("<q>", lambda event: self.quit_game())
 		self.attributes("-fullscreen", True)
+
+
+		self.tk_setPalette(background='white', foreground='black',
+               activeBackground='green', activeForeground='red')
 
 		Thread_maintain_GUI=Thread(target=self.maintain_GUI,daemon=True)#end when main program ends
 		Thread_maintain_GUI.start()
@@ -126,9 +130,9 @@ class GomokuApp(Tk):
 		self.checkbox_show_dialog=Checkbutton(self.frame1, text="Show dialog before starting next game", variable=self.var_show_dialog)
 		self.checkbox_show_dialog.grid(row=0, column=1, sticky="w")
 
-		self.player1typelabel = ttk.Label(self.frame1, text="Player 1(black)")
+		self.player1typelabel = Label(self.frame1, text="Player 1(black)")
 		self.player1typelabel.grid(row=2, column=0, sticky="w", padx=distance_from_left_side)
-		self.player2typelabel = ttk.Label(self.frame1, text="Player 2(white)")
+		self.player2typelabel = Label(self.frame1, text="Player 2(white)")
 		self.player2typelabel.grid(row=2, column=1, sticky="w", padx=distance_from_left_side)
 
 		self.radiobutton1 = Radiobutton(self.frame1, text="Human", variable=self.var_playerType1, value="Human", command=lambda: self.set_player_type(0))
@@ -146,8 +150,8 @@ class GomokuApp(Tk):
 		self.radiobutton6.grid(row=5, column=1, sticky="w")
 
 		self.list_models = modelmanager_instance.get_list_models()
-		self.CbModel1 = ttk.Combobox(self.frame1, state="readonly", values=self.list_models,textvariable=self.var_model_player1)
-		self.CbModel2 = ttk.Combobox(self.frame1, state="readonly", values=self.list_models,textvariable=self.var_model_player2)
+		self.CbModel1 = Combobox(self.frame1, state="readonly", values=self.list_models,textvariable=self.var_model_player1)
+		self.CbModel2 = Combobox(self.frame1, state="readonly", values=self.list_models,textvariable=self.var_model_player2)
 
 		self.CbModel1.grid(row=6, column=0, sticky="w",padx=distance_from_left_side)
 		self.CbModel2.grid(row=6, column=1,sticky="w",padx=distance_from_left_side)
@@ -174,94 +178,94 @@ class GomokuApp(Tk):
 
 		self.playerstartLabel = Label(self.frame1, text="Player to start: ")
 		self.playerstartLabel.grid(row=11, column=0, sticky="w", padx=distance_from_left_side)
-		self.CbStartingPlayer = ttk.Combobox(self.frame1, state="readonly", values=["Player 1", "Player 2"], textvariable=self.var_startingPlayer)
+		self.CbStartingPlayer = Combobox(self.frame1, state="readonly", values=["Player 1", "Player 2"], textvariable=self.var_startingPlayer)
 		self.CbStartingPlayer.current(0)
 		self.CbStartingPlayer.grid(row=11, column=1, sticky="w")
 
 		#column 0
-		self.logbutton = ttk.Checkbutton(self.frame1, text="Create log file", variable=self.var_log) 
+		self.logbutton = Checkbutton(self.frame1, text="Create log file", variable=self.var_log) 
 		self.logbutton.grid(row=12, column=0, sticky="w",padx=distance_from_left_side)
-		self.replaybutton = ttk.Checkbutton(self.frame1, text="Save replays(1)", variable=self.var_rep) 
+		self.replaybutton = Checkbutton(self.frame1, text="Save replays(1)", variable=self.var_rep) 
 		self.replaybutton.grid(row=13, column=0, sticky="w",padx=distance_from_left_side)
-		self.delaybutton = ttk.Checkbutton(self.frame1, text="Use AI Delay", variable=self.var_delay)
+		self.delaybutton = Checkbutton(self.frame1, text="Use AI Delay", variable=self.var_delay)
 		self.delaybutton.grid(row=14, column=0, sticky="w",padx=distance_from_left_side)
 
 		#column1
-		self.music_button=ttk.Checkbutton(self.frame1, text="Play music", variable=self.var_play_music)
+		self.music_button=Checkbutton(self.frame1, text="Play music", variable=self.var_play_music)
 		self.music_button.grid(row=12, column=1, sticky="w")
-		self.button_show_overruling=ttk.Checkbutton(self.frame1, text="Show overruling", variable=self.var_show_overruling)
+		self.button_show_overruling=Checkbutton(self.frame1, text="Show overruling", variable=self.var_show_overruling)
 		self.button_show_overruling.grid(row=13, column=1, sticky="w")
-		self.use_recognition_button=ttk.Checkbutton(self.frame1, text="use recognition(experimental)*", variable=self.var_use_recognition)
+		self.use_recognition_button=Checkbutton(self.frame1, text="use recognition(in development)*", variable=self.var_use_recognition)
 		self.use_recognition_button.grid(row=14, column=1, sticky="w")
 
 
-		self.label_recognition=ttk.Label(self.frame1, text="*only turn on when you have a physical board, a webcam and the other repository.",wraplength=WIDTH-15)
+		self.label_recognition=Label(self.frame1, text="*only turn on when you have a physical board, a webcam and the other repository.",wraplength=WIDTH-15)
 		self.label_recognition.grid(row=15, column=0, sticky="w",columnspan=2, padx=distance_from_left_side)
 
 
 		self.bottomframe = Frame(self.frame1, highlightbackground="blue", highlightthickness=3, borderwidth=1)
 		self.bottomframe.grid(row=16, column=0, sticky="w",columnspan=3, padx=distance_from_left_side, pady=15)
 
-		self.start_from_file_button=ttk.Checkbutton(self.bottomframe, text="Load game situation(2)", variable=self.var_start_from_file)
+		self.start_from_file_button=Checkbutton(self.bottomframe, text="Load game situation(2)", variable=self.var_start_from_file)
 		self.start_from_file_button.grid(row=0, column=0, sticky="w")
-		self.label_unvalid_file=ttk.Label(self.bottomframe, text="",style="TLabel")
+		self.label_unvalid_file=Label(self.bottomframe, text="")
 		self.label_unvalid_file.grid(row=0, column=1, sticky="e",columnspan=2)
 
-		self.label_load_state=ttk.Label(self.bottomframe, text="Choose file board state: ",style="TLabel")
+		self.label_load_state=Label(self.bottomframe, text="Choose file board state: ")
 		self.label_load_state.grid(row=1, column=0, sticky="w")
-		self.load_state_entry = ttk.Entry(self.bottomframe, textvariable=self.state_board_path, width=50,style="TEntry")
+		self.load_state_entry = Entry(self.bottomframe, textvariable=self.state_board_path, width=50)
 		self.load_state_entry.grid(row=2, column=0, sticky="w",columnspan=2)
-		self.button_browse_state_file = ttk.Button(self.bottomframe, text="...",style="TButton", command=lambda: self.browse_state_files())
+		self.button_browse_state_file = Button(self.bottomframe, text="...", command=lambda: self.browse_state_files())
 		self.button_browse_state_file.grid(row=2, column=2, sticky="w")
 
 
-		self.button_3 = ttk.Button(self.input_canvas, text="Quit Game(ESC/Q)", style="TButton", command=lambda: self.quit_game())
+		self.button_3 = Button(self.input_canvas, text="Quit Game(ESC/Q)", command=lambda: self.quit_game())
 		self.button_3.grid(row=1, column=0)
 		self.label_shortcuts=Label(self.input_canvas, text="In game shortcuts: esc = return to this menu, q = terminate program , space = skip the current round",wraplength=WIDTH-15,bg="#357EC7",font=(self.style_numbers[0],self.style_numbers[1]),fg="white")
 		self.label_shortcuts.grid(row=2, column=0)
 
-		self.label_info_load_save_replay=ttk.Label(self.frame1,wraplength=WIDTH-15, text="(1)(2)The save replay function can't be used when loading a board, because that would create a wrong replay file.",style="TLabel")
+		self.label_info_load_save_replay=Label(self.frame1,wraplength=WIDTH-15, text="(1)(2)The save replay function can't be used when loading a board, because that would create a wrong replay file.")
 		self.label_info_load_save_replay.grid(row=17, column=0, sticky="w",columnspan=2,pady=5,padx=distance_from_left_side)
 
 		#row 0
-		self.button_2 = ttk.Button(self.frame2, text="Train", style="TButton", command=lambda: self.start_new_training())
+		self.button_2 = Button(self.frame2, text="Train", command=lambda: self.start_new_training())
 		self.button_2.grid(row=0, column=1, sticky="e")
 
 		#column 0
-		self.label_model=ttk.Label(self.frame2, text="AI-Model: ",style="TLabel")
+		self.label_model=Label(self.frame2, text="AI-Model: ")
 		self.label_model.grid(row=1, column=0, sticky="w",padx=distance_from_left_side,pady=1)
-		self.CbModelTrain1 = ttk.Combobox(self.frame2, state="readonly", values=self.list_models,textvariable=self.var_model_player1)
+		self.CbModelTrain1 = Combobox(self.frame2, state="readonly", values=self.list_models,textvariable=self.var_model_player1)
 		self.CbModelTrain1.grid(row=2, column=0, sticky="w",padx=distance_from_left_side,pady=1)
-		self.label_value_number_of_training_loops_tab2_p1 = ttk.Label(self.frame2, textvariable=self.var_number_of_training_loops_comboboxes_p1,style="TLabel")
+		self.label_value_number_of_training_loops_tab2_p1 =Label(self.frame2, textvariable=self.var_number_of_training_loops_comboboxes_p1)
 		self.label_value_number_of_training_loops_tab2_p1.grid(row=3, column=0, sticky="w",padx=distance_from_left_side,pady=1)
-		self.overrule_button_player_1_tab2=ttk.Checkbutton(self.frame2, text="Allow overrule", variable=self.var_allow_overrule_player_1)
+		self.overrule_button_player_1_tab2=Checkbutton(self.frame2, text="Allow overrule", variable=self.var_allow_overrule_player_1)
 		self.overrule_button_player_1_tab2.grid(row=7, column=0, sticky="w",padx=distance_from_left_side)
 
 
-		self.train_opponent_label = ttk.Label(self.frame2, text="Train model against:", style="TLabel")
+		self.train_opponent_label = Label(self.frame2, text="Train model against:")
 		self.train_opponent_label.grid(row=1, column=1, sticky="w")
 
-		self.human_training_button=ttk.Radiobutton(self.frame2, text="Human", variable=self.var_playerType2, value="Human", style="TRadiobutton")
+		self.human_training_button=Radiobutton(self.frame2, text="Human", variable=self.var_playerType2, value="Human")
 		self.human_training_button.grid(row=2, column=1,sticky="w")
-		self.radiobutton7 = ttk.Radiobutton(self.frame2, text="Test Algorithm", variable=self.var_playerType2, value="Test Algorithm")
+		self.radiobutton7 = Radiobutton(self.frame2, text="Test Algorithm", variable=self.var_playerType2, value="Test Algorithm")
 		self.radiobutton7.grid(row=3, column=1, sticky="w")
-		self.radiobutton8 = ttk.Radiobutton(self.frame2, text="AI-Model", variable=self.var_playerType2, value="AI-Model", style="TRadiobutton")
+		self.radiobutton8 = Radiobutton(self.frame2, text="AI-Model", variable=self.var_playerType2, value="AI-Model")
 		self.radiobutton8.grid(row=4, column=1, sticky="w")
 
-		self.CbModelTrain2 = ttk.Combobox(self.frame2, state="readonly", values=self.list_models,textvariable=self.var_model_player2)
+		self.CbModelTrain2 = Combobox(self.frame2, state="readonly", values=self.list_models,textvariable=self.var_model_player2)
 		self.CbModelTrain2.grid(row=5, column=1, sticky="w")
-		self.label_value_number_of_training_loops_tab2_p2 = ttk.Label(self.frame2, textvariable=self.var_number_of_training_loops_comboboxes_p2,style="TLabel")
+		self.label_value_number_of_training_loops_tab2_p2 = Label(self.frame2, textvariable=self.var_number_of_training_loops_comboboxes_p2)
 		self.label_value_number_of_training_loops_tab2_p2.grid(row=6, column=1, sticky="w")
-		self.overrule_button_player_2_tab2=ttk.Checkbutton(self.frame2, text="Allow overrule", variable=self.var_allow_overrule_player_2)
+		self.overrule_button_player_2_tab2=Checkbutton(self.frame2, text="Allow overrule", variable=self.var_allow_overrule_player_2)
 		self.overrule_button_player_2_tab2.grid(row=7, column=1, sticky="w")
 
-		self.gamerunslabel = ttk.Label(self.frame2, text="Number of games: ",style="TLabel")
+		self.gamerunslabel = Label(self.frame2, text="Number of games: ")
 		self.gamerunslabel.grid(row=8, column=0, sticky="w",pady=2,padx=distance_from_left_side)
-		self.gamerunsentry2 = ttk.Entry(self.frame2, textvariable=self.var_game_runs,style="TEntry")
+		self.gamerunsentry2 = Entry(self.frame2, textvariable=self.var_game_runs)
 		self.gamerunsentry2.grid(row=9, column=0, sticky="w",pady=2,padx=distance_from_left_side)
-		self.replaybutton2 = ttk.Checkbutton(self.frame2, text="Save replays", variable=self.var_rep)
+		self.replaybutton2 = Checkbutton(self.frame2, text="Save replays", variable=self.var_rep)
 		self.replaybutton2.grid(row=10, column=0, sticky="w",pady=2,padx=distance_from_left_side)
-		self.show_graphs_checkbutton=ttk.Checkbutton(self.frame2, text="Show graphs*", variable=self.var_show_graphs)
+		self.show_graphs_checkbutton=Checkbutton(self.frame2, text="Show graphs*", variable=self.var_show_graphs)
 		self.show_graphs_checkbutton.grid(row=11, column=0, sticky="w",pady=2,padx=distance_from_left_side)
 
 
@@ -269,20 +273,20 @@ class GomokuApp(Tk):
 		self.train_description = Label(self.frame2, text="It is recommended to run at least 3 000 games per training session.", font=(self.style_numbers[0], self.style_numbers[1]), wraplength=WIDTH-15)
 		self.train_description.grid(row=12, column=0, sticky="w",columnspan=2,padx=distance_from_left_side)
 
-		self.info_show_graphs=ttk.Label(self.frame2, text="*Don't forget to MANUALLY close the graphs at the end of each training session if you enable it.",foreground="red",wraplength=WIDTH-15)
+		self.info_show_graphs=Label(self.frame2, text="*Don't forget to MANUALLY close the graphs at the end of each training session if you enable it.",foreground="red",wraplength=WIDTH-15)
 		self.info_show_graphs.grid(row=13, column=0, sticky="w",columnspan=2,padx=distance_from_left_side)
 
-		self.replaylabel = ttk.Label(self.frame3, text="Choose the replay file: ",style="TLabel")
+		self.replaylabel = Label(self.frame3, text="Choose the replay file: ")
 		self.replaylabel.grid(row=0, column=0, sticky="w",pady=2,padx=distance_from_left_side)
-		self.replayentry = ttk.Entry(self.frame3, textvariable=self.replay_path, width=30,style="TEntry")
+		self.replayentry = Entry(self.frame3, textvariable=self.replay_path, width=30)
 		self.replayentry.grid(row=1, column=0, sticky="w",pady=2,padx=distance_from_left_side)
-		self.button_4 = ttk.Button(self.frame3, text="...",style="TButton", command=lambda: self.browse_files())
+		self.button_4 = Button(self.frame3, text="...", command=lambda: self.browse_files())
 		self.button_4.grid(row=1, column=1, sticky="w")
-		self.delaybutton2 = ttk.Checkbutton(self.frame3, text="Use AI Delay", variable=self.var_delay, style="TCheckbutton")
+		self.delaybutton2 = Checkbutton(self.frame3, text="Use AI Delay", variable=self.var_delay)
 		self.delaybutton2.grid(row=2, column=0, sticky="w",pady=2,padx=distance_from_left_side)
-		self.button_5 = ttk.Button(self.frame3, text="Play", style="TButton", command=lambda: self.start_new_replay())
+		self.button_5 = Button(self.frame3, text="Play", command=lambda: self.start_new_replay())
 		self.button_5.grid(row=3, column=0, sticky="w",pady=2,padx=distance_from_left_side)
-		self.checkbox_show_dialog_tab3=ttk.Checkbutton(self.frame3, text="Show dialog before starting next game", variable=self.var_show_dialog)
+		self.checkbox_show_dialog_tab3=Checkbutton(self.frame3, text="Show dialog before starting next game", variable=self.var_show_dialog)
 		self.checkbox_show_dialog_tab3.grid(row=3, column=1, sticky="w")
 
 		self.label_info_replay_file_loaded=Label(self.frame3, text="",foreground="red",wraplength=WIDTH-20,font=(self.style_numbers[0],self.style_numbers[1]))
@@ -309,57 +313,57 @@ class GomokuApp(Tk):
 			self.Lb1.activate(0)
 			last_selected_model=models[0]
 
-		self.frame_buttons=ttk.Frame(self.frame4)
+		self.frame_buttons=Frame(self.frame4)
 		self.frame_buttons.grid(row=0, column=0, columnspan=2,sticky='e')
 
-		self.button_NewModel = ttk.Button(self.frame_buttons, text="Make New Model", style="TButton", command=lambda: self.create_new_model())
+		self.button_NewModel = Button(self.frame_buttons, text="Make New Model",  command=lambda: self.create_new_model())
 		self.button_NewModel.grid(row=0, column=1,sticky="n",pady=2,padx=distance_from_left_side)
-		self.nameModelLabel = ttk.Label(self.frame_buttons, text="Name of model: ",style="TLabel")
+		self.nameModelLabel = Label(self.frame_buttons, text="Name of model: ")
 		self.nameModelLabel.grid(row=1, column=0, sticky="w",pady=2,padx=distance_from_left_side)
-		self.nameModelEntry = ttk.Entry(self.frame_buttons, textvariable=self.var_name_model,style="TEntry")
+		self.nameModelEntry = Entry(self.frame_buttons, textvariable=self.var_name_model)
 		self.nameModelEntry.grid(row=1, column=1, sticky="w",pady=2,padx=distance_from_left_side)
 		self.nameModelEntry.bind("<Return>",lambda event: self.create_new_model())#push enter to create a new model (easier)
 
-		self.button_DeleteModel = ttk.Button(self.frame_buttons, text="Delete Model", style="TButton", command=lambda: self.delete_model())
+		self.button_DeleteModel = Button(self.frame_buttons, text="Delete Model",  command=lambda: self.delete_model())
 		self.button_DeleteModel.grid(row=0, column=0,sticky="n")
 
-		self.label_number_of_training_loops = ttk.Label(self.frame4, text="Training loops: ",style="TLabel")
+		self.label_number_of_training_loops = Label(self.frame4, text="Training loops: ")
 		self.label_number_of_training_loops.grid(row=4, column=0, sticky="w",padx=(distance_from_left_side,0),pady=(30,10))
-		self.label_value_number_of_training_loops_tab4 = ttk.Label(self.frame4, textvariable=self.var_number_of_training_loops,style="TLabel")
+		self.label_value_number_of_training_loops_tab4 = Label(self.frame4, textvariable=self.var_number_of_training_loops)
 		self.label_value_number_of_training_loops_tab4.grid(row=4, column=1, sticky="w",pady=(30,10))
 
 		self.stats_list=["Total","Games","Training"]
-		self.Cb_choose_stats= ttk.Combobox(self.frame4, state="readonly", values=self.stats_list, textvariable=self.var_choose_stats)
+		self.Cb_choose_stats= Combobox(self.frame4, state="readonly", values=self.stats_list, textvariable=self.var_choose_stats)
 		self.Cb_choose_stats.current(0)
 		self.Cb_choose_stats.grid(row=5, column=0, sticky="w",pady=2,padx=distance_from_left_side)
 
 
-		self.label_losses=ttk.Label(self.frame4, text="Losses: ",style="TLabel")
+		self.label_losses=Label(self.frame4, text="Losses: ")
 		self.label_losses.grid(row=6, column=0, sticky="w")
-		self.label_value_losses_tab4 = ttk.Label(self.frame4, textvariable=self.var_losses,style="TLabel")
+		self.label_value_losses_tab4 = Label(self.frame4, textvariable=self.var_losses)
 		self.label_value_losses_tab4.grid(row=6, column=1, sticky="w")
-		self.label_relative_value_losses=ttk.Label(self.frame4, textvariable=self.var_relative_value_losses,style="TLabel")
+		self.label_relative_value_losses=Label(self.frame4, textvariable=self.var_relative_value_losses)
 		self.label_relative_value_losses.grid(row=6, column=2, sticky="w")
 
-		self.label_wins=ttk.Label(self.frame4, text="Wins: ",style="TLabel")
+		self.label_wins=Label(self.frame4, text="Wins: ")
 		self.label_wins.grid(row=7, column=0, sticky="w",padx=distance_from_left_side)
-		self.label_value_wins_tab4 = ttk.Label(self.frame4, textvariable=self.var_wins,style="TLabel")
+		self.label_value_wins_tab4 = Label(self.frame4, textvariable=self.var_wins)
 		self.label_value_wins_tab4.grid(row=7, column=1, sticky="w")
-		self.label_relative_value_wins=ttk.Label(self.frame4, textvariable=self.var_relative_value_wins,style="TLabel")
+		self.label_relative_value_wins=Label(self.frame4, textvariable=self.var_relative_value_wins)
 		self.label_relative_value_wins.grid(row=7, column=2, sticky="w")
 
-		self.label_ties=ttk.Label(self.frame4, text="Ties: ",style="TLabel")
+		self.label_ties=Label(self.frame4, text="Ties: ")
 		self.label_ties.grid(row=8, column=0, sticky="w",padx=distance_from_left_side)
-		self.label_value_ties_tab4 = ttk.Label(self.frame4, textvariable=self.var_ties,style="TLabel")
+		self.label_value_ties_tab4 = Label(self.frame4, textvariable=self.var_ties)
 		self.label_value_ties_tab4.grid(row=8, column=1, sticky="w")
-		self.label_relative_value_ties=ttk.Label(self.frame4, textvariable=self.var_relative_value_ties,style="TLabel")
+		self.label_relative_value_ties=Label(self.frame4, textvariable=self.var_relative_value_ties)
 		self.label_relative_value_ties.grid(row=8, column=2, sticky="w")
 
-		self.frame_stats_buttons=ttk.Frame(self.frame4)
+		self.frame_stats_buttons=Frame(self.frame4)
 		self.frame_stats_buttons.grid(row=9, column=0, columnspan=3,pady=15)
-		self.button_reset_stats=ttk.Button(self.frame_stats_buttons, text="Reset Stats", style="TButton", command=lambda: self.reset_all_stats())
+		self.button_reset_stats=Button(self.frame_stats_buttons, text="Reset Stats", command=lambda: self.reset_all_stats())
 		self.button_reset_stats.grid(row=0, column=0)
-		self.button_reset_end_states=ttk.Button(self.frame_stats_buttons, text="Reset End States", style="TButton", command=lambda: self.reset_end_states())
+		self.button_reset_end_states=Button(self.frame_stats_buttons, text="Reset End States", command=lambda: self.reset_end_states())
 		self.button_reset_end_states.grid(row=0, column=1)
 
 
@@ -673,7 +677,6 @@ class GomokuApp(Tk):
 		last_value_repvar=True
 		last_value_load_board_from_file=False
 		while True:
-			print("maintaining")
 			try:
 
 				old_tab_text= tab_text
