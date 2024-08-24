@@ -38,10 +38,10 @@ class GomokuApp(Tk):
 		Thread_maintain_GUI=Thread(target=self.maintain_GUI,daemon=True)#end when main program ends
 		Thread_maintain_GUI.start()
 	
-		self.frame1 = Frame(self,width=WIDTH,height=HEIGHT)
-		self.frame2 = Frame(self,width=WIDTH,height=HEIGHT)
-		self.frame3 = Frame(self,width=WIDTH,height=HEIGHT)
-		self.frame4 = Frame(self,width=WIDTH,height=HEIGHT)
+		self.frame1 = Frame(self,width=WIDTH,height=HEIGHT,bg="white")
+		self.frame2 = Frame(self,width=WIDTH,height=HEIGHT,bg="white")
+		self.frame3 = Frame(self,width=WIDTH,height=HEIGHT,bg="white")
+		self.frame4 = Frame(self,width=WIDTH,height=HEIGHT,bg="white")
 
 		self.frame1.grid(row=0,column=0)
 		self.frame2.grid(row=0,column=1)
