@@ -6,7 +6,7 @@ import torch.nn.functional as F
 import numpy as np
 import random
 from collections import deque
-from filereader import log_info_overruling
+from utils.filereader import log_info_overruling
 
 MAX_MEMORY = 1_000_0000          # origineel 1_000_000
 BATCH_SIZE = 10_000

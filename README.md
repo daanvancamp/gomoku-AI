@@ -135,16 +135,18 @@ august 2024:
   first implementation of the integrated recognition
 
   restructured, the fullscreen GUI and the recognition are now each part of their own module.
+  
+  added folders
 
 
 **issues:**
 
-You shouldn't experience any issues at the moment.
+You shouldn't experience any issues if you use the latest release.
 
 
 **roadmap(in descending priority):**
 
--We are currently working on integrating the two programs.
+-We are currently working on integrating the two programs and restructuring the program.
 
 -coming soon, but it's done as of right now.
 

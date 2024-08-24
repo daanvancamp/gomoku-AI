@@ -2,7 +2,8 @@ import operator
 import time
 from tkinter import messagebox as mb
 import pygame
-from AI_model import AI_Model
+
+from model_management.AI_model import AI_Model
 from utils.music import start_music_delayed
 import testai
 from NN import ai

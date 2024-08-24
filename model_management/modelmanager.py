@@ -1,6 +1,5 @@
 import os
 import shutil
-import json
 from  AI_model import AI_Model
 
 class ModelManagerMeta(type):

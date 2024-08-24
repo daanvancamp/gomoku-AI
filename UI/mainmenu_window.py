@@ -5,8 +5,7 @@ from tkinter import *
 from tkinter import ttk
 
 from utils import filereader,stats
-from utils.filereader import log_info_overruling
-import modelmanager
+from model_management import modelmanager
 from game import gomoku
 from UI import game_window
 
@@ -426,7 +425,7 @@ class GomokuApp(Tk):
 
     def start_new_game():
         global game_instance
-        log_info_overruling("\n\n\nnew session begins:")
+        filereader.log_info_overruling("\n\n\nnew session begins:")
     
         game_instance.use_recognition = self.var_use_recognition.get()
         game_instance.play_music = self.var_play_music.get()
@@ -478,7 +477,7 @@ class GomokuApp(Tk):
         game_instance.game_mode=game_instance.game_modes[0]
         game_instance.GUI.initialize_fullscreen_GUI()
         for i in range(runs):
-            log_info_overruling("run "+str(i+1)+" begins:")
+            filereader.log_info_overruling("run "+str(i+1)+" begins:")
             stats.log_message(f"Game  {i+1} begins.")
 
             game_instance.current_game = i+1

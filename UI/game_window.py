@@ -1,4 +1,3 @@
-import numpy as np
 from tkinter import *
 from tkinter import messagebox as mb
 from PIL import Image, ImageTk

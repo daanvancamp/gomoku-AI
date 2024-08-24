@@ -1,6 +1,7 @@
 import cv2
 import numpy as np
 import gomoku
+import math
 
 class PlayBoardProcessor():
 
@@ -15,7 +16,8 @@ class PlayBoardProcessor():
         self.color_p2=self.game_instance.P2COL
 
     def calculate_euclidean_distance(self,p1, p2):
-            return np.sqrt((p1[0] - p2[0]) ** 2 + (p1[1] - p2[1]) ** 2)
+        return math.dist(p1, p2)#todo:test and verify
+        return np.sqrt((p1[0] - p2[0]) ** 2 + (p1[1] - p2[1]) ** 2)
 
     def calculate_average_horizontal_vertical_distance(self,corners):
         corners = corners.reshape((self.BOARD_SIZE - 1, self.BOARD_SIZE - 1, 2))
