@@ -1,12 +1,12 @@
 import cv2
 import numpy as np
-import gomoku
+from game import gomoku
 import math
 
 class PlayBoardProcessor():
 
     def __init__(self, instance:gomoku.GomokuGame):
-        self.BOARD_SIZE=instance.BOARD_SIZE
+        self.BOARD_SIZE=instance.GRID_SIZE
         self.game_instance=instance
         self.avg_distances = None
         self.vid=cv2.VideoCapture(1, cv2.CAP_DSHOW)

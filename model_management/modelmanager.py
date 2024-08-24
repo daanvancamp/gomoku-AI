@@ -1,6 +1,6 @@
 import os
 import shutil
-from  AI_model import AI_Model
+from model_management.AI_model import AI_Model
 
 class ModelManagerMeta(type):
     """

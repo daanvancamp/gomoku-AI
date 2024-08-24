@@ -2,7 +2,7 @@ import pygame
 from time import sleep
 
 
-path_wachten_muziek=r".\wachten_muziek.mp3"
+path_wachten_muziek=r".\wait_music.mp3"
 
 def initialiseer_muziek():
     # Initialiseer pygame mixer
