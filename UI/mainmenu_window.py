@@ -1,19 +1,17 @@
 import random
 import sys
 from threading import Thread
-from time import sleep
 from tkinter import *
 from tkinter import ttk
-from tkinter import filedialog
 
-import filereader
-import stats
-from PIL import Image, ImageTk
-from filereader import log_info_overruling
+from utils import filereader,stats
+from utils.filereader import log_info_overruling
 import modelmanager
-import gomoku
-import numpy as np
+from game import gomoku
 from UI import game_window
+
+from PIL import Image, ImageTk
+
 
 WIDTH = 540
 HEIGHT = 500
@@ -870,7 +868,6 @@ class GomokuApp(Tk):
 # style2.configure("TEntry",fg="white",bg="green")
 # style2.configure("TLabel", font=(style_numbers[0], style_numbers[1]),fg="white",bg="green")#font=georgia, size=10
 # style2.configure("TCheckbutton", font=(style_numbers[0], style_numbers[1]),fg="white",bg="green")#font=georgia, size=10
-
 
 
 # def mainmenu_run():

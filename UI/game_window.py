@@ -2,12 +2,11 @@ import numpy as np
 from tkinter import *
 from tkinter import messagebox as mb
 from PIL import Image, ImageTk
-import gomoku
 from threading import Thread
 import cv2
 import pygame
 import os
-import playboard_processor
+from game import playboard_processor,gomoku
 
 class Game_Window(Tk):
     def __init__(self,instance:gomoku.GomokuGame):
@@ -282,15 +281,16 @@ class Game_Window(Tk):
 
         if coordinates:
             (x,y)=coordinates[0]
-            self.root_play_game.after(0,self.label_recognition_info.config(text="Your move was successfully recognized.",fg="green"))
+            self.root_play_game.after(0,self.label_recognition_info.config(text="Your move was successfully recognized: " + str(x) + "," + str(y) + ".",fg="green"))
+            try:
+                gomoku.handle_human_move(self.game_instance, x, y , gomoku.players, gomoku.p1_moves, gomoku.p2_moves)
+            except:
+                gomoku.handle_human_move(self.game_instance, x, y, gomoku.players)
         else:
             self.root_play_game.after(0,self.label_recognition_info.config(text="No move was recognized, try again later.",fg="red"))
             return #don't do anything
 
-        try:
-            gomoku.handle_human_move(self.game_instance, x, y , gomoku.players, gomoku.p1_moves, gomoku.p2_moves)
-        except:
-            gomoku.handle_human_move(self.game_instance, x, y, gomoku.players)
+        
 
 
     

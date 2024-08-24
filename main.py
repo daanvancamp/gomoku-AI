@@ -1,26 +1,12 @@
 from datetime import datetime
-import os
 from threading import Thread
-from filereader import log_info_overruling
-import sys
+from utils.filereader import log_info_overruling
 from UI import mainmenu_window
-from music import initialiseer_muziek
+from utils.music import initialiseer_muziek
 
 
-def main():
-    mainmenu.mainmenu_run()
-    
-def check_paths():
-    #glob.glob searches file in directory
-    pad_gedetecteerde_stukken=r'..\vijf_op_een_rij_beeldherkenning\detected_pieces.json'
-
-    #paden=[r".\bord_gomoku\bord_na_zet.json",r".\bord_gomoku\bord_voor_zet.json", pad_gedetecteerde_stukken,"consts.json","wachten_muziek.mp3","logging_overruling.txt"]
-    #for bestandspad in paden:
-    #    if not os.path.exists(bestandspad):
-    #        raise Exception("The file doesn't exist",bestandspad)
-    #temporarily disabled, will be implemented in the future
-def start_recognition():
-    pass
+# def main():
+#     mainmenu.mainmenu_run()
 
 def log_new_run():
     log_info_overruling("\n\n\n\n\ndate and time: "+datetime.now().isoformat())
@@ -28,7 +14,6 @@ def log_new_run():
 
 if __name__ == '__main__':
     log_new_run()
-    check_paths()
     initialiseer_muziek()
     app = mainmenu_window.GomokuApp()
     app.mainloop()
