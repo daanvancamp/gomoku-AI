@@ -23,7 +23,8 @@ modelmanager_instance = modelmanager.ModelManager()
 
 class GomokuApp(Tk):
 	def __init__(self):
-		self.game_window:game_window.Game_Window = game_window.Game_Window(game_instance)
+		#self.game_window:game_window.Game_Window = game_window.Game_Window(game_instance)
+		game_instance.GUI = game_window.Game_Window(game_instance)
 
 		super().__init__()
 		self.geometry(str(WIDTH) + "x" + str(HEIGHT))
@@ -472,7 +473,7 @@ class GomokuApp(Tk):
 				print("invalid number, try again")
 
 		game_instance.game_mode=game_instance.game_modes[0]
-		self.game_window.open_game_window()
+		game_instance.GUI.open_game_window()
 		for i in range(runs):
 			filereader.log_info_overruling("run "+str(i+1)+" begins:")
 			stats.log_message(f"Game  {i+1} begins.")
@@ -553,7 +554,7 @@ class GomokuApp(Tk):
 			self.wm_state('iconic')
 
 			game_instance.game_mode=game_instance.game_modes[1]
-			game_instance.GUI.initialize_fullscreen_GUI()
+			game_instance.GUI.open_game_window()
 
 			for i in range(runs):
 				filereader.log_info_overruling("run "+str(i+1)+" begins:")
@@ -591,7 +592,7 @@ class GomokuApp(Tk):
 		game_instance.show_dialog = self.var_show_dialog.get()
 
 
-		self.log_info_overruling("\n\n\nnew session begins:")
+		filereader.log_info_overruling("\n\n\nnew session begins:")
    
 		moves = filereader.load_replay(self.replay_path.get())
 
@@ -617,7 +618,7 @@ class GomokuApp(Tk):
 			self.wm_state('iconic')
 
 			game_instance.game_mode=game_instance.game_modes[2]
-			game_instance.GUI.initialize_fullscreen_GUI()
+			game_instance.GUI.open_game_window()
 
 			try:
 				gomoku.runReplay(game_instance,moves) #main function
@@ -632,8 +633,7 @@ class GomokuApp(Tk):
 
 	def game_over(self):
 		global game_instance
-		if game_instance.GUI.root_play_game is not None:
-			game_instance.GUI.hide_GUI()
+		game_instance.GUI.hide_GUI()
 		self.wm_state('normal')
 		game_instance.current_game = 0
 		if game_instance.quit_program:

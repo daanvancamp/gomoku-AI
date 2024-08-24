@@ -179,13 +179,6 @@ class Game_Window(Tk):
         os.environ['SDL_WINDOWID'] = str(self.embed_pygame.winfo_id())
         os.environ['SDL_VIDEODRIVER'] = 'windib'
 
-           
-
-        # pygame.display.init()
-        # self.game_instance.screen = pygame.display.set_mode((self.game_instance.WIDTH, self.game_instance.HEIGHT))
-    
-        # self.pygame_loop()
-
     
     def open_game_window(self):
         self.initialize_session()
