@@ -16,8 +16,7 @@ class Game_Window(Tk):
         self.root_play_game = None
         self.game_mode = None
         self.vid = None
-        BOARD_SIZE=self.game_instance.GRID_SIZE
-        self.Playboard_processor = playboard_processor.PlayBoardProcessor(BOARD_SIZE)
+        self.Playboard_processor = playboard_processor.PlayBoardProcessor(self.game_instance)
         self.initialize_fullscreen_GUI()
     
     def quit_program(self):
@@ -281,15 +280,12 @@ class Game_Window(Tk):
         self.show_webcam_view(self.label_webcam_image)
         coordinates=self.Playboard_processor.get_move()
 
-        if coordinates is not None:
-            if len(coordinates)>1:
-                print("too many moves detected, only one at a time please")
-                return
+        if coordinates:
             (x,y)=coordinates[0]
+            self.root_play_game.after(0,self.label_recognition_info.config(text="Your move was successfully recognized.",fg="green"))
         else:
             self.root_play_game.after(0,self.label_recognition_info.config(text="No move was recognized, try again later.",fg="red"))
             return #don't do anything
-        self.root_play_game.after(0,self.label_recognition_info.config(text="Your move was successfully recognized.",fg="green"))
 
         try:
             gomoku.handle_human_move(self.game_instance, x, y , gomoku.players, gomoku.p1_moves, gomoku.p2_moves)

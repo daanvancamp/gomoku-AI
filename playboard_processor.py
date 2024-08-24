@@ -1,38 +1,39 @@
 import cv2
 import numpy as np
-
-from gomoku import GomokuGame
+import gomoku
 
 class PlayBoardProcessor():
 
-    def __init__(self, BOARD_SIZE):
-        self.corners_to_be_found = BOARD_SIZE - 1
-        self.BOARD_SIZE=BOARD_SIZE
+    def __init__(self, instance:gomoku.GomokuGame):
+        self.BOARD_SIZE=instance.BOARD_SIZE
+        self.game_instance=instance
         self.avg_distances = None
         self.vid=cv2.VideoCapture(1, cv2.CAP_DSHOW)
-        self.old_pieces=[]
+        self.previous_state_board=[]
         self.pieces=None
+        self.color_p1=self.game_instance.P1COL
+        self.color_p2=self.game_instance.P2COL
 
     def calculate_euclidean_distance(self,p1, p2):
             return np.sqrt((p1[0] - p2[0]) ** 2 + (p1[1] - p2[1]) ** 2)
 
-    def determine_average_distances(self,corners):
-        corners = corners.reshape((self.corners_to_be_found, self.corners_to_be_found, 2))
+    def calculate_average_horizontal_vertical_distance(self,corners):
+        corners = corners.reshape((self.BOARD_SIZE - 1, self.BOARD_SIZE - 1, 2))
     
         horizontal_distances = []
         vertical_distances = []
 
-        for i in range(self.corners_to_be_found):
-            for j in range(self.corners_to_be_found):
+        for i in range(self.BOARD_SIZE - 1):
+            for j in range(self.BOARD_SIZE - 1):
                 p1 = corners[i, j]
 
                 # add horizontal distances
-                if j + 1 < self.corners_to_be_found:
+                if j + 1 < self.BOARD_SIZE - 1:
                     p2 = corners[i, j + 1]
                     horizontal_distances.append(self.calculate_euclidean_distance(p1, p2))
 
                 # add vertical distances
-                if i + 1 < self.corners_to_be_found:
+                if i + 1 < self.BOARD_SIZE - 1:
                     p3 = corners[i + 1, j]
                     vertical_distances.append(self.calculate_euclidean_distance(p1, p3))
 
@@ -42,30 +43,30 @@ class PlayBoardProcessor():
 
         return avg_horizontal_distance, avg_vertical_distance
 
-    def extrapolate_other_corners(self,corners):
+    def extrapolate_full_board_corners(self,corners):
         avg_horizontal, avg_vertical = self.avg_distances
 
-        complete_corners = np.zeros((self.BOARD_SIZE + 1, self.BOARD_SIZE + 1, 2), dtype=np.float32)
-        complete_corners[1:-1, 1:-1] = corners.reshape((self.corners_to_be_found, self.corners_to_be_found, 2))
+        full_board_corners = np.zeros((self.BOARD_SIZE + 1, self.BOARD_SIZE + 1, 2), dtype=np.float32)
+        full_board_corners[1:-1, 1:-1] = corners.reshape((self.BOARD_SIZE - 1, self.BOARD_SIZE - 1, 2))
 
         for i in range(1, self.BOARD_SIZE):
-            complete_corners[i, -1] = [complete_corners[i, -2, 0] + avg_horizontal, complete_corners[i, -2, 1]]
+            full_board_corners[i, -1] = [full_board_corners[i, -2, 0] + avg_horizontal, full_board_corners[i, -2, 1]]
 
         for j in range(1, self.BOARD_SIZE):
-            complete_corners[-1, j] = [complete_corners[-2, j, 0], complete_corners[-2, j, 1] + avg_vertical]
+            full_board_corners[-1, j] = [full_board_corners[-2, j, 0], full_board_corners[-2, j, 1] + avg_vertical]
 
         for i in range(1, self.BOARD_SIZE):
-            complete_corners[i, 0] = [complete_corners[i, 1, 0] - avg_horizontal, complete_corners[i, 1, 1]]
+            full_board_corners[i, 0] = [full_board_corners[i, 1, 0] - avg_horizontal, full_board_corners[i, 1, 1]]
 
         for j in range(1, self.BOARD_SIZE):
-            complete_corners[0, j] = [complete_corners[1, j, 0], complete_corners[1, j, 1] - avg_vertical]
+            full_board_corners[0, j] = [full_board_corners[1, j, 0], full_board_corners[1, j, 1] - avg_vertical]
 
-        complete_corners[0, 0] = [complete_corners[1, 1, 0] - avg_horizontal, complete_corners[1, 1, 1] - avg_vertical]
-        complete_corners[0, -1] = [complete_corners[1, -2, 0] + avg_horizontal, complete_corners[1, -2, 1] - avg_vertical]
-        complete_corners[-1, 0] = [complete_corners[-2, 1, 0] - avg_horizontal, complete_corners[-2, 1, 1] + avg_vertical]
-        complete_corners[-1, -1] = [complete_corners[-2, -2, 0] + avg_horizontal, complete_corners[-2, -2, 1] + avg_vertical]
+        full_board_corners[0, 0] = [full_board_corners[1, 1, 0] - avg_horizontal, full_board_corners[1, 1, 1] - avg_vertical]
+        full_board_corners[0, -1] = [full_board_corners[1, -2, 0] + avg_horizontal, full_board_corners[1, -2, 1] - avg_vertical]
+        full_board_corners[-1, 0] = [full_board_corners[-2, 1, 0] - avg_horizontal, full_board_corners[-2, 1, 1] + avg_vertical]
+        full_board_corners[-1, -1] = [full_board_corners[-2, -2, 0] + avg_horizontal, full_board_corners[-2, -2, 1] + avg_vertical]
 
-        return complete_corners
+        return full_board_corners
 
     def calculate_cell_centers(self,corners):
         centers = []
@@ -79,9 +80,8 @@ class PlayBoardProcessor():
                 center_y = (p1[1] + p2[1] + p3[1] + p4[1]) / 4
                 centers.append((center_x, center_y))
         return np.array(centers)
-    
 
-    def detect_pieces(self,cell_centers, img):    
+    def mark_pieces(self,cell_centers, img):    
             hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
 
             lower_blue = np.array([100, 150, 50])
@@ -106,28 +106,24 @@ class PlayBoardProcessor():
             print("detected",len(list_blue_shapes),"blue pieces")
             print("detected",len(list_red_shapes),"red pieces")
 
-            all_shapes = blue_ellipses + red_ellipses
-
             list_shapes = list(set(list_blue_shapes + list_red_shapes))
 
             return list_shapes
 
     def detect_and_draw_ellipses(self,img, mask, color, shape="ellipses", min_area=50):
-        # Zoek contouren in het masker
         contours, _ = cv2.findContours(mask, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
         min_area = (self.avg_horizontal * self.avg_vertical)/60
         max_area = (self.avg_horizontal * self.avg_vertical)+10
         detected_ellipses = []
         for cnt in contours:
             area = cv2.contourArea(cnt)
-            if max_area>=area >= min_area and len(cnt) >= 5:  # Filter ellipsen op basis van minimale oppervlakte
+            if max_area>=area >= min_area and len(cnt) >= 5:
                 ellipse = cv2.fitEllipse(cnt)
                 cv2.ellipse(img, ellipse, color, 2)
-                center = (int(ellipse[0][0]), int(ellipse[0][1]))  # Middelpunt van de ellips
-                detected_ellipses.append(center)  # Voeg het middelpunt toe aan de lijst
-        print(f"Detected {len(detected_ellipses)} {shape}.")
+                center = (int(ellipse[0][0]), int(ellipse[0][1]))
+                detected_ellipses.append(center)
     
-        return detected_ellipses  # Retourneer de lijst met gedetecteerde ellipsen
+        return detected_ellipses 
 
     def get_coordinates(self,index):
         x = index[0]//self.BOARD_SIZE
@@ -135,23 +131,19 @@ class PlayBoardProcessor():
         return (x,y)
 
     def match_shapes_to_centers(self,shapes, cell_centers, img,color):
-        """
-        Voor elk gedetecteerd object (cirkel of ellips), bepaal welk celcentrum het dichtstbijzijnde is
-        en teken de lijn tussen hen op de afbeelding.
-        """
+
         list_shapes = []
         for shape in shapes:
             closest_center = None
             min_distance = float("inf")
         
             for center in cell_centers:
-                # Bereken de Euclidische afstand
                 distance = np.linalg.norm(np.array(shape) - np.array(center))
                 if distance < min_distance:
                     min_distance = distance
                     closest_center = center
         
-            max_distance=(self.avg_horizontal+self.avg_vertical)/2
+            max_distance=((self.avg_horizontal+self.avg_vertical)/2)*0.75
 
             if min_distance>max_distance:
                 continue
@@ -176,7 +168,7 @@ class PlayBoardProcessor():
         return list_shapes
 
     def get_move(self):
-        number_of_corners = (self.corners_to_be_found, self.corners_to_be_found)
+        number_of_inner_corners = (self.BOARD_SIZE - 1, self.BOARD_SIZE - 1)
 
         ret_img,img=self.vid.read()
 
@@ -188,40 +180,50 @@ class PlayBoardProcessor():
 
         gray = cv2.medianBlur(gray, 13)
        
-        ret, corners = cv2.findChessboardCornersSB(gray, number_of_corners,
+        ret, inner_corners = cv2.findChessboardCornersSB(gray, number_of_inner_corners,
                                                 flags= cv2.CALIB_CB_EXHAUSTIVE +cv2.CALIB_CB_ACCURACY )
     
-        if ret== False:
+        if not ret:
             print("no chessboard detected at first")
-            ret, corners= cv2.findChessboardCorners(gray, number_of_corners, flags= cv2.CALIB_CB_PLAIN +cv2.CALIB_CB_FAST_CHECK )
+            ret, inner_corners= cv2.findChessboardCorners(gray, number_of_inner_corners, flags= cv2.CALIB_CB_PLAIN +cv2.CALIB_CB_FAST_CHECK )
 
-        if ret == True:
+        if ret:
             print("Chessboard detected")
         
-            corners = cv2.cornerSubPix(gray, corners, (11, 11), (-1, -1), 
+            inner_corners = cv2.cornerSubPix(gray, inner_corners, (11, 11), (-1, -1), 
                                         criteria=(cv2.TERM_CRITERIA_EPS + cv2.TERM_CRITERIA_MAX_ITER, 30, 0.001))
         
-            self.avg_distances = self.determine_average_distances(corners)
+            self.avg_distances = self.calculate_average_horizontal_vertical_distance(inner_corners)
             self.avg_horizontal, self.avg_vertical = self.avg_distances
         
-            all_corners = self.extrapolate_other_corners(corners)
+            all_corners = self.extrapolate_full_board_corners(inner_corners)
         
             img_with_corners = img.copy()
             img_with_corners = cv2.drawChessboardCorners(img_with_corners, (self.BOARD_SIZE + 1, self.BOARD_SIZE + 1), all_corners.reshape(-1, 1, 2), ret)
 
             cell_centers = self.calculate_cell_centers(all_corners)
 
-            self.pieces= self.detect_pieces(cell_centers,img)
+            self.pieces= self.mark_pieces(cell_centers,img.copy())
 
+            color_current_player=self.game_instance.P1COL if gomoku.current_player==1 else self.game_instance.P2COL
             human_move=[]
             for piece in self.pieces:
-                if piece not in self.old_pieces:
+                if piece not in self.previous_state_board and piece[0]==color_current_player:
                     print(piece,"detected")
                     human_move.append(piece[1])
-            self.old_pieces=self.pieces
-            return human_move if len(human_move)>0 else None
+            self.previous_state_board=self.pieces
+
+            if len(human_move)==0:
+                print("No move detected") #todo:show in GUI
+            elif len(human_move)==1:
+                print(human_move[0]) #todo: show last detected move in GUI
+                return human_move
+            else:
+                print("Multiple moves detected") #todo: show in GUI
+
+            return None
 
         else:
             print("No chessboard detected")
             return None
-            #todo: add backup
+            #todo: add backup if possible

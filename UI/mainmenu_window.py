@@ -435,6 +435,9 @@ class GomokuApp(Tk):
         game_instance.show_overruling = self.var_show_overruling.get()
         game_instance.record_replay = self.var_rep.get()
         game_instance.show_dialog = self.var_show_dialog.get()
+        if game_instance.use_recognition:
+            game_instance.P1COL = "red"
+            game_instance.P2COL = "blue"
 
         game_instance.ai_delay = self.var_delay.get()
         stats.should_log = self.var_log.get()
