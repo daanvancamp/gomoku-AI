@@ -1,22 +1,22 @@
 {
     "training stats": {
-        "training loops": 552,
+        "training loops": 554,
         "training loops against Human": 2,
-        "training loops against AI-Model": 226,
+        "training loops against AI-Model": 228,
         "training loops against Test Algorithm": 324
     },
     "total end stats": {
-        "losses": 122,
-        "wins": 925,
+        "losses": 123,
+        "wins": 931,
         "ties": 2
     },
     "games end stats": {
-        "wins": 828,
-        "losses": 30,
+        "wins": 833,
+        "losses": 31,
         "ties": 2
     },
     "training loops end stats": {
-        "wins": 97,
+        "wins": 98,
         "losses": 92,
         "ties": 0
     }

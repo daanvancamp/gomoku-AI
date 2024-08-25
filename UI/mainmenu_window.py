@@ -64,8 +64,8 @@ class GomokuApp(Tk):
 		self.title("Gomoku -- Main Menu")
 		self.configure(background="#357EC7")
 		self.attributes("-topmost", True)
-		self.bind("<Escape>", lambda event: self.quit_game())
-		self.bind("<q>", lambda event: self.quit_game())
+		self.bind("<Escape>", lambda event: self.quit_program())
+		self.bind("<q>", lambda event: self.quit_program())
 		self.attributes("-fullscreen", False)#temporarily set to false because it is easier to test
 		Gamesettings = GameSettings()
 
@@ -132,9 +132,9 @@ class GomokuApp(Tk):
 		self.style_numbers = ["georgia", 10, "white", 12, 2]#font, size, color, bold, underline
 
 		self.frame1 = Frame_Play(self)
-		self.frame2 = Frame(self,width=WIDTH,height=HEIGHT,bg="white")
-		self.frame3 = Frame(self,width=WIDTH,height=HEIGHT,bg="white")
-		self.frame4 = Frame(self,width=WIDTH,height=HEIGHT,bg="white")
+		self.frame2 = Frame(self,width=WIDTH,height=HEIGHT)
+		self.frame3 = Frame(self,width=WIDTH,height=HEIGHT)
+		self.frame4 = Frame(self,width=WIDTH,height=HEIGHT)
 		
 		game_instance.Gamewindow = game_window.GameWindow(game_instance,self) #needs to be declared after all the frames are created
 
@@ -298,7 +298,8 @@ class GomokuApp(Tk):
 				newtype = gomoku.player2.var_playerType.get()
 			gomoku.players[player_id-1].TYPE=newtype
 
-	def quit_game(self):
+	def quit_program(self):
+		print("quitting game")
 		sys.exit() #end the program
 
 	def add_frame_to_grid(self,frame):
@@ -308,7 +309,7 @@ class GomokuApp(Tk):
 
 	def remove_all_widgets(self):
 		try:
-			self.frame1.hide_frame()
+			self.frame1.grid_remove()
 			self.frame2.grid_remove()
 			self.frame3.grid_remove()
 			self.frame4.grid_remove()
@@ -324,7 +325,7 @@ class GomokuApp(Tk):
 
 	def browse_state_files(self):
 		file_path = filedialog.askopenfilename(filetypes=[("txt File", "*.txt")],initialdir=r".\test_situations")
-		self.state_board_path.set(file_path)
+		Gamesettings.state_board_path.set(file_path)
 
 	def browse_files(self):
 		file_path = filedialog.askopenfilename(filetypes=[("Json File", "*.json")],initialdir=r".\data\replays")
@@ -335,7 +336,7 @@ class GomokuApp(Tk):
 
 	def load_board_from_file(self)->list[list[int]]:
 		try:
-			with open(self.state_board_path.get(), "r") as file:
+			with open(Gamesettings.state_board_path.get(), "r") as file:
 				board = [[0] * 15 for _ in range(15)] # 0 = empty, 1 = player 1, 2 = player 2.
 				for row in range(15):
 					line = file.readline().replace("\n", "").replace(" ", "") # remove \n and spaces
@@ -345,7 +346,8 @@ class GomokuApp(Tk):
 							return None
 			print("board loaded")
 			return board
-		except:
+		except Exception as e:
+			print(e)
 			return None
 
 
@@ -560,7 +562,7 @@ class GomokuApp(Tk):
 		global game_instance
 		game_instance.current_game = 0
 		if game_instance.quit_program:
-			self.quit_game()
+			self.quit_program()
 
 	def create_new_model(self):
 		modelmanager_instance.create_new_model(self.var_name_model.get())
@@ -605,7 +607,7 @@ class GomokuApp(Tk):
 		self.CbModelTrain1.configure(values=models)
 		self.CbModelTrain2.configure(values=models)
 
-	def quit_game(self):
+	def quit_program(self):
 		sys.exit()#end the program
 
 	def maintain_GUI(self):
@@ -895,3 +897,4 @@ class Frame_Play (Frame,GomokuApp):#the methods of gomokuapp need to be callable
 
 	def hide_frame(self):
 		self.grid_remove()
+

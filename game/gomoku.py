@@ -414,6 +414,11 @@ def runGame(instance:GomokuGame, game_number):#main function
                         mb.showerror(title="Is your webcam connected?",message="Could not open webcam, please attach a webcam to the computer and try again")
                         instance.Gamewindow.stop_game()
 
+                        #todo: find a solution for this problem:
+
+                        #frame1 should automatically show up again when no webcam is attached
+
+
                 for event in pygame.event.get():
                     if event.type == pygame.QUIT:
                         instance.running = False 

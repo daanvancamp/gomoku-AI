@@ -147,7 +147,7 @@ class GameWindow(Frame):
         self.label_recognition_info.grid(row=0, column=1,sticky="n")
 
         self.embed_pygame = Frame(self, width=self.game_instance.WIDTH, height=self.game_instance.HEIGHT)
-        self.embed_pygame.grid(row=0, column=1,rowspan=3)
+        self.embed_pygame.grid(row=0, column=1,rowspan=2,pady=30)
 
         self.button_capture_image = Button(self, text="Capture Image (in development)", command=self.determine_move,width=25, bg="green",fg="white", font=font_labels)
         self.button_capture_image.grid(row=1, column=1,sticky="s",pady=(0,90))
