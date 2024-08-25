@@ -11,7 +11,6 @@ class Game_Window(Frame):
     def __init__(self,instance:gomoku.GomokuGame,master):
         super().__init__()
         self.grid()
-        self.config(bg="black")
         self.game_instance = instance
         self.game_mode = None
         self.vid = None
@@ -234,7 +233,6 @@ class Game_Window(Frame):
     def pygame_loop(self):
         global current_player
         pygame.display.flip()
-        self.update()
         self.after(100, self.pygame_loop)
 
         if self.game_instance.use_recognition:

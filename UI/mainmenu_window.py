@@ -11,9 +11,7 @@ from utils import filereader,stats
 from model_management import modelmanager
 from game import gomoku
 from UI import game_window
-
-from PIL import Image, ImageTk
-
+from game import gomoku
 
 WIDTH = 540
 HEIGHT = 500
@@ -397,18 +395,6 @@ class GomokuApp(Tk):
 	def quit_game(self):
 		sys.exit() #end the program
 
-
-	def my_decorator(func):
-		def wrapper(*args, **kwargs):
-			# Actie die je aan het begin van de functie wilt uitvoeren
-			print("Actie aan het begin van de functie")
-		
-			# Oproepen van de oorspronkelijke functie
-			result = func(*args, **kwargs)
-		
-			return result
-		return wrapper
-
 	def add_frame_to_grid(self,frame):
 		game_instance.Gamewindow.stop_game()
 		self.remove_all_widgets()
@@ -450,9 +436,8 @@ class GomokuApp(Tk):
 	def start_new_game(self):
 		global game_instance
 		filereader.log_info_overruling("\n\n\nnew session begins:")
-	
+		self.add_frame_to_grid(game_instance.Gamewindow)
 		game_instance.use_recognition = self.var_use_recognition.get()
-		print(game_instance.use_recognition)
 		game_instance.play_music = self.var_play_music.get()
 		game_instance.show_overruling = self.var_show_overruling.get()
 		game_instance.record_replay = self.var_rep.get()
@@ -535,7 +520,8 @@ class GomokuApp(Tk):
 	def start_new_training(self):
 		global game_instance
 		filereader.log_info_overruling("\n\n\nnew session begins:")
-	
+		self.add_frame_to_grid(game_instance.Gamewindow)
+
 		game_instance.use_recognition = False
 		game_instance.play_music = False
 		game_instance.show_overruling=False
@@ -613,6 +599,7 @@ class GomokuApp(Tk):
 		global game_instance
 		game_instance.show_hover_effect=False
 		game_instance.show_dialog = self.var_show_dialog.get()
+		self.add_frame_to_grid(game_instance.Gamewindow)
 
 
 		filereader.log_info_overruling("\n\n\nnew session begins:")
@@ -640,7 +627,7 @@ class GomokuApp(Tk):
 			stats.setup_logging(gomoku.player1.TYPE, gomoku.player2.TYPE)
 
 			game_instance.game_mode=game_instance.game_modes[2]
-			game_instance.Gamewindow.open_game_window()
+			game_instance.Gamewindow.restart_game_window()
 
 			try:
 				gomoku.runReplay(game_instance,moves) #main function

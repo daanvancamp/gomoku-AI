@@ -98,7 +98,7 @@ class Player:
             self.weighed_scores.append(0)
         print(f"score: {self.score}")
         self.sum_score += self.score
-        self.avg_score = self.sum_score / game_number+1
+        self.avg_score = self.sum_score / game_number
         self.all_moves.append(self.moves)
         self.avg_moves = sum(self.all_moves) / len(self.all_moves)
 
