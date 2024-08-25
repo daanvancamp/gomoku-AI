@@ -7,7 +7,7 @@ import pygame
 import os
 from game import playboard_processor,gomoku
 
-class GameWindow(Frame):
+class GameWindow(Frame): #todo: show empty board on start instead of a blank screen (black)
     def __init__(self,instance:gomoku.GomokuGame,master):
         super().__init__(master)
         self.grid()
@@ -147,7 +147,7 @@ class GameWindow(Frame):
         self.label_recognition_info.grid(row=0, column=1,sticky="n")
 
         self.embed_pygame = Frame(self, width=self.game_instance.WIDTH, height=self.game_instance.HEIGHT)
-        self.embed_pygame.grid(row=0, column=1,rowspan=2,pady=30)
+        self.embed_pygame.grid(row=0, column=1,rowspan=2,pady=100)
 
         self.button_capture_image = Button(self, text="Capture Image (in development)", command=self.determine_move,width=25, bg="green",fg="white", font=font_labels)
         self.button_capture_image.grid(row=1, column=1,sticky="s",pady=(0,90))

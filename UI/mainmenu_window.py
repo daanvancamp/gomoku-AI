@@ -6,6 +6,7 @@ from time import sleep
 from tkinter import *
 from tkinter.ttk import Combobox
 from tkinter import filedialog
+from tkinter import messagebox as mb
 
 import numpy as np
 from utils import filereader,stats
@@ -346,8 +347,7 @@ class GomokuApp(Tk):
 							return None
 			print("board loaded")
 			return board
-		except Exception as e:
-			print(e)
+		except:
 			return None
 
 
@@ -417,7 +417,7 @@ class GomokuApp(Tk):
 					board_loaded=False
 				game_instance.set_board(board)
 
-			if (board_loaded and Gamesettings.var_start_from_file.get()) or not Gamesettings.var_start_from_file.get():
+			if (board_loaded and Gamesettings.var_start_from_file.get()) or (not Gamesettings.var_start_from_file.get()):
 				try:
 					
 					gomoku.runGame(game_instance, i) #main function
@@ -428,11 +428,17 @@ class GomokuApp(Tk):
 					raise Exception("There is an error in the main function/loop, it can be anything." , str(e))
 			else:
 				print("Please select a valid file that contains the board in the following format and try again:")
+				example_board=""
 				for i in range(15):
 					for b in range(15):
 						print(random.randint(0,2), end="")
+						example_board+=str(random.randint(0,2))
 					print("\n",end="")
 				print("The board can only contain 0, 1, or 2. 0 = empty, 1 = player 1, 2 = player 2.")
+
+				mb.showerror(message=example_board, title="Invalid board file, try again",detail="The board can only contain 0, 1, or 2. 0 = empty, 1 = player 1, 2 = player 2.")
+
+				break
 		self.game_over()
 
 	def start_new_training(self):
@@ -555,7 +561,7 @@ class GomokuApp(Tk):
 		else:
 			print("Try again, please select a valid json file and make sure that it's not opened")
 			self.label_info_replay_file_loaded.config(text="Try again, please select a valid json file and make sure that it's not opened in another program",fg="red")
-		
+			mb.showerror("Try again, please select a valid json file",message="Please close the file if it is opened in another program")
 		self.game_over()
 
 	def game_over(self):

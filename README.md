@@ -2,6 +2,7 @@
 https://github.com/Mig26/gomoku-thesis-proj
 
 **The latest stable release is version 1.4. The recognition doesn't work in this version yet, but all the other features should work perfectly, if not: please report the bug.** That version is the compiled version of the python code. It is made for those who don't want to experience issues caused by features that are in development or those who just want to play it as fast as possible without having to install python or anything else.
+**Version 1.4 will remain the best version if performance is very important.** The newer versions will be a little bit slower, because of the extra features and longer loading times.
 
 stable release:https://github.com/daanvancamp/gomoku-thesis-proj/releases/tag/v1.4
 
@@ -140,7 +141,13 @@ august 2024:
 
   visual improvements in the game window
 
-  The mainmenu is now fullscreen
+  The mainmenu is now fullscreen and integrated with the gamewindow.
+
+  You can now acces all "tabs" by using the menubar. The tabs are now frames.
+
+  restructured the classes
+  
+
 
 
 **issues:**

@@ -3,7 +3,6 @@ import shutil
 from model_management.AI_model import AI_Model
 from utils.singleton_class import Singleton
 
-
 class ModelManager(metaclass=Singleton):
     def __init__(self):
         self.parent_dir = "data/models"
