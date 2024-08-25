@@ -2,6 +2,7 @@ from ast import Lambda
 import random
 import sys
 from threading import Thread
+from time import sleep
 from tkinter import *
 from tkinter.ttk import Combobox
 from tkinter import filedialog
@@ -12,6 +13,7 @@ from model_management import modelmanager
 from game import gomoku
 from UI import game_window
 from game import gomoku
+from utils.singleton_class import Singleton
 
 WIDTH = 540
 HEIGHT = 500
@@ -19,45 +21,12 @@ HEIGHT = 500
 game_instance = gomoku.GomokuGame(filereader.create_gomoku_game("consts.json"))
 modelmanager_instance = modelmanager.ModelManager()
 
-
-class GomokuApp(Tk):
-	def __init__(self):
-		#type annotation
-		#self.game_window:game_window.Game_Window = game_window.Game_Window(game_instance)
-
-		super().__init__()
-		self.title("Gomoku -- Main Menu")
-		self.configure(background="#357EC7")
-		self.attributes("-topmost", True)
-		self.bind("<Escape>", lambda event: self.quit_game())
-		self.bind("<q>", lambda event: self.quit_game())
-		self.attributes("-fullscreen", False)#temporarily set to false because it is easier to test
-		game_instance.Gamewindow = game_window.Game_Window(game_instance,self)
+distance_from_left_side=10
 
 
 
-		self.tk_setPalette(background='white', foreground='black',
-			   activeBackground='green', activeForeground='red')
-
-		Thread_maintain_GUI=Thread(target=self.maintain_GUI,daemon=True)#end when main program ends
-		Thread_maintain_GUI.start()
-	
-		self.frame1 = Frame(self,width=WIDTH,height=HEIGHT,bg="white")
-		self.frame2 = Frame(self,width=WIDTH,height=HEIGHT,bg="white")
-		self.frame3 = Frame(self,width=WIDTH,height=HEIGHT,bg="white")
-		self.frame4 = Frame(self,width=WIDTH,height=HEIGHT,bg="white")
-
-		#only enable if you want to test, don't enable in production
-		# self.frame1.grid(row=0,column=0)
-		# self.frame2.grid(row=0,column=1)
-		# self.frame3.grid(row=1,column=0)
-		# self.frame4.grid(row=1,column=1)
-
-
-		self.var_playerType1 = StringVar()
-		self.var_playerType2 = StringVar()
-		self.var_playerType1.set("Human")
-		self.var_playerType2.set("AI-Model")
+class GameSettings(metaclass=Singleton):
+	def __init__(self) -> None:
 		self.var_game_runs = StringVar()
 		self.var_game_runs.set("1")
 		self.var_delay = BooleanVar()
@@ -68,10 +37,6 @@ class GomokuApp(Tk):
 		self.var_rep.set(True)
 		self.replay_path = StringVar()
 		self.replay_path.set(r".\data\replays")
-		self.var_allow_overrule_player_1=BooleanVar()
-		self.var_allow_overrule_player_1.set(True)
-		self.var_allow_overrule_player_2=BooleanVar()
-		self.var_allow_overrule_player_2.set(True)
 		self.var_play_music=BooleanVar()
 		self.var_play_music.set(False)
 		self.var_show_overruling=BooleanVar()
@@ -80,6 +45,61 @@ class GomokuApp(Tk):
 		self.var_show_graphs.set(False)
 		self.var_show_dialog=BooleanVar()
 		self.var_show_dialog.set(False)
+		self.var_use_recognition=BooleanVar()
+		self.var_use_recognition.set(False)
+		self.var_startingPlayer=StringVar()
+		self.var_startingPlayer.set("Player 1")
+		self.var_start_from_file=BooleanVar()
+		self.var_start_from_file.set(False)
+		self.state_board_path=StringVar()
+		self.state_board_path.set(r".\test_situations\specific_situation.txt")
+
+
+class GomokuApp(Tk):
+	def __init__(self):
+		global Gamesettings
+		#type annotation
+		#self.game_window:game_window.GameWindow = game_window.GameWindow(game_instance)
+		Tk.__init__(self)
+		self.title("Gomoku -- Main Menu")
+		self.configure(background="#357EC7")
+		self.attributes("-topmost", True)
+		self.bind("<Escape>", lambda event: self.quit_game())
+		self.bind("<q>", lambda event: self.quit_game())
+		self.attributes("-fullscreen", False)#temporarily set to false because it is easier to test
+		Gamesettings = GameSettings()
+
+		self.tk_setPalette(background='white', foreground='black',
+			   activeBackground='gray', activeForeground='black')
+
+		Thread_maintain_GUI=Thread(target=self.maintain_GUI,daemon=True)#end when main program ends
+		Thread_maintain_GUI.start()
+
+
+		#only enable if you want to test, don't enable in production
+		# self.frame1.grid(row=0,column=0)
+		# self.frame2.grid(row=0,column=1)
+		# self.frame3.grid(row=1,column=0)
+		# self.frame4.grid(row=1,column=1)
+
+
+		gomoku.player1.var_playerType = StringVar()
+		gomoku.player2.var_playerType = StringVar()
+		gomoku.player1.var_playerType.set("Human")
+		gomoku.player2.var_playerType.set("AI-Model")
+		
+		
+		gomoku.player1.var_allow_overrule=BooleanVar()
+		gomoku.player1.var_allow_overrule.set(True)
+		gomoku.player2.var_allow_overrule=BooleanVar()
+		gomoku.player2.var_allow_overrule.set(True)
+		
+		gomoku.player1.var_model=StringVar()
+		gomoku.player2.var_model=StringVar()
+		
+		gomoku.player1.var_model.set("standaard")
+		gomoku.player2.var_model.set("standaard")
+
 
 		self.var_losses=IntVar()
 		self.var_losses.set(0)
@@ -97,38 +117,29 @@ class GomokuApp(Tk):
 		self.var_relative_value_ties = StringVar()
 		self.var_relative_value_ties.set("0%")
 
-		self.var_choose_stats=StringVar()
+		self.var_choose_stats = StringVar()
 
-		self.var_start_from_file=BooleanVar()
-		self.var_start_from_file.set(False)
-		self.state_board_path=StringVar()
-		self.state_board_path.set(r".\test_situations\specific_situation.txt")
-		self.var_name_model=StringVar()
-		self.var_model_player1=StringVar()
-		self.var_model_player2=StringVar()
-		self.var_use_recognition=BooleanVar()
-		self.var_use_recognition.set(False)
-		self.var_model_player1.set("standaard")
-		self.var_model_player2.set("standaard")
-		self.var_startingPlayer=StringVar()
-		self.var_startingPlayer.set("Player 1")
+		self.var_name_model = StringVar()
 
 		self.var_number_of_training_loops=StringVar()
 		self.var_number_of_training_loops.set("0 (against H:0,T'A':0, AI:0 )")
-		self.var_number_of_training_loops_comboboxes_p1=StringVar()
-		self.var_number_of_training_loops_comboboxes_p1.set(0)
-		self.var_number_of_training_loops_comboboxes_p2=StringVar()
-		self.var_number_of_training_loops_comboboxes_p2.set(0)
-	
-		self.input_canvas = Canvas(self, relief="groove", borderwidth=0, highlightthickness=0,bg="#357EC7")
-		self.input_canvas.grid(row=2, column=0,columnspan=3, padx=2, pady=2,sticky="s")
-		distance_from_left_side=10
-		### TABS ###
+
+		gomoku.player1.var_number_of_training_loops_comboboxes=StringVar()
+		gomoku.player1.var_number_of_training_loops_comboboxes.set(0)
+		gomoku.player2.var_number_of_training_loops_comboboxes=StringVar()
+		gomoku.player2.var_number_of_training_loops_comboboxes.set(0)
+
 		self.style_numbers = ["georgia", 10, "white", 12, 2]#font, size, color, bold, underline
 
+		self.frame1 = Frame_Play(self)
+		self.frame2 = Frame(self,width=WIDTH,height=HEIGHT,bg="white")
+		self.frame3 = Frame(self,width=WIDTH,height=HEIGHT,bg="white")
+		self.frame4 = Frame(self,width=WIDTH,height=HEIGHT,bg="white")
+		
+		game_instance.Gamewindow = game_window.GameWindow(game_instance,self) #needs to be declared after all the frames are created
 
 		self.menubar=Menu(self)
-		self.new_game_menu=Menu(self.menubar,tearoff=0)
+		self.new_game_menu = Menu(self.menubar,tearoff=0)
 
 		self.new_game_menu.add_command(label="Play", command=lambda:self.add_frame_to_grid(self.frame1))
 		self.new_game_menu.add_command(label="Train", command=lambda:self.add_frame_to_grid(self.frame2))
@@ -142,109 +153,6 @@ class GomokuApp(Tk):
 		self.menubar.add_cascade(label="Models",menu=self.models_menu)
 		self.config(menu=self.menubar)
 
-
-		self.button_1 = Button(self.frame1, text="New Game", command=lambda: self.start_new_game())
-		self.button_1.grid(row=0, column=0, sticky="w", padx=distance_from_left_side)
-		self.checkbox_show_dialog=Checkbutton(self.frame1, text="Show dialog before starting next game", variable=self.var_show_dialog)
-		self.checkbox_show_dialog.grid(row=0, column=1, sticky="w")
-
-		self.player1typelabel = Label(self.frame1, text="Player 1(black)")
-		self.player1typelabel.grid(row=2, column=0, sticky="w", padx=distance_from_left_side)
-		self.player2typelabel = Label(self.frame1, text="Player 2(white)")
-		self.player2typelabel.grid(row=2, column=1, sticky="w", padx=distance_from_left_side)
-
-		self.radiobutton1 = Radiobutton(self.frame1, text="Human", variable=self.var_playerType1, value="Human", command=lambda: self.set_player_type(0))
-		self.radiobutton1.grid(row=3, column=0, sticky="w", padx=distance_from_left_side)
-		self.radiobutton2 = Radiobutton(self.frame1, text="Test Algorithm", variable=self.var_playerType1, value="Test Algorithm", command=lambda: self.set_player_type(0))
-		self.radiobutton2.grid(row=4, column=0, sticky="w", padx=distance_from_left_side)
-		self.radiobutton3 = Radiobutton(self.frame1, text="AI-Model", variable=self.var_playerType1, value="AI-Model", command=lambda: self.set_player_type(0))
-		self.radiobutton3.grid(row=5, column=0, sticky="w", padx=distance_from_left_side)
-
-		self.radiobutton4 = Radiobutton(self.frame1, text="Human", variable=self.var_playerType2, value="Human", command=lambda: self.set_player_type(1))
-		self.radiobutton4.grid(row=3, column=1, sticky="w")
-		self.radiobutton5 = Radiobutton(self.frame1, text="Test Algorithm", variable=self.var_playerType2, value="Test Algorithm", command=lambda: self.set_player_type(1))
-		self.radiobutton5.grid(row=4, column=1, sticky="w")
-		self.radiobutton6 = Radiobutton(self.frame1, text="AI-Model", variable=self.var_playerType2, value="AI-Model", command=lambda: self.set_player_type(1))
-		self.radiobutton6.grid(row=5, column=1, sticky="w")
-
-		self.list_models = modelmanager_instance.get_list_models()
-		self.CbModel1 = Combobox(self.frame1, state="readonly", values=self.list_models,textvariable=self.var_model_player1)
-		self.CbModel2 = Combobox(self.frame1, state="readonly", values=self.list_models,textvariable=self.var_model_player2)
-
-		self.CbModel1.grid(row=6, column=0, sticky="w",padx=distance_from_left_side)
-		self.CbModel2.grid(row=6, column=1,sticky="w",padx=distance_from_left_side)
-
-		self.label_value_number_of_training_loops_p1 = Label(self.frame1, textvariable=self.var_number_of_training_loops_comboboxes_p1)
-		self.label_value_number_of_training_loops_p1.grid(row=8, column=0, sticky="w",padx=distance_from_left_side)
-
-		self.label_value_number_of_training_loops_p2 = Label(self.frame1, textvariable=self.var_number_of_training_loops_comboboxes_p2)
-		self.label_value_number_of_training_loops_p2.grid(row=8, column=1, sticky="w")
-
-
-		self.overrule_button_player_1=Checkbutton(self.frame1, text="Allow overrule", variable=self.var_allow_overrule_player_1)
-		self.overrule_button_player_1.grid(row=9, column=0, sticky="w",padx=distance_from_left_side)
-
-		self.overrule_button_player_2=Checkbutton(self.frame1, text="Allow overrule", variable=self.var_allow_overrule_player_2)
-		self.overrule_button_player_2.grid(row=9, column=1, sticky="w")
-
-
-		self.gamerunslabel = Label(self.frame1, text="Number of games: ")
-		self.gamerunslabel.grid(row=10, column=0, sticky="w",padx=distance_from_left_side)
-		self.gamerunsentry = Entry(self.frame1, textvariable=self.var_game_runs)
-		self.gamerunsentry.grid(row=10, column=1, sticky="w")
-
-
-		self.playerstartLabel = Label(self.frame1, text="Player to start: ")
-		self.playerstartLabel.grid(row=11, column=0, sticky="w", padx=distance_from_left_side)
-		self.CbStartingPlayer = Combobox(self.frame1, state="readonly", values=["Player 1", "Player 2"], textvariable=self.var_startingPlayer)
-		self.CbStartingPlayer.current(0)
-		self.CbStartingPlayer.grid(row=11, column=1, sticky="w")
-
-		#column 0
-		self.logbutton = Checkbutton(self.frame1, text="Create log file", variable=self.var_log) 
-		self.logbutton.grid(row=12, column=0, sticky="w",padx=distance_from_left_side)
-		self.replaybutton = Checkbutton(self.frame1, text="Save replays(1)", variable=self.var_rep) 
-		self.replaybutton.grid(row=13, column=0, sticky="w",padx=distance_from_left_side)
-		self.delaybutton = Checkbutton(self.frame1, text="Use AI Delay", variable=self.var_delay)
-		self.delaybutton.grid(row=14, column=0, sticky="w",padx=distance_from_left_side)
-
-		#column1
-		self.music_button=Checkbutton(self.frame1, text="Play music", variable=self.var_play_music)
-		self.music_button.grid(row=12, column=1, sticky="w")
-		self.button_show_overruling=Checkbutton(self.frame1, text="Show overruling", variable=self.var_show_overruling)
-		self.button_show_overruling.grid(row=13, column=1, sticky="w")
-		self.use_recognition_button=Checkbutton(self.frame1, text="use recognition(in development)*", variable=self.var_use_recognition)
-		self.use_recognition_button.grid(row=14, column=1, sticky="w")
-
-
-		self.label_recognition=Label(self.frame1, text="*only turn on when you have a physical board, a webcam and the other repository.",wraplength=WIDTH-15)
-		self.label_recognition.grid(row=15, column=0, sticky="w",columnspan=2, padx=distance_from_left_side)
-
-
-		self.bottomframe = Frame(self.frame1, highlightbackground="blue", highlightthickness=3, borderwidth=1)
-		self.bottomframe.grid(row=16, column=0, sticky="w",columnspan=3, padx=distance_from_left_side, pady=15)
-
-		self.start_from_file_button=Checkbutton(self.bottomframe, text="Load game situation(2)", variable=self.var_start_from_file)
-		self.start_from_file_button.grid(row=0, column=0, sticky="w")
-		self.label_unvalid_file=Label(self.bottomframe, text="")
-		self.label_unvalid_file.grid(row=0, column=1, sticky="e",columnspan=2)
-
-		self.label_load_state=Label(self.bottomframe, text="Choose file board state: ")
-		self.label_load_state.grid(row=1, column=0, sticky="w")
-		self.load_state_entry = Entry(self.bottomframe, textvariable=self.state_board_path, width=50)
-		self.load_state_entry.grid(row=2, column=0, sticky="w",columnspan=2)
-		self.button_browse_state_file = Button(self.bottomframe, text="...", command=lambda: self.browse_state_files())
-		self.button_browse_state_file.grid(row=2, column=2, sticky="w")
-
-
-		self.button_3 = Button(self.input_canvas, text="Quit Game(ESC/Q)", command=lambda: self.quit_game())
-		self.button_3.grid(row=1, column=0)
-		self.label_shortcuts=Label(self.input_canvas, text="In game shortcuts: esc = return to this menu, q = terminate program , space = skip the current round",wraplength=WIDTH-15,bg="#357EC7",font=(self.style_numbers[0],self.style_numbers[1]),fg="white")
-		self.label_shortcuts.grid(row=2, column=0)
-
-		self.label_info_load_save_replay=Label(self.frame1,wraplength=WIDTH-15, text="(1)(2)The save replay function can't be used when loading a board, because that would create a wrong replay file.")
-		self.label_info_load_save_replay.grid(row=17, column=0, sticky="w",columnspan=2,pady=5,padx=distance_from_left_side)
-
 		#row 0
 		self.button_2 = Button(self.frame2, text="Train", command=lambda: self.start_new_training())
 		self.button_2.grid(row=0, column=1, sticky="e")
@@ -252,38 +160,38 @@ class GomokuApp(Tk):
 		#column 0
 		self.label_model=Label(self.frame2, text="AI-Model: ")
 		self.label_model.grid(row=1, column=0, sticky="w",padx=distance_from_left_side,pady=1)
-		self.CbModelTrain1 = Combobox(self.frame2, state="readonly", values=self.list_models,textvariable=self.var_model_player1)
+		self.CbModelTrain1 = Combobox(self.frame2, state="readonly", values=modelmanager_instance.list_models,textvariable=gomoku.player1.var_model)
 		self.CbModelTrain1.grid(row=2, column=0, sticky="w",padx=distance_from_left_side,pady=1)
-		self.label_value_number_of_training_loops_tab2_p1 =Label(self.frame2, textvariable=self.var_number_of_training_loops_comboboxes_p1)
+		self.label_value_number_of_training_loops_tab2_p1 =Label(self.frame2, textvariable=gomoku.player1.var_number_of_training_loops_comboboxes)
 		self.label_value_number_of_training_loops_tab2_p1.grid(row=3, column=0, sticky="w",padx=distance_from_left_side,pady=1)
-		self.overrule_button_player_1_tab2=Checkbutton(self.frame2, text="Allow overrule", variable=self.var_allow_overrule_player_1)
+		self.overrule_button_player_1_tab2=Checkbutton(self.frame2, text="Allow overrule", variable=gomoku.player1.var_allow_overrule)
 		self.overrule_button_player_1_tab2.grid(row=7, column=0, sticky="w",padx=distance_from_left_side)
 
 
 		self.train_opponent_label = Label(self.frame2, text="Train model against:")
 		self.train_opponent_label.grid(row=1, column=1, sticky="w")
 
-		self.human_training_button=Radiobutton(self.frame2, text="Human", variable=self.var_playerType2, value="Human")
+		self.human_training_button=Radiobutton(self.frame2, text="Human", variable=gomoku.player2.var_playerType, value="Human")
 		self.human_training_button.grid(row=2, column=1,sticky="w")
-		self.radiobutton7 = Radiobutton(self.frame2, text="Test Algorithm", variable=self.var_playerType2, value="Test Algorithm")
+		self.radiobutton7 = Radiobutton(self.frame2, text="Test Algorithm", variable=gomoku.player2.var_playerType, value="Test Algorithm")
 		self.radiobutton7.grid(row=3, column=1, sticky="w")
-		self.radiobutton8 = Radiobutton(self.frame2, text="AI-Model", variable=self.var_playerType2, value="AI-Model")
+		self.radiobutton8 = Radiobutton(self.frame2, text="AI-Model", variable=gomoku.player2.var_playerType, value="AI-Model")
 		self.radiobutton8.grid(row=4, column=1, sticky="w")
 
-		self.CbModelTrain2 = Combobox(self.frame2, state="readonly", values=self.list_models,textvariable=self.var_model_player2)
+		self.CbModelTrain2 = Combobox(self.frame2, state="readonly", values=modelmanager_instance.list_models,textvariable=gomoku.player2.var_model)
 		self.CbModelTrain2.grid(row=5, column=1, sticky="w")
-		self.label_value_number_of_training_loops_tab2_p2 = Label(self.frame2, textvariable=self.var_number_of_training_loops_comboboxes_p2)
+		self.label_value_number_of_training_loops_tab2_p2 = Label(self.frame2, textvariable=gomoku.player2.var_number_of_training_loops_comboboxes)
 		self.label_value_number_of_training_loops_tab2_p2.grid(row=6, column=1, sticky="w")
-		self.overrule_button_player_2_tab2=Checkbutton(self.frame2, text="Allow overrule", variable=self.var_allow_overrule_player_2)
+		self.overrule_button_player_2_tab2=Checkbutton(self.frame2, text="Allow overrule", variable=gomoku.player2.var_allow_overrule)
 		self.overrule_button_player_2_tab2.grid(row=7, column=1, sticky="w")
 
 		self.gamerunslabel = Label(self.frame2, text="Number of games: ")
 		self.gamerunslabel.grid(row=8, column=0, sticky="w",pady=2,padx=distance_from_left_side)
-		self.gamerunsentry2 = Entry(self.frame2, textvariable=self.var_game_runs)
+		self.gamerunsentry2 = Entry(self.frame2, textvariable=Gamesettings.var_game_runs)
 		self.gamerunsentry2.grid(row=9, column=0, sticky="w",pady=2,padx=distance_from_left_side)
-		self.replaybutton2 = Checkbutton(self.frame2, text="Save replays", variable=self.var_rep)
+		self.replaybutton2 = Checkbutton(self.frame2, text="Save replays", variable=Gamesettings.var_rep)
 		self.replaybutton2.grid(row=10, column=0, sticky="w",pady=2,padx=distance_from_left_side)
-		self.show_graphs_checkbutton=Checkbutton(self.frame2, text="Show graphs*", variable=self.var_show_graphs)
+		self.show_graphs_checkbutton=Checkbutton(self.frame2, text="Show graphs*", variable=Gamesettings.var_show_graphs)
 		self.show_graphs_checkbutton.grid(row=11, column=0, sticky="w",pady=2,padx=distance_from_left_side)
 
 
@@ -296,16 +204,14 @@ class GomokuApp(Tk):
 
 		self.replaylabel = Label(self.frame3, text="Choose the replay file: ")
 		self.replaylabel.grid(row=0, column=0, sticky="w",pady=2,padx=distance_from_left_side)
-		self.replayentry = Entry(self.frame3, textvariable=self.replay_path, width=30)
+		self.replayentry = Entry(self.frame3, textvariable=Gamesettings.replay_path, width=30)
 		self.replayentry.grid(row=1, column=0, sticky="w",pady=2,padx=distance_from_left_side)
 		self.button_4 = Button(self.frame3, text="...", command=lambda: self.browse_files())
 		self.button_4.grid(row=1, column=1, sticky="w")
-		self.delaybutton2 = Checkbutton(self.frame3, text="Use AI Delay", variable=self.var_delay)
+		self.delaybutton2 = Checkbutton(self.frame3, text="Use AI Delay", variable=Gamesettings.var_delay)
 		self.delaybutton2.grid(row=2, column=0, sticky="w",pady=2,padx=distance_from_left_side)
 		self.button_5 = Button(self.frame3, text="Play", command=lambda: self.start_new_replay())
 		self.button_5.grid(row=3, column=0, sticky="w",pady=2,padx=distance_from_left_side)
-		self.checkbox_show_dialog_tab3=Checkbutton(self.frame3, text="Show dialog before starting next game", variable=self.var_show_dialog)
-		self.checkbox_show_dialog_tab3.grid(row=3, column=1, sticky="w")
 
 		self.label_info_replay_file_loaded=Label(self.frame3, text="",foreground="red",wraplength=WIDTH-20,font=(self.style_numbers[0],self.style_numbers[1]))
 		self.label_info_replay_file_loaded.grid(row=4, column=0, sticky="w",columnspan=2,padx=distance_from_left_side)
@@ -387,9 +293,9 @@ class GomokuApp(Tk):
 
 	def set_player_type(self,player_id):
 			if player_id == 1:
-				newtype = self.var_playerType1.get()
+				newtype = gomoku.player1.var_playerType.get()
 			else:
-				newtype = self.var_playerType2.get()
+				newtype = gomoku.player2.var_playerType.get()
 			gomoku.players[player_id-1].TYPE=newtype
 
 	def quit_game(self):
@@ -400,11 +306,21 @@ class GomokuApp(Tk):
 		self.remove_all_widgets()
 		frame.grid(row=0,column=0)
 
-
 	def remove_all_widgets(self):
-		for widget in self.winfo_children():
-			if widget.winfo_ismapped():  # Controleer of de widget zichtbaar is
-				widget.grid_remove()
+		try:
+			self.frame1.hide_frame()
+			self.frame2.grid_remove()
+			self.frame3.grid_remove()
+			self.frame4.grid_remove()
+			game_instance.Gamewindow.grid_remove()
+		except:
+			pass
+		
+		#todo: determine why this code doesn't work. The above code seems to work.
+		# for widget in self.winfo_children():
+		# 	if widget.winfo_ismapped():  # Controleer of de widget zichtbaar is
+		# 		widget.grid_remove()
+
 
 	def browse_state_files(self):
 		file_path = filedialog.askopenfilename(filetypes=[("txt File", "*.txt")],initialdir=r".\test_situations")
@@ -412,7 +328,7 @@ class GomokuApp(Tk):
 
 	def browse_files(self):
 		file_path = filedialog.askopenfilename(filetypes=[("Json File", "*.json")],initialdir=r".\data\replays")
-		self.replay_path.set(file_path)
+		Gamesettings.replay_path.set(file_path)
    
 	def run(self):
 		gomoku.run(game_instance)
@@ -437,21 +353,21 @@ class GomokuApp(Tk):
 		global game_instance
 		filereader.log_info_overruling("\n\n\nnew session begins:")
 		self.add_frame_to_grid(game_instance.Gamewindow)
-		game_instance.use_recognition = self.var_use_recognition.get()
-		game_instance.play_music = self.var_play_music.get()
-		game_instance.show_overruling = self.var_show_overruling.get()
-		game_instance.record_replay = self.var_rep.get()
-		game_instance.show_dialog = self.var_show_dialog.get()
+		game_instance.use_recognition = Gamesettings.var_use_recognition.get()
+		game_instance.play_music = Gamesettings.var_play_music.get()
+		game_instance.show_overruling = Gamesettings.var_show_overruling.get()
+		game_instance.record_replay = Gamesettings.var_rep.get()
+		game_instance.show_dialog = Gamesettings.var_show_dialog.get()
 		if game_instance.use_recognition:
 			game_instance.P1COL = "red"
 			game_instance.P2COL = "blue"
 
-		game_instance.ai_delay = self.var_delay.get()
-		stats.should_log = self.var_log.get()
+		game_instance.ai_delay = Gamesettings.var_delay.get()
+		stats.should_log = Gamesettings.var_log.get()
 	
 		
-		gomoku.player1.TYPE=self.var_playerType1.get()
-		gomoku.player2.TYPE=self.var_playerType2.get()
+		gomoku.player1.TYPE=gomoku.player1.var_playerType.get()
+		gomoku.player2.TYPE=gomoku.player2.var_playerType.get()
 
 		if (gomoku.player1.TYPE=="Human" or gomoku.player2.TYPE=="Human") and not game_instance.use_recognition:
 			game_instance.show_hover_effect=True
@@ -461,13 +377,13 @@ class GomokuApp(Tk):
 		stats.setup_logging(gomoku.player1.TYPE, gomoku.player2.TYPE)
 
 		if gomoku.player1.TYPE == "AI-Model":
-			gomoku.player1.load_model(self.var_model_player1.get())
-			gomoku.player1.set_allow_overrule(self.var_allow_overrule_player_1.get())
+			gomoku.player1.load_model(gomoku.player1.var_model.get())
+			gomoku.player1.set_allow_overrule(gomoku.player1.var_allow_overrule.get())
 		if gomoku.player2.TYPE == "AI-Model":
-			gomoku.player2.load_model(self.var_model_player2.get())
-			gomoku.player2.set_allow_overrule(self.var_allow_overrule_player_2.get())
+			gomoku.player2.load_model(gomoku.player2.var_model.get())
+			gomoku.player2.set_allow_overrule(gomoku.player2.var_allow_overrule.get())
 
-		if self.var_startingPlayer.get() == "Player 1":
+		if Gamesettings.var_startingPlayer.get() == "Player 1":
 			gomoku.current_player = gomoku.player1
 		else:
 			gomoku.current_player = gomoku.player2
@@ -476,7 +392,7 @@ class GomokuApp(Tk):
 
 		while not valid_number:
 			try:
-				runs = int(self.var_game_runs.get())
+				runs = int(Gamesettings.var_game_runs.get())
 				valid_number=True
 			except:
 				print("invalid number, try again")
@@ -490,7 +406,7 @@ class GomokuApp(Tk):
 			game_instance.current_game = i+1
 			game_instance.last_round = (i+1 == runs)
 			board_loaded=None
-			if self.var_start_from_file.get():
+			if Gamesettings.var_start_from_file.get():
 				board = self.load_board_from_file()
 				if board is not None:
 					board_loaded=True
@@ -499,7 +415,7 @@ class GomokuApp(Tk):
 					board_loaded=False
 				game_instance.set_board(board)
 
-			if (board_loaded and self.var_start_from_file.get()) or not self.var_start_from_file.get():
+			if (board_loaded and Gamesettings.var_start_from_file.get()) or not Gamesettings.var_start_from_file.get():
 				try:
 					
 					gomoku.runGame(game_instance, i) #main function
@@ -526,24 +442,24 @@ class GomokuApp(Tk):
 		game_instance.play_music = False
 		game_instance.show_overruling=False
 		game_instance.record_replay=True
-		game_instance.show_graphs=self.var_show_graphs.get()
+		game_instance.show_graphs=Gamesettings.var_show_graphs.get()
 
 		gomoku.player1.TYPE="AI-Model"
-		gomoku.player2.TYPE=self.var_playerType2.get()
+		gomoku.player2.TYPE=gomoku.player2.var_playerType.get()
 	
 		if gomoku.player1.TYPE=="Human" or gomoku.player2.TYPE=="Human":
 			game_instance.show_hover_effect=True
 		else:
 			game_instance.show_hover_effect=False
 
-		gomoku.player1.load_model(self.var_model_player1.get())#player 1 is always an AI-Model when training
-		gomoku.player1.set_allow_overrule(self.var_allow_overrule_player_1.get())
+		gomoku.player1.load_model(gomoku.player1.var_model.get())#player 1 is always an AI-Model when training
+		gomoku.player1.set_allow_overrule(gomoku.player1.var_allow_overrule.get())
 
 		if gomoku.player2.TYPE == "AI-Model":
-			gomoku.player2.load_model(self.var_model_player2.get())
-			gomoku.player2.set_allow_overrule(self.var_allow_overrule_player_2.get())
+			gomoku.player2.load_model(gomoku.player2.var_model.get())
+			gomoku.player2.set_allow_overrule(gomoku.player2.var_allow_overrule.get())
 
-		if self.var_startingPlayer.get() == "Player 1":
+		if Gamesettings.var_startingPlayer.get() == "Player 1":
 			gomoku.current_player = gomoku.player1
 		else:
 			gomoku.current_player = gomoku.player2
@@ -553,13 +469,13 @@ class GomokuApp(Tk):
 			valid_number = False
 			while not valid_number:
 				try:
-					runs = int(self.var_game_runs.get())
+					runs = int(Gamesettings.var_game_runs.get())
 					valid_number=True
 				except:
 					print("invalid number, try again")
 
 			game_instance.ai_delay = False #never wait when training
-			stats.should_log = self.var_log.get()
+			stats.should_log = Gamesettings.var_log.get()
 			stats.setup_logging(gomoku.player1.TYPE, gomoku.player2.TYPE)
 
 			game_instance.game_mode=game_instance.game_modes[1]
@@ -572,7 +488,7 @@ class GomokuApp(Tk):
 				game_instance.current_game = i+1
 				game_instance.last_round = (i+1 == runs)
 				try:
-					gomoku.runTraining(game_instance, i) #main function
+					gomoku.run_training(game_instance, i) #main function
 					if game_instance.stop_game:
 						break
 				except Exception as e:
@@ -598,13 +514,13 @@ class GomokuApp(Tk):
 	def start_new_replay(self):
 		global game_instance
 		game_instance.show_hover_effect=False
-		game_instance.show_dialog = self.var_show_dialog.get()
+		game_instance.show_dialog = Gamesettings.var_show_dialog.get()
 		self.add_frame_to_grid(game_instance.Gamewindow)
 
 
 		filereader.log_info_overruling("\n\n\nnew session begins:")
    
-		moves = filereader.load_replay(self.replay_path.get())
+		moves = filereader.load_replay(Gamesettings.replay_path.get())
 
 		if moves is None:
 			replay_loaded=False
@@ -622,15 +538,15 @@ class GomokuApp(Tk):
 
 			gomoku.current_player = gomoku.player1
 
-			game_instance.ai_delay = self.var_delay.get()
-			stats.should_log = self.var_log.get()
+			game_instance.ai_delay = Gamesettings.var_delay.get()
+			stats.should_log = Gamesettings.var_log.get()
 			stats.setup_logging(gomoku.player1.TYPE, gomoku.player2.TYPE)
 
 			game_instance.game_mode=game_instance.game_modes[2]
 			game_instance.Gamewindow.restart_game_window()
 
 			try:
-				gomoku.runReplay(game_instance,moves) #main function
+				gomoku.run_replay(game_instance,moves) #main function
 			except Exception as e:
 				print("error in gomoku.run, herschrijf die functie.")
 				raise Exception("There is an error in the main function/loop, it can be anything." , str(e)) 
@@ -698,132 +614,134 @@ class GomokuApp(Tk):
 		last_value_repvar=True
 		last_value_load_board_from_file=False
 		while True:
-			try:
+			sleep(1)
+			while not game_instance.running:
+				try:
 
-				old_tab_text= tab_text
-				current_tab = self.tabControl.index(self.tabControl.select())
-				tab_text = self.tabControl.tab(current_tab, "text")
-				if tab_text=="Train" and old_tab_text!=tab_text:
-					self.var_game_runs.set("3000")
-				elif tab_text=="Play gomoku" and old_tab_text!=tab_text:
-					self.var_game_runs.set("1")
-					self.var_delay.set(False)
-				elif tab_text=="Replay old games" and old_tab_text!=tab_text:
-					self.var_delay.set(True)
+					old_tab_text= tab_text
+					current_tab = self.tabControl.index(self.tabControl.select())
+					tab_text = self.tabControl.tab(current_tab, "text")
+					if tab_text=="Train" and old_tab_text!=tab_text:
+						self.game_instance.var_game_runs.set("3000")
+					elif tab_text=="Play gomoku" and old_tab_text!=tab_text:
+						self.game_instance.var_game_runs.set("1")
+						self.var_delay.set(False)
+					elif tab_text=="Replay old games" and old_tab_text!=tab_text:
+						self.var_delay.set(True)
 
-				if tab_text=="Train":
-					self.label_shortcuts.config(text="In game shortcuts: esc = return to this menu, q = terminate program")
-				elif tab_text=="Replay old games":
-					self.label_shortcuts.config(text="In game shortcuts: esc = return to this menu, q = terminate program")
-				elif tab_text=="Play gomoku":
-					self.label_shortcuts.config(text="In game shortcuts: esc = return to this menu, q = terminate program , space = skip the current round")
+					if tab_text=="Train":
+						self.label_shortcuts.config(text="In game shortcuts: esc = return to this menu, q = terminate program")
+					elif tab_text=="Replay old games":
+						self.label_shortcuts.config(text="In game shortcuts: esc = return to this menu, q = terminate program")
+					elif tab_text=="Play gomoku":
+						self.label_shortcuts.config(text="In game shortcuts: esc = return to this menu, q = terminate program , space = skip the current round")
 
-				##TAB 1##
-				if self.var_playerType1.get() == "Human" and self.var_playerType2.get() == "Human":
-					self.var_log.set(False)
-					self.var_rep.set(False)
-					self.logbutton.config(state=DISABLED)
-					self.replaybutton.config(state=DISABLED)
-				else:
-					self.logbutton.config(state=NORMAL)
-					self.replaybutton.config(state=NORMAL)
+					##TAB 1##
+					if gomoku.player1.var_playerType.get() == "Human" and gomoku.player2.var_playerType.get() == "Human":
+						self.var_log.set(False)
+						self.var_rep.set(False)
+						self.logbutton.config(state=DISABLED)
+						self.replaybutton.config(state=DISABLED)
+					else:
+						self.logbutton.config(state=NORMAL)
+						self.replaybutton.config(state=NORMAL)
 
 
-				if self.var_playerType1.get()=="AI-Model":
-					self.CbModel1.config(state="readonly")
-					self.overrule_button_player_1.config(state=NORMAL)
-					self.label_value_number_of_training_loops_p1.config(state=NORMAL)
+					if gomoku.player1.var_playerType.get()=="AI-Model":
+						self.CbModel1.config(state="readonly")
+						self.overrule_button_player_1.config(state=NORMAL)
+						self.label_value_number_of_training_loops_p1.config(state=NORMAL)
 
-				else:
-					self.CbModel1.config(state=DISABLED)
-					self.overrule_button_player_1.config(state=DISABLED)
-					self.label_value_number_of_training_loops_p1.config(state=DISABLED)
+					else:
+						self.CbModel1.config(state=DISABLED)
+						self.overrule_button_player_1.config(state=DISABLED)
+						self.label_value_number_of_training_loops_p1.config(state=DISABLED)
 
-				if self.var_playerType2.get()=="AI-Model":
-					self.CbModel2.config(state="readonly")
-					self.overrule_button_player_2.config(state=NORMAL)
-					self.overrule_button_player_2_tab2.config(state=NORMAL)
-					self.label_value_number_of_training_loops_p2.config(state=NORMAL)
-				else:
-					self.CbModel2.config(state=DISABLED)
-					self.overrule_button_player_2.config(state=DISABLED)
-					self.overrule_button_player_2_tab2.config(state=DISABLED)
-					self.label_value_number_of_training_loops_p2.config(state=DISABLED)
+					if gomoku.player2.var_playerType.get()=="AI-Model":
+						self.CbModel2.config(state="readonly")
+						self.overrule_button_player_2.config(state=NORMAL)
+						self.overrule_button_player_2_tab2.config(state=NORMAL)
+						self.label_value_number_of_training_loops_p2.config(state=NORMAL)
+					else:
+						self.CbModel2.config(state=DISABLED)
+						self.overrule_button_player_2.config(state=DISABLED)
+						self.overrule_button_player_2_tab2.config(state=DISABLED)
+						self.label_value_number_of_training_loops_p2.config(state=DISABLED)
 
-				if self.var_start_from_file.get():
-					self.label_load_state.grid()
-					self.load_state_entry.grid()
-					self.button_browse_state_file.grid()
-				else:
-					self.label_load_state.grid_remove()
-					self.load_state_entry.grid_remove()
-					self.button_browse_state_file.grid_remove()
+					if self.var_start_from_file.get():
+						self.label_load_state.grid()
+						self.load_state_entry.grid()
+						self.button_browse_state_file.grid()
+					else:
+						self.label_load_state.grid_remove()
+						self.load_state_entry.grid_remove()
+						self.button_browse_state_file.grid_remove()
 		
-				recognition_possible=(self.var_playerType1.get()=="Human" or self.var_playerType2.get()=="Human")and (self.var_playerType1.get()=="AI-Model" or self.var_playerType2.get()=="AI-Model" or self.var_playerType1.get()=="Test Algorithm" or self.var_playerType2.get()=="Test Algorithm")
-				if recognition_possible and not self.var_start_from_file.get():
-					self.use_recognition_button.config(state=NORMAL)
-					self.label_recognition.config(state=NORMAL)
-				else:
-					self.use_recognition_button.config(state=DISABLED)
-					self.label_recognition.config(state=DISABLED)
-				#tab 1, delaybutton#
-				if (self.var_playerType1.get()=="AI-Model" or self.var_playerType2.get()=="AI-Model" ) or (self.var_playerType1.get()=="Test Algorithm" or self.var_playerType2.get()=="Test Algorithm"):
-					self.delaybutton.config(state=NORMAL)
-				else:
-					self.delaybutton.config(state=DISABLED)
-				#tab1, music button#
-				if self.var_playerType1.get()=="Human" or self.var_playerType2.get()=="Human":
-					self.music_button.config(state=NORMAL)
-				else:
-					self.music_button.config(state=DISABLED)
+					recognition_possible=(gomoku.player1.var_playerType.get()=="Human" or gomoku.player2.var_playerType.get()=="Human")and (gomoku.player1.var_playerType.get()=="AI-Model" or gomoku.player2.var_playerType.get()=="AI-Model" or gomoku.player1.var_playerType.get()=="Test Algorithm" or gomoku.player2.var_playerType.get()=="Test Algorithm")
+					if recognition_possible and not self.var_start_from_file.get():
+						self.use_recognition_button.config(state=NORMAL)
+						self.label_recognition.config(state=NORMAL)
+					else:
+						self.use_recognition_button.config(state=DISABLED)
+						self.label_recognition.config(state=DISABLED)
+					#tab 1, delaybutton#
+					if (gomoku.player1.var_playerType.get()=="AI-Model" or gomoku.player2.var_playerType.get()=="AI-Model" ) or (gomoku.player1.var_playerType.get()=="Test Algorithm" or gomoku.player2.var_playerType.get()=="Test Algorithm"):
+						self.delaybutton.config(state=NORMAL)
+					else:
+						self.delaybutton.config(state=DISABLED)
+					#tab1, music button#
+					if gomoku.player1.var_playerType.get()=="Human" or gomoku.player2.var_playerType.get()=="Human":
+						self.music_button.config(state=NORMAL)
+					else:
+						self.music_button.config(state=DISABLED)
 
-				#starting player
-				if self.var_playerType1.get()==self.var_playerType2.get() and self.var_playerType1=="Test Algorithm": #option not relevant
-					self.playerstartLabel.config(state=DISABLED)
-					self.CbStartingPlayer.config(state=DISABLED)
-				else:
-					self.playerstartLabel.config(state="normal")
-					self.CbStartingPlayer.config(state="readonly")
+					#starting player
+					if gomoku.player1.var_playerType.get()==gomoku.player2.var_playerType.get() and gomoku.player1.var_playerType=="Test Algorithm": #option not relevant
+						self.playerstartLabel.config(state=DISABLED)
+						self.CbStartingPlayer.config(state=DISABLED)
+					else:
+						self.playerstartLabel.config(state="normal")
+						self.CbStartingPlayer.config(state="readonly")
 
-				if self.var_start_from_file.get()!=last_value_load_board_from_file and self.var_start_from_file.get()==True:
-					self.var_rep.set(False) #can't be used simultanously because if you would save a replay file, it wouldn't be complete (the moves that are loaded are gone)
+					if self.var_start_from_file.get()!=last_value_load_board_from_file and self.var_start_from_file.get()==True:
+						self.var_rep.set(False) #can't be used simultanously because if you would save a replay file, it wouldn't be complete (the moves that are loaded are gone)
 			
-					last_value_load_board_from_file=self.var_start_from_file.get()
-					last_value_repvar=self.var_rep.get()
+						last_value_load_board_from_file=self.var_start_from_file.get()
+						last_value_repvar=self.var_rep.get()
 
-				if self.var_rep.get()!=last_value_repvar and self.var_rep.get()==True:
-					self.var_start_from_file.set(False)
+					if self.var_rep.get()!=last_value_repvar and self.var_rep.get()==True:
+						self.var_start_from_file.set(False)
 
-					last_value_load_board_from_file=self.var_start_from_file.get()
-					last_value_repvar=self.var_rep.get()
+						last_value_load_board_from_file=self.var_start_from_file.get()
+						last_value_repvar=self.var_rep.get()
 
-				list_artificial_players=["AI-Model","Test Algorithm"]
-				if self.var_playerType1.get() not in list_artificial_players and self.var_playerType2.get() not in list_artificial_players:
-					self.button_show_overruling.config(state=NORMAL)
-				else:
-					self.button_show_overruling.config(state=DISABLED)
+					list_artificial_players=["AI-Model","Test Algorithm"]
+					if gomoku.player1.var_playerType.get() not in list_artificial_players and gomoku.player2.var_playerType.get() not in list_artificial_players:
+						self.button_show_overruling.config(state=NORMAL)
+					else:
+						self.button_show_overruling.config(state=DISABLED)
 
-				if not self.var_rep.get() and not self.var_start_from_file.get():
-					self.label_info_load_save_replay.config(state=DISABLED)
-				else:
-					self.label_info_load_save_replay.config(state=NORMAL)
+					if not self.var_rep.get() and not self.var_start_from_file.get():
+						self.label_info_load_save_replay.config(state=DISABLED)
+					else:
+						self.label_info_load_save_replay.config(state=NORMAL)
 
-				if self.var_playerType2.get()=="Human":
-					self.train_description.config(state=DISABLED) #a human will never play the game 3000 times to train the model
-				else:
-					self.train_description.config(state=NORMAL)
+					if gomoku.player2.var_playerType.get()=="Human":
+						self.train_description.config(state=DISABLED) #a human will never play the game 3000 times to train the model
+					else:
+						self.train_description.config(state=NORMAL)
 
-				if self.var_playerType2.get()=="AI-Model":
-					self.CbModelTrain2.config(state="readonly")
-					self.label_value_number_of_training_loops_tab2_p2.config(state=NORMAL)
-				else:
-					self.CbModelTrain2.config(state=DISABLED)
-					self.label_value_number_of_training_loops_tab2_p2.config(state=DISABLED)
+					if gomoku.player2.var_playerType.get()=="AI-Model":
+						self.CbModelTrain2.config(state="readonly")
+						self.label_value_number_of_training_loops_tab2_p2.config(state=NORMAL)
+					else:
+						self.CbModelTrain2.config(state=DISABLED)
+						self.label_value_number_of_training_loops_tab2_p2.config(state=DISABLED)
 
-				self.show_number_of_training_loops_comboboxes()
-				self.refresh_training_stats()
-			except Exception as e:
-				pass
+					self.show_number_of_training_loops_comboboxes()
+					self.refresh_training_stats()
+				except Exception as e:
+					pass
 
 	def refresh_training_stats(self):
 		global last_selected_model #used to keep track of which model is selected, because it is unselected when selecting something in the  combobox
@@ -859,9 +777,9 @@ class GomokuApp(Tk):
 			pass
 
 	def show_number_of_training_loops_comboboxes(self):
-		self.var_number_of_training_loops_comboboxes_p1.set("training loops: "+str(modelmanager_instance.get_model(self.var_model_player1.get()).get_number_of_training_loops("training loops")))
+		gomoku.player1.var_number_of_training_loops_comboboxes.set("training loops: "+str(modelmanager_instance.get_model(gomoku.player1.var_model.get()).get_number_of_training_loops("training loops")))
 	
-		self.var_number_of_training_loops_comboboxes_p2.set("training loops: "+str(modelmanager_instance.get_model(self.var_model_player2.get()).get_number_of_training_loops("training loops")))
+		gomoku.player2.var_number_of_training_loops_comboboxes.set("training loops: "+str(modelmanager_instance.get_model(gomoku.player2.var_model.get()).get_number_of_training_loops("training loops")))
 	
 
 
@@ -875,3 +793,105 @@ class GomokuApp(Tk):
 def set_game_instance(new_instance):
 	global game_instance
 	game_instance = new_instance
+
+class Frame_Play (Frame,GomokuApp):#the methods of gomokuapp need to be callable from the frame
+	def __init__(self, master):
+		super().__init__(master,width=WIDTH,height=HEIGHT)
+
+		self.button_1 = Button(self, text="New Game", command=self.start_new_game)
+		self.button_1.grid(row=0, column=0, sticky="w", padx=distance_from_left_side)
+		self.checkbox_show_dialog=Checkbutton(self, text="Show dialog before starting next game", variable=Gamesettings.var_show_dialog)
+		self.checkbox_show_dialog.grid(row=0, column=1, sticky="w")
+
+		self.player1typelabel = Label(self, text="Player 1(black)")
+		self.player1typelabel.grid(row=2, column=0, sticky="w", padx=distance_from_left_side)
+		self.player2typelabel = Label(self, text="Player 2(white)")
+		self.player2typelabel.grid(row=2, column=1, sticky="w", padx=distance_from_left_side)
+
+		self.radiobutton1 = Radiobutton(self, text="Human", variable=gomoku.player1.var_playerType, value="Human", command=lambda: self.set_player_type(0))
+		self.radiobutton1.grid(row=3, column=0, sticky="w", padx=distance_from_left_side)
+		self.radiobutton2 = Radiobutton(self, text="Test Algorithm", variable=gomoku.player1.var_playerType, value="Test Algorithm", command=lambda: self.set_player_type(0))
+		self.radiobutton2.grid(row=4, column=0, sticky="w", padx=distance_from_left_side)
+		self.radiobutton3 = Radiobutton(self, text="AI-Model", variable=gomoku.player1.var_playerType, value="AI-Model", command=lambda: self.set_player_type(0))
+		self.radiobutton3.grid(row=5, column=0, sticky="w", padx=distance_from_left_side)
+
+		self.radiobutton4 = Radiobutton(self, text="Human", variable=gomoku.player2.var_playerType, value="Human", command=lambda: self.set_player_type(1))
+		self.radiobutton4.grid(row=3, column=1, sticky="w")
+		self.radiobutton5 = Radiobutton(self, text="Test Algorithm", variable=gomoku.player2.var_playerType, value="Test Algorithm", command=lambda: self.set_player_type(1))
+		self.radiobutton5.grid(row=4, column=1, sticky="w")
+		self.radiobutton6 = Radiobutton(self, text="AI-Model", variable=gomoku.player2.var_playerType, value="AI-Model", command=lambda: self.set_player_type(1))
+		self.radiobutton6.grid(row=5, column=1, sticky="w")
+
+		self.CbModel1 = Combobox(self, state="readonly", values=modelmanager_instance.list_models,textvariable=gomoku.player1.var_model)
+		self.CbModel2 = Combobox(self, state="readonly", values=modelmanager_instance.list_models,textvariable=gomoku.player2.var_model)
+
+		self.CbModel1.grid(row=6, column=0, sticky="w",padx=distance_from_left_side)
+		self.CbModel2.grid(row=6, column=1,sticky="w",padx=distance_from_left_side)
+
+		self.label_value_number_of_training_loops_p1 = Label(self, textvariable=gomoku.player1.var_number_of_training_loops_comboboxes)
+		self.label_value_number_of_training_loops_p1.grid(row=8, column=0, sticky="w",padx=distance_from_left_side)
+
+		self.label_value_number_of_training_loops_p2 = Label(self, textvariable=gomoku.player2.var_number_of_training_loops_comboboxes)
+		self.label_value_number_of_training_loops_p2.grid(row=8, column=1, sticky="w")
+
+
+		self.overrule_button_player_1=Checkbutton(self, text="Allow overrule", variable=gomoku.player1.var_allow_overrule)
+		self.overrule_button_player_1.grid(row=9, column=0, sticky="w",padx=distance_from_left_side)
+
+		self.overrule_button_player_2=Checkbutton(self, text="Allow overrule", variable=gomoku.player2.var_allow_overrule)
+		self.overrule_button_player_2.grid(row=9, column=1, sticky="w")
+
+
+		self.gamerunslabel = Label(self, text="Number of games: ")
+		self.gamerunslabel.grid(row=10, column=0, sticky="w",padx=distance_from_left_side)
+		self.gamerunsentry = Entry(self, textvariable=Gamesettings.var_game_runs)
+		self.gamerunsentry.grid(row=10, column=1, sticky="w")
+
+
+		self.playerstartLabel = Label(self, text="Player to start: ")
+		self.playerstartLabel.grid(row=11, column=0, sticky="w", padx=distance_from_left_side)
+		self.CbStartingPlayer = Combobox(self, state="readonly", values=["Player 1", "Player 2"], textvariable=Gamesettings.var_startingPlayer)
+		self.CbStartingPlayer.current(0)
+		self.CbStartingPlayer.grid(row=11, column=1, sticky="w")
+
+		#column 0
+		self.logbutton = Checkbutton(self, text="Create log file", variable=Gamesettings.var_log) 
+		self.logbutton.grid(row=12, column=0, sticky="w",padx=distance_from_left_side)
+		self.replaybutton = Checkbutton(self, text="Save replays(1)", variable=Gamesettings.var_rep) 
+		self.replaybutton.grid(row=13, column=0, sticky="w",padx=distance_from_left_side)
+		self.delaybutton = Checkbutton(self, text="Use AI Delay", variable=Gamesettings.var_delay)
+		self.delaybutton.grid(row=14, column=0, sticky="w",padx=distance_from_left_side)
+
+		#column1
+		self.music_button=Checkbutton(self, text="Play music", variable=Gamesettings.var_play_music)
+		self.music_button.grid(row=12, column=1, sticky="w")
+		self.button_show_overruling=Checkbutton(self, text="Show overruling", variable=Gamesettings.var_show_overruling)
+		self.button_show_overruling.grid(row=13, column=1, sticky="w")
+		self.use_recognition_button=Checkbutton(self, text="use recognition(in development)*", variable=Gamesettings.var_use_recognition)
+		self.use_recognition_button.grid(row=14, column=1, sticky="w")
+
+
+		self.label_recognition=Label(self, text="*only turn on when you have a physical board, a webcam and the other repository.",wraplength=WIDTH-15)
+		self.label_recognition.grid(row=15, column=0, sticky="w",columnspan=2, padx=distance_from_left_side)
+
+
+		self.bottomframe = Frame(self, highlightbackground="blue", highlightthickness=3, borderwidth=1)
+		self.bottomframe.grid(row=16, column=0, sticky="w",columnspan=3, padx=distance_from_left_side, pady=15)
+
+		self.start_from_file_button=Checkbutton(self.bottomframe, text="Load game situation(2)", variable=Gamesettings.var_start_from_file)
+		self.start_from_file_button.grid(row=0, column=0, sticky="w")
+		self.label_unvalid_file=Label(self.bottomframe, text="")
+		self.label_unvalid_file.grid(row=0, column=1, sticky="e",columnspan=2)
+
+		self.label_load_state=Label(self.bottomframe, text="Choose file board state: ")
+		self.label_load_state.grid(row=1, column=0, sticky="w")
+		self.load_state_entry = Entry(self.bottomframe, textvariable=Gamesettings.state_board_path, width=50)
+		self.load_state_entry.grid(row=2, column=0, sticky="w",columnspan=2)
+		self.button_browse_state_file = Button(self.bottomframe, text="...", command=lambda: self.browse_state_files())
+		self.button_browse_state_file.grid(row=2, column=2, sticky="w")
+		
+		self.label_info_load_save_replay=Label(self,wraplength=WIDTH-15, text="(1)(2)The save replay function can't be used when loading a board, because that would create a wrong replay file.")
+		self.label_info_load_save_replay.grid(row=17, column=0, sticky="w",columnspan=2,pady=5,padx=distance_from_left_side)
+
+	def hide_frame(self):
+		self.grid_remove()

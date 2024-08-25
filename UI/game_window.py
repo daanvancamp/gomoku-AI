@@ -7,9 +7,9 @@ import pygame
 import os
 from game import playboard_processor,gomoku
 
-class Game_Window(Frame):
+class GameWindow(Frame):
     def __init__(self,instance:gomoku.GomokuGame,master):
-        super().__init__()
+        super().__init__(master)
         self.grid()
         self.game_instance = instance
         self.game_mode = None
@@ -38,7 +38,7 @@ class Game_Window(Frame):
         self.game_instance.stop_game=True
     
     def show_dialog_next_game(self):
-        if self.game_instance.show_dialog:
+        if self.game_instance.show_dialog and not self.game_instance.last_round:
             res=mb.askquestion(title='Start next game',message='Do you want to start the next game automatically?')
             if res.strip().lower() == 'yes' :
                 pass
@@ -147,7 +147,7 @@ class Game_Window(Frame):
         self.label_recognition_info.grid(row=0, column=1,sticky="n")
 
         self.embed_pygame = Frame(self, width=self.game_instance.WIDTH, height=self.game_instance.HEIGHT)
-        self.embed_pygame.grid(row=0, column=1,rowspan=2)
+        self.embed_pygame.grid(row=0, column=1,rowspan=3)
 
         self.button_capture_image = Button(self, text="Capture Image (in development)", command=self.determine_move,width=25, bg="green",fg="white", font=font_labels)
         self.button_capture_image.grid(row=1, column=1,sticky="s",pady=(0,90))
@@ -206,10 +206,12 @@ class Game_Window(Frame):
         self.var_current_game_mode.set("Game mode: " + self.game_mode)
         self.label_current_game_mode.update()
 
-        pygame.display.init()
-        self.game_instance.screen = pygame.display.set_mode((self.game_instance.WIDTH, self.game_instance.HEIGHT))
+
+        #todo: determine if this code should be uncommented or removed
+        # pygame.display.init()
+        # self.game_instance.screen = pygame.display.set_mode((self.game_instance.WIDTH, self.game_instance.HEIGHT))
     
-        self.pygame_loop()
+        # self.pygame_loop()
 
     def refresh_labels(self):
         if gomoku.current_player.TYPE == "Human":
@@ -230,7 +232,7 @@ class Game_Window(Frame):
         self.refresh_labels()
         pygame.display.flip()
 
-    def pygame_loop(self):
+    def pygame_loop(self):#todo: solve error:invalid command name "2384024382080pygame_loop"while executing"2384024382080pygame_loop"("after" script)
         global current_player
         pygame.display.flip()
         self.after(100, self.pygame_loop)

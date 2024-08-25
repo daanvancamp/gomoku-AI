@@ -8,6 +8,7 @@ from utils.music import start_music_delayed
 import testai
 from NN import ai
 from utils import filereader,stats
+from utils.singleton_class import Singleton
 from threading import Thread
 import random
 import numpy as np
@@ -16,7 +17,7 @@ window_name = "Gomoku"
 victory_text = ""
 mark_last_move_model = True
 
-class GomokuGame:
+class GomokuGame(metaclass=Singleton):
     def __init__(self, values):
         self.GRID_SIZE = values[1]
         self.WIDTH = self.HEIGHT = self.GRID_SIZE * values[0]
@@ -525,7 +526,7 @@ def handle_pygame_events():
                 elif event.type == pygame.QUIT:
                     pygame.quit()
 
-def runTraining(instance:GomokuGame, game_number):#main function
+def run_training(instance:GomokuGame, game_number):#main function
     # Main game loop
     global window_name, victory_text, current_player,player1,player2,winning_player
     mark_last_move_model=False 
@@ -700,7 +701,7 @@ def runTraining(instance:GomokuGame, game_number):#main function
     
     reset_game(instance)
 
-def runReplay(instance:GomokuGame, moves:dict=None):#main function
+def run_replay(instance:GomokuGame, moves:dict=None):#main function
     # Main game loop
     global window_name, victory_text, current_player
 
@@ -746,7 +747,3 @@ def runReplay(instance:GomokuGame, moves:dict=None):#main function
         time.sleep(instance.SLEEP_BEFORE_END)#sleep before closing for SLEEP_BEFORE_END seconds
 
     reset_game(instance)
-
-
-
-pygame.quit()
