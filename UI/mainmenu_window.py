@@ -26,8 +26,6 @@ distance_from_left_side=10
 style_numbers = ["georgia", 10, "white", 12, 2]#font, size, color, bold, underline
 
 
-
-
 class GameSettings(metaclass=Singleton):
 	def __init__(self) -> None:
 		self.var_game_runs = StringVar()
