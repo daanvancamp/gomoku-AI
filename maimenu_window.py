@@ -22,13 +22,14 @@ class GomokuApp(Tk):
 		self.bind("<Escape>", lambda event: self.quit_program())
 		self.bind("<q>", lambda event: self.quit_program())
 		
+		self.frames={}
 		for F in (FramePlay, FrameTrain,FrameReplay,FrameGameWindow):
 			page_name = F.__name__
 			frame = F(parent=self, controller=self)
 			self.frames[page_name] = frame
 			
 			# All frames are stacked on top of each other
-			frame.grid(row=0, column=0, sticky="nsew")
+			
 		
 		self.show_frame("StartPage")
 	
@@ -43,6 +44,7 @@ class GomokuApp(Tk):
 class FramePlay (Frame):#the methods of gomokuapp need to be callable from the frame
 	def __init__(self, master):
 		super().__init__(master,width=WIDTH,height=HEIGHT)
+		self.controller=master
 
 		self.button_1 = Button(self, text="New Game", command=self.start_new_game)
 		self.button_1.grid(row=0, column=0, sticky="w", padx=distance_from_left_side)
@@ -142,6 +144,7 @@ class FramePlay (Frame):#the methods of gomokuapp need to be callable from the f
 class FrameTrain(Frame):
 	def __init__(self, master):
 		super().__init__(master,width=WIDTH, height=HEIGHT)
+		self.controller=master
 		#row 0
 		self.button_2 = Button(self, text="Train", command=lambda: self.start_new_training())
 		self.button_2.grid(row=0, column=1, sticky="e")
@@ -192,6 +195,7 @@ class FrameTrain(Frame):
 class FrameReplay(Frame,GomokuApp):
 	def __init__(self, master):
 		super().__init__(master,width=WIDTH,height=HEIGHT)
+		self.controller=master
 
 		self.replaylabel = Label(self, text="Choose the replay file: ")
 		self.replaylabel.grid(row=0, column=0, sticky="w",pady=2,padx=distance_from_left_side)
@@ -210,7 +214,7 @@ class FrameReplay(Frame,GomokuApp):
 class FrameModels(Frame):
 	def __init__(self,master):
 		super().__init__(master,width=WIDTH,height=HEIGHT)
-
+		self.controller=master
 		#todo: the values aren't displayed correctly, fix this
 
 		self.var_losses=IntVar()
