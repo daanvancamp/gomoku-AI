@@ -171,8 +171,11 @@ class PlayBoardProcessor():
 
     def get_move(self):
         number_of_inner_corners = (self.BOARD_SIZE - 1, self.BOARD_SIZE - 1)
-
-        ret_img,img=self.vid.read()
+        try:
+            ret_img,img=self.vid.read()
+        except:
+            self.vid=cv2.VideoCapture(1, cv2.CAP_DSHOW)
+            ret_img,img=self.vid.read()
 
         if not ret_img:
             print("Error: Could not read frame.")
@@ -207,16 +210,18 @@ class PlayBoardProcessor():
 
             self.pieces= self.mark_pieces(cell_centers,img.copy())
 
-            color_current_player=self.game_instance.P1COL if gomoku.current_player==1 else self.game_instance.P2COL
+            color_current_player="blue" if gomoku.current_player==1 else "red"
+            print("Current player:",color_current_player)
             human_move=[]
             for piece in self.pieces:
                 if piece not in self.previous_state_board and piece[0]==color_current_player:
                     print(piece,"detected")
                     human_move.append(piece[1])
+                print(piece)
             self.previous_state_board=self.pieces
 
             if len(human_move)==0:
-                print("No move detected") #todo:show in GUI
+                print("No move detected",self.pieces,human_move) #todo:show in GUI
             elif len(human_move)==1:
                 print(human_move[0]) #todo: show last detected move in GUI
                 return human_move
