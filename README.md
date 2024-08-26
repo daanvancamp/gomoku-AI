@@ -1,3 +1,24 @@
+
+
+
+# This branch won't receive any updates anymore, please navigate to the other branch. Version 1.4 is the stable, but doesn't contain the latest features.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 # started from gomoku-thesis-proj, but we changed and improved almost everything.
 https://github.com/Mig26/gomoku-thesis-proj
 
@@ -146,6 +167,8 @@ august 2024:
   You can now acces all "tabs" by using the menubar. The tabs are now frames.
 
   restructured the classes
+
+  # This code has reached the end of his life.
   
 
 
