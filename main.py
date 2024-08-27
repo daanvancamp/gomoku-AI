@@ -16,5 +16,6 @@ if __name__ == '__main__':
     log_new_run()
     initialiseer_muziek()
     app = mainmenu_window.GomokuApp()
+    
     app.mainloop()
     
