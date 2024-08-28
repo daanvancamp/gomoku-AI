@@ -1,9 +1,3 @@
-
-
-
-# This branch won't receive any updates anymore, please navigate to the other branch. Version 1.4 is the stable, but doesn't contain the latest features.
-
-
 # started from gomoku-thesis-proj, but we changed and improved almost everything.
 https://github.com/Mig26/gomoku-thesis-proj
 
