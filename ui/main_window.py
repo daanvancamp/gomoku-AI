@@ -18,6 +18,21 @@ class MainApp(tk.Tk):
         label = ttk.Label(self, text="This is the Main Window")
         label.pack(pady=20)
 
+        self.menubar=tk.Menu(self)
+        self.config(menu=self.menubar)
+        self.new_game_menu = tk.Menu(self.menubar,tearoff=0)
+
+        self.new_game_menu.add_command(label="Play", command=lambda:self.add_frame_to_grid(self.frame1))
+        self.new_game_menu.add_command(label="Train", command=lambda:self.add_frame_to_grid(self.frame2))
+        self.new_game_menu.add_command(label="Replay", command=lambda:self.add_frame_to_grid(self.frame3))
+
+        self.menubar.add_cascade(label="New Game",menu=self.new_game_menu)
+
+        self.models_menu=tk.Menu(self.menubar,tearoff=0)
+        self.models_menu.add_command(label="models", command=lambda:self.add_frame_to_grid(self.frame4))
+
+        self.menubar.add_cascade(label="Models",menu=self.models_menu)
+
         # Button to open a new window
         open_window_button = ttk.Button(self, text="Open New Window", command=self.open_new_window)
         open_window_button.pack()
@@ -96,21 +111,10 @@ class MainApp(tk.Tk):
                             self.canvas.create_oval(value[2] + padding, value[3] + padding, value[4] - padding, value[5] - padding, fill=color)
 
         
-# Second Window Class
-class SecondWindow(tk.Toplevel):
-    def __init__(self, parent):
-        super().__init__(parent)
 
-        self.title("Second Window")
-        self.geometry("250x150")
 
-        # Label for Second Window
-        label = ttk.Label(self, text="This is the Second Window")
-        label.pack(pady=20)
 
-        # Button to close the window
-        close_button = ttk.Button(self, text="Close Window", command=self.destroy)
-        close_button.pack()
+
 
 
 

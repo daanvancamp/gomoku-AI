@@ -32,6 +32,25 @@ class GomokuApp(Tk):
 			
 		
 		self.show_frame("StartPage")
+		
+
+		self.menubar=Menu(self)
+		self.new_game_menu = Menu(self.menubar,tearoff=0)
+
+		self.new_game_menu.add_command(label="Play", command=lambda:self.add_frame_to_grid(self.frame1))
+		self.new_game_menu.add_command(label="Train", command=lambda:self.add_frame_to_grid(self.frame2))
+		self.new_game_menu.add_command(label="Replay", command=lambda:self.add_frame_to_grid(self.frame3))
+
+		self.menubar.add_cascade(label="New Game",menu=self.new_game_menu)
+
+		self.models_menu=Menu(self.menubar,tearoff=0)
+		self.models_menu.add_command(label="models", command=lambda:self.add_frame_to_grid(self.frame4))
+
+		self.menubar.add_cascade(label="Models",menu=self.models_menu)
+		self.config(menu=self.menubar)
+
+
+
 	
 	# Method to show a frame for the given page name
 	def show_frame(self, page_name):
