@@ -1,5 +1,5 @@
 import numpy as np
-
+import operator
 
 class GameBoard:
     def  __init__(self, grid_size):
@@ -47,6 +47,9 @@ class GameBoard:
     
     def put_piece(self, row, col, player_id):
         self.board[row][col] = player_id
+
+    def square_empty(self, row, col):
+        return self.board[row][col] == 0
         
     def remove_piece(self, row, col):
         self.board[row][col] = 0

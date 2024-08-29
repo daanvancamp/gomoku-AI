@@ -1,3 +1,5 @@
+#todo dit window werkt nog niet
+
 class TrainWindow(tk.Toplevel):
 	def __init__(self, master):
 		super().__init__(master,width=WIDTH, height=HEIGHT)

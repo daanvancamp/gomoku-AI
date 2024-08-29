@@ -2,24 +2,33 @@
 from tkinter import ttk
 import numpy as np
 from . import replay_window
+from . import new_game_window
 import enum
+import controller
+
 
 class WindowMode(enum.Enum):
     replay = 'replay'
-    train = 'train'
-    play = 'play'
+    computer_move = 'computer_move'
+    human_move = 'human_move'
     pause = 'pause'
+
+
+class GameType(enum.Enum):
+    human_vs_human = 'human_vs_human'
+    replay = 'replay'
 
 
 # Main Application Class
 class MainApp(tk.Tk):
-    def __init__(self, controller):
+    def __init__(self):
         super().__init__()
 
         self.title("Gomoku")
         self.geometry("800x800")
         
         self.window_mode = WindowMode.pause
+        self.game_type = GameType.human_vs_human
         
         # Canvas to draw the chessboard
         self.canvas = tk.Canvas(self, width=750, height=750)
@@ -65,13 +74,16 @@ class MainApp(tk.Tk):
         self.next_button.pack(side=tk.LEFT, padx=5)  # Place button2 next to button1 on the left side
 
         self.deactivate_replay_frame()
+        
+        self.color_player_1 = "red"
+        self.color_player_2 = "blue"
 
-    def set_controller(self, controller):
-        self.controller = controller
     
     def open_new_window(self, window_type):
         if (window_type == "Replay"):
-            new_window = replay_window.ReplayWindow(self, self.controller)
+            new_window = replay_window.ReplayWindow(self)
+        elif (window_type == "Play"):
+            new_window = new_game_window.NewGameWindow(self)
         
     def create_gomokuboard(self, grid_size):
         square_size = 50    # Each square will be 50x50 pixels
@@ -99,19 +111,18 @@ class MainApp(tk.Tk):
                 self.canvas.tag_bind(square_id, "<Button-1>", self.on_square_click)
 
     def on_square_click(self, event):
-        # Get the ID of the clicked square
-        square_id = self.canvas.find_closest(event.x, event.y)[0]
+        if (self.window_mode == WindowMode.human_move):
+            # Get the ID of the clicked square
+            square_id = self.canvas.find_closest(event.x, event.y)[0]
 
-        # Retrieve row, column, and coordinates from the stored dictionary
-        row, col, x1, y1, x2, y2 = self.squares[square_id]
+            # Retrieve row, column, and coordinates from the stored dictionary
+            row, col, x1, y1, x2, y2 = self.squares[square_id]
 
-        # Print the clicked square position
-        print(f"Square clicked at row {row}, column {col}")
+            # Print the clicked square position
+            print(f"Square clicked at row {row}, column {col}")
 
-        # Draw a circle inside the clicked square
-        padding = 10  # Padding to keep the circle inside the square
-        self.canvas.create_oval(x1 + padding, y1 + padding, x2 - padding, y2 - padding, fill="red")
-
+            self.controller.put_piece(row, col)
+                  
     def delete_pieces(self):
         self.canvas.delete("piece")
 
@@ -129,31 +140,33 @@ class MainApp(tk.Tk):
                                 color = "red"
                             self.canvas.create_oval(value[2] + padding, value[3] + padding, value[4] - padding, value[5] - padding, fill=color, tags="piece")
 
+    def activate_game(self):  
+        self.close_secondary_windows()
 
     def show_previous(self):
         """Show the previous item in the list."""
-        if self.controller.replay_controller.current_index >= 0:
+        if self.controller.current_index >= 0:
             self.delete_pieces()
-            self.controller.replay_controller.previous()
-            self.draw_pieces(self.controller.replay_controller.game_board.board)
+            self.controller.previous()
+            self.draw_pieces(self.controller.game_board.board)
         self.update_replay_button_states()
 
     def show_next(self):
         """Show the next item in the list."""
-        if self.controller.replay_controller.current_index < len(self.controller.replay_controller.moves) - 1:
+        if self.controller.current_index < len(self.controller.moves) - 1:
             self.delete_pieces()
-            self.controller.replay_controller.next()
-            self.draw_pieces(self.controller.replay_controller.game_board.board)
+            self.controller.next()
+            self.draw_pieces(self.controller.game_board.board)
         self.update_replay_button_states()
 
     def update_replay_button_states(self):
         """Enable or disable buttons based on the current index."""
-        if self.controller.replay_controller == -1:
+        if self.controller.current_index == -1:
             self.prev_button.config(state=tk.DISABLED)
         else:
             self.prev_button.config(state=tk.NORMAL)
 
-        if self.controller.replay_controller.current_index == len(self.controller.replay_controller.moves) - 1:
+        if self.controller.current_index == len(self.controller.moves) - 1:
             self.next_button.config(state=tk.DISABLED)
         else:
             self.next_button.config(state=tk.NORMAL)

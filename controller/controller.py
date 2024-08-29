@@ -1,14 +1,11 @@
-from . import replay_controller
+
+
 
 # controller.py
 class Controller:
-    def __init__(self, model, view):
-        self.model = model
+    def __init__(self, view):
         self.view = view
-        self.view.set_controller(self)
-        self.replay_controller = replay_controller.ReplayController(view)
+        self.view.controller = self
 
-    def initialize_replay(self, file_name):
-        self.replay_controller.load_game(file_name)
-        
+
         

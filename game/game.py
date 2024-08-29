@@ -6,8 +6,23 @@ class Game:
         self.player1 = player1
         self.player2 = player2
         self.current_player = player1
-        self.board =board
-
+        self.board = board
+        self.winner = 0
+        
+    def put_piece(self, row, col):
+        if self.board.square_empty(row, col):
+            self.board.put_piece(row, col, self.current_player.id)
+        if self.board.check_win(row, col, self.current_player.id):
+            self.winner = self.current_player.id
+        else:
+            self.switch_player()
+    
+    def switch_player(self):
+        if self.current_player.id == 1:
+            self.current_player = self.player2
+        else: 
+            self.current_player = self.player1
+            
 
 class GameFactory:
     def create_player(player_type, player_id): 
