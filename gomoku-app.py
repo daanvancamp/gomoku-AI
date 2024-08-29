@@ -4,6 +4,9 @@ import operator
 from game import GameFactory, GameBoard, Game
 from secondwindow import SecondWindow
 
+distance_from_left_side=10
+
+
 # Main Application Class
 class MainApp(Tk):
     def __init__(self):
