@@ -45,5 +45,11 @@ class GameBoard:
                 return True
         return False
     
+    def put_piece(self, row, col, player_id):
+        self.board[row][col] = player_id
+        
+    def remove_piece(self, row, col):
+        self.board[row][col] = 0
+
     def check_board_full(self, marker_id):
         pass
