@@ -56,7 +56,7 @@ class MainApp(tk.Tk):
         # Store squares to identify them later
         self.squares = {}
         
-        self.create_gomokuboard(15)
+        self.create_gomokuboard(15)#todo: needs to be read from the consts file
         
         board = np.zeros((15, 15))
         self.draw_pieces(board)

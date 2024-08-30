@@ -1,4 +1,5 @@
 from tkinter import *
+from config import *
 
 class FramePlay (Toplevel):#the methods of gomokuapp need to be callable from the frame
 	def __init__(self, master):

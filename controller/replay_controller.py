@@ -3,7 +3,7 @@ import game.gameboard as gb
 from . import controller
 
 # controller.py
-class ReplayController(controller.Controller):
+class ReplayController(controller.BaseController):
     def __init__(self, view):
         self.moves = None
         self.game_board = gb.GameBoard(15)
