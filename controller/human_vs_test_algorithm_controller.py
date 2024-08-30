@@ -3,7 +3,7 @@ import game.game
 import UI.main_window
 from . import controller
 
-#todo controller uitwerken om tegen test algoritme te spelen
+#todo: controller uitwerken om tegen test algoritme te spelen
 
 # controller.py
 class Human_vs_TestAlgorithmController(controller.BaseController):

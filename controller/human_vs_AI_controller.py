@@ -3,7 +3,7 @@ import game.game
 import UI.main_window
 from . import controller
 
-#todo controller uitwerken om tegen AI te spelen
+#todo: controller uitwerken om tegen AI te spelen
 
 # controller.py
 class Human_vs_AI_Controller(controller.BaseController):

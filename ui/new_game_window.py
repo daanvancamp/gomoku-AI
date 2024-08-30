@@ -6,7 +6,7 @@ import controller.human_vs_human_controller
 
 
 
-#todo window verder afwerken
+#todo: window verder afwerken
 class NewGameWindow (tk.Toplevel):#the methods of gomokuapp need to be callable from the frame
 	def __init__(self, master):
 		super().__init__(master)
