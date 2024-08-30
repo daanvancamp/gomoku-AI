@@ -1,5 +1,8 @@
 #todo dit window werkt nog niet
 
+import tkinter as tk
+from tkinter import *
+from tkinter.ttk import *
 class TrainWindow(tk.Toplevel):
 	def __init__(self, master):
 		super().__init__(master,width=WIDTH, height=HEIGHT)

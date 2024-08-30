@@ -1,5 +1,5 @@
 from os import replace
-import tkinter as tk
+from tkinter import *
 import tkinter.filedialog
 from config import *
 import controller.human_vs_human_controller 
@@ -7,7 +7,7 @@ import controller.human_vs_human_controller
 
 
 #todo: window verder afwerken
-class NewGameWindow (tk.Toplevel):#the methods of gomokuapp need to be callable from the frame
+class NewGameWindow (Toplevel):#the methods of gomokuapp need to be callable from the frame
 	def __init__(self, master):
 		super().__init__(master)
 
@@ -16,18 +16,18 @@ class NewGameWindow (tk.Toplevel):#the methods of gomokuapp need to be callable 
 		
 		self.master = master
 		
-		self.var_oponent_type = tk.StringVar()
-		self.button_new_game = tk.Button(self, text="New Game", command=self.start_new_game)
+		self.var_oponent_type = StringVar()
+		self.button_new_game = Button(self, text="New Game", command=self.start_new_game)
 		self.button_new_game.grid(row=0, column=0, sticky="w", padx=10)
 
-		self.oponent_type_label = tk.Label(self, text="Oponent")
+		self.oponent_type_label = Label(self, text="Oponent")
 		self.oponent_type_label.grid(row=2, column=1, sticky="w", padx=10)
 
-		self.radiobutton_4 = tk.Radiobutton(self, text="Human", variable=self.var_oponent_type, value="Human")
+		self.radiobutton_4 = Radiobutton(self, text="Human", variable=self.var_oponent_type, value="Human")
 		self.radiobutton_4.grid(row=3, column=1, sticky="w")
-		self.radiobutton_5 = tk.Radiobutton(self, text="Test Algorithm", variable=self.var_oponent_type, value="Test Algorithm")
+		self.radiobutton_5 = Radiobutton(self, text="Test Algorithm", variable=self.var_oponent_type, value="Test Algorithm")
 		self.radiobutton_5.grid(row=4, column=1, sticky="w")
-		self.radiobutton_6 = tk.Radiobutton(self, text="AI-Model", variable=self.var_oponent_type, value="AI-Model")
+		self.radiobutton_6 = Radiobutton(self, text="AI-Model", variable=self.var_oponent_type, value="AI-Model")
 		self.radiobutton_6.grid(row=5, column=1, sticky="w")
 
 		self.start_new_game()

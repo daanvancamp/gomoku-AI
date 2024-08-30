@@ -1,6 +1,7 @@
 #todo dit window werkt nog niet
-
-class ModelsWindow(tk.Toplevel):
+from tkinter import *
+from tkinter import ttk
+class ModelsWindow(Toplevel):
 	def __init__(self,master):
 		super().__init__(master,width=WIDTH,height=HEIGHT)
 
@@ -70,7 +71,7 @@ class ModelsWindow(tk.Toplevel):
 		self.label_value_number_of_training_loops_tab4.grid(row=4, column=1, sticky="w",pady=(30,10))
 
 		self.stats_list=["Total","Games","Training"]
-		self.Cb_choose_stats= Combobox(self, state="readonly", values=self.stats_list, textvariable=self.var_choose_stats)
+		self.Cb_choose_stats= ttk.Combobox(self, state="readonly", values=self.stats_list, textvariable=self.var_choose_stats)
 		self.Cb_choose_stats.current(0)
 		self.Cb_choose_stats.grid(row=5, column=0, sticky="w",pady=2,padx=10)
 

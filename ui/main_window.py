@@ -1,8 +1,10 @@
-﻿import tkinter as tk
-from tkinter import ttk
+﻿from tkinter import ttk
+from tkinter import *
 import numpy as np
 from . import replay_window
 from . import new_game_window
+from . import train_window
+from . import models_window
 import enum
 import controller
 
@@ -20,27 +22,29 @@ class GameType(enum.Enum):
 
 
 # Main Application Class
-class MainApp(tk.Tk):
+class MainApp(Tk):
     def __init__(self):
         super().__init__()
 
         self.title("Gomoku")
         self.geometry("800x800")
-        
+        self.config(background="#357EC7")
+
+
         self.window_mode = WindowMode.pause
         self.game_type = GameType.human_vs_human
         
         # Canvas to draw the chessboard
-        self.canvas = tk.Canvas(self, width=750, height=750)
+        self.canvas = Canvas(self, width=750, height=750)
         self.canvas.grid(row=1, column=0, padx=10)
 
         # Label and Button for Main Window
         label = ttk.Label(self, text="This is the Main Window")
         label.grid(row=0, column=0, padx=10)
 
-        self.menubar=tk.Menu(self)
+        self.menubar= Menu(self)
         self.config(menu=self.menubar)
-        self.new_game_menu = tk.Menu(self.menubar,tearoff=0)
+        self.new_game_menu = Menu(self.menubar,tearoff=0)
 
         self.new_game_menu.add_command(label="Play", command=lambda:self.open_new_window("Play"))
         self.new_game_menu.add_command(label="Train", command=lambda:self.open_new_window("Train"))
@@ -48,7 +52,7 @@ class MainApp(tk.Tk):
 
         self.menubar.add_cascade(label="New Game",menu=self.new_game_menu)
 
-        self.models_menu=tk.Menu(self.menubar,tearoff=0)
+        self.models_menu= Menu(self.menubar,tearoff=0)
         self.models_menu.add_command(label="models", command=lambda:self.open_new_window("Models"))
 
         self.menubar.add_cascade(label="Models",menu=self.models_menu)
@@ -62,16 +66,16 @@ class MainApp(tk.Tk):
         self.draw_pieces(board)
         self.controller = controller
         
-        self.frame_replay = tk.Frame(self)
+        self.frame_replay = Frame(self)
         # Previous button
-        self.prev_button = ttk.Button(self.frame_replay, text="◄ Previous", command=self.show_previous)
+        self.prev_button = Button(self.frame_replay, text="◄ Previous", command=self.show_previous)
 
         # Next button
-        self.next_button = ttk.Button(self.frame_replay, text="Next ►", command=self.show_next)
+        self.next_button = Button(self.frame_replay, text="Next ►", command=self.show_next)
 
         # Place the buttons in the frame
-        self.prev_button.pack(side=tk.LEFT, padx=5)  # Place button1 on the left side of the frame
-        self.next_button.pack(side=tk.LEFT, padx=5)  # Place button2 next to button1 on the left side
+        self.prev_button.pack(side=LEFT, padx=5)  # Place button1 on the left side of the frame
+        self.next_button.pack(side=LEFT, padx=5)  # Place button2 next to button1 on the left side
 
         self.deactivate_replay_frame()
         
@@ -85,7 +89,22 @@ class MainApp(tk.Tk):
             new_window = replay_window.ReplayWindow(self)
         elif (window_type == "Play"):
             new_window = new_game_window.NewGameWindow(self)
+        elif (window_type == "Models"):
+            new_window = models_window.ModelsWindow(self)
+        elif (window_type == "Train"):
+            new_window = train_window.TrainWindow(self)
         
+        self.show_replay_buttons(window_type=="Replay")
+    
+    def show_replay_buttons(self,show):
+        if show:
+            self.prev_button.pack(side=LEFT, padx=5)  # Place button1 on the left side of the frame
+            self.next_button.pack(side=LEFT, padx=5)  # Place button2 next to button1 on the left side
+        else:
+            self.prev_button.pack_forget()
+            self.next_button.pack_forget()
+
+
     def create_gomokuboard(self, grid_size):
         square_size = 50    # Each square will be 50x50 pixels
         # Create the squares for the chessboard
@@ -160,14 +179,14 @@ class MainApp(tk.Tk):
     def update_replay_button_states(self):
         """Enable or disable buttons based on the current index."""
         if self.controller.current_index == -1:
-            self.prev_button.config(state=tk.DISABLED)
+            self.prev_button.config(state=DISABLED)
         else:
-            self.prev_button.config(state=tk.NORMAL)
+            self.prev_button.config(state=NORMAL)
 
         if self.controller.current_index == len(self.controller.moves) - 1:
-            self.next_button.config(state=tk.DISABLED)
+            self.next_button.config(state=DISABLED)
         else:
-            self.next_button.config(state=tk.NORMAL)
+            self.next_button.config(state=NORMAL)
 
     def activate_replay_frame(self):
         self.frame_replay.grid(row=3, column=0, padx=10)  
@@ -179,7 +198,7 @@ class MainApp(tk.Tk):
         
     def close_secondary_windows(self):
         for widget in self.winfo_children():
-            if isinstance(widget, tk.Toplevel):
+            if isinstance(widget, Toplevel):
                 widget.destroy()
         
 
