@@ -14,3 +14,4 @@ logs/
 /NN/__pycache__
 /controller/__pycache__/controller.cpython-312.pyc
 /controller/__pycache__/replay_controller.cpython-312.pyc
+/controller/__pycache__/human_vs_human_controller.cpython-312.pyc
