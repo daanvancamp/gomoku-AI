@@ -1,3 +1,6 @@
+import game.algorithms.test_algorithm.
+
+
 class Player:
     def __init__(self, player_id):    
         self.id = int(player_id) #id can be 1 or 2
@@ -32,3 +35,4 @@ class Human_Player(Player):
 class Test_Player(Player):
     def __init__(self, player_id):    
         super().__init__(player_id)  # Call the constructor of the base class
+        self.algorithm = game.algorithms.test_algorithm.

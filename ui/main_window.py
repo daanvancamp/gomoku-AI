@@ -134,11 +134,9 @@ class MainApp(Tk):
         if (self.window_mode == WindowMode.human_move):
             # Get the ID of the clicked square
             square_id = self.canvas.find_closest(event.x, event.y)[0]
-
             # Retrieve row, column, and coordinates from the stored dictionary
             row, col, x1, y1, x2, y2 = self.squares[square_id]
-
-            self.controller.put_piece(row, col)
+            self.controller.human_put_piece(row, col)
                   
     def delete_pieces(self):
         self.canvas.delete("piece")

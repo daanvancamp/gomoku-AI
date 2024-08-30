@@ -29,7 +29,7 @@ class GameFactory:
         if player_type == "AI":
             return player.AI_Player(player_id)
         elif player_type == "Test":
-            return player.AI_Player(player_id)
+            return player.Test_Player(player_id)
         else: 
             return player.Human_Player(player_id)
     

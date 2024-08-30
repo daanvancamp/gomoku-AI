@@ -10,7 +10,7 @@ class Human_vs_AI_Controller(controller.BaseController):
     def __init__(self, view):
         super().__init__(view)
         player1 = game.game.GameFactory.create_player("Human", 1)
-        player2 = game.game.GameFactory.create_player("Human", 2)
+        player2 = game.game.GameFactory.create_player("AI", 2)
         game_board = game.game.GameFactory.create_game_board(15)
         self.game = game.game.GameFactory.create_game(game_board, player1, player2)
         self.view.window_mode = UI.main_window.WindowMode.human_move

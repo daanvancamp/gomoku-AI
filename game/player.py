@@ -1,3 +1,4 @@
+import game.algorithms.test_algorithm.TestAlgorithm
 from NN.ai import GomokuAI
 
 
@@ -22,6 +23,7 @@ class Player:
         self.allow_overrule = True
         self.final_action = None
         self.ai=GomokuAI(15)#todo: make this configurable
+        self.game = None
 
 class AI_Player(Player):
     def __init__(self, player_id):    
@@ -35,3 +37,4 @@ class Human_Player(Player):
 class Test_Player(Player):
     def __init__(self, player_id):    
         super().__init__(player_id)  # Call the constructor of the base class
+        self.test_algortithm = game.algorithms.test_algorithm.TestAlgorithm.TestAlgorithm(self)
