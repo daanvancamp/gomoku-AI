@@ -12,3 +12,4 @@ logs/
 /utils/__pycache__
 /game/__pycache__
 /NN/__pycache__
+/controller/__pycache__
