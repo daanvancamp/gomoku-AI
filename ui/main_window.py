@@ -80,6 +80,7 @@ class MainApp(tk.Tk):
 
     
     def open_new_window(self, window_type):
+        self.close_secondary_windows()
         if (window_type == "Replay"):
             new_window = replay_window.ReplayWindow(self)
         elif (window_type == "Play"):
@@ -117,9 +118,6 @@ class MainApp(tk.Tk):
 
             # Retrieve row, column, and coordinates from the stored dictionary
             row, col, x1, y1, x2, y2 = self.squares[square_id]
-
-            # Print the clicked square position
-            print(f"Square clicked at row {row}, column {col}")
 
             self.controller.put_piece(row, col)
                   

@@ -1,3 +1,6 @@
+from NN.ai import GomokuAI
+
+
 class Player:
     def __init__(self, player_id):    
         self.id = int(player_id) #id can be 1 or 2
@@ -18,6 +21,7 @@ class Player:
         self.win_rate = 0
         self.allow_overrule = True
         self.final_action = None
+        self.ai=GomokuAI(15)#todo: make this configurable
 
 class AI_Player(Player):
     def __init__(self, player_id):    

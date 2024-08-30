@@ -4,7 +4,7 @@ import tkinter.filedialog
 from config import *
 import controller.replay_controller 
 
-#todo window verdwijnt soms
+#todo: window verdwijnt soms
 class ReplayWindow(tk.Toplevel):
 	def __init__(self, master):
 		super().__init__(master)
