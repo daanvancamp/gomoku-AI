@@ -1,10 +1,10 @@
 ﻿from tkinter import ttk
 from tkinter import *
 import numpy as np
-from . import replay_window
-from . import new_game_window
-from . import train_window
-from . import models_window
+from .settings_windows import replay_window
+from .settings_windows import new_game_window
+from .settings_windows import train_window
+from .settings_windows import models_window
 import enum
 import controller
 from config import *
@@ -61,10 +61,10 @@ class MainApp(Tk):
         # Store squares to identify them later
         self.squares = {}
         
-        BOARDSIZE=int(config["OTHER VARIABLES"]["BOARDSIZE"])
-        self.create_gomokuboard(BOARDSIZE)#todo: needs to be read from the consts file
+        self.BOARDSIZE=int(config["OTHER VARIABLES"]["BOARDSIZE"])
+        self.create_gomokuboard(self.BOARDSIZE)#todo: needs to be read from the consts file
         
-        board = np.zeros((BOARDSIZE, BOARDSIZE))
+        board = np.zeros((self.BOARDSIZE, self.BOARDSIZE))
         self.draw_pieces(board)
         self.controller = controller
         
@@ -202,4 +202,6 @@ class MainApp(Tk):
                 widget.destroy()
         
 
-
+    def clear_board(self):
+        self.canvas.delete("piece")
+        #self.controller.game.board.board=np.zeros((self.BOARDSIZE, self.BOARDSIZE))

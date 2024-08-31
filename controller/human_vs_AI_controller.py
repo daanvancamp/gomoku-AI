@@ -7,7 +7,7 @@ from config import *
 
 # controller.py
 class Human_vs_AI_Controller(controller.BaseController):
-    def __init__(self, view):
+    def __init__(self, view: "ui.main_window.MainApp"):
         super().__init__(view)
         player1 = game.game.GameFactory.create_player("Human", 1)
         player2 = game.game.GameFactory.create_player("AI", 2)

@@ -23,7 +23,7 @@ class Player:
         self.win_rate = 0
         self.allow_overrule = True
         self.final_action = None
-        self.ai=GomokuAI(int(config["OTHER_VARIABLES"]["BOARD_SIZE"]))
+        self.ai=GomokuAI(int(config["OTHER VARIABLES"]["BOARDSIZE"]))
         self.game = None
 
 class AI_Player(Player):

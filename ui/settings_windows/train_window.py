@@ -1,13 +1,15 @@
-#todo dit window werkt nog niet
+#todo: deze window werkt nog niet
 
 import tkinter as tk
 from tkinter import *
 from tkinter.ttk import *
 from config import *
+from model_management.modelmanager import ModelManager
 
 distance_from_left_side = int(config["OTHER VARIABLES"]["distance_from_left_side"])
 WIDTH = int(config["OTHER VARIABLES"]["WIDTH"])
 HEIGHT = int(config["OTHER VARIABLES"]["HEIGHT"])
+modelmanager_instance = ModelManager()
 class TrainWindow(tk.Toplevel):
 	def __init__(self, master):
 		super().__init__(master,width=WIDTH, height=HEIGHT)

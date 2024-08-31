@@ -1,33 +1,36 @@
-from os import replace
-
 from tkinter import *
 import tkinter.filedialog
 from config import *
 import controller.human_vs_human_controller 
-import controller.human_vs_test_algorithm_controller 
+import controller.human_vs_test_algorithm_controller
+from model_management.modelmanager import ModelManager
+modelmanager_instance=ModelManager()
 
-
+WIDTH=int(config["OTHER VARIABLES"]["WIDTH"])
+HEIGHT=int(config["OTHER VARIABLES"]["HEIGHT"])
 #todo: window verder afwerken
 class NewGameWindow (Toplevel):#the methods of gomokuapp need to be callable from the frame
 	def __init__(self, master):
 		super().__init__(master)
 
 		self.title("New Game Window")
-		self.geometry("250x150")
+		self.geometry(f"{WIDTH}x{HEIGHT}")
 		
 		self.master = master
 		
 		self.button_new_game = Button(self, text="New Game", command=self.start_new_game)
 		self.button_new_game.grid(row=0, column=0, sticky="w", padx=10)
 
-		self.oponent_type_label = Label(self, text="Oponent")
-		self.oponent_type_label.grid(row=2, column=1, sticky="w", padx=10)
+		self.label_p1 = Label(self, text="Player 1")
+		self.label_p1.grid(row=2, column=1, sticky="w", padx=10)
+
+		self.label_p2 = Label(self, text="Player 2")
+		self.label_p2.grid(row=2, column=2, sticky="w", padx=10)
 		
 		self.var_p1_type = StringVar()
 		self.var_p1_type.set("Human")
 		self.var_p2_type = StringVar()
-		self.var_p2_type.set("Human")
-
+		self.var_p2_type.set("Test Algorithm")
 
 
 		self.radiobutton_4 = Radiobutton(self, text="Human", variable=self.var_p1_type, value="Human")
@@ -45,26 +48,31 @@ class NewGameWindow (Toplevel):#the methods of gomokuapp need to be callable fro
 		self.radiobutton_9.grid(row=5, column=2, sticky="w")
 
 	def start_new_game(self):
-		if self.var_p1_type.get() == "Human":
+		self.master.clear_board()
+
+
+
+		list_of_players=[self.var_p1_type.get(),self.var_p2_type.get()]
+		
+		same_player_types=self.var_p1_type.get()==self.var_p2_type.get()
+
+		if same_player_types and self.var_p1_type.get() == "Human":
 			self.master.controller = controller.human_vs_human_controller.Human_vs_HumanController(self.master)
-		elif self.var_p1_type.get() == "Test Algorithm":
+
+		elif same_player_types and self.var_p1_type.get() == "Test Algorithm":
+			pass
+		elif same_player_types and self.var_p1_type.get() == "AI-Model":
+			pass
+
+
+		elif "Human" in list_of_players and "AI-Model" in list_of_players:
+			pass
+
+		elif "Human" in list_of_players and "Test Algorithm" in list_of_players:
 			self.master.controller = controller.human_vs_test_algorithm_controller.Human_vs_TestAlgorithmController(self.master)
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+		elif "AI-Model" in list_of_players and "Test Algorithm" in list_of_players:
+			pass
 
 
 
