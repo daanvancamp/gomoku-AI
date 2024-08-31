@@ -21,17 +21,17 @@ class TestAlgorithm:
                         score_white /= 2
                         score_black /= 2
                     if board_score == 1:    # black piece
-                        if self.player.id == 0:
+                        if self.player.id == 1:
                             score_white += 5 * multiplier - i
-                        elif self.player.id == 1:
+                        elif self.player.id == 2:
                             score_black += 2 * multiplier - i
                             if i >= 3 and multiplier > 3:
                                 score_black **= 2
                                 break
                     elif board_score == 2:  # white piece
-                        if self.player.id == 0:
+                        if self.player.id == 1:
                             score_black += 5 * multiplier - i
-                        elif self.player.id == 1:
+                        elif self.player.id == 2:
                             score_white += 2 * multiplier - i
                             if i >= 3 and multiplier > 3:
                                 score_white **= 2
