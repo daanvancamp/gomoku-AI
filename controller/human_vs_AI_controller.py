@@ -21,3 +21,5 @@ class Human_vs_AI_Controller(controller.BaseController):
         self.view.draw_pieces(self.game.board.board)
         if self.game.winner != 0:
             print("er is een winnaar")
+        else:
+            pass #todo: AI move

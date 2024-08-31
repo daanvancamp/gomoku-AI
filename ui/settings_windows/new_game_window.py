@@ -21,10 +21,10 @@ class NewGameWindow (Toplevel):#the methods of gomokuapp need to be callable fro
 		self.button_new_game = Button(self, text="New Game", command=self.start_new_game)
 		self.button_new_game.grid(row=0, column=0, sticky="w", padx=10)
 
-		self.label_p1 = Label(self, text="Player 1")
+		self.label_p1 = Label(self, text="Player 1(Red)")
 		self.label_p1.grid(row=2, column=1, sticky="w", padx=10)
 
-		self.label_p2 = Label(self, text="Player 2")
+		self.label_p2 = Label(self, text="Player 2(Blue)")
 		self.label_p2.grid(row=2, column=2, sticky="w", padx=10)
 		
 		self.var_p1_type = StringVar()
