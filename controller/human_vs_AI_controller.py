@@ -4,7 +4,7 @@ import ui.main_window
 from . import controller
 from config import *
 #todo: controller uitwerken om tegen AI te spelen
-
+import numpy as np
 # controller.py
 class Human_vs_AI_Controller(controller.BaseController):
     def __init__(self, view: "ui.main_window.MainApp"):
@@ -13,6 +13,8 @@ class Human_vs_AI_Controller(controller.BaseController):
         player2 = game.game.GameFactory.create_player("AI", 2)
         game_board = game.game.GameFactory.create_game_board(int(config["OTHER VARIABLES"]["BOARDSIZE"]))
         self.game = game.game.GameFactory.initialize_new_game(game_board, player1, player2)
+        game.game.Game().board.board = np.zeros((self.BOARDSIZE,self.BOARDSIZE))
+
         self.view.window_mode = ui.main_window.WindowMode.human_move
         self.view.activate_game()
 

@@ -3,6 +3,7 @@ import game.game
 import ui.main_window
 from . import controller
 from config import *
+import numpy as np
 #todo: controller uitwerken om tegen test algoritme te spelen
 
 # controller.py
@@ -12,7 +13,10 @@ class Human_vs_TestAlgorithmController(controller.BaseController):
         player1 = game.game.GameFactory.create_player("Human", 1)
         player2 = game.game.GameFactory.create_player("Test", 2)
         game_board = game.game.GameFactory.create_game_board(int(config["OTHER VARIABLES"]["BOARDSIZE"]))
+
         self.game = game.game.GameFactory.initialize_new_game(game_board, player1, player2)
+        game.game.Game().board.board = np.zeros((int(config["OTHER VARIABLES"]["BOARDSIZE"]),int(config["OTHER VARIABLES"]["BOARDSIZE"])))
+
         self.game.player1.game = self.game
         self.game.player2.game = self.game
         self.view.window_mode = ui.main_window.WindowMode.human_move

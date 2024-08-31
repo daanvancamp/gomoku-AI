@@ -206,7 +206,3 @@ class MainApp(Tk):
 
     def clear_board(self):
         self.canvas.delete("piece")
-        try:
-            Game().board.board = np.zeros((self.BOARDSIZE,self.BOARDSIZE))
-        except:
-            print("this error should only occur once")
