@@ -17,3 +17,4 @@ logs/
 /controller/__pycache__/human_vs_human_controller.cpython-312.pyc
 /controller/__pycache__/human_vs_test_algorithm_controller.cpython-312.pyc
 /game/algorithms/test_algorithm/__pycache__/TestAlgorithm.cpython-312.pyc
+*.pyc
