@@ -3,6 +3,11 @@
 import tkinter as tk
 from tkinter import *
 from tkinter.ttk import *
+from config import *
+
+distance_from_left_side = config["OTHER VARIABLES"]["distance_from_left_side"]
+WIDTH = config["OTHER VARIABLES"]["WIDTH"]
+HEIGHT = config["OTHER VARIABLES"]["HEIGHT"]
 class TrainWindow(tk.Toplevel):
 	def __init__(self, master):
 		super().__init__(master,width=WIDTH, height=HEIGHT)
@@ -47,7 +52,7 @@ class TrainWindow(tk.Toplevel):
 		self.show_graphs_checkbutton=Checkbutton(self, text="Show graphs*", variable=Gamesettings.var_show_graphs)
 		self.show_graphs_checkbutton.grid(row=11, column=0, sticky="w",pady=2,padx=distance_from_left_side)
 
-		self.train_description = Label(self, text="It is recommended to run at least 3 000 games per training session.", font=(style_numbers[0], style_numbers[1]), wraplength=WIDTH-15)
+		self.train_description = Label(self, text="It is recommended to run at least 3 000 games per training session.", wraplength=WIDTH-15)
 		self.train_description.grid(row=12, column=0, sticky="w",columnspan=2,padx=distance_from_left_side)
 
 		self.info_show_graphs=Label(self, text="*Don't forget to MANUALLY close the graphs at the end of each training session if you enable it.",foreground="red",wraplength=WIDTH-15)

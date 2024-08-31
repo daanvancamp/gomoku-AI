@@ -1,5 +1,6 @@
 from os import replace
-import tkinter as tk
+
+from tkinter import *
 import tkinter.filedialog
 from config import *
 import controller.human_vs_human_controller 
@@ -7,7 +8,7 @@ import controller.human_vs_test_algorithm_controller
 
 
 #todo: window verder afwerken
-class NewGameWindow (tk.Toplevel):#the methods of gomokuapp need to be callable from the frame
+class NewGameWindow (Toplevel):#the methods of gomokuapp need to be callable from the frame
 	def __init__(self, master):
 		super().__init__(master)
 
@@ -16,25 +17,37 @@ class NewGameWindow (tk.Toplevel):#the methods of gomokuapp need to be callable 
 		
 		self.master = master
 		
-		self.button_new_game = tk.Button(self, text="New Game", command=self.start_new_game)
+		self.button_new_game = Button(self, text="New Game", command=self.start_new_game)
 		self.button_new_game.grid(row=0, column=0, sticky="w", padx=10)
 
-		self.oponent_type_label = tk.Label(self, text="Oponent")
+		self.oponent_type_label = Label(self, text="Oponent")
 		self.oponent_type_label.grid(row=2, column=1, sticky="w", padx=10)
 		
-		self.var_oponent_type = tk.StringVar()
-		self.var_oponent_type.set("Human")
-		self.radiobutton_4 = tk.Radiobutton(self, text="Human", variable=self.var_oponent_type, value="Human")
+		self.var_p1_type = StringVar()
+		self.var_p1_type.set("Human")
+		self.var_p2_type = StringVar()
+		self.var_p2_type.set("Human")
+
+
+
+		self.radiobutton_4 = Radiobutton(self, text="Human", variable=self.var_p1_type, value="Human")
 		self.radiobutton_4.grid(row=3, column=1, sticky="w")
-		self.radiobutton_5 = tk.Radiobutton(self, text="Test Algorithm", variable=self.var_oponent_type, value="Test Algorithm")
+		self.radiobutton_5 = Radiobutton(self, text="Test Algorithm", variable=self.var_p1_type, value="Test Algorithm")
 		self.radiobutton_5.grid(row=4, column=1, sticky="w")
-		self.radiobutton_6 = tk.Radiobutton(self, text="AI-Model", variable=self.var_oponent_type, value="AI-Model")
+		self.radiobutton_6 = Radiobutton(self, text="AI-Model", variable=self.var_p1_type, value="AI-Model")
 		self.radiobutton_6.grid(row=5, column=1, sticky="w")
 
+		self.radiobutton_7 = Radiobutton(self, text="Human", variable=self.var_p2_type, value="Human")
+		self.radiobutton_7.grid(row=3, column=2, sticky="w")
+		self.radiobutton_8 = Radiobutton(self, text="Test Algorithm", variable=self.var_p2_type, value="Test Algorithm")
+		self.radiobutton_8.grid(row=4, column=2, sticky="w")
+		self.radiobutton_9 = Radiobutton(self, text="AI-Model", variable=self.var_p2_type, value="AI-Model")
+		self.radiobutton_9.grid(row=5, column=2, sticky="w")
+
 	def start_new_game(self):
-		if self.var_oponent_type.get() == "Human":
+		if self.var_p1_type.get() == "Human":
 			self.master.controller = controller.human_vs_human_controller.Human_vs_HumanController(self.master)
-		elif self.var_oponent_type.get() == "Test Algorithm":
+		elif self.var_p1_type.get() == "Test Algorithm":
 			self.master.controller = controller.human_vs_test_algorithm_controller.Human_vs_TestAlgorithmController(self.master)
 
 

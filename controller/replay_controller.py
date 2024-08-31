@@ -18,7 +18,7 @@ class ReplayController(controller.BaseController):
         self.view.delete_pieces()
         self.view.draw_pieces(self.game_board.board)
         
-    def next(self):
+    def next_move(self):
         if self.current_index < (len(self.moves) - 1):
             self.current_index += 1
             position_tuple = eval(self.moves[self.current_index]['position'])
@@ -26,7 +26,7 @@ class ReplayController(controller.BaseController):
             self.game_board.put_piece(position_tuple[0], position_tuple[1], player_id) 
         return self.game_board 
         
-    def previous(self):
+    def previous_move(self):
         if self.current_index >= 0:
             self.current_index -= 1
             position_tuple = eval(self.moves[self.current_index]['position'])

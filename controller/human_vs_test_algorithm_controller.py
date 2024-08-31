@@ -2,7 +2,7 @@ import json
 import game.game
 import ui.main_window
 from . import controller
-
+from config import *
 #todo: controller uitwerken om tegen test algoritme te spelen
 
 # controller.py
@@ -11,8 +11,8 @@ class Human_vs_TestAlgorithmController(controller.BaseController):
         super().__init__(view)
         player1 = game.game.GameFactory.create_player("Human", 1)
         player2 = game.game.GameFactory.create_player("Test", 2)
-        game_board = game.game.GameFactory.create_game_board(15)
-        self.game = game.game.GameFactory.create_game(game_board, player1, player2)
+        game_board = game.game.GameFactory.create_game_board(config["OTHER VARIABLES"]["BOARDSIZE"])
+        self.game = game.game.GameFactory.initialize_new_game(game_board, player1, player2)
         self.game.player1.game = self.game
         self.game.player2.game = self.game
         self.view.window_mode = ui.main_window.WindowMode.human_move
