@@ -7,7 +7,7 @@ from . import train_window
 from . import models_window
 import enum
 import controller
-
+from config import *
 
 class WindowMode(enum.Enum):
     replay = 'replay'
@@ -27,9 +27,10 @@ class MainApp(Tk):
         super().__init__()
 
         self.title("Gomoku")
-        self.geometry("800x800")
         self.config(background="#357EC7")
-
+        self.resizable(True, True)
+        self.attributes("-fullscreen", False) #todo: set to true in production
+        self.tk.call('tk', 'scaling', 1.5)#adjust depending on your screen resolution
 
         self.window_mode = WindowMode.pause
         self.game_type = GameType.human_vs_human
@@ -39,10 +40,10 @@ class MainApp(Tk):
         self.canvas.grid(row=1, column=0, padx=10)
 
         # Label and Button for Main Window
-        label = ttk.Label(self, text="This is the Main Window")
+        label = ttk.Label(self, text="Gomoku")
         label.grid(row=0, column=0, padx=10)
 
-        self.menubar= Menu(self)
+        self.menubar= Menu(self,font=("Helvetica", 12),tearoff=0)
         self.config(menu=self.menubar)
         self.new_game_menu = Menu(self.menubar,tearoff=0)
 
@@ -60,9 +61,10 @@ class MainApp(Tk):
         # Store squares to identify them later
         self.squares = {}
         
-        self.create_gomokuboard(15)#todo: needs to be read from the consts file
+        BOARDSIZE=int(config["OTHER VARIABLES"]["BOARDSIZE"])
+        self.create_gomokuboard(BOARDSIZE)#todo: needs to be read from the consts file
         
-        board = np.zeros((15, 15))
+        board = np.zeros((BOARDSIZE, BOARDSIZE))
         self.draw_pieces(board)
         self.controller = controller
         

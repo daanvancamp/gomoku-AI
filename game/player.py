@@ -1,5 +1,6 @@
 import game.algorithms.test_algorithm.TestAlgorithm
 from NN.ai import GomokuAI
+from config import *
 
 
 class Player:
@@ -22,7 +23,7 @@ class Player:
         self.win_rate = 0
         self.allow_overrule = True
         self.final_action = None
-        self.ai=GomokuAI(15)#todo: make this configurable
+        self.ai=GomokuAI(int(config["OTHER_VARIABLES"]["BOARD_SIZE"]))
         self.game = None
 
 class AI_Player(Player):

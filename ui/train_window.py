@@ -5,9 +5,9 @@ from tkinter import *
 from tkinter.ttk import *
 from config import *
 
-distance_from_left_side = config["OTHER VARIABLES"]["distance_from_left_side"]
-WIDTH = config["OTHER VARIABLES"]["WIDTH"]
-HEIGHT = config["OTHER VARIABLES"]["HEIGHT"]
+distance_from_left_side = int(config["OTHER VARIABLES"]["distance_from_left_side"])
+WIDTH = int(config["OTHER VARIABLES"]["WIDTH"])
+HEIGHT = int(config["OTHER VARIABLES"]["HEIGHT"])
 class TrainWindow(tk.Toplevel):
 	def __init__(self, master):
 		super().__init__(master,width=WIDTH, height=HEIGHT)
