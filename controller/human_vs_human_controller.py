@@ -17,7 +17,7 @@ class Human_vs_HumanController(controller.BaseController):
 
     def human_put_piece(self, row, col):
         self.game.put_piece(row, col)
-        self.view.draw_pieces(self.game.board.board)
+        self.view.draw_pieces(game.game.Game().board.board)
         if self.game.winner != 0:
             print("er is een winnaar")
             #todo: verder uitwerken wat er gebeurt als er een winnaar is; de winnende lijn moet uitgetekend worden

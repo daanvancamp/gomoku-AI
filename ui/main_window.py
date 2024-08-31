@@ -1,6 +1,8 @@
 ﻿from tkinter import ttk
 from tkinter import *
 import numpy as np
+
+from game.game import Game
 from .settings_windows import replay_window
 from .settings_windows import new_game_window
 from .settings_windows import train_window
@@ -143,7 +145,7 @@ class MainApp(Tk):
     def delete_pieces(self):
         self.canvas.delete("piece")
 
-    def draw_pieces(self, board):
+    def draw_pieces(self,board):
         rows, cols = board.shape
         for i in range(rows):
             for j in range(cols):
@@ -154,7 +156,7 @@ class MainApp(Tk):
                             if board[i,j] == 1:
                                 color = "blue"
                             else:
-                                color = "red"
+                                color = "red"#board[i,j]==2
                             self.canvas.create_oval(value[2] + padding, value[3] + padding, value[4] - padding, value[5] - padding, fill=color, tags="piece")
 
     def activate_game(self):  
@@ -165,7 +167,7 @@ class MainApp(Tk):
         if self.controller.current_index >= 0:
             self.delete_pieces()
             self.controller.previous()
-            self.draw_pieces(self.controller.game_board.board)
+            self.draw_pieces(Game().board.board)
         self.update_replay_button_states()
 
     def show_next(self):
@@ -173,7 +175,7 @@ class MainApp(Tk):
         if self.controller.current_index < len(self.controller.moves) - 1:
             self.delete_pieces()
             self.controller.next()
-            self.draw_pieces(self.controller.game_board.board)
+            self.draw_pieces(Game().board.board)
         self.update_replay_button_states()
 
     def update_replay_button_states(self):
@@ -204,4 +206,7 @@ class MainApp(Tk):
 
     def clear_board(self):
         self.canvas.delete("piece")
-        #self.controller.game.board.board=np.zeros((self.BOARDSIZE, self.BOARDSIZE))
+        try:
+            Game().board.board = np.zeros((self.BOARDSIZE,self.BOARDSIZE))
+        except:
+            print("this error should only occur once")
