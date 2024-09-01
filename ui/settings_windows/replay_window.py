@@ -1,8 +1,7 @@
-from os import replace
 import tkinter as tk
 import tkinter.filedialog
 from config import *
-import controller.replay_controller 
+import controllers.replay_controller
 
 #todo: window verdwijnt soms
 class ReplayWindow(tk.Toplevel):
@@ -25,5 +24,5 @@ class ReplayWindow(tk.Toplevel):
 		self.var_replay_file.set(tk.filedialog.askopenfilename(filetypes=[("Json File", "*.json")],initialdir=config['Folders']['replay_folder']))
 
 	def start_new_replay(self):
-		self.master.controller = controller.replay_controller.ReplayController(self.master)
+		self.master.controller = controllers.replay_controller.ReplayController(self.master)
 		self.master.controller.load_game(self.var_replay_file.get())

@@ -1,12 +1,8 @@
-import json
 import game.game
 import ui.main_window
 from . import controller
 from config import *
-import numpy as np
-from tkinter import messagebox as mb
 
-# controller.py
 class Human_vs_HumanController(controller.BaseController):
     def __init__(self, view: "ui.main_window.GomokuApp"):
         super().__init__(view)

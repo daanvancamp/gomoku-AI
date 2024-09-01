@@ -2,8 +2,8 @@ from tkinter import *
 from tkinter import ttk
 import tkinter.filedialog
 from config import *
-import controller.human_vs_human_controller 
-import controller.human_vs_test_algorithm_controller
+import controllers.human_vs_human_controller 
+import controllers.human_vs_test_algorithm_controller
 from model_management.modelmanager import ModelManager
 modelmanager_instance=ModelManager()
 
@@ -56,11 +56,11 @@ class NewGameWindow (Toplevel):#the methods of gomokuapp need to be callable fro
 		
 		match self.var_p2_type.get():
 			case "Human":
-				self.master.controller = controller.human_vs_human_controller.Human_vs_HumanController(self.master)
+				self.master.controller = controllers.human_vs_human_controller.Human_vs_HumanController(self.master)
 			case "Test Algorithm":
 				start=time()
 
-				self.master.controller = controller.human_vs_test_algorithm_controller.Human_vs_TestAlgorithmController(self.master,self.var_color_p1.get())
+				self.master.controller = controllers.human_vs_test_algorithm_controller.Human_vs_TestAlgorithmController(self.master,self.var_color_p1.get())
 				print("time",time()-start)
 
 			case "AI-Model":

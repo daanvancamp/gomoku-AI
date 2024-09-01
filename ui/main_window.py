@@ -9,7 +9,7 @@ from .settings_windows import new_game_window
 from .settings_windows import train_window
 from .settings_windows import models_window
 import enum
-import controller
+import controllers
 from config import *
 import tkinter.messagebox as mb
 
@@ -25,7 +25,7 @@ class GameType(enum.Enum):
     replay = 'replay'
 
 
-# Main Application Class
+
 class GomokuApp(Tk):
     def __init__(self):
         super().__init__()
@@ -70,7 +70,7 @@ class GomokuApp(Tk):
         
         board = np.zeros((self.BOARDSIZE, self.BOARDSIZE))
         self.draw_pieces(board)
-        self.controller = controller
+        self.controller = controllers
         
         self.frame_replay = Frame(self)
         # Previous button

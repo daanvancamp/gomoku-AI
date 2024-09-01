@@ -1,10 +1,8 @@
-import json
 from time import time
 import game.game
 import ui.main_window
 from . import controller
 from config import *
-import numpy as np
 import game.player
 #todo: controller uitwerken om tegen test algoritme te spelen
 

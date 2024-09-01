@@ -1,10 +1,10 @@
+
+#This is the startup file, run this one to start the game
+
 from datetime import datetime
 from utils.filereader import log_info_overruling
 from ui import main_window
-from game import game
 #from utils.music import initialiseer_muziek
-from controller import controller
-
 from config import *
 
 

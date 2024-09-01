@@ -1,6 +1,13 @@
 #todo dit window werkt nog niet
 from tkinter import *
 from tkinter import ttk
+from model_management.modelmanager import ModelManager
+from config import *
+
+WIDTH = int(config["OTHER VARIABLES"]["WIDTH"])
+HEIGHT = int(config["OTHER VARIABLES"]["HEIGHT"])
+modelmanager_instance = ModelManager()
+
 class ModelsWindow(Toplevel):
 	def __init__(self,master):
 		super().__init__(master,width=WIDTH,height=HEIGHT)

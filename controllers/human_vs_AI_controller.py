@@ -1,11 +1,9 @@
-import json
 import game.game
 import ui.main_window
 from . import controller
 from config import *
 #todo: controller uitwerken om tegen AI te spelen
-import numpy as np
-# controller.py
+
 class Human_vs_AI_Controller(controller.BaseController):
     def __init__(self, view: "ui.main_window.GomokuApp"):
         super().__init__(view)
