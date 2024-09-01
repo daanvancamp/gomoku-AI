@@ -1,10 +1,10 @@
+from functools import lru_cache
 import game.algorithms.test_algorithm.TestAlgorithm
 from NN.ai import GomokuAI
 from config import *
 
-
 class Player:
-    def __init__(self, player_id):    
+    def __init__(self, player_id):
         self.id = int(player_id) #id can be 1 or 2
         self.moves = 0
         self.wins = 0
@@ -26,15 +26,18 @@ class Player:
         self.ai=GomokuAI(int(config["OTHER VARIABLES"]["BOARDSIZE"]))
         self.game = None
 
+@lru_cache(maxsize=None)
 class AI_Player(Player):
     def __init__(self, player_id):    
         super().__init__(player_id)  # Call the constructor of the base class
         self.AI_model=None
-    
+ 
+@lru_cache(maxsize=None)
 class Human_Player(Player):
     def __init__(self, player_id):    
         super().__init__(player_id)  # Call the constructor of the base class
 
+@lru_cache(maxsize=None)
 class Test_Player(Player):
     def __init__(self, player_id):    
         super().__init__(player_id)  # Call the constructor of the base class

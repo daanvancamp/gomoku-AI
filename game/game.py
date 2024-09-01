@@ -25,7 +25,7 @@ class Game(metaclass=Singleton):
             
 
 class GameFactory:
-    def create_player(player_type, player_id): 
+    def create_player(player_type, player_id):
         if player_type == "AI":
             return player.AI_Player(player_id)
         elif player_type == "Test":

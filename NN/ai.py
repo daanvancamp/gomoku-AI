@@ -1,4 +1,6 @@
+from functools import lru_cache
 import os.path
+from time import time
 import torch
 import torch.nn as nn
 import torch.optim as optim
@@ -8,7 +10,7 @@ import random
 from collections import deque
 from utils.filereader import log_info_overruling
 
-MAX_MEMORY = 1_000_0000          # origineel 1_000_000
+MAX_MEMORY = 1_000_000          # origineel 1_000_000
 BATCH_SIZE = 10_000
 MIN_EPSILON = 0.01
 EPSILON_DECAY_RATE = 0.999
@@ -64,9 +66,10 @@ class ConvNet(nn.Module):
         torch.save(self.state_dict(), full_path)
         print(f"Model saved to directory {full_path}.")
 
-
+@lru_cache(maxsize=None)
 class GomokuAI:
     def __init__(self,_board_size=15):
+        start=time()
         self.n_games = 0
         self.game = None
         self.learning_rate = 0.00075
@@ -84,7 +87,7 @@ class GomokuAI:
         self.threat_moves =[]
         self.valid_moves = []
         self.overruled_last_move = False
-
+        print("elapsed while creating gomokuai",time()-start)
     def decrease_learning_rate(self):
         self.learning_rate *= 0.9999 #decrease learning rate
         print("learning rate automatically declined by 0.001%, current lr:", self.learning_rate)
@@ -94,6 +97,7 @@ class GomokuAI:
     def set_game(self, _game):
         self.game = _game
 
+    @lru_cache(maxsize=None)
     def build_model(self, input_dim: int) -> ConvNet:#multi-layered network
         return ConvNet(input_dim, 30, 255)
 

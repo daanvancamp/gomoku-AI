@@ -1,4 +1,5 @@
 import json
+from time import time
 import game.game
 import ui.main_window
 from . import controller
@@ -10,13 +11,16 @@ import numpy as np
 class Human_vs_TestAlgorithmController(controller.BaseController):
     def __init__(self, view:"ui.main_window.MainApp"):
         super().__init__(view)
+        start_p=time()
         player1 = game.game.GameFactory.create_player("Human", 1)
         player2 = game.game.GameFactory.create_player("Test", 2)
+        print("created players in",time()-start_p)
+
         game_board = game.game.GameFactory.create_game_board(int(config["OTHER VARIABLES"]["BOARDSIZE"]))
-
         self.game = game.game.GameFactory.initialize_new_game(game_board, player1, player2)
-        game.game.Game().board.board = np.zeros((int(config["OTHER VARIABLES"]["BOARDSIZE"]),int(config["OTHER VARIABLES"]["BOARDSIZE"])))
 
+
+        game.game.Game().board.board = np.zeros((int(config["OTHER VARIABLES"]["BOARDSIZE"]),int(config["OTHER VARIABLES"]["BOARDSIZE"])))
         self.game.player1.game = self.game
         self.game.player2.game = self.game
         self.view.window_mode = ui.main_window.WindowMode.human_move

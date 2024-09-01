@@ -1,4 +1,5 @@
-﻿from tkinter import ttk
+﻿from time import time
+from tkinter import ttk
 from tkinter import *
 import numpy as np
 
@@ -88,6 +89,7 @@ class MainApp(Tk):
 
     
     def open_new_window(self, window_type):
+        start=time()
         self.close_secondary_windows()
         if (window_type == "Replay"):
             new_window = replay_window.ReplayWindow(self)
@@ -99,6 +101,8 @@ class MainApp(Tk):
             new_window = train_window.TrainWindow(self)
         
         self.show_replay_buttons(window_type=="Replay")
+
+        print("time open window",time()-start)
     
     def show_replay_buttons(self,show):
         if show:

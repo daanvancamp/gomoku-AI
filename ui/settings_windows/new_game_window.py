@@ -48,6 +48,7 @@ class NewGameWindow (Toplevel):#the methods of gomokuapp need to be callable fro
 		self.radiobutton_9.grid(row=5, column=2, sticky="w")
 
 	def start_new_game(self):
+		from time import time
 		self.master.clear_board()
 
 
@@ -69,8 +70,9 @@ class NewGameWindow (Toplevel):#the methods of gomokuapp need to be callable fro
 			pass
 
 		elif "Human" in list_of_players and "Test Algorithm" in list_of_players:
+			start=time()
 			self.master.controller = controller.human_vs_test_algorithm_controller.Human_vs_TestAlgorithmController(self.master)
-
+			print("time",time()-start)
 		elif "AI-Model" in list_of_players and "Test Algorithm" in list_of_players:
 			pass
 
