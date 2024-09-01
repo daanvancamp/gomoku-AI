@@ -1,7 +1,7 @@
 from functools import lru_cache
 import game.algorithms.test_algorithm.TestAlgorithm
 from NN.ai import GomokuAI
-from config import *
+import game.game
 
 class Player:
     def __init__(self, player_id):
@@ -25,12 +25,14 @@ class Player:
         self.final_action = None
         self.game = None
 
+    def __repr__(self) -> str:
+        return f"{self.__class__.__name__}({self.id})"
 @lru_cache(maxsize=None)
 class AI_Player(Player):
     def __init__(self, player_id):    
         super().__init__(player_id)  # Call the constructor of the base class
         self.AI_model=None
-        self.ai=GomokuAI(int(config["OTHER VARIABLES"]["BOARDSIZE"]))
+        self.ai=GomokuAI(game.game.Game()).board.board_size
 
  
 @lru_cache(maxsize=None)

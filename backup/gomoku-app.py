@@ -108,15 +108,13 @@ class MainApp(Tk):
 
 
 
-
-
-# Running the application
-if __name__ == "__main__":
-    ##Create players
-    player1 = GameFactory.create_player("Human", 1)
-    player2 = GameFactory.create_player("AI", 2)
-    game_board = GameFactory.create_game_board(15)
-    game = GameFactory.create_game(game_board, player1, player2)
+# # Running the application
+# if __name__ == "__main__":
+#     ##Create players
+#     player1 = GameFactory.create_player("Human", 1)
+#     player2 = GameFactory.create_player("AI", 2)
+#     game_board = GameFactory.create_game_board(15)
+#     game = GameFactory.create_game(game_board, player1, player2)
     
-    app = MainApp()
-    app.mainloop()
+#     app = MainApp()
+#     app.mainloop()

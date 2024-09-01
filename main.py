@@ -15,6 +15,6 @@ def log_new_run():
 
 # Running the application
 if __name__ == "__main__":    
-    app = main_window.MainApp()    
+    app = main_window.GomokuApp()    
     app.mainloop()
     

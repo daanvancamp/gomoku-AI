@@ -5,7 +5,7 @@ class Game(metaclass=Singleton):
     def  __init__(self, player1, player2, board:gameboard.GameBoard):
         self.player1 = player1
         self.player2 = player2
-        players=[self.player1,self.player2]
+        self.players=[self.player1,self.player2]
         self.current_player = player1
         self.board = board
         self.winner = 0
@@ -40,4 +40,6 @@ class GameFactory:
         return gameboard.GameBoard(grid_size)
 
     def initialize_new_game(game_board:gameboard.GameBoard, player1, player2):
-        return Game(player1, player2, game_board)
+        game = Game(player1, player2, game_board)
+        game.__init__(player1, player2, game_board)#it is a singleton class
+        return game

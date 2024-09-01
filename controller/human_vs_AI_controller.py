@@ -7,13 +7,13 @@ from config import *
 import numpy as np
 # controller.py
 class Human_vs_AI_Controller(controller.BaseController):
-    def __init__(self, view: "ui.main_window.MainApp"):
+    def __init__(self, view: "ui.main_window.GomokuApp"):
         super().__init__(view)
         player1 = game.game.GameFactory.create_player("Human", 1)
         player2 = game.game.GameFactory.create_player("AI", 2)
         game_board = game.game.GameFactory.create_game_board(int(config["OTHER VARIABLES"]["BOARDSIZE"]))
         self.game = game.game.GameFactory.initialize_new_game(game_board, player1, player2)
-        game.game.Game().board.board = np.zeros((self.BOARDSIZE,self.BOARDSIZE))
+        self.initialize_board()
 
         self.view.window_mode = ui.main_window.WindowMode.human_move
         self.view.activate_game()
@@ -23,5 +23,7 @@ class Human_vs_AI_Controller(controller.BaseController):
         self.view.draw_pieces(game.game.Game().board.board)
         if self.game.winner != 0:
             print("er is een winnaar")
+            self.view.end_game()
+            self.initialize_board()
         else:
             pass #todo: AI move

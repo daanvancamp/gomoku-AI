@@ -6,6 +6,7 @@ class GameBoard:
         self.board = np.zeros((grid_size, grid_size))
         self.winning_cells = None
         self.grid_size = grid_size
+        self.board_size = self.grid_size
     
     def check_win(self, row, col, player_id):
         directions = [(0, 1), (1, 0), (1, 1), (1, -1)]

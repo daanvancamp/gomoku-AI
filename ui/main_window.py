@@ -11,6 +11,7 @@ from .settings_windows import models_window
 import enum
 import controller
 from config import *
+import tkinter.messagebox as mb
 
 class WindowMode(enum.Enum):
     replay = 'replay'
@@ -25,7 +26,7 @@ class GameType(enum.Enum):
 
 
 # Main Application Class
-class MainApp(Tk):
+class GomokuApp(Tk):
     def __init__(self):
         super().__init__()
 
@@ -167,6 +168,7 @@ class MainApp(Tk):
 
     def activate_game(self):  
         self.close_secondary_windows()
+        self.canvas.config(state="normal")
 
     def show_previous(self):
         """Show the previous item in the list."""
@@ -212,3 +214,8 @@ class MainApp(Tk):
 
     def clear_board(self):
         self.canvas.delete("piece")
+    
+    def end_game(self):
+         mb.showinfo("End of the game","There's a winner, player"+str(self.controller.game.winner))
+         self.clear_board()
+         self.canvas.config(state=DISABLED)

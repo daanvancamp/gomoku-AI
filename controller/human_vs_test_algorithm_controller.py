@@ -5,11 +5,12 @@ import ui.main_window
 from . import controller
 from config import *
 import numpy as np
+import game.player
 #todo: controller uitwerken om tegen test algoritme te spelen
 
 # controller.py
 class Human_vs_TestAlgorithmController(controller.BaseController):
-    def __init__(self, view:"ui.main_window.MainApp", color_human):
+    def __init__(self, view:"ui.main_window.GomokuApp", color_human):
         super().__init__(view)
         start_p=time()
         if color_human=="red": #red always plays first
@@ -23,15 +24,17 @@ class Human_vs_TestAlgorithmController(controller.BaseController):
 
         game_board = game.game.GameFactory.create_game_board(int(config["OTHER VARIABLES"]["BOARDSIZE"]))
         self.game = game.game.GameFactory.initialize_new_game(game_board, player1, player2)
+        self.initialize_board()
 
-
-        game.game.Game().board.board = np.zeros((int(config["OTHER VARIABLES"]["BOARDSIZE"]),int(config["OTHER VARIABLES"]["BOARDSIZE"])))
         self.game.player1.game = self.game
         self.game.player2.game = self.game
         self.view.window_mode = ui.main_window.WindowMode.human_move
         self.view.activate_game()
+        self.color_human=color_human
+
         if color_human!="red":
-            self.game.switch_player()
+            if self.game.current_player == self.game.player2:
+                self.game.switch_player()
             self.algorithm_put_piece()
 
     def human_put_piece(self, row, col):
@@ -39,11 +42,18 @@ class Human_vs_TestAlgorithmController(controller.BaseController):
         self.view.draw_pieces(game.game.Game().board.board)
         if self.game.winner != 0:
             print("er is een winnaar")
+            self.view.end_game()
+            self.initialize_board()
         else:
             self.algorithm_put_piece()
                 
     def algorithm_put_piece(self):
-        row, col = self.game.current_player.test_algorithm.ai_move()
-        self.game.put_piece(row, col)
-        self.view.draw_pieces(game.game.Game().board.board)
+        if self.color_human!="red":
+            row, col = self.game.player1.test_algorithm.ai_move()
+            self.game.put_piece(row, col)
+            self.view.draw_pieces(game.game.Game().board.board)
+        else:
+            row, col = self.game.player2.test_algorithm.ai_move()
+            self.game.put_piece(row, col)
+            self.view.draw_pieces(game.game.Game().board.board)
             
