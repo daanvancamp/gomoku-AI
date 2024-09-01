@@ -1,7 +1,7 @@
 import game.game
 import ui.main_window
 from . import controller
-from config import *
+from configuration.config import *
 #todo: controller uitwerken om tegen AI te spelen
 
 class Human_vs_AI_Controller(controller.BaseController):

@@ -5,7 +5,7 @@ from datetime import datetime
 from utils.filereader import log_info_overruling
 from ui import main_window
 #from utils.music import initialiseer_muziek
-from config import *
+from configuration.config import *
 
 
 def log_new_run():

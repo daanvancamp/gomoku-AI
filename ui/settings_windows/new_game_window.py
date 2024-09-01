@@ -1,7 +1,7 @@
 from tkinter import *
 from tkinter import ttk
 import tkinter.filedialog
-from config import *
+from configuration.config import *
 import controllers.human_vs_human_controller 
 import controllers.human_vs_test_algorithm_controller
 from model_management.modelmanager import ModelManager

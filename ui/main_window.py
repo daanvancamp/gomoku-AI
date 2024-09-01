@@ -10,7 +10,7 @@ from .settings_windows import train_window
 from .settings_windows import models_window
 import enum
 import controllers
-from config import *
+from configuration.config import *
 import tkinter.messagebox as mb
 
 class WindowMode(enum.Enum):

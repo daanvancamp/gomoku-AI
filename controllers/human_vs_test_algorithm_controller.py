@@ -2,7 +2,7 @@ from time import time
 import game.game
 import ui.main_window
 from . import controller
-from config import *
+from configuration.config import *
 import game.player
 #todo: controller uitwerken om tegen test algoritme te spelen
 

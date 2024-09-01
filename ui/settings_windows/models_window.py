@@ -2,7 +2,7 @@
 from tkinter import *
 from tkinter import ttk
 from model_management.modelmanager import ModelManager
-from config import *
+from configuration.config import *
 
 WIDTH = int(config["OTHER VARIABLES"]["WIDTH"])
 HEIGHT = int(config["OTHER VARIABLES"]["HEIGHT"])

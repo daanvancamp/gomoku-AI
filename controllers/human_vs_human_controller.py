@@ -1,7 +1,7 @@
 import game.game
 import ui.main_window
 from . import controller
-from config import *
+from configuration.config import *
 
 class Human_vs_HumanController(controller.BaseController):
     def __init__(self, view: "ui.main_window.GomokuApp"):

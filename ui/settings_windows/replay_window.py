@@ -1,6 +1,6 @@
 import tkinter as tk
 import tkinter.filedialog
-from config import *
+from configuration.config import *
 import controllers.replay_controller
 
 #todo: window verdwijnt soms

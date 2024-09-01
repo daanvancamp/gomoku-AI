@@ -3,7 +3,7 @@
 import tkinter as tk
 from tkinter import *
 from tkinter.ttk import *
-from config import *
+from configuration.config import *
 from model_management.modelmanager import ModelManager
 
 distance_from_left_side = int(config["OTHER VARIABLES"]["distance_from_left_side"])

@@ -1,7 +1,7 @@
 import json
 import game.gameboard as gb
 from . import controller
-from config import *
+from configuration.config import *
 
 
 # controller.py
