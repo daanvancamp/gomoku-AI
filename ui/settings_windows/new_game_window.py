@@ -1,4 +1,5 @@
 from tkinter import *
+from tkinter import ttk
 import tkinter.filedialog
 from config import *
 import controller.human_vs_human_controller 
@@ -21,24 +22,26 @@ class NewGameWindow (Toplevel):#the methods of gomokuapp need to be callable fro
 		self.button_new_game = Button(self, text="New Game", command=self.start_new_game)
 		self.button_new_game.grid(row=0, column=0, sticky="w", padx=10)
 
-		self.label_p1 = Label(self, text="Player 1(Red)")
+		self.label_info=Label(self, text="red begins always")
+		self.label_info.grid(row=1, column=0, sticky="w", padx=10)
+
+		self.label_p1 = Label(self, text="Player 1(Human)")
 		self.label_p1.grid(row=2, column=1, sticky="w", padx=10)
 
-		self.label_p2 = Label(self, text="Player 2(Blue)")
+		self.label_p2 = Label(self, text="Player 2(?)")
 		self.label_p2.grid(row=2, column=2, sticky="w", padx=10)
 		
 		self.var_p1_type = StringVar()
 		self.var_p1_type.set("Human")
+		self.var_color_p1 = StringVar()
+		self.var_color_p1.set("red")
 		self.var_p2_type = StringVar()
 		self.var_p2_type.set("Test Algorithm")
 
 
-		self.radiobutton_4 = Radiobutton(self, text="Human", variable=self.var_p1_type, value="Human")
-		self.radiobutton_4.grid(row=3, column=1, sticky="w")
-		self.radiobutton_5 = Radiobutton(self, text="Test Algorithm", variable=self.var_p1_type, value="Test Algorithm")
-		self.radiobutton_5.grid(row=4, column=1, sticky="w")
-		self.radiobutton_6 = Radiobutton(self, text="AI-Model", variable=self.var_p1_type, value="AI-Model")
-		self.radiobutton_6.grid(row=5, column=1, sticky="w")
+		self.cb_choose_color=ttk.Combobox(self, state="readonly",values=["red","blue"],textvariable=self.var_color_p1)
+		self.cb_choose_color.grid(row=3, column=1, sticky="w", padx=10)
+
 
 		self.radiobutton_7 = Radiobutton(self, text="Human", variable=self.var_p2_type, value="Human")
 		self.radiobutton_7.grid(row=3, column=2, sticky="w")
@@ -50,31 +53,18 @@ class NewGameWindow (Toplevel):#the methods of gomokuapp need to be callable fro
 	def start_new_game(self):
 		from time import time
 		self.master.clear_board()
-
-
-
-		list_of_players=[self.var_p1_type.get(),self.var_p2_type.get()]
 		
-		same_player_types=self.var_p1_type.get()==self.var_p2_type.get()
+		match self.var_p2_type.get():
+			case "Human":
+				self.master.controller = controller.human_vs_human_controller.Human_vs_HumanController(self.master)
+			case "Test Algorithm":
+				start=time()
 
-		if same_player_types and self.var_p1_type.get() == "Human":
-			self.master.controller = controller.human_vs_human_controller.Human_vs_HumanController(self.master)
+				self.master.controller = controller.human_vs_test_algorithm_controller.Human_vs_TestAlgorithmController(self.master,self.var_color_p1.get())
+				print("time",time()-start)
 
-		elif same_player_types and self.var_p1_type.get() == "Test Algorithm":
-			pass
-		elif same_player_types and self.var_p1_type.get() == "AI-Model":
-			pass
-
-
-		elif "Human" in list_of_players and "AI-Model" in list_of_players:
-			pass
-
-		elif "Human" in list_of_players and "Test Algorithm" in list_of_players:
-			start=time()
-			self.master.controller = controller.human_vs_test_algorithm_controller.Human_vs_TestAlgorithmController(self.master)
-			print("time",time()-start)
-		elif "AI-Model" in list_of_players and "Test Algorithm" in list_of_players:
-			pass
+			case "AI-Model":
+				pass
 
 
 

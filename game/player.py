@@ -23,7 +23,6 @@ class Player:
         self.win_rate = 0
         self.allow_overrule = True
         self.final_action = None
-        self.ai=GomokuAI(int(config["OTHER VARIABLES"]["BOARDSIZE"]))
         self.game = None
 
 @lru_cache(maxsize=None)
@@ -31,6 +30,8 @@ class AI_Player(Player):
     def __init__(self, player_id):    
         super().__init__(player_id)  # Call the constructor of the base class
         self.AI_model=None
+        self.ai=GomokuAI(int(config["OTHER VARIABLES"]["BOARDSIZE"]))
+
  
 @lru_cache(maxsize=None)
 class Human_Player(Player):
@@ -41,4 +42,4 @@ class Human_Player(Player):
 class Test_Player(Player):
     def __init__(self, player_id):    
         super().__init__(player_id)  # Call the constructor of the base class
-        self.test_algortithm = game.algorithms.test_algorithm.TestAlgorithm.TestAlgorithm(self)
+        self.test_algorithm = game.algorithms.test_algorithm.TestAlgorithm.TestAlgorithm(self)

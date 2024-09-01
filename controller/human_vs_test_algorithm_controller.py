@@ -9,12 +9,17 @@ import numpy as np
 
 # controller.py
 class Human_vs_TestAlgorithmController(controller.BaseController):
-    def __init__(self, view:"ui.main_window.MainApp"):
+    def __init__(self, view:"ui.main_window.MainApp", color_human):
         super().__init__(view)
         start_p=time()
-        player1 = game.game.GameFactory.create_player("Human", 1)
-        player2 = game.game.GameFactory.create_player("Test", 2)
-        print("created players in",time()-start_p)
+        if color_human=="red": #red always plays first
+            player1 = game.game.GameFactory.create_player("Human", 1)
+            player2 = game.game.GameFactory.create_player("Test", 2)
+        else:
+            print("blue selected")
+            player1 = game.game.GameFactory.create_player("Test", 1)
+            player2 = game.game.GameFactory.create_player("Human", 2)
+        print("created 2 players in",time()-start_p)
 
         game_board = game.game.GameFactory.create_game_board(int(config["OTHER VARIABLES"]["BOARDSIZE"]))
         self.game = game.game.GameFactory.initialize_new_game(game_board, player1, player2)
@@ -25,6 +30,9 @@ class Human_vs_TestAlgorithmController(controller.BaseController):
         self.game.player2.game = self.game
         self.view.window_mode = ui.main_window.WindowMode.human_move
         self.view.activate_game()
+        if color_human!="red":
+            self.game.switch_player()
+            self.algorithm_put_piece()
 
     def human_put_piece(self, row, col):
         self.game.put_piece(row, col)
@@ -35,7 +43,7 @@ class Human_vs_TestAlgorithmController(controller.BaseController):
             self.algorithm_put_piece()
                 
     def algorithm_put_piece(self):
-        row, col = self.game.player2.test_algortithm.ai_move()
+        row, col = self.game.current_player.test_algorithm.ai_move()
         self.game.put_piece(row, col)
         self.view.draw_pieces(game.game.Game().board.board)
             

@@ -91,14 +91,16 @@ class MainApp(Tk):
     def open_new_window(self, window_type):
         start=time()
         self.close_secondary_windows()
-        if (window_type == "Replay"):
-            new_window = replay_window.ReplayWindow(self)
-        elif (window_type == "Play"):
-            new_window = new_game_window.NewGameWindow(self)
-        elif (window_type == "Models"):
-            new_window = models_window.ModelsWindow(self)
-        elif (window_type == "Train"):
-            new_window = train_window.TrainWindow(self)
+
+        match window_type:
+            case "Replay":
+                new_window = replay_window.ReplayWindow(self)
+            case "Play":
+                new_window = new_game_window.NewGameWindow(self)
+            case "Models":
+                new_window = models_window.ModelsWindow(self)
+            case "Train":
+                new_window = train_window.TrainWindow(self)
         
         self.show_replay_buttons(window_type=="Replay")
 
@@ -158,9 +160,9 @@ class MainApp(Tk):
                         if value[0] == i and value[1] == j:
                             padding = 10
                             if board[i,j] == 1:
-                                color = "blue"
+                                color = self.color_player_1
                             else:
-                                color = "red"#board[i,j]==2
+                                color = self.color_player_2
                             self.canvas.create_oval(value[2] + padding, value[3] + padding, value[4] - padding, value[5] - padding, fill=color, tags="piece")
 
     def activate_game(self):  
