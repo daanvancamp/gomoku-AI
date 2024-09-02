@@ -8,11 +8,15 @@ class BaseController:
     def initialize_board(self):
         game.game.Game().board.board = np.zeros((game.game.Game().board.board_size,game.game.Game().board.board_size))
     
-    def handle_winner(self):
+    def check_and_handle_winner(self):
+        #todo: verder uitwerken wat er gebeurt als er een winnaar is; de winnende lijn moet uitgetekend worden
         if self.game.winner != 0:
             print("er is een winnaar")
             self.view.end_game()
             self.initialize_board()
+            return True
+        else:
+            return False
 
 
         

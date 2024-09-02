@@ -39,13 +39,9 @@ class Human_vs_TestAlgorithmController(controller.BaseController):
     def human_put_piece(self, row, col):
         self.game.put_piece(row, col)
         self.view.draw_pieces(game.game.Game().board.board)
-        if self.game.winner != 0:
-            print("er is een winnaar")
-            self.view.end_game()
-            self.initialize_board()
-        else:
+        if not self.check_and_handle_winner():
             self.algorithm_put_piece()
-            self.handle_winner()
+            self.check_and_handle_winner()
                 
     def algorithm_put_piece(self):
         row, col = self.game.current_player.test_algorithm.ai_move()

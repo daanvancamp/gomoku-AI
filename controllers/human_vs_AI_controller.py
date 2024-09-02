@@ -19,10 +19,6 @@ class Human_vs_AI_Controller(controller.BaseController):
     def put_piece(self, row, col):
         self.game.put_piece(row, col)
         self.view.draw_pieces(game.game.Game().board.board)
-        if self.game.winner != 0:
-            print("er is een winnaar")
-            self.view.end_game()
-            self.initialize_board()
-        else:
-            #todo: AI move
+        if not self.check_and_handle_winner():
+            #todo: add AI move
             self.handle_winner()
