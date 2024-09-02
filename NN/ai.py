@@ -10,7 +10,7 @@ import random
 from collections import deque
 from utils.filereader import log_info_overruling
 
-MAX_MEMORY = 1_000_000          # origineel 1_000_000
+MAX_MEMORY = 1_000_000          # originally 1_000_000
 BATCH_SIZE = 10_000
 MIN_EPSILON = 0.01
 EPSILON_DECAY_RATE = 0.999

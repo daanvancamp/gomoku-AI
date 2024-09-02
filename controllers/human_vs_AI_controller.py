@@ -24,4 +24,5 @@ class Human_vs_AI_Controller(controller.BaseController):
             self.view.end_game()
             self.initialize_board()
         else:
-            pass #todo: AI move
+            #todo: AI move
+            self.check_winner()

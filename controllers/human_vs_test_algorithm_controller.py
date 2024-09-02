@@ -44,14 +44,19 @@ class Human_vs_TestAlgorithmController(controller.BaseController):
             self.initialize_board()
         else:
             self.algorithm_put_piece()
+            self.check_winner()
                 
     def algorithm_put_piece(self):
-        if self.color_human!="red":
-            row, col = self.game.player1.test_algorithm.ai_move()
-            self.game.put_piece(row, col)
-            self.view.draw_pieces(game.game.Game().board.board)
-        else:
-            row, col = self.game.player2.test_algorithm.ai_move()
-            self.game.put_piece(row, col)
-            self.view.draw_pieces(game.game.Game().board.board)
+        row, col = self.game.current_player.test_algorithm.ai_move()
+        self.game.put_piece(row, col)
+        self.view.draw_pieces(game.game.Game().board.board)
+
+        # if self.color_human!="red":
+        #     row, col = self.game.player1.test_algorithm.ai_move()
+        #     self.game.put_piece(row, col)
+        #     self.view.draw_pieces(game.game.Game().board.board)
+        # else:
+        #     row, col = self.game.player2.test_algorithm.ai_move()
+        #     self.game.put_piece(row, col)
+        #     self.view.draw_pieces(game.game.Game().board.board)
             

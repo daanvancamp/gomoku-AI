@@ -56,12 +56,13 @@ class AI_Model():
         self.add_one_to_value_from_config_file("training stats","training loops")
         self.number_of_training_loops = self.get_value_from_config_file("training stats","training loops")
         self.add_one_to_value_from_config_file("training stats","training loops against "+ opponent)
-        if opponent=="Human":
-            self.number_of_training_loops_against_human = self.get_value_from_config_file("training stats","training loops against Human")
-        elif opponent=="AI-Model":
-            self.number_of_training_loops_against_ai_model = self.get_value_from_config_file("training stats","training loops against AI-Model")
-        elif opponent=="Test Algorithm":
-            self.number_of_training_loops_against_test_algorithm = self.get_value_from_config_file("training stats","training loops against Test Algorithm")
+        match opponent:
+            case "Human":
+                self.number_of_training_loops_against_human = self.get_value_from_config_file("training stats","training loops against Human")
+            case "AI-Model":
+                self.number_of_training_loops_against_ai_model = self.get_value_from_config_file("training stats","training loops against AI-Model")
+            case "Test Algorithm":
+                self.number_of_training_loops_against_test_algorithm = self.get_value_from_config_file("training stats","training loops against Test Algorithm")
 
     def log_win(self):
         self.add_one_to_value_from_config_file("total end stats","wins")
