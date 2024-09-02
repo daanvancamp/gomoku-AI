@@ -5,6 +5,7 @@ from tkinter import *
 from tkinter.ttk import *
 from configuration.config import *
 from model_management.modelmanager import ModelManager
+import ui.main_window
 
 distance_from_left_side = int(config["OTHER VARIABLES"]["distance_from_left_side"])
 WIDTH = int(config["OTHER VARIABLES"]["WIDTH"])
@@ -13,6 +14,8 @@ modelmanager_instance = ModelManager()
 class TrainWindow(tk.Toplevel):
 	def __init__(self, master):
 		super().__init__(master,width=WIDTH, height=HEIGHT)
+		self.master: "ui.main_window.GomokuApp" = master
+
 		#row 0
 		self.button_2 = Button(self, text="Train", command=lambda: self.start_new_training())
 		self.button_2.grid(row=0, column=1, sticky="e")

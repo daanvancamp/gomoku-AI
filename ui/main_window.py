@@ -62,11 +62,10 @@ class GomokuApp(Tk):
 
         self.menubar.add_cascade(label="Models",menu=self.models_menu)
         
-        # Store squares to identify them later
         self.squares = {}
         
         self.BOARDSIZE=int(config["OTHER VARIABLES"]["BOARDSIZE"])
-        self.create_gomokuboard(self.BOARDSIZE)#todo: needs to be read from the consts file
+        self.create_gomokuboard(self.BOARDSIZE)
         
         board = np.zeros((self.BOARDSIZE, self.BOARDSIZE))
         self.draw_pieces(board)

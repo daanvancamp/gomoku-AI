@@ -5,19 +5,20 @@ from configuration.config import *
 import controllers.human_vs_human_controller 
 import controllers.human_vs_test_algorithm_controller
 from model_management.modelmanager import ModelManager
+import ui.main_window
 modelmanager_instance=ModelManager()
 
 WIDTH=int(config["OTHER VARIABLES"]["WIDTH"])
 HEIGHT=int(config["OTHER VARIABLES"]["HEIGHT"])
 #todo: window verder afwerken
 class NewGameWindow (Toplevel):#the methods of gomokuapp need to be callable from the frame
-	def __init__(self, master):
+	def __init__(self, master: "ui.main_window.GomokuApp"):
 		super().__init__(master)
 
 		self.title("New Game Window")
 		self.geometry(f"{WIDTH}x{HEIGHT}")
 		
-		self.master = master
+		self.master: "ui.main_window.GomokuApp" = master
 		
 		self.button_new_game = Button(self, text="New Game", command=self.start_new_game)
 		self.button_new_game.grid(row=0, column=0, sticky="w", padx=10)

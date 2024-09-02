@@ -25,4 +25,4 @@ class Human_vs_AI_Controller(controller.BaseController):
             self.initialize_board()
         else:
             #todo: AI move
-            self.check_winner()
+            self.handle_winner()
