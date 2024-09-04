@@ -17,5 +17,5 @@ class Human_vs_HumanController(controller.BaseController):
 
     def human_put_piece(self, row, col):
         self.game.put_piece(row, col)
-        self.view.draw_pieces(game.game.Game().board.board)
+        self.view.draw_pieces(self.game.board.board)
         self.check_and_handle_winner()

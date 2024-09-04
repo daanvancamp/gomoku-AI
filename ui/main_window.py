@@ -18,7 +18,6 @@ class WindowMode(enum.Enum):
     human_move = 'human_move'
     pause = 'pause'
 
-
 class GameType(enum.Enum):
     human_vs_human = 'human_vs_human'
     replay = 'replay'

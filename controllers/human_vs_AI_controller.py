@@ -5,7 +5,6 @@ from configuration.config import *
 import numpy as np
 from utils.utils_AI import Utils_AI
 import NN.ai
-#todo: controller uitwerken om tegen AI te spelen
 
 class Human_vs_AI_Controller(controller.BaseController):
     def __init__(self, view: "ui.main_window.GomokuApp"):
@@ -25,13 +24,12 @@ class Human_vs_AI_Controller(controller.BaseController):
     def human_put_piece(self, row, col):
         self.game.put_piece(row, col)
         self.view.draw_pieces(self.game.board.board)
-        if not self.check_and_handle_winner():
 
+        if not self.check_and_handle_winner():
             self.AI_put_piece()
             self.check_and_handle_winner()
 
     def AI_put_piece(self):
-        #todo: add AI move
         one_hot_board = self.utils_AI.convert_to_one_hot(self.game.board.board, self.game.current_player.id)
         DVC_AI:NN.ai.GomokuAI = self.game.current_player.id.ai#player1.ai or player2.ai #always an instance of GomokuAI
         DVC_AI.set_game(one_hot_board)
