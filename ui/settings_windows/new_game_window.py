@@ -2,6 +2,7 @@ from tkinter import *
 from tkinter import ttk
 import tkinter.filedialog
 from configuration.config import *
+import controllers.human_vs_AI_controller
 import controllers.human_vs_human_controller 
 import controllers.human_vs_test_algorithm_controller
 from model_management.modelmanager import ModelManager
@@ -65,7 +66,7 @@ class NewGameWindow (Toplevel):#the methods of gomokuapp need to be callable fro
 				print("time",time()-start)
 
 			case "AI-Model":
-				pass
+				self.master.controller = controllers.human_vs_AI_controller.Human_vs_AI_Controller(self.master)
 
 
 
