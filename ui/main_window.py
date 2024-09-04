@@ -3,7 +3,6 @@ from tkinter import ttk
 from tkinter import *
 import numpy as np
 
-from game.game import Game
 from .settings_windows import replay_window
 from .settings_windows import new_game_window
 from .settings_windows import train_window
@@ -174,7 +173,7 @@ class GomokuApp(Tk):
         if self.controller.current_index >= 0:
             self.delete_pieces()
             self.controller.previous()
-            self.draw_pieces(Game().board.board)
+            self.draw_pieces(self.controller.game.board.board)
         self.update_replay_button_states()
 
     def show_next(self):
@@ -182,7 +181,7 @@ class GomokuApp(Tk):
         if self.controller.current_index < len(self.controller.moves) - 1:
             self.delete_pieces()
             self.controller.next()
-            self.draw_pieces(Game().board.board)
+            self.draw_pieces(self.controller.game.board.board)
         self.update_replay_button_states()
 
     def update_replay_button_states(self):
@@ -211,10 +210,10 @@ class GomokuApp(Tk):
                 widget.destroy()
         
 
-    def clear_board(self):
+    def clear_canvas(self):
         self.canvas.delete("piece")
     
     def end_game(self):
          mb.showinfo("End of the game","There's a winner, player"+str(self.controller.game.winner))
-         self.clear_board()
+         self.clear_canvas()
          self.canvas.config(state=DISABLED)

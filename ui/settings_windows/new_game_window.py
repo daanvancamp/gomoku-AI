@@ -54,7 +54,7 @@ class NewGameWindow (Toplevel):#the methods of gomokuapp need to be callable fro
 
 	def start_new_game(self):
 		from time import time
-		self.master.clear_board()
+		self.master.clear_canvas()
 		
 		match self.var_p2_type.get():
 			case "Human":

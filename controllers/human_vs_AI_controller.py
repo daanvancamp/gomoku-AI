@@ -32,8 +32,8 @@ class Human_vs_AI_Controller(controller.BaseController):
 
     def AI_put_piece(self):
         #todo: add AI move
-        one_hot_board = self.utils_AI.convert_to_one_hot(self.game.board.board, self.game.players[self.game.current_player.id-1].id)
-        DVC_AI:NN.ai.GomokuAI = self.game.players[self.game.current_player.id-1].ai#player1.ai or player2.ai #always an instance of GomokuAI
+        one_hot_board = self.utils_AI.convert_to_one_hot(self.game.board.board, self.game.current_player.id)
+        DVC_AI:NN.ai.GomokuAI = self.game.current_player.id.ai#player1.ai or player2.ai #always an instance of GomokuAI
         DVC_AI.set_game(one_hot_board)
         max_score, scores, scores_normalized = self.utils_AI.calculate_score(self.game.board.board)
         DVC_AI.current_player_id=self.game.current_player.id
@@ -56,10 +56,10 @@ class Human_vs_AI_Controller(controller.BaseController):
         # elif instance.record_replay:
         #     p2_moves.append(action)
 
-        self.game.players[self.game.current_player.id - 1].weighed_moves.append(score)
-        self.game.board.board[action[0]][action[1]] = self.game.current_player.id
-        self.game.players[self.game.current_player.id-1].final_action = action
-        self.game.players[self.game.current_player.id - 1].moves += 1
+        self.game.current_player.weighed_moves.append(score)
+        self.game.current_player = self.game.current_player.id
+        self.game.current_player.final_action = action
+        self.game.current_player.moves += 1
 
         row, col = action
         self.game.put_piece(row, col)
