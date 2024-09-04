@@ -2,9 +2,6 @@ from . import player
 from . import gameboard
 from utils.singleton_class import Singleton
 class Game(metaclass=Singleton):
-    def  __init__(self):
-        pass
-
     def initialize_game(self, player1, player2, board:gameboard.GameBoard):
         self.player1 = player1
         self.player2 = player2
