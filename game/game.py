@@ -10,14 +10,17 @@ class Game(metaclass=Singleton):
         self.board = board
         self.winner = 0
 
-    def put_piece(self, row, col):
+    def put_piece(self, row, col) -> bool:
         if self.board.square_empty(row, col):
             self.board.put_piece(row, col, self.current_player.id)
+        else:
+            return False
 
         if self.board.check_win(row, col, self.current_player.id):
             self.winner = self.current_player.id
         else:
             self.switch_player()
+        return True
     
     def switch_player(self):
         if self.current_player.id == 1:

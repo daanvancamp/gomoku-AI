@@ -35,25 +35,15 @@ class Human_vs_TestAlgorithmController(controller.BaseController):
             self.algorithm_put_piece()
 
     def human_put_piece(self, row, col):
-        self.game.put_piece(row, col)
-        self.view.draw_pieces(self.game.board.board)
+        if self.game.put_piece(row, col):
+            self.view.draw_pieces(self.game.board.board)
 
-        if not self.check_and_handle_winner():
-            self.algorithm_put_piece()
-            self.check_and_handle_winner()
+            if not self.check_and_handle_winner():
+                self.algorithm_put_piece()
+                self.check_and_handle_winner()
                 
     def algorithm_put_piece(self):
         row, col = self.game.current_player.test_algorithm.ai_move()
         self.game.put_piece(row, col)
         self.view.draw_pieces(self.game.board.board)
-
-        #todo verify if this should be used instead of the above...
-        # if self.color_human!="red":
-        #     row, col = self.game.player1.test_algorithm.ai_move()
-        #     self.game.put_piece(row, col)
-        #     self.view.draw_pieces(game.game.Game().board.board)
-        # else:
-        #     row, col = self.game.player2.test_algorithm.ai_move()
-        #     self.game.put_piece(row, col)
-        #     self.view.draw_pieces(game.game.Game().board.board)
             

@@ -214,5 +214,4 @@ class GomokuApp(Tk):
     
     def end_game(self):
          mb.showinfo("End of the game","There's a winner, player"+str(self.controller.game.winner))
-         self.clear_canvas()
          self.canvas.config(state=DISABLED)

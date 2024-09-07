@@ -11,8 +11,8 @@ class Human_vs_AI_Controller(controller.BaseController):
         super().__init__(view)
         player1 = game.game.GameFactory.create_player("Human", 1)
         player2 = game.game.GameFactory.create_player("AI", 2)
-        player2.load_model("standaard")
-        player2.set_allow_overrule(True) #todo: add GUI element to let the user decide
+        player2.load_model("standard-Mikko")
+        player2.set_allow_overrule(False) #todo: add GUI element to let the user decide
         game_board = game.game.GameFactory.create_game_board(int(config["OTHER VARIABLES"]["BOARDSIZE"]))
         self.game:game.game.Game = game.game.GameFactory.initialize_new_game(game_board, player1, player2)
         self.initialize_board()
@@ -23,12 +23,11 @@ class Human_vs_AI_Controller(controller.BaseController):
         self.utils_AI = Utils_AI()
 
     def human_put_piece(self, row, col):
-        self.game.put_piece(row, col)
-        self.view.draw_pieces(self.game.board.board)
-
-        if not self.check_and_handle_winner():
-            self.AI_put_piece()
-            self.check_and_handle_winner()
+        if self.game.put_piece(row, col):
+            self.view.draw_pieces(self.game.board.board)
+            if not self.check_and_handle_winner():
+                self.AI_put_piece()
+                self.check_and_handle_winner()
 
     def AI_put_piece(self):
         one_hot_board = self.utils_AI.convert_to_one_hot(self.game.board.board, self.game.current_player.id)
