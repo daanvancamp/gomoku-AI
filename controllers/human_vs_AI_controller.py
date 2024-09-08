@@ -21,7 +21,8 @@ class Human_vs_AI_Controller(controller.BaseController):
         self.view.activate_game()
 
         self.utils_AI = Utils_AI()
-
+        self.record_replay = True
+        self.mark_last_move_model = False
     def human_put_piece(self, row, col):
         if self.game.put_piece(row, col):
             self.view.draw_pieces(self.game.board.board)
@@ -39,20 +40,22 @@ class Human_vs_AI_Controller(controller.BaseController):
                
         np_scores = np.array(scores).reshape(15, 15)
         short_score = np_scores[action[0]][action[1]]
-        # if mark_last_move_model:
-        #     last_move_model=action #=last move for example :(3,6)
-        # else:
-        #     last_move_model=None
+        if self.mark_last_move_model:
+            self.last_move_model=action #=last move for example :(3,6)
+        else:
+            self.last_move_model=None
+
         if max_score <= 0:
             # prevent division with negative values or zero
             score = 0
         else:
             score = short_score / max_score
 
-        # if self.game.current_player.id == 1 and instance.record_replay:
-        #     p1_moves.append(action)
-        # elif instance.record_replay:
-        #     p2_moves.append(action)
+        if self.record_replay:
+            if self.game.current_player.id == 1:
+                self.game.p1_moves.append(action)
+            else:
+                self.game.p2_moves.append(action)
 
         self.game.current_player.weighed_moves.append(score)
         self.game.current_player.final_action = action
