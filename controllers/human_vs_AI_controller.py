@@ -26,6 +26,7 @@ class Human_vs_AI_Controller(controller.BaseController):
     def human_put_piece(self, row, col):
         if self.game.put_piece(row, col):
             self.view.draw_pieces(self.game.board.board)
+            self.view.draw_scoreboard(self.game.board.board)
             if not self.check_and_handle_winner():
                 self.AI_put_piece()
                 self.check_and_handle_winner()
@@ -63,4 +64,5 @@ class Human_vs_AI_Controller(controller.BaseController):
 
         row, col = action
         self.game.put_piece(row, col)
-        self.view.draw_pieces(self.game.board.board)
+        self.view.draw_pieces(self.game.board.board) 
+        self.view.draw_scoreboard(self.game.board.board)

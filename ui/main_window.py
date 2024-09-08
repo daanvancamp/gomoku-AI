@@ -6,6 +6,7 @@ import numpy as np
 from .settings_windows import replay_window
 from .settings_windows import new_game_window
 from .settings_windows import train_window
+from .settings_windows import scoreboard_window
 from .settings_windows import models_window
 import enum
 import controllers
@@ -52,13 +53,15 @@ class GomokuApp(Tk):
         self.new_game_menu.add_command(label="Play", command=lambda:self.open_new_window("Play"))
         self.new_game_menu.add_command(label="Train", command=lambda:self.open_new_window("Train"))
         self.new_game_menu.add_command(label="Replay", command=lambda:self.open_new_window("Replay"))
-
         self.menubar.add_cascade(label="New Game",menu=self.new_game_menu)
 
         self.models_menu= Menu(self.menubar,tearoff=0)
         self.models_menu.add_command(label="models", command=lambda:self.open_new_window("Models"))
-
         self.menubar.add_cascade(label="Models",menu=self.models_menu)
+        
+        self.scoreboard_menu = Menu(self.menubar,tearoff=0)
+        self.scoreboard_menu.add_command(label="scoreboard", command=lambda:self.open_new_window("Scoreboard"))
+        self.menubar.add_cascade(label="Scoreboard",menu=self.scoreboard_menu)
         
         self.squares = {}
         
@@ -84,6 +87,8 @@ class GomokuApp(Tk):
         
         self.color_player_1 = "red"
         self.color_player_2 = "blue"
+        
+        self.draw_scoreboard_bool = False
 
     
     def open_new_window(self, window_type):
@@ -99,6 +104,8 @@ class GomokuApp(Tk):
                 new_window = models_window.ModelsWindow(self)
             case "Train":
                 new_window = train_window.TrainWindow(self)
+            case "Scoreboard":
+                new_window = scoreboard_window.ScoreboardWindow(self)
         
         self.show_replay_buttons(window_type=="Replay")
 
@@ -162,6 +169,18 @@ class GomokuApp(Tk):
                             else:
                                 color = self.color_player_2
                             self.canvas.create_oval(value[2] + padding, value[3] + padding, value[4] - padding, value[5] - padding, fill=color, tags="piece")
+                            
+    
+    def draw_scoreboard(self,board):
+        rows, cols = board.shape
+        for i in range(rows):
+            for j in range(cols):
+                if board[i,j] == 0:
+                    for value in self.squares.values():
+                        if value[0] == i and value[1] == j:
+                            padding = 10
+                            self.canvas.create_text(value[2], value[3]-padding/2, text="Hello", font=('Helvetica', 8), fill="red")
+                            
 
     def activate_game(self):  
         self.close_secondary_windows()
