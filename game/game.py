@@ -9,6 +9,11 @@ class Game(metaclass=Singleton):
         self.current_player = player1
         self.board = board
         self.winner = 0
+        self.current_game = 0
+        self.last_round = False
+
+        self.p1_moves = []
+        self.p2_moves = []
 
     def put_piece(self, row, col) -> bool:
         if self.board.square_empty(row, col):

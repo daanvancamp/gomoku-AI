@@ -6,7 +6,8 @@ from configuration.config import config
 from model_management.AI_model import AI_Model
 
 class Player:
-    def __init__(self, player_id):
+    def __init__(self, player_id,playertype):
+        self.TYPE = playertype
         self.id = int(player_id) #id can be 1 or 2
         self.moves = 0
         self.wins = 0
@@ -36,6 +37,7 @@ class Player:
         return f"Player {self.id}: {self.TYPE}"
 
     def calculate_score(self, max_score, is_winner, game_number):
+        print(game_number+1)
         if max_score > 0:
             if is_winner:
                 self.score = (max_score - self.moves) / max_score
@@ -48,7 +50,7 @@ class Player:
             self.weighed_scores.append(0)
         print(f"score: {self.score}")
         self.sum_score += self.score
-        self.avg_score = self.sum_score / game_number
+        self.avg_score = self.sum_score / game_number+1
         self.all_moves.append(self.moves)
         self.avg_moves = sum(self.all_moves) / len(self.all_moves)
 
@@ -80,8 +82,8 @@ class Player:
 
 @lru_cache(maxsize=None)
 class AI_Player(Player):
-    def __init__(self, player_id):    
-        super().__init__(player_id)  # Call the constructor of the base class
+    def __init__(self, player_id):
+        super().__init__(player_id,"AI")  # Call the constructor of the base class
         self.AI_model = None
         self.ai = GomokuAI(int(config["OTHER VARIABLES"]["BOARDSIZE"]))
         self.ai.train = False
@@ -101,11 +103,11 @@ class AI_Player(Player):
 @lru_cache(maxsize=None)
 class Human_Player(Player):
     def __init__(self, player_id):    
-        super().__init__(player_id)  # Call the constructor of the base class
+        super().__init__(player_id,"Human")  # Call the constructor of the base class
 
 
 @lru_cache(maxsize=None)
 class Test_Player(Player):
     def __init__(self, player_id):    
-        super().__init__(player_id)  # Call the constructor of the base class
+        super().__init__(player_id,"Test")  # Call the constructor of the base class
         self.test_algorithm = game.algorithms.test_algorithm.TestAlgorithm.TestAlgorithm(self)

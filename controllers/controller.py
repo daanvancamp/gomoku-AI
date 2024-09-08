@@ -1,6 +1,7 @@
 import game.game
 import numpy as np
 import ui.main_window
+from utils.player_stats import update_player_stats
 class BaseController:
     def __init__(self, view):
         self.view:"ui.main_window.GomokuApp" = view
@@ -14,6 +15,7 @@ class BaseController:
             print("er is een winnaar")
             self.view.end_game()
             self.initialize_board()
+            update_player_stats(self.game,self.game.winner)
             return True
         else:
             return False

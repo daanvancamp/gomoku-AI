@@ -38,7 +38,7 @@ class NewGameWindow (Toplevel):#the methods of gomokuapp need to be callable fro
 		self.var_color_p1 = StringVar()
 		self.var_color_p1.set("red")
 		self.var_p2_type = StringVar()
-		self.var_p2_type.set("Test Algorithm")
+		self.var_p2_type.set("AI-Model")
 
 
 		self.cb_choose_color=ttk.Combobox(self, state="readonly",values=["red","blue"],textvariable=self.var_color_p1)

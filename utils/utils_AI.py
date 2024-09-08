@@ -1,5 +1,6 @@
 import numpy as np
 import utils.filereader
+
 class Utils_AI:
     def __init__(self):
         pass
