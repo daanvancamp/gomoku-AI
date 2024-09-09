@@ -12,6 +12,7 @@ import enum
 import controllers
 from configuration.config import *
 import tkinter.messagebox as mb
+import game.algorithms.test_algorithm.TestAlgorithm
 
 class WindowMode(enum.Enum):
     replay = 'replay'
@@ -119,7 +120,6 @@ class GomokuApp(Tk):
             self.prev_button.pack_forget()
             self.next_button.pack_forget()
 
-
     def create_gomokuboard(self, grid_size):
         square_size = 50    # Each square will be 50x50 pixels
         # Create the squares for the chessboard
@@ -151,6 +151,7 @@ class GomokuApp(Tk):
             square_id = self.canvas.find_closest(event.x, event.y)[0]
             # Retrieve row, column, and coordinates from the stored dictionary
             row, col, x1, y1, x2, y2 = self.squares[square_id]
+            print(f"Clicked on square ({row},{col})")
             self.controller.human_put_piece(row, col)
                   
     def delete_pieces(self):
@@ -170,18 +171,18 @@ class GomokuApp(Tk):
                                 color = self.color_player_2
                             self.canvas.create_oval(value[2] + padding, value[3] + padding, value[4] - padding, value[5] - padding, fill=color, tags="piece")
                             
-    
-    def draw_scoreboard(self,board):
-        rows, cols = board.shape
-        for i in range(rows):
-            for j in range(cols):
+    def draw_scoreboard(self, board, scoreboard):
+        self.clear_text_on_canvas()
+        for i in range(15):
+            for j in range(15):
                 if board[i,j] == 0:
+                    key_to_lookup = (i, j)
                     for value in self.squares.values():
                         if value[0] == i and value[1] == j:
-                            padding = 10
-                            self.canvas.create_text(value[2], value[3]-padding/2, text="Hello", font=('Helvetica', 8), fill="red")
+                            padding = 20
+                            if key_to_lookup in scoreboard:
+                                self.canvas.create_text(value[2]+padding, value[3]+padding, text=f"{scoreboard[key_to_lookup]:.2f}", font=('Helvetica', 12), fill="pink", tags="text")
                             
-
     def activate_game(self):  
         self.close_secondary_windows()
         self.canvas.config(state="normal")
@@ -221,15 +222,16 @@ class GomokuApp(Tk):
     def deactivate_replay_frame(self):
         self.frame_replay.grid_forget()
 
-        
     def close_secondary_windows(self):
         for widget in self.winfo_children():
             if isinstance(widget, Toplevel):
                 widget.destroy()
         
-
     def clear_canvas(self):
         self.canvas.delete("piece")
+        
+    def clear_text_on_canvas(self):
+        self.canvas.delete("text")
     
     def end_game(self):
          mb.showinfo("End of the game","There's a winner, player"+str(self.controller.game.winner))

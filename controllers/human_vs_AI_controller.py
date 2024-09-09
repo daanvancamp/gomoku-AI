@@ -23,6 +23,7 @@ class Human_vs_AI_Controller(controller.BaseController):
         self.utils_AI = Utils_AI()
         self.record_replay = True
         self.mark_last_move_model = False
+        
     def human_put_piece(self, row, col):
         if self.game.put_piece(row, col):
             self.view.draw_pieces(self.game.board.board)
@@ -65,4 +66,3 @@ class Human_vs_AI_Controller(controller.BaseController):
         row, col = action
         self.game.put_piece(row, col)
         self.view.draw_pieces(self.game.board.board) 
-        self.view.draw_scoreboard(self.game.board.board)

@@ -7,7 +7,7 @@ class TestAlgorithm:
         self.board = None
     
     def check_line(self, row, col, direction):
-        score_white = score_black = previous = 0
+        score_player1 = score_player2 = previous = 0
         multiplier = 1
         adjacency_loss = 1
         for i in range(self.DEPTH-1):
@@ -18,23 +18,23 @@ class TestAlgorithm:
                         multiplier *= (1 + multiplier)
                     else:
                         multiplier = 1
-                        score_white /= 2
-                        score_black /= 2
-                    if board_score == 1:    # black piece
+                        score_player1 /= 2
+                        score_player2 /= 2
+                    if board_score == 1:    
                         if self.player.id == 1:
-                            score_white += 5 * multiplier - i
+                            score_player1 += 5 * multiplier - i
                         elif self.player.id == 2:
-                            score_black += 2 * multiplier - i
+                            score_player2 += 2 * multiplier - i
                             if i >= 3 and multiplier > 3:
-                                score_black **= 2
+                                score_player2 **= 2
                                 break
-                    elif board_score == 2:  # white piece
+                    elif board_score == 2:  
                         if self.player.id == 1:
-                            score_black += 5 * multiplier - i
+                            score_player2 += 5 * multiplier - i
                         elif self.player.id == 2:
-                            score_white += 2 * multiplier - i
+                            score_player1 += 2 * multiplier - i
                             if i >= 3 and multiplier > 3:
-                                score_white **= 2
+                                score_player1 **= 2
                                 break
                     previous = board_score
                 elif i == 0:
@@ -53,23 +53,24 @@ class TestAlgorithm:
                         try:
                             current_piece = self.board[row + (direction[0] * (j+1))][col + (direction[1] * (j+1))]
                             if current_piece == 1 and current_piece == board_piece:
-                                score_black *= ((j+1)*2)
+                                score_player2 *= ((j+1)*2)
                                 adjacency_loss /= 2
                             if current_piece == 2 and current_piece == board_piece:
-                                score_white *= ((j+1)*2)
+                                score_player1 *= ((j+1)*2)
                                 adjacency_loss /= 2
                             else:
                                 if j == 0:
-                                    score_white /= 2
-                                    score_black /= 2
+                                    score_player1 /= 2
+                                    score_player2 /= 2
                                 break
                         except IndexError:
                             break
         except IndexError:
             pass
-        score_white = score_white / adjacency_loss
-        score_black = score_black / adjacency_loss
-        return int(score_white), int(score_black)
+        
+        score_player1 = score_player1 / adjacency_loss
+        score_player2 = score_player2 / adjacency_loss          
+        return score_player1, score_player2
 
 
     def evaluate_board(self):

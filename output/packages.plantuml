@@ -1,0 +1,40 @@
+@startuml packages
+set namespaceSeparator none
+package "AI_model" as AI_model {
+}
+package "ai" as ai {
+}
+package "algorithms.test_algorithm.TestAlgorithm" as algorithms.test_algorithm.TestAlgorithm {
+}
+package "controller" as controller {
+}
+package "game" as game {
+}
+package "gameboard" as gameboard {
+}
+package "human_vs_AI_controller" as human_vs_AI_controller {
+}
+package "human_vs_test_algorithm_controller" as human_vs_test_algorithm_controller {
+}
+package "main_window" as main_window {
+}
+package "model" as model {
+}
+package "modelmanager" as modelmanager {
+}
+package "playboard_processor" as playboard_processor {
+}
+package "player" as player {
+}
+package "replay_controller" as replay_controller {
+}
+package "settings_windows.models_window" as settings_windows.models_window {
+}
+package "settings_windows.new_game_window" as settings_windows.new_game_window {
+}
+package "settings_windows.replay_window" as settings_windows.replay_window {
+}
+package "settings_windows.train_window" as settings_windows.train_window {
+}
+playboard_processor --> game
+@enduml

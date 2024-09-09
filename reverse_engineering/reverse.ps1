@@ -1,0 +1,1 @@
+pyreverse -o png -p ProjectName ..\.

@@ -1,0 +1,347 @@
+@startuml classes
+set namespaceSeparator none
+class "AI_Model" as AI_model.AI_Model {
+  directory
+  initial_json_data
+  losses : NoneType
+  losses_games : NoneType
+  losses_training : NoneType
+  modelname
+  name_config_file : str
+  number_of_training_loops : NoneType
+  number_of_training_loops_against_ai_model : NoneType
+  number_of_training_loops_against_human : NoneType
+  number_of_training_loops_against_test_algorithm : NoneType
+  parent_dir : str
+  path
+  path_config_file
+  ties : NoneType
+  ties_games : NoneType
+  ties_training : NoneType
+  training : bool
+  wins : NoneType
+  wins_games : NoneType
+  wins_training : NoneType
+  add_one_to_value_from_config_file(category, item)
+  get_number_of_losses(category)
+  get_number_of_ties(category)
+  get_number_of_training_loops(key)
+  get_number_of_wins(category)
+  get_value_from_config_file(category, item)
+  log_loss()
+  log_number_of_training_loops(opponent)
+  log_tie()
+  log_win()
+  reset_end_states()
+  reset_stats(print_info: bool)
+}
+class "AI_Player" as player.AI_Player {
+  AI_model : NoneType
+  ai
+}
+class "BaseController" as controller.BaseController {
+  view : str
+  check_and_handle_winner()
+  initialize_board()
+}
+class "ConvNet" as ai.ConvNet {
+  conv1 : Conv2d
+  conv2 : Conv2d
+  fc1 : Linear
+  fc2 : Linear
+  fc3 : Linear
+  layer1 : Sequential
+  layer2 : Sequential
+  layer3 : Sequential
+  list_dropout_rates : list
+  forward(x)
+  load_model(folder, file_name)
+  save_model(folder, file_name)
+}
+class "Game" as game.Game {
+  board
+  current_player
+  player1
+  player2
+  players : list
+  winner : int
+  initialize_game(player1, player2, board: gameboard.GameBoard)
+  put_piece(row, col)
+  switch_player()
+}
+class "GameBoard" as gameboard.GameBoard {
+  board : ndarray
+  board_size
+  grid_size
+  winning_cells : NoneType, list
+  {abstract}check_board_full(marker_id)
+  check_win(row, col, player_id)
+  put_piece(row, col, player_id)
+  remove_piece(row, col)
+  square_empty(row, col)
+}
+class "GameFactory" as game.GameFactory {
+  create_game_board()
+  create_player(player_id)
+  initialize_new_game(player1, player2)
+}
+class "GameType" as main_window.GameType {
+  name
+}
+class "GomokuAI" as ai.GomokuAI {
+  allow_overrule : bool
+  board_size : int
+  criterion : MSELoss
+  current_player_id : NoneType
+  epsilon : float
+  game : NoneType
+  gamma : float
+  learning_rate : float
+  loss : int
+  memory : deque
+  model
+  n_games : int
+  optimizer : SGD
+  overruled_last_move : bool
+  threat_moves : list
+  train : bool
+  valid_moves : list
+  adjust_epsilon()
+  build_model(input_dim: int) -> ConvNet
+  calculate_score(current_score, move, board, current_spot, j, direction: tuple, first_spot) -> int
+  calculate_short_max_score(board: tuple, board_size)
+  calculate_short_score(move: tuple, board: tuple, max_score_calculation)
+  can_win_in_one_move(board) -> list
+  convert_to_one_hot(board, player_id)
+  decrease_learning_rate()
+  get_action(state, one_hot_board, scores) -> tuple
+  get_random_action(board)
+  get_state(game)
+  get_valid_moves(board) -> list
+  id_to_move(move_id, valid_moves)
+  remember(state, action, reward, next_state, done)
+  remove_unvalid_moves()
+  set_allow_overrule(allow_overrule)
+  set_game(_game)
+  train_long_memory()
+  train_short_memory(state, action, reward, scores, next_state, next_scores, done)
+}
+class "GomokuApp" as main_window.GomokuApp {
+  BOARDSIZE : int
+  canvas : Canvas
+  color_player_1 : str
+  color_player_2 : str
+  controller
+  frame_replay : Frame
+  game_type : human_vs_human
+  menubar : Menu
+  models_menu : Menu
+  new_game_menu : Menu
+  next_button : Button
+  prev_button : Button
+  squares : dict
+  window_mode : pause
+  activate_game()
+  activate_replay_frame()
+  clear_board()
+  close_secondary_windows()
+  create_gomokuboard(grid_size)
+  deactivate_replay_frame()
+  delete_pieces()
+  draw_pieces(board)
+  end_game()
+  on_square_click(event)
+  open_new_window(window_type)
+  show_next()
+  show_previous()
+  show_replay_buttons(show)
+  update_replay_button_states()
+}
+class "Human_Player" as player.Human_Player {
+}
+class "Human_vs_AI_Controller" as human_vs_AI_controller.Human_vs_AI_Controller {
+  game
+  put_piece(row, col)
+}
+class "Human_vs_TestAlgorithmController" as human_vs_test_algorithm_controller.Human_vs_TestAlgorithmController {
+  color_human
+  game
+  algorithm_put_piece()
+  human_put_piece(row, col)
+}
+class "Linear_QNet" as model.Linear_QNet {
+  linear1 : Linear
+  linear2 : Linear
+  forward(x)
+  save(file_name)
+}
+class "ModelManager" as modelmanager.ModelManager {
+  list_models : list
+  parent_dir : str
+  create_new_model(modelName: str)
+  delete_model(modelName)
+  get_list_models()
+  get_model(modelName)
+}
+class "ModelsWindow" as settings_windows.models_window.ModelsWindow {
+  Cb_choose_stats : Combobox
+  Lb1 : Listbox
+  button_DeleteModel : Button
+  button_NewModel : Button
+  button_reset_end_states : Button
+  button_reset_stats : Button
+  frame_buttons : Frame
+  frame_stats_buttons : Frame
+  label_losses : Label
+  label_number_of_training_loops : Label
+  label_relative_value_losses : Label
+  label_relative_value_ties : Label
+  label_relative_value_wins : Label
+  label_ties : Label
+  label_value_losses_tab4 : Label
+  label_value_number_of_training_loops_tab4 : Label
+  label_value_ties_tab4 : Label
+  label_value_wins_tab4 : Label
+  label_wins : Label
+  nameModelEntry : Entry
+  nameModelLabel : Label
+  stats_list : list
+  var_choose_stats : StringVar
+  var_losses : IntVar
+  var_name_model : StringVar
+  var_number_of_training_loops : StringVar
+  var_relative_value_losses : StringVar
+  var_relative_value_ties : StringVar
+  var_relative_value_wins : StringVar
+  var_ties : IntVar
+  var_wins : IntVar
+}
+class "NewGameWindow" as settings_windows.new_game_window.NewGameWindow {
+  button_new_game : Button
+  cb_choose_color : Combobox
+  label_info : Label
+  label_p1 : Label
+  label_p2 : Label
+  master : str
+  radiobutton_7 : Radiobutton
+  radiobutton_8 : Radiobutton
+  radiobutton_9 : Radiobutton
+  var_color_p1 : StringVar
+  var_p1_type : StringVar
+  var_p2_type : StringVar
+  start_new_game()
+}
+class "PlayBoardProcessor" as playboard_processor.PlayBoardProcessor {
+  BOARD_SIZE
+  avg_distances : NoneType, tuple
+  avg_horizontal
+  avg_vertical
+  color_p1
+  color_p2
+  game_instance
+  pieces : NoneType, list
+  previous_state_board : NoneType, list
+  vid
+  calculate_average_horizontal_vertical_distance(corners)
+  calculate_cell_centers(corners)
+  calculate_euclidean_distance(p1, p2)
+  detect_and_draw_ellipses(img, mask, color, shape, min_area)
+  extrapolate_full_board_corners(corners)
+  get_coordinates(index)
+  get_move()
+  mark_pieces(cell_centers, img)
+  match_shapes_to_centers(shapes, cell_centers, img, color)
+}
+class "Player" as player.Player {
+  all_moves : list
+  allow_overrule : bool
+  avg_moves : int
+  avg_score : int
+  final_action : NoneType
+  final_move_loss : list
+  final_move_scores : list
+  game : NoneType
+  id : int
+  losses : int
+  move_loss : list
+  moves : int
+  score : int
+  score_loss : list
+  sum_score : int
+  weighed_moves : list
+  weighed_scores : list
+  win_rate : int
+  wins : int
+}
+class "QTrainer" as model.QTrainer {
+  criterion : MSELoss
+  gamma
+  lr
+  model
+  optimizer : SGD
+  train_step(state, action, reward, next_state, done)
+}
+class "ReplayController" as replay_controller.ReplayController {
+  current_index : int
+  game_board
+  moves : NoneType
+  view
+  activate_replay_buttons()
+  load_game(file_name)
+  next_move()
+  previous_move()
+}
+class "ReplayWindow" as settings_windows.replay_window.ReplayWindow {
+  button_browse : Button
+  button_replay : Button
+  label_info_replay_file_loaded : Label
+  master : str
+  replayentry : Entry
+  replaylabel : Label
+  var_replay_file : StringVar
+  browse_files()
+  start_new_replay()
+}
+class "TestAlgorithm" as algorithms.test_algorithm.TestAlgorithm.TestAlgorithm {
+  DEPTH : int
+  board : NoneType
+  player
+  ai_move()
+  check_game_over()
+  check_line(row, col, direction)
+  evaluate_board()
+  get_available_moves()
+  make_move(move)
+}
+class "Test_Player" as player.Test_Player {
+  test_algorithm
+}
+class "TrainWindow" as settings_windows.train_window.TrainWindow {
+  CbModelTrain1 : Combobox
+  CbModelTrain2 : Combobox
+  button_2 : Button
+  gamerunsentry2 : Entry
+  gamerunslabel : Label
+  human_training_button : Radiobutton
+  info_show_graphs : Label
+  label_model : Label
+  label_value_number_of_training_loops_tab2_p1 : Label
+  label_value_number_of_training_loops_tab2_p2 : Label
+  master : str
+  overrule_button_player_1_tab2 : Checkbutton
+  overrule_button_player_2_tab2 : Checkbutton
+  radiobutton7 : Radiobutton
+  radiobutton8 : Radiobutton
+  replaybutton2 : Checkbutton
+  show_graphs_checkbutton : Checkbutton
+  train_description : Label
+  train_opponent_label : Label
+}
+class "WindowMode" as main_window.WindowMode {
+  name
+}
+player.AI_Player --|> player.Player
+player.Human_Player --|> player.Player
+player.Test_Player --|> player.Player
+ai.ConvNet --* ai.GomokuAI : model
+@enduml

@@ -45,5 +45,13 @@ class Human_vs_TestAlgorithmController(controller.BaseController):
     def algorithm_put_piece(self):
         row, col = self.game.current_player.test_algorithm.ai_move()
         self.game.put_piece(row, col)
-        self.view.draw_pieces(self.game.board.board)
-            
+        self.view.draw_pieces(self.game.board.board) 
+        test_algorithm = game.algorithms.test_algorithm.TestAlgorithm.TestAlgorithm(self.game.current_player)
+        test_algorithm.board = self.game.board.board
+        scoreboard = test_algorithm.evaluate_board()
+        print("###########")
+        print(scoreboard)
+        self.view.draw_scoreboard(self.game.board.board, scoreboard)
+        
+        
+        
