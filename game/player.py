@@ -1,6 +1,6 @@
 from functools import lru_cache
 import game.algorithms.test_algorithm.TestAlgorithm
-from NN.ai import GomokuAI
+from game.algorithms.ai.ai import GomokuAI
 import game.game
 from configuration.config import config
 from model_management.AI_model import AI_Model
@@ -50,7 +50,7 @@ class Player:
             self.weighed_scores.append(0)
         print(f"score: {self.score}")
         self.sum_score += self.score
-        self.avg_score = self.sum_score / game_number+1
+        self.avg_score = self.sum_score / (game_number+1)
         self.all_moves.append(self.moves)
         self.avg_moves = sum(self.all_moves) / len(self.all_moves)
 
@@ -84,13 +84,11 @@ class Player:
 class AI_Player(Player):
     def __init__(self, player_id):
         super().__init__(player_id,"AI")  # Call the constructor of the base class
-        self.AI_model = None
         self.ai = GomokuAI(int(config["OTHER VARIABLES"]["BOARDSIZE"]))
         self.ai.train = False
 
     def load_model(self, model):
-        self.AI_model = AI_Model(model,self.ai.train)
-        self.ai.model.load_model(model)
+        self.ai.load_model(model) 
 
     def get_model_name(self):
         return self.AI_model.modelname

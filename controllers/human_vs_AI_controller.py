@@ -4,7 +4,7 @@ from . import controller
 from configuration.config import *
 import numpy as np
 from utils.utils_AI import Utils_AI
-import NN.ai
+import game.algorithms.ai.ai
 
 class Human_vs_AI_Controller(controller.BaseController):
     def __init__(self, view: "ui.main_window.GomokuApp"):
@@ -27,18 +27,18 @@ class Human_vs_AI_Controller(controller.BaseController):
     def human_put_piece(self, row, col):
         if self.game.put_piece(row, col):
             self.view.draw_pieces(self.game.board.board)
-            self.view.draw_scoreboard(self.game.board.board)
             if not self.check_and_handle_winner():
                 self.AI_put_piece()
                 self.check_and_handle_winner()
 
     def AI_put_piece(self):
         one_hot_board = self.utils_AI.convert_to_one_hot(self.game.board.board, self.game.current_player.id)
-        DVC_AI:NN.ai.GomokuAI = self.game.current_player.ai#player1.ai or player2.ai #always an instance of GomokuAI
-        DVC_AI.set_game(one_hot_board)
+        
+        gomoku_ai:game.algorithms.ai.ai.GomokuAI = self.game.current_player.ai
+        gomoku_ai.set_game(one_hot_board)
         max_score, scores, scores_normalized = self.utils_AI.calculate_score(self.game.board.board)
-        DVC_AI.current_player_id=self.game.current_player.id
-        action = DVC_AI.get_action(self.game.board.board, one_hot_board, scores_normalized)
+        gomoku_ai.current_player_id=self.game.current_player.id
+        action = gomoku_ai.get_action(self.game.board.board, one_hot_board, scores_normalized)
                
         np_scores = np.array(scores).reshape(15, 15)
         short_score = np_scores[action[0]][action[1]]
