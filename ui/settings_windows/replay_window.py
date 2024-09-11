@@ -8,6 +8,7 @@ class ReplayWindow(tk.Toplevel):
 	def __init__(self, master):
 		super().__init__(master)
 		
+		self.title("Replay Window")
 		self.master:"ui.main_window.GomokuApp" = master
 
 		self.var_replay_file = tk.StringVar()
