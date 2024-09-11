@@ -1,4 +1,8 @@
 import random
+import logging
+
+# Use the existing logger by name
+logger = logging.getLogger('my_logger')
 
 class TestAlgorithm:
     def  __init__(self, player):

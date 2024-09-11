@@ -2,6 +2,11 @@ import game.game
 import numpy as np
 import ui.main_window
 from utils.player_stats import update_player_stats
+import logging
+
+# Use the existing logger by name
+logger = logging.getLogger('my_logger')
+
 class BaseController:
     def __init__(self, view):
         self.view:"ui.main_window.GomokuApp" = view

@@ -1,6 +1,13 @@
 from . import player
 from . import gameboard
 from utils.singleton_class import Singleton
+
+import logging
+
+# Use the existing logger by name
+logger = logging.getLogger('my_logger')
+
+
 class Game(metaclass=Singleton):
     def initialize_game(self, player1, player2, board:gameboard.GameBoard):
         self.player1 = player1

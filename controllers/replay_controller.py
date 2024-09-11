@@ -2,7 +2,10 @@ import json
 import game.gameboard as gb
 from . import controller
 from configuration.config import *
+import logging
 
+# Use the existing logger by name
+logger = logging.getLogger('my_logger')
 
 # controller.py
 class ReplayController(controller.BaseController):

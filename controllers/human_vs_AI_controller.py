@@ -3,12 +3,17 @@ import ui.main_window
 from . import controller
 from configuration.config import *
 import numpy as np
-from utils.utils_AI import Utils_AI
 import game.algorithms.ai.ai
+import logging
+
+# Use the existing logger by name
+logger = logging.getLogger('my_logger')
 
 class Human_vs_AI_Controller(controller.BaseController):
     def __init__(self, view: "ui.main_window.GomokuApp"):
         super().__init__(view)
+        logger.info("Initialize Human_vs_AI_Controller")
+
         player1 = game.game.GameFactory.create_player("Human", 1)
         player2 = game.game.GameFactory.create_player("AI", 2)
         player2.load_model("standard-Mikko")
@@ -20,11 +25,12 @@ class Human_vs_AI_Controller(controller.BaseController):
         self.view.window_mode = ui.main_window.WindowMode.human_move
         self.view.activate_game()
 
-        self.utils_AI = Utils_AI()
         self.record_replay = True
         self.mark_last_move_model = False
         
     def human_put_piece(self, row, col):
+        logger.info("Human move")       
+
         if self.game.put_piece(row, col):
             self.view.draw_pieces(self.game.board.board)
             if not self.check_and_handle_winner():
@@ -32,13 +38,14 @@ class Human_vs_AI_Controller(controller.BaseController):
                 self.check_and_handle_winner()
 
     def AI_put_piece(self):
-        one_hot_board = self.utils_AI.convert_to_one_hot(self.game.board.board, self.game.current_player.id)
+        logger.info("AI move")             
         
-        gomoku_ai:game.algorithms.ai.ai.GomokuAI = self.game.current_player.ai
-        gomoku_ai.set_game(one_hot_board)
-        max_score, scores, scores_normalized = self.utils_AI.calculate_score(self.game.board.board)
-        gomoku_ai.current_player_id=self.game.current_player.id
-        action = gomoku_ai.get_action(self.game.board.board, one_hot_board, scores_normalized)
+        gomoku_ai:game.algorithms.ai.ai.AI_Algorithm = self.game.current_player.ai
+        gomoku_ai.board = self.game.board.board
+        gomoku_ai.current_player_id = self.game.current_player.id
+        gomoku_ai.convert_to_one_hot()
+        max_score, scores, scores_normalized = gomoku_ai.calculate_score()
+        action = gomoku_ai.get_action(scores_normalized)
                
         np_scores = np.array(scores).reshape(15, 15)
         short_score = np_scores[action[0]][action[1]]

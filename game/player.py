@@ -1,9 +1,14 @@
 from functools import lru_cache
 import game.algorithms.test_algorithm.TestAlgorithm
-from game.algorithms.ai.ai import GomokuAI
+from game.algorithms.ai.ai import AI_Algorithm
 import game.game
 from configuration.config import config
 from model_management.AI_model import AI_Model
+
+import logging
+
+# Use the existing logger by name
+logger = logging.getLogger('my_logger')
 
 class Player:
     def __init__(self, player_id,playertype):
@@ -84,7 +89,7 @@ class Player:
 class AI_Player(Player):
     def __init__(self, player_id):
         super().__init__(player_id,"AI")  # Call the constructor of the base class
-        self.ai = GomokuAI(int(config["OTHER VARIABLES"]["BOARDSIZE"]))
+        self.ai = AI_Algorithm(int(config["OTHER VARIABLES"]["BOARDSIZE"]))
         self.ai.train = False
 
     def load_model(self, model):

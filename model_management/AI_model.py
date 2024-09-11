@@ -1,5 +1,11 @@
 import os
 import json
+
+import logging
+
+# Use the existing logger by name
+logger = logging.getLogger('my_logger')
+
 class AI_Model():
     def __init__(self,name,training=False) -> None:
         self.training=training

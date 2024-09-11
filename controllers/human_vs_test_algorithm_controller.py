@@ -4,6 +4,11 @@ import ui.main_window
 from . import controller
 from configuration.config import *
 import game.player
+import logging
+
+# Use the existing logger by name
+logger = logging.getLogger('my_logger')
+
 #todo: controller uitwerken om tegen test algoritme te spelen
 
 # controller.py

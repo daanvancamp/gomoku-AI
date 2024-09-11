@@ -1,5 +1,9 @@
 import numpy as np
 import operator
+import logging
+
+# Use the existing logger by name
+logger = logging.getLogger('my_logger')
 
 class GameBoard:
     def  __init__(self, grid_size):

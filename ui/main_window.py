@@ -14,6 +14,13 @@ from configuration.config import *
 import tkinter.messagebox as mb
 import game.algorithms.test_algorithm.TestAlgorithm
 
+import logging
+
+# Use the existing logger by name
+logger = logging.getLogger('my_logger')
+
+
+
 class WindowMode(enum.Enum):
     replay = 'replay'
     computer_move = 'computer_move'
@@ -28,6 +35,8 @@ class GameType(enum.Enum):
 
 class GomokuApp(Tk):
     def __init__(self):
+        logger.info("Initialize GomokuApp")
+        
         super().__init__()
 
         self.title("Gomoku")
