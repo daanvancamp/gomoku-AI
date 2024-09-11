@@ -1,8 +1,0 @@
-pygame
-numpy==1.26.4
-datetime
-torch
-datetime
-matplotlib
-pillow==10.4.0 #newer could also work, but we aren't sure (We can't predict the future)
-opencv-python
