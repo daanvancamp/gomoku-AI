@@ -16,7 +16,7 @@ class NewGameWindow (Toplevel):#the methods of gomokuapp need to be callable fro
 	def __init__(self, master: "ui.main_window.GomokuApp"):
 		super().__init__(master)
 
-		self.title("New Game Window")
+		self.title("New Game")
 		self.geometry(f"{WIDTH}x{HEIGHT}")
 		
 		self.master: "ui.main_window.GomokuApp" = master
