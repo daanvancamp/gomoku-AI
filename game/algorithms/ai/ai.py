@@ -362,6 +362,8 @@ class AI_Algorithm:
                     action = (pred_indices[0][idx], pred_indices[1][idx])
             else:
                 action = None
+                logger.info("AI_Algorithm probleem in exploitation") 
+                
         attempts=0
         max_attempts=70
         while action is None:
