@@ -4,6 +4,7 @@ import ui.main_window
 from configuration.config import *
 import game.player
 import logging
+import numpy as np
 
 
 def test_1():
