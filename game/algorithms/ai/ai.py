@@ -311,7 +311,7 @@ class AI_Algorithm:
 
                             break  # There's no need to search any further for this cell.
     
-        if overrule and self.threat_moves and not self.can_win_in_one_move(board): #if threat_moves is not empty
+        if overrule and self.threat_moves and not self.can_win_in_one_move(self.board): #if threat_moves is not empty
             log_info_overruling("overruled: " + str(self.threat_moves))
             for row in self.board:
                 log_info_overruling(str(row))
