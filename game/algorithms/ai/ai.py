@@ -23,7 +23,7 @@ EPSILON_DECAY_RATE = 0.999
 class ConvNet(nn.Module):
     def __init__(self, input_dim, hidden_dim, output_dim):
         super(ConvNet, self).__init__()
-        self.list_dropout_rates=[0.05,0.1,0.2,0.25,0.3,0.35,0.4,0.45,0.5]
+        self.list_dropout_rates=[0.05,0.1,0.2,0.25,0.3,0.35,0.4,0.45,0.5] #the other values aren't used, but are logically equivalent.
         # Define your CNN architecture here
         self.layer1 = torch.nn.Sequential(
             torch.nn.Conv2d(3, hidden_dim, kernel_size=5, stride=1, padding=2),
