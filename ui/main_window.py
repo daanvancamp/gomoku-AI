@@ -166,15 +166,15 @@ class GomokuApp(Tk):
     def delete_pieces(self):
         self.canvas.delete("piece")
 
-    def draw_pieces(self,board):
-        rows, cols = board.shape
-        for i in range(rows):
-            for j in range(cols):
-                if board[i,j] != 0:
+    def draw_pieces(self, board):
+        board_np = np.array(board)
+        for i in range(self.BOARDSIZE):
+            for j in range(self.BOARDSIZE):
+                if board_np[i,j] != 0:
                     for value in self.squares.values():
                         if value[0] == i and value[1] == j:
                             padding = 10
-                            if board[i,j] == 1:
+                            if board_np[i,j] == 1:
                                 color = self.color_player_1
                             else:
                                 color = self.color_player_2

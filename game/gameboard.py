@@ -7,7 +7,8 @@ logger = logging.getLogger('my_logger')
 
 class GameBoard:
     def  __init__(self, grid_size):
-        self.board = np.zeros((grid_size, grid_size))
+        self.board = [[0] * grid_size for _ in range(grid_size)]
+        
         self.winning_cells = None
         self.grid_size = grid_size
         self.board_size = self.grid_size
@@ -61,6 +62,9 @@ class GameBoard:
 
     def check_board_full(self, marker_id):
         pass
+
+    def reset_board(self):
+        self.board = [[0] * self.grid_size for _ in range(self.grid_size)]
     
 
 

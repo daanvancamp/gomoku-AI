@@ -393,15 +393,16 @@ class AI_Algorithm:
 
     def convert_to_one_hot(self):
         #Empty places one_hot_board[0], pieces of enemy one_hot_board[1] and pieces of AI one_hot_board[2]
-        height, width = self.board.shape
+        board = np.array(self.board)
+        height, width = board.shape
         self.one_hot_board = np.zeros((3, height, width), dtype=np.float32)
-        self.one_hot_board[0] = (self.board == 0).astype(np.float32)
+        self.one_hot_board[0] = (board == 0).astype(np.float32)
         if self.current_player_id == 2:
-            self.one_hot_board[1] = (self.board == 1).astype(np.float32)  
-            self.one_hot_board[2] = (self.board == 2).astype(np.float32)  
+            self.one_hot_board[1] = (board == 1).astype(np.float32)  
+            self.one_hot_board[2] = (board == 2).astype(np.float32)  
         else:
-            self.one_hot_board[1] = (self.board == 2).astype(np.float32)  
-            self.one_hot_board[2] = (self.board == 1).astype(np.float32)
+            self.one_hot_board[1] = (board == 2).astype(np.float32)  
+            self.one_hot_board[2] = (board == 1).astype(np.float32)
 
 
     def calculate_score(self, board_size=15):

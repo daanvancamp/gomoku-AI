@@ -12,7 +12,7 @@ class BaseController:
         self.view:"ui.main_window.GomokuApp" = view
         self.view.controller = self
     def initialize_board(self):
-        game.game.Game().board.board = np.zeros((game.game.Game().board.board_size,game.game.Game().board.board_size))
+        game.game.Game().board.reset_board()
     
     def check_and_handle_winner(self):
         #todo: verder uitwerken wat er gebeurt als er een winnaar is; de winnende lijn moet uitgetekend worden
