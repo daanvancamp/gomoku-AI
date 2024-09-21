@@ -2,19 +2,19 @@
 from tkinter import ttk
 from tkinter import *
 import numpy as np
+import tkinter.messagebox as mb
+import logging
+import enum
+
 
 from .settings_windows import replay_window
 from .settings_windows import new_game_window
 from .settings_windows import train_window
 from .settings_windows import scoreboard_window
 from .settings_windows import models_window
-import enum
 import controllers
 from configuration.config import *
-import tkinter.messagebox as mb
-import game.algorithms.test_algorithm.TestAlgorithm
 
-import logging
 
 # Use the existing logger by name
 logger = logging.getLogger('my_logger')
@@ -53,8 +53,8 @@ class GomokuApp(Tk):
         self.canvas.grid(row=1, column=0, padx=10)
 
         # Label and Button for Main Window
-        label = ttk.Label(self, text="Gomoku")
-        label.grid(row=0, column=0, padx=10)
+        # label = ttk.Label(self, text="Gomoku")
+        # label.grid(row=0, column=0, padx=10)
 
         self.menubar= Menu(self,font=("Helvetica", 12),tearoff=0)
         self.config(menu=self.menubar)
@@ -83,10 +83,9 @@ class GomokuApp(Tk):
         self.controller = controllers
         
         self.frame_replay = Frame(self)
-        # Previous button
+
         self.prev_button = Button(self.frame_replay, text="◄ Previous", command=self.show_previous)
 
-        # Next button
         self.next_button = Button(self.frame_replay, text="Next ►", command=self.show_next)
 
         # Place the buttons in the frame
@@ -117,9 +116,7 @@ class GomokuApp(Tk):
             case "Scoreboard":
                 new_window = scoreboard_window.ScoreboardWindow(self)
         
-        self.show_replay_buttons(window_type=="Replay")
-
-        print("time open window",time()-start)
+        self.show_replay_buttons(window_type=="Replay") #show replay buttons when using replay mode
     
     def show_replay_buttons(self,show):
         if show:

@@ -16,7 +16,7 @@ class Human_vs_AI_Controller(controller.BaseController):
 
         player1 = game.game.GameFactory.create_player("Human", 1)
         player2 = game.game.GameFactory.create_player("AI", 2)
-        player2.load_model("standard-Mikko")
+        player2.load_model("standaard+3000")
         player2.set_allow_overrule(False) #todo: add GUI element to let the user decide
         game_board = game.game.GameFactory.create_game_board(int(config["OTHER VARIABLES"]["BOARDSIZE"]))
         self.game:game.game.Game = game.game.GameFactory.initialize_new_game(game_board, player1, player2)

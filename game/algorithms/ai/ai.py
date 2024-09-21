@@ -338,7 +338,9 @@ class AI_Algorithm:
         logger.info("AI_Algorithm get_action")             
         valid_moves = self.get_valid_moves()
         np_scores = np.array(scores).reshape(15, 15)
-        current_state = torch.tensor(self.get_state(self.one_hot_board), dtype=torch.float)
+        #current_state = torch.tensor(self.get_state(self.one_hot_board), dtype=torch.float)
+        # solved userwarning, it is recommended to use the following instead of the previous line:
+        current_state = self.get_state(self.one_hot_board).clone().detach().requires_grad_(True)
 
         action = None
         with torch.no_grad():
