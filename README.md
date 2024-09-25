@@ -151,6 +151,8 @@ august 2024:
   # We redesigned the hole code.
 
   restored some old features
+
+  **There won't be any new features in a long time because we are working on the new design and mainly focusing on restoring the old features. The first release is almost done.**
   
   
 
