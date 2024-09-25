@@ -61,7 +61,6 @@ class NewGameWindow (Toplevel):#the methods of gomokuapp need to be callable fro
 				self.master.controller = controllers.human_vs_human_controller.Human_vs_HumanController(self.master)
 			case "Test Algorithm":
 				start=time()
-
 				self.master.controller = controllers.human_vs_test_algorithm_controller.Human_vs_TestAlgorithmController(self.master,self.var_color_p1.get())
 				print("time",time()-start)
 
