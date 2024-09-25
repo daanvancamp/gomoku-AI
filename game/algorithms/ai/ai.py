@@ -237,7 +237,7 @@ class AI_Algorithm:
         self.valid_moves = []
         self.threat_moves = []
         directions = [(0, 1), (1, 0), (1, 1), (1, -1)]
-        overrule=self.allow_overrule #shorter variable name
+        overrule = self.allow_overrule #shorter variable name
     
         for row in range(len(self.board)):
             for col in range(len(self.board)):
@@ -310,8 +310,12 @@ class AI_Algorithm:
                                     log_info_overruling(f"player {opponent} has 3 in a row and 1 nearby: xxx_x or x_xxx")
 
                             break  # There's no need to search any further for this cell.
-    
-        if overrule and self.threat_moves and not self.can_win_in_one_move(self.board): #if threat_moves is not empty
+        
+        if overrule:
+            print("overruling turned on")
+        else:
+            print("overruling turned off")
+        if overrule and self.threat_moves and not self.can_win_in_one_move(): #if threat_moves is not empty
             log_info_overruling("overruled: " + str(self.threat_moves))
             for row in self.board:
                 log_info_overruling(str(row))
@@ -320,10 +324,10 @@ class AI_Algorithm:
             self.threat_moves=self.remove_unvalid_moves()
             return self.threat_moves
         else:
-            print("a normal move is executed by the AI")
+            print("a normal move will be executed by the AI")
             for row in self.board:
                 log_info_overruling(str(row))
-            log_info_overruling("status: a normal move is executed by the AI")
+            log_info_overruling("status: a normal move will be executed by the AI")
             log_info_overruling("allow_overrule: " + str(self.allow_overrule))
             self.overruled_last_move = False
             return self.valid_moves
@@ -335,7 +339,7 @@ class AI_Algorithm:
             return None
 
     def get_action(self, scores)->tuple:
-        logger.info("AI_Algorithm get_action")             
+        logger.info("AI_Algorithm get_action")         
         valid_moves = self.get_valid_moves()
         np_scores = np.array(scores).reshape(15, 15)
         #current_state = torch.tensor(self.get_state(self.one_hot_board), dtype=torch.float)
