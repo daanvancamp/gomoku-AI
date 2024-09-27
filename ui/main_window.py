@@ -178,7 +178,7 @@ class GomokuApp(Tk):
 
                             print(self.controller.last_move_model)
                             if self.controller.last_move_model==(i,j):
-                                self.canvas.create_oval(value[2] + padding, value[3] + padding, value[4] - padding, value[5] - padding, fill="green", tags="dot")
+                                self.canvas.create_oval(value[2] + padding, value[3] + padding, value[4] - padding, value[5] - padding, fill="green", tags="piece")
                             else:
                                 self.canvas.create_oval(value[2] + padding, value[3] + padding, value[4] - padding, value[5] - padding, fill=color, tags="piece")
 
@@ -242,7 +242,6 @@ class GomokuApp(Tk):
         
     def clear_canvas(self):
         self.canvas.delete("piece")
-        self.canvas.delete("dot")
         
     def clear_text_on_canvas(self):
         self.canvas.delete("text")
