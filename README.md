@@ -146,11 +146,13 @@ august 2024:
 
   restructured the classes
 
-  # This design reached the end of his life.µ
+  **This design reached the end of his life.**
 
-  # We redesigned the hole code.
+  **We redesigned the hole code.**
 
   restored some old features
+
+  **There won't be any new features in a long time because we are working on the new design and mainly focusing on restoring the old features. The first release is almost done.**
   
   
 
