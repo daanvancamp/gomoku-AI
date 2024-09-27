@@ -157,7 +157,7 @@ class GomokuApp(Tk):
             square_id = self.canvas.find_closest(event.x, event.y)[0]
             # Retrieve row, column, and coordinates from the stored dictionary
             row, col, x1, y1, x2, y2 = self.squares[square_id]
-            print(f"Clicked on square ({row},{col})")
+            #print(f"Clicked on square ({row},{col})")
             self.controller.human_put_piece(row, col)
                   
     def delete_pieces(self):

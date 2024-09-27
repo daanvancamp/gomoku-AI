@@ -10,14 +10,20 @@ import logging
 logger = logging.getLogger('my_logger')
 
 class Human_vs_AI_Controller(controller.BaseController):
-    def __init__(self, view: "ui.main_window.GomokuApp"):
+    def __init__(self, view: "ui.main_window.GomokuApp",color_human):
         super().__init__(view)
         logger.info("Initialize Human_vs_AI_Controller")
+        if color_human=="red": #red always plays first
+            player1 = game.game.GameFactory.create_player("Human", 1)
+            player2 = game.game.GameFactory.create_player("AI", 2)
+            self.AI_player=player2
+        else:
+            player1 = game.game.GameFactory.create_player("AI", 1)
+            player2 = game.game.GameFactory.create_player("Human", 2)
+            self.AI_player=player1
 
-        player1 = game.game.GameFactory.create_player("Human", 1)
-        player2 = game.game.GameFactory.create_player("AI", 2)
-        player2.load_model("standaard+3000")
-        player2.set_allow_overrule(True) #todo: add GUI element to let the user decide
+        self.AI_player.load_model("standaard+3000")
+
         game_board = game.game.GameFactory.create_game_board(int(config["OTHER VARIABLES"]["BOARDSIZE"]))
         self.game:game.game.Game = game.game.GameFactory.initialize_new_game(game_board, player1, player2)
         self.initialize_board()
@@ -27,6 +33,9 @@ class Human_vs_AI_Controller(controller.BaseController):
 
         self.record_replay = True
         self.mark_last_move_model = False
+
+        if color_human!="red":
+            self.AI_put_piece()
         
     def human_put_piece(self, row, col):
         logger.info("Human move")       

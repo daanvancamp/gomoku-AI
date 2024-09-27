@@ -40,6 +40,8 @@ class NewGameWindow (Toplevel):#the methods of gomokuapp need to be callable fro
 		self.var_p2_type = StringVar()
 		self.var_p2_type.set("AI-Model")
 
+		self.var_allow_overrule=BooleanVar()
+		self.var_allow_overrule.set(True)
 
 		self.cb_choose_color=ttk.Combobox(self, state="readonly",values=["red","blue"],textvariable=self.var_color_p1)
 		self.cb_choose_color.grid(row=3, column=1, sticky="w", padx=10)
@@ -51,6 +53,9 @@ class NewGameWindow (Toplevel):#the methods of gomokuapp need to be callable fro
 		self.radiobutton_8.grid(row=4, column=2, sticky="w")
 		self.radiobutton_9 = Radiobutton(self, text="AI-Model", variable=self.var_p2_type, value="AI-Model")
 		self.radiobutton_9.grid(row=5, column=2, sticky="w")
+
+		self.checkbox_allow_overrule = Checkbutton(self, text="Allow overrule", variable=self.var_allow_overrule)
+		self.checkbox_allow_overrule.grid(row=6, column=2, sticky="w")
 
 	def start_new_game(self):
 		from time import time
@@ -65,9 +70,9 @@ class NewGameWindow (Toplevel):#the methods of gomokuapp need to be callable fro
 				print("time",time()-start)
 
 			case "AI-Model":
-				self.master.controller = controllers.human_vs_AI_controller.Human_vs_AI_Controller(self.master)
-
-
+				self.master.controller = controllers.human_vs_AI_controller.Human_vs_AI_Controller(self.master,self.var_color_p1.get())
+				self.master.controller.AI_player.set_allow_overrule(self.var_allow_overrule.get())
+				
 
 
 

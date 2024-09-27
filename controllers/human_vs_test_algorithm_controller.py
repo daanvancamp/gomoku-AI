@@ -54,7 +54,7 @@ class Human_vs_TestAlgorithmController(controller.BaseController):
         test_algorithm = game.algorithms.test_algorithm.TestAlgorithm.TestAlgorithm(self.game.current_player)
         test_algorithm.board = self.game.board.board
         scoreboard = test_algorithm.evaluate_board()
-        print("###########")
+        #print("###########")
         print(scoreboard)
         self.view.draw_scoreboard(self.game.board.board, scoreboard)
         
