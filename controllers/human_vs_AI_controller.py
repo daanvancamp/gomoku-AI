@@ -12,6 +12,7 @@ logger = logging.getLogger('my_logger')
 class Human_vs_AI_Controller(controller.BaseController):
     def __init__(self, view: "ui.main_window.GomokuApp",color_human):
         super().__init__(view)
+        self.last_move_model=None
         logger.info("Initialize Human_vs_AI_Controller")
         if color_human=="red": #red always plays first
             player1 = game.game.GameFactory.create_player("Human", 1)
@@ -32,7 +33,7 @@ class Human_vs_AI_Controller(controller.BaseController):
         self.view.activate_game()
 
         self.record_replay = True
-        self.mark_last_move_model = False
+        self.mark_last_move_model = True
 
         if color_human!="red":
             self.AI_put_piece()
