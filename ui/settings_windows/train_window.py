@@ -6,6 +6,7 @@ from tkinter.ttk import *
 from configuration.config import *
 from model_management.modelmanager import ModelManager
 import ui.main_window
+import controllers
 
 distance_from_left_side = int(config["OTHER VARIABLES"]["distance_from_left_side"])
 WIDTH = int(config["OTHER VARIABLES"]["WIDTH"])
@@ -62,3 +63,19 @@ class TrainWindow(tk.Toplevel):
 
 		self.info_show_graphs=Label(self, text="*Don't forget to MANUALLY close the graphs at the end of each training session if you enable it.",foreground="red",wraplength=WIDTH-15)
 		self.info_show_graphs.grid(row=13, column=0, sticky="w",columnspan=2,padx=distance_from_left_side)
+
+	def start_new_training(self):
+		from time import time
+		self.master.clear_canvas()
+
+		match self.var_p2_type.get():
+			case "Human":
+				self.master.controller = ...
+			case "Test Algorithm":
+				start=time()
+				self.master.controller = ...
+				print("time",time()-start)
+
+			case "AI-Model":
+				self.master.controller = ...
+				self.master.controller.AI_player.set_allow_overrule(self.var_allow_overrule.get())
