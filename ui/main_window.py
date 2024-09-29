@@ -190,7 +190,7 @@ class GomokuApp(Tk):
             for j in range(15):
                 print('indices:',i,j)
                 print("bord:",board)
-                if board[i,j] == 0:
+                if board[i][j] == 0:
                     key_to_lookup = (i, j)
                     for value in self.squares.values():
                         if value[0] == i and value[1] == j:
