@@ -9,11 +9,11 @@ import logging
 # Use the existing logger by name
 logger = logging.getLogger('my_logger')
 
-class Human_vs_AI_Training_Controller(controller.BaseController):
+class Human_vs_AI_Controller(controller.BaseController):
     def __init__(self, view: "ui.main_window.GomokuApp",color_human):
         super().__init__(view)
         self.last_move_model=None
-        logger.info("Initialize Human_vs_AI_Trainging_Controller")
+        logger.info("Initialize Human_vs_AI_Controller")
         if color_human=="red": #red always plays first
             player1 = game.game.GameFactory.create_player("Human", 1)
             player2 = game.game.GameFactory.create_player("AI", 2)
@@ -51,11 +51,11 @@ class Human_vs_AI_Training_Controller(controller.BaseController):
         logger.info("AI move")             
         
         gomoku_ai:game.algorithms.ai.ai.AI_Algorithm = self.game.current_player.ai
-
+        gomoku_ai.board = self.game.board.board
         gomoku_ai.current_player_id = self.game.current_player.id
-        one_hot_board = gomoku_ai.convert_to_one_hot(self.game.board.board)
-        gomoku_ai.set_game(one_hot_board)
-
+        
+        old_state= self.game.board.board
+        one_hot_board= gomoku_ai.convert_to_one_hot()
         max_score, scores, scores_normalized = gomoku_ai.calculate_score()
         action = gomoku_ai.get_action(scores_normalized)
                
@@ -78,14 +78,15 @@ class Human_vs_AI_Training_Controller(controller.BaseController):
             else:
                 self.game.p2_moves.append(action)
 
-        gomoku_ai.remember(old_state, action, score, instance.board, game_over)
-                    gomoku_ai.train_short_memory(one_hot_board, action, short_score, scores, convert_to_one_hot(instance.board, players[current_player-1].ID), next_scores, game_over)
-                    players[current_player - 1].move_loss.append(gomoku_ai.loss)
-
-        self.game.current_player.weighed_moves.append(score)
-        self.game.current_player.final_action = action
-        self.game.current_player.moves += 1
+        
 
         row, col = action
         self.game.put_piece(row, col)
         self.view.draw_pieces(self.game.board.board) 
+
+        gomoku_ai.remember(old_state, action, score,self.game.board.board , game_over) #todo how to get the variable to this line?
+        gomoku_ai.train_short_memory(one_hot_board, action, short_score, scores, gomoku_ai.convert_to_one_hot(self.game.board.board, self.game.players[self.game.current_player.id-1].ID), next_scores, game_over)
+        self.game.players[self.game.current_player.id - 1].move_loss.append(gomoku_ai.loss)
+        self.game.current_player.weighed_moves.append(score)
+        self.game.current_player.final_action = action
+        self.game.current_player.moves += 1

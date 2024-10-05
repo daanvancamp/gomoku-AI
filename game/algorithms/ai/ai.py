@@ -410,6 +410,7 @@ class AI_Algorithm:
             self.one_hot_board[1] = (board == 2).astype(np.float32)  
             self.one_hot_board[2] = (board == 1).astype(np.float32)
 
+        return self.one_hot_board
 
     def calculate_score(self, board_size=15):
         directions = [(0, 1), (0, -1), (1, 0), (-1, 0), (1, 1), (-1, -1), (1, -1), (-1, 1)]
