@@ -6,7 +6,6 @@ import tkinter.messagebox as mb
 import logging
 import enum
 
-
 from .settings_windows import replay_window
 from .settings_windows import new_game_window
 from .settings_windows import train_window
