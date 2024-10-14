@@ -61,7 +61,7 @@ class ModelsWindow(Toplevel):
 		self.frame_buttons=Frame(self)
 		self.frame_buttons.grid(row=0, column=0, columnspan=2,sticky='e')
 
-		self.button_NewModel = Button(self.frame_buttons, text="Make New Model",  command=lambda: self.create_new_model())
+		self.button_NewModel = Button(self.frame_buttons, text="Make New Model",  command=lambda: ModelManager.create_new_model())
 		self.button_NewModel.grid(row=0, column=1,sticky="n",pady=2,padx=10)
 		self.nameModelLabel = Label(self.frame_buttons, text="Name of model: ")
 		self.nameModelLabel.grid(row=1, column=0, sticky="w",pady=2,padx=10)

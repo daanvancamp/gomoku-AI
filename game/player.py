@@ -85,7 +85,6 @@ class Player:
         self.avg_moves = 0
 
 
-@lru_cache(maxsize=None)
 class AI_Player(Player):
     def __init__(self, player_id):
         super().__init__(player_id,"AI")  # Call the constructor of the base class

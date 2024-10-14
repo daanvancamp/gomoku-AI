@@ -187,8 +187,6 @@ class GomokuApp(Tk):
         self.clear_text_on_canvas()
         for i in range(15):
             for j in range(15):
-                print('indices:',i,j)
-                print("bord:",board)
                 if board[i][j] == 0:
                     key_to_lookup = (i, j)
                     for value in self.squares.values():

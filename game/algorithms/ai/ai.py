@@ -95,7 +95,7 @@ class AI_Algorithm:
         self.threat_moves =[]
         self.valid_moves = []
         self.overruled_last_move = False
-        print("elapsed while creating gomokuai",time()-start)
+        print("elapsed time while creating gomokuai",time()-start)
 
     def load_model(self, model):
         self.model.load_model(model)
@@ -109,7 +109,6 @@ class AI_Algorithm:
     def set_game(self, _game):
         self.game = _game
 
-    @lru_cache(maxsize=None)
     def build_model(self, input_dim: int) -> ConvNet:#multi-layered network
         return ConvNet(input_dim, 30, 255)
 
@@ -415,7 +414,6 @@ class AI_Algorithm:
     def calculate_score(self, board_size=15):
         directions = [(0, 1), (0, -1), (1, 0), (-1, 0), (1, 1), (-1, -1), (1, -1), (-1, 1)]
         score_board = utils.filereader.load_scores("./configuration/consts.json")
-        print("size:",board_size,board_size)
         scored_board = np.zeros((board_size, board_size))
         for row in range(len(self.board[0])):
             for col in range(len(self.board[1])):

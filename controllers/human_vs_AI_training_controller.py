@@ -5,13 +5,14 @@ from configuration.config import *
 import numpy as np
 import game.algorithms.ai.ai
 import logging
-
+from utils import stats
 # Use the existing logger by name
 logger = logging.getLogger('my_logger')
 
 class Human_vs_AI_Training_Controller(controller.BaseController):
     def __init__(self, view: "ui.main_window.GomokuApp",color_human):
         super().__init__(view)
+        self.last_round=False #todo toggle on and off when needed, temporarily enabled
         self.last_move_model=None
         logger.info("Initialize Human_vs_AI_Training_Controller")
         if color_human=="red": #red always plays first
@@ -39,17 +40,18 @@ class Human_vs_AI_Training_Controller(controller.BaseController):
             self.AI_put_piece()
         
     def human_put_piece(self, row, col):
-        logger.info("Human move")       
-
         if self.game.put_piece(row, col):
+            logger.info("Human move")       
             self.view.draw_pieces(self.game.board.board)
             if not self.check_and_handle_winner():
                 self.AI_put_piece()
 
-                if self.check_and_handle_winner():
-                    ...
+                if self.game.winner!=0:
+                    self.train_at_the_end_of_the_round()
             else:
-                ...#todo finish this
+                self.train_at_the_end_of_the_round()
+                #todo finish this
+
 
     def AI_put_piece(self):
         logger.info("AI move")             
@@ -99,6 +101,7 @@ class Human_vs_AI_Training_Controller(controller.BaseController):
         self.game.current_player.moves += 1
 
     def train_at_the_end_of_the_round(self):
+        print("training at the end of the round")
         data = {}
         loss_data = {}
         move_loss_data = {}
@@ -109,10 +112,10 @@ class Human_vs_AI_Training_Controller(controller.BaseController):
                 p.score_loss.append(p.ai.loss)
                 move_loss = [float(val) for val in p.move_loss]
                 p.final_move_loss.append(sum(move_loss)/len(move_loss))
-                p.ai.model.save_model()
+                p.ai.model.save_model()#todo check if this works
                 p.final_move_scores.append(sum(p.weighed_moves)/len(p.weighed_moves))
-                # stats.log_message(f"{p.TYPE} {p.ID}: score loss: {float(p.ai.loss)}")
-                # stats.log_message(f"{p.TYPE} {p.ID}: move loss: {sum(p.move_loss)/len(p.move_loss)}")
+                stats.log_message(f"{p.TYPE} {p.ID}: score loss: {float(p.ai.loss)}")
+                stats.log_message(f"{p.TYPE} {p.ID}: move loss: {sum(p.move_loss)/len(p.move_loss)}")
             p.reset_score()
             if self.last_round:
                 if p.TYPE == "MM-AI":
@@ -120,12 +123,12 @@ class Human_vs_AI_Training_Controller(controller.BaseController):
                     data[f"{p.TYPE} {p.ID}: move accuracy"] = p.final_move_scores
                     loss_data[f"{p.TYPE} {p.ID}: score loss"] = [float(val) for val in p.score_loss]
                     move_loss_data[f"{p.TYPE} {p.ID}: move loss"] = p.final_move_loss
-                    # stats.log_message(f"{p.TYPE} {p.ID}: average score loss: {sum([float(val) for val in p.score_loss]) / len([float(val) for val in p.score_loss])}")
-                    # stats.log_message(f"{p.TYPE} {p.ID}: average move loss: {sum(p.final_move_loss) / len(p.final_move_loss)}")
+                    stats.log_message(f"{p.TYPE} {p.ID}: average score loss: {sum([float(val) for val in p.score_loss]) / len([float(val) for val in p.score_loss])}")
+                    stats.log_message(f"{p.TYPE} {p.ID}: average move loss: {sum(p.final_move_loss) / len(p.final_move_loss)}")
                 p.reset_all_stats()
-        # if len(data) > 0:
-        #     stats.plot_graph(data, 'accuracy')
-        # if len(loss_data) > 0:
-        #     stats.plot_graph(loss_data, 'loss data')
-        # if len(move_loss_data) > 0:
-        #     stats.plot_graph(move_loss_data, 'loss data')
+                if len(data) > 0:
+                    stats.plot_graph(data, 'accuracy')
+                if len(loss_data) > 0:
+                    stats.plot_graph(loss_data, 'loss data')
+                if len(move_loss_data) > 0:
+                    stats.plot_graph(move_loss_data, 'loss data')
