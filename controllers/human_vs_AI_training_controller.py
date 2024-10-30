@@ -5,7 +5,7 @@ from configuration.config import *
 import numpy as np
 import game.algorithms.ai.ai
 import logging
-from utils import stats
+from utils import stats, player_stats
 # Use the existing logger by name
 logger = logging.getLogger('my_logger')
 
@@ -24,7 +24,7 @@ class Human_vs_AI_Training_Controller(controller.BaseController):
             player2 = game.game.GameFactory.create_player("Human", 2)
             self.AI_player=player1
 
-        self.AI_player.load_model("standaard+3000")
+        self.AI_player.load_model("standaard+3000",True)
 
         game_board = game.game.GameFactory.create_game_board(int(config["OTHER VARIABLES"]["BOARDSIZE"]))
         self.game:game.game.Game = game.game.GameFactory.initialize_new_game(game_board, player1, player2)
@@ -45,7 +45,8 @@ class Human_vs_AI_Training_Controller(controller.BaseController):
             self.view.draw_pieces(self.game.board.board)
             if not self.check_and_handle_winner():
                 self.AI_put_piece()
-
+                 #todo fix the bug that causes the program to detect a win too late
+                self.check_and_handle_winner()
                 if self.game.winner!=0:
                     self.train_at_the_end_of_the_round()
             else:
@@ -102,33 +103,34 @@ class Human_vs_AI_Training_Controller(controller.BaseController):
 
     def train_at_the_end_of_the_round(self):
         print("training at the end of the round")
+        player_stats.update_player_stats(self.game,self.game.player1.id if self.game.winner==1 else self.game.player2.id)
         data = {}
         loss_data = {}
         move_loss_data = {}
         for p in self.game.players:
-            if p.TYPE == "MM-AI":
+            if p.TYPE == "AI":
                 p.ai.remember(self.game.board.board, p.final_action, p.score, self.game.board.board, True)
                 p.ai.train_long_memory()
                 p.score_loss.append(p.ai.loss)
                 move_loss = [float(val) for val in p.move_loss]
                 p.final_move_loss.append(sum(move_loss)/len(move_loss))
-                p.ai.model.save_model()#todo check if this works
+                p.ai.model.save_model(p.get_model_name())#todo check if this works
                 p.final_move_scores.append(sum(p.weighed_moves)/len(p.weighed_moves))
-                stats.log_message(f"{p.TYPE} {p.ID}: score loss: {float(p.ai.loss)}")
-                stats.log_message(f"{p.TYPE} {p.ID}: move loss: {sum(p.move_loss)/len(p.move_loss)}")
+                stats.log_message(f"{p.TYPE} {p.id}: score loss: {float(p.ai.loss)}")
+                stats.log_message(f"{p.TYPE} {p.id}: move loss: {sum(p.move_loss)/len(p.move_loss)}")
             p.reset_score()
             if self.last_round:
-                if p.TYPE == "MM-AI":
-                    data[f"{p.TYPE} {p.ID}: game accuracy"] = p.weighed_scores
-                    data[f"{p.TYPE} {p.ID}: move accuracy"] = p.final_move_scores
-                    loss_data[f"{p.TYPE} {p.ID}: score loss"] = [float(val) for val in p.score_loss]
-                    move_loss_data[f"{p.TYPE} {p.ID}: move loss"] = p.final_move_loss
-                    stats.log_message(f"{p.TYPE} {p.ID}: average score loss: {sum([float(val) for val in p.score_loss]) / len([float(val) for val in p.score_loss])}")
-                    stats.log_message(f"{p.TYPE} {p.ID}: average move loss: {sum(p.final_move_loss) / len(p.final_move_loss)}")
+                if p.TYPE == "AI":
+                    data[f"{p.TYPE} {p.id}: game accuracy"] = p.weighed_scores
+                    data[f"{p.TYPE} {p.id}: move accuracy"] = p.final_move_scores
+                    loss_data[f"{p.TYPE} {p.id}: score loss"] = [float(val) for val in p.score_loss]
+                    move_loss_data[f"{p.TYPE} {p.id}: move loss"] = p.final_move_loss
+                    stats.log_message(f"{p.TYPE} {p.id}: average score loss: {sum([float(val) for val in p.score_loss]) / len([float(val) for val in p.score_loss])}")
+                    stats.log_message(f"{p.TYPE} {p.id}: average move loss: {sum(p.final_move_loss) / len(p.final_move_loss)}")
                 p.reset_all_stats()
-                if len(data) > 0:
-                    stats.plot_graph(data, 'accuracy')
-                if len(loss_data) > 0:
-                    stats.plot_graph(loss_data, 'loss data')
-                if len(move_loss_data) > 0:
-                    stats.plot_graph(move_loss_data, 'loss data')
+        if len(data) > 0:
+            stats.plot_graph(data, 'accuracy')
+        if len(loss_data) > 0:
+            stats.plot_graph(loss_data, 'loss data')
+        if len(move_loss_data) > 0:
+            stats.plot_graph(move_loss_data, 'loss data')

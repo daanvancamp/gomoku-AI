@@ -63,6 +63,7 @@ class ConvNet(nn.Module):
             print("No model exists. Creating a new model.")
 
     def save_model(self, folder,file_name='model.pth'):
+        print("trying to save model")
         model_folder = './data/models/'+folder.strip()
         file_name=file_name.strip()#remove \n from filename
         if not os.path.exists(model_folder):
@@ -72,7 +73,6 @@ class ConvNet(nn.Module):
         print(f"Model saved to directory {full_path}.")
 
 
-@lru_cache(maxsize=None)
 class AI_Algorithm:
     def __init__(self,_board_size=15):
         start=time()
