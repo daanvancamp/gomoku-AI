@@ -15,7 +15,9 @@ class Human_vs_AI_Training_Controller(controller.BaseController):
         self.last_round=False #todo toggle on and off when needed, temporarily enabled
         self.last_move_model=None
         logger.info("Initialize Human_vs_AI_Training_Controller")
+        print(color_human)
         if color_human=="red": #red always plays first
+            print("color_human is red!!!!!!")
             player1 = game.game.GameFactory.create_player("Human", 1)
             player2 = game.game.GameFactory.create_player("AI", 2)
             self.AI_player=player2
@@ -46,7 +48,7 @@ class Human_vs_AI_Training_Controller(controller.BaseController):
             if not self.check_and_handle_winner():
                 self.AI_put_piece()
                  #todo fix the bug that causes the program to detect a win too late
-                self.check_and_handle_winner()
+                self.check_and_handle_winner() #todo check if this line causes issues
                 if self.game.winner!=0:
                     self.train_at_the_end_of_the_round()
             else:

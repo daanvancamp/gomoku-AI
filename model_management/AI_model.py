@@ -65,7 +65,7 @@ class AI_Model():
         match opponent:
             case "Human":
                 self.number_of_training_loops_against_human = self.get_value_from_config_file("training stats","training loops against Human")
-            case "AI-Model":
+            case "AI":
                 self.number_of_training_loops_against_ai_model = self.get_value_from_config_file("training stats","training loops against AI-Model")
             case "Test Algorithm":
                 self.number_of_training_loops_against_test_algorithm = self.get_value_from_config_file("training stats","training loops against Test Algorithm")

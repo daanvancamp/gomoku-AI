@@ -7,17 +7,17 @@ def reset_player_stats(game):#todo integrate in the right place
 
 # Update win / loss stats of game.players: -1 = tie; 1 = player 1 won; 2 = player 2 won
 def update_player_stats(game, winning_player):
-    AI_players=[p for p in game.players if p.TYPE=="AI-Model"]
+    AI_players=[p for p in game.players if p.TYPE=="AI"]
     if winning_player > -1: # run if game was not a tie
         if winning_player == 1:
-            if game.player1.TYPE =="AI-Model":
+            if game.player1.TYPE =="AI":
                 game.player1.AI_model.log_win()
-            if game.player2.TYPE =="AI-Model":
+            if game.player2.TYPE =="AI":
                 game.player2.AI_model.log_loss()
         elif winning_player == 2:
-            if game.player1.TYPE =="AI-Model":
+            if game.player1.TYPE =="AI":
                 game.player1.AI_model.log_loss()
-            if game.player2.TYPE =="AI-Model":
+            if game.player2.TYPE =="AI":
                 game.player2.AI_model.log_win()
 
         for i in range(len(game.players)):

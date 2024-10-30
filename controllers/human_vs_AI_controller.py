@@ -23,7 +23,7 @@ class Human_vs_AI_Controller(controller.BaseController):
             player2 = game.game.GameFactory.create_player("Human", 2)
             self.AI_player=player1
 
-        self.AI_player.load_model("standaard+3000")
+        self.AI_player.load_model("standaard+3000",False)
 
         game_board = game.game.GameFactory.create_game_board(int(config["OTHER VARIABLES"]["BOARDSIZE"]))
         self.game:game.game.Game = game.game.GameFactory.initialize_new_game(game_board, player1, player2)

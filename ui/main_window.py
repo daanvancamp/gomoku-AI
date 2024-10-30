@@ -175,7 +175,6 @@ class GomokuApp(Tk):
                             else:
                                 color = self.color_player_2
 
-                            print(self.controller.last_move_model)
                             if self.controller.last_move_model==(i,j):
                                 self.canvas.create_oval(value[2] + padding, value[3] + padding, value[4] - padding, value[5] - padding, fill="green", tags="piece")
                             else:
