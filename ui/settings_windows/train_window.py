@@ -40,13 +40,18 @@ class TrainWindow(tk.Toplevel):
 		self.var_color_p1 = StringVar()
 		self.var_color_p1.set("red") #red begins always
 		self.var_p2_type = StringVar()
-		self.var_p2_type.set("AI-Model")
+		self.var_p2_type.set("Human")
 
 		self.var_allow_overrule=BooleanVar()
 		self.var_allow_overrule.set(False)
 		
 		self.var_show_graphs= BooleanVar()
 		self.var_show_graphs.set(False)
+
+		self.var_p1_model= StringVar()
+		self.var_p1_model.set("standaard+3000")
+		self.var_p2_model= StringVar()
+		self.var_p2_model.set("standaard+3000")
 
 		self.cb_choose_color=ttk.Combobox(self, state="readonly",values=["red","blue"],textvariable=self.var_color_p1)
 		self.cb_choose_color.grid(row=3, column=1, sticky="w", padx=10)
@@ -66,8 +71,8 @@ class TrainWindow(tk.Toplevel):
 		# #column 0
 		# self.label_model=Label(self, text="AI-Model: ")
 		# self.label_model.grid(row=1, column=0, sticky="w",padx=distance_from_left_side,pady=1)
-		# self.CbModelTrain1 = Combobox(self, state="readonly", values=modelmanager_instance.list_models,textvariable=gomoku.player1.var_model)
-		# self.CbModelTrain1.grid(row=2, column=0, sticky="w",padx=distance_from_left_side,pady=1)
+		self.CbModelTrain1 = Combobox(self, state="readonly", values=modelmanager_instance.list_models,textvariable=self.var_p1_model)
+		self.CbModelTrain1.grid(row=2, column=0, sticky="w",padx=distance_from_left_side,pady=1)
 		# self.label_value_number_of_training_loops_tab2_p1 =Label(self, textvariable=gomoku.player1.var_number_of_training_loops_comboboxes)
 		# self.label_value_number_of_training_loops_tab2_p1.grid(row=3, column=0, sticky="w",padx=distance_from_left_side,pady=1)
 		# self.overrule_button_player_1_tab2=Checkbutton(self, text="Allow overrule", variable=gomoku.player1.var_allow_overrule)
@@ -84,8 +89,8 @@ class TrainWindow(tk.Toplevel):
 		# self.radiobutton8 = Radiobutton(self, text="AI-Model", variable=gomoku.player2.var_playerType, value="AI-Model")
 		# self.radiobutton8.grid(row=4, column=1, sticky="w")
 
-		# self.CbModelTrain2 = Combobox(self, state="readonly", values=modelmanager_instance.list_models,textvariable=gomoku.player2.var_model)
-		# self.CbModelTrain2.grid(row=5, column=1, sticky="w")
+		self.CbModelTrain2 = Combobox(self, state="readonly", values=modelmanager_instance.list_models,textvariable=self.var_p2_model)
+		self.CbModelTrain2.grid(row=5, column=1, sticky="w")
 		# self.label_value_number_of_training_loops_tab2_p2 = Label(self, textvariable=gomoku.player2.var_number_of_training_loops_comboboxes)
 		# self.label_value_number_of_training_loops_tab2_p2.grid(row=6, column=1, sticky="w")
 		# self.overrule_button_player_2_tab2=Checkbutton(self, text="Allow overrule", variable=gomoku.player2.var_allow_overrule)
@@ -109,10 +114,11 @@ class TrainWindow(tk.Toplevel):
 	def start_new_training(self):
 		from time import time
 		self.master.clear_canvas()
-
+		# The first move never needs to be overruled.
+		#p1=AI, p2=...
 		match self.var_p2_type.get():
 			case "Human":
-				self.master.controller = controllers.human_vs_AI_training_controller.Human_vs_AI_Training_Controller(self.master,self.var_color_p1.get())
+				self.master.controller = controllers.human_vs_AI_training_controller.Human_vs_AI_Training_Controller(self.master,self.var_color_p1.get(),self.var_p2_model.get()) #todo finish this
 				self.master.controller.AI_player.set_allow_overrule(self.var_allow_overrule.get())
 				self.master.controller.show_graphs = self.var_show_graphs.get()
 			case "Test Algorithm":

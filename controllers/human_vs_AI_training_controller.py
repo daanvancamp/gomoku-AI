@@ -10,7 +10,7 @@ from utils import stats, player_stats
 logger = logging.getLogger('my_logger')
 
 class Human_vs_AI_Training_Controller(controller.BaseController):
-    def __init__(self, view: "ui.main_window.GomokuApp",color_AI):
+    def __init__(self, view: "ui.main_window.GomokuApp",color_AI,modelname="standaard+3000"):
         super().__init__(view)
         self.last_round=False #todo toggle on and off when needed, temporarily disabled
         self.last_move_model=None
@@ -24,7 +24,7 @@ class Human_vs_AI_Training_Controller(controller.BaseController):
             player2 = game.game.GameFactory.create_player("Human", 2)
             self.AI_player=player1
 
-        self.AI_player.load_model("standaard+3000",True)
+        self.AI_player.load_model(modelname,True)
 
         game_board = game.game.GameFactory.create_game_board(int(config["OTHER VARIABLES"]["BOARDSIZE"]))
         self.game:game.game.Game = game.game.GameFactory.initialize_new_game(game_board, player1, player2)
@@ -36,7 +36,8 @@ class Human_vs_AI_Training_Controller(controller.BaseController):
         self.record_replay = True
         self.mark_last_move_model = True
 
-        if self.game.player1.TYPE=="red": #player 1 always plays red and begins
+        if self.game.player1.TYPE=="AI": #player 1 always plays red and begins
+            print("first move== AI-move")
             self.AI_put_piece()
         
     def human_put_piece(self, row, col):
@@ -52,7 +53,6 @@ class Human_vs_AI_Training_Controller(controller.BaseController):
             else:
                 self.train_at_the_end_of_the_round()
                 #todo finish this
-
 
     def AI_put_piece(self):
         logger.info("AI move")             
@@ -84,7 +84,6 @@ class Human_vs_AI_Training_Controller(controller.BaseController):
                 self.game.p1_moves.append(action)
             else:
                 self.game.p2_moves.append(action)
-
         
 
         row, col = action
@@ -113,7 +112,7 @@ class Human_vs_AI_Training_Controller(controller.BaseController):
                 p.ai.train_long_memory()
                 p.score_loss.append(p.ai.loss)
                 move_loss = [float(val) for val in p.move_loss]
-                p.final_move_loss.append(sum(move_loss)/len(move_loss))
+                p.final_move_loss.append(sum(move_loss)/len(move_loss)) #todo fix zero division error that occurs once in a while
                 p.ai.model.save_model(p.get_model_name())#todo check if this works
                 p.final_move_scores.append(sum(p.weighed_moves)/len(p.weighed_moves))
                 stats.log_message(f"{p.TYPE} {p.id}: score loss: {float(p.ai.loss)}")

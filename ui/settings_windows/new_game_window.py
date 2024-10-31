@@ -28,10 +28,10 @@ class NewGameWindow (Toplevel):#the methods of gomokuapp need to be callable fro
 		self.label_info.grid(row=1, column=0, sticky="w", padx=10)
 
 		self.label_p1 = Label(self, text="Player 1(Human)")
-		self.label_p1.grid(row=2, column=1, sticky="w", padx=10)
+		self.label_p1.grid(row=2, column=0, sticky="w", padx=10)
 
 		self.label_p2 = Label(self, text="Player 2(?)")
-		self.label_p2.grid(row=2, column=2, sticky="w", padx=10)
+		self.label_p2.grid(row=2, column=1, sticky="w", padx=10)
 		
 		self.var_p1_type = StringVar()
 		self.var_p1_type.set("Human")
@@ -40,27 +40,41 @@ class NewGameWindow (Toplevel):#the methods of gomokuapp need to be callable fro
 		self.var_p2_type = StringVar()
 		self.var_p2_type.set("AI-Model")
 
+		self.var_p2_model= StringVar()
+		self.var_p2_model.set("standaard+3000")
+
+
 		self.var_allow_overrule=BooleanVar()
 		self.var_allow_overrule.set(True)
 
 		self.cb_choose_color=ttk.Combobox(self, state="readonly",values=["red","blue"],textvariable=self.var_color_p1)
-		self.cb_choose_color.grid(row=3, column=1, sticky="w", padx=10)
+		self.cb_choose_color.grid(row=3, column=0, sticky="w", padx=10)
 
 
 		self.radiobutton_7 = Radiobutton(self, text="Human", variable=self.var_p2_type, value="Human")
-		self.radiobutton_7.grid(row=3, column=2, sticky="w")
+		self.radiobutton_7.grid(row=3, column=1, sticky="w")
 		self.radiobutton_8 = Radiobutton(self, text="Test Algorithm", variable=self.var_p2_type, value="Test Algorithm")
-		self.radiobutton_8.grid(row=4, column=2, sticky="w")
+		self.radiobutton_8.grid(row=4, column=1, sticky="w")
 		self.radiobutton_9 = Radiobutton(self, text="AI-Model", variable=self.var_p2_type, value="AI-Model")
-		self.radiobutton_9.grid(row=5, column=2, sticky="w")
+		self.radiobutton_9.grid(row=5, column=1, sticky="w")
 
 		self.checkbox_allow_overrule = Checkbutton(self, text="Allow overrule", variable=self.var_allow_overrule)
-		self.checkbox_allow_overrule.grid(row=6, column=2, sticky="w")
+		self.checkbox_allow_overrule.grid(row=7, column=0,columnspan=2)
+
+		self.CbModel2 = ttk.Combobox(self, state="readonly", values=modelmanager_instance.list_models,textvariable=self.var_p2_model)
+
+		self.CbModel2.grid(row=6, column=1,sticky="w",padx=10)
+
+		# self.label_value_number_of_training_loops_p1 = tk.Label(self, textvariable=gomoku.player1.var_number_of_training_loops_comboboxes)
+		# self.label_value_number_of_training_loops_p1.grid(row=8, column=0, sticky="w",padx=10)
+
+		# self.label_value_number_of_training_loops_p2 = tk.Label(self, textvariable=gomoku.player2.var_number_of_training_loops_comboboxes)
+		# self.label_value_number_of_training_loops_p2.grid(row=8, column=1, sticky="w")
 
 	def start_new_game(self):
 		from time import time
 		self.master.clear_canvas()
-		
+		#p1=Human, p2=...
 		match self.var_p2_type.get():
 			case "Human":
 				self.master.controller = controllers.human_vs_human_controller.Human_vs_HumanController(self.master)
@@ -68,10 +82,9 @@ class NewGameWindow (Toplevel):#the methods of gomokuapp need to be callable fro
 				start=time()
 				self.master.controller = controllers.human_vs_test_algorithm_controller.Human_vs_TestAlgorithmController(self.master,self.var_color_p1.get())
 				print("time",time()-start)
-
 			case "AI-Model":
-				self.master.controller = controllers.human_vs_AI_controller.Human_vs_AI_Controller(self.master,self.var_color_p1.get())
-				self.master.controller.AI_player.set_allow_overrule(self.var_allow_overrule.get())
+				self.master.controller = controllers.human_vs_AI_controller.Human_vs_AI_Controller(self.master,self.var_color_p1.get(),self.var_p2_model.get())
+				self.master.controller.AI_player.set_allow_overrule(self.var_allow_overrule.get())# The first move never needs to be overruled.
 
 
 
@@ -93,17 +106,7 @@ class NewGameWindow (Toplevel):#the methods of gomokuapp need to be callable fro
 
 
 
-		# self.CbModel1 = tk.Combobox(self, state="readonly", values=modelmanager_instance.list_models,textvariable=gomoku.player1.var_model)
-		# self.CbModel2 = tk.Combobox(self, state="readonly", values=modelmanager_instance.list_models,textvariable=gomoku.player2.var_model)
-
-		# self.CbModel1.grid(row=6, column=0, sticky="w",padx=10)
-		# self.CbModel2.grid(row=6, column=1,sticky="w",padx=10)
-
-		# self.label_value_number_of_training_loops_p1 = tk.Label(self, textvariable=gomoku.player1.var_number_of_training_loops_comboboxes)
-		# self.label_value_number_of_training_loops_p1.grid(row=8, column=0, sticky="w",padx=10)
-
-		# self.label_value_number_of_training_loops_p2 = tk.Label(self, textvariable=gomoku.player2.var_number_of_training_loops_comboboxes)
-		# self.label_value_number_of_training_loops_p2.grid(row=8, column=1, sticky="w")
+		
 
 
 		# self.overrule_button_player_1=tk.Checkbutton(self, text="Allow overrule", variable=gomoku.player1.var_allow_overrule)

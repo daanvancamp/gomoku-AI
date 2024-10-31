@@ -10,7 +10,7 @@ import logging
 logger = logging.getLogger('my_logger')
 
 class Human_vs_AI_Controller(controller.BaseController):
-    def __init__(self, view: "ui.main_window.GomokuApp",color_human):
+    def __init__(self, view: "ui.main_window.GomokuApp",color_human, modelname="standaard+3000"):
         super().__init__(view)
         self.last_move_model=None
         logger.info("Initialize Human_vs_AI_Controller")
@@ -23,7 +23,7 @@ class Human_vs_AI_Controller(controller.BaseController):
             player2 = game.game.GameFactory.create_player("Human", 2)
             self.AI_player=player1
 
-        self.AI_player.load_model("standaard+3000",False)
+        self.AI_player.load_model(modelname,False)
 
         game_board = game.game.GameFactory.create_game_board(int(config["OTHER VARIABLES"]["BOARDSIZE"]))
         self.game:game.game.Game = game.game.GameFactory.initialize_new_game(game_board, player1, player2)
@@ -35,7 +35,7 @@ class Human_vs_AI_Controller(controller.BaseController):
         self.record_replay = True
         self.mark_last_move_model = True
 
-        if self.game.player1.TYPE=="red": #player 1 always plays red and begins
+        if self.game.player1.TYPE=="AI": #player 1 always plays red and begins
             self.AI_put_piece()
         
     def human_put_piece(self, row, col):

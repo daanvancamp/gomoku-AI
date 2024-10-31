@@ -244,20 +244,20 @@ class GomokuApp(Tk):
         self.canvas.delete("text")
     
     def draw_line(self,winning_cells): #draws a line through the winning cells
-        
+        padding = 25 #cell size= 50, so padding = 25
+
         first_cell = winning_cells[0] #start of the line, the list is sorted, form: (x,y)
-        last_cell = winning_cells[4] #end of the line, the list is sorted, form: (x,y)
+        last_cell = winning_cells[-1] #end of the line, the list is sorted, form: (x,y)
         for value in self.squares.values():
             if value[0] == first_cell[0] and value[1] == first_cell[1]:
-                padding = 10
                 x1 = value[2] + padding
                 y1 = value[3] + padding
+
             if value[0] == last_cell[0] and value[1] == last_cell[1]:
-                padding = 10
                 x2 = value[4] - padding
                 y2 = value[5] - padding
 
-        self.canvas.create_line(x1, y1, x2, y2, fill="white", width=5, tags="line")
+        self.canvas.create_line(x1, y1, x2, y2, fill="white", width=4, tags="line")
 
     def end_game(self):
          mb.showinfo("End of the game","There's a winner, player"+str(self.controller.game.winner))
