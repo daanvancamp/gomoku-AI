@@ -1,4 +1,4 @@
-
+#todo add a button to clear the board to the menubar
 #This is the startup file, run this file to start the game
 
 from datetime import datetime

@@ -12,7 +12,7 @@ class ModelsWindow(Toplevel):
 	def __init__(self,master):
 		super().__init__(master,width=WIDTH,height=HEIGHT)
 
-		#todo: the values aren't displayed correctly, fix this
+		#todo: the values aren't displayed yet, fix this
 
 		self.var_losses=IntVar()
 		self.var_losses.set(0)

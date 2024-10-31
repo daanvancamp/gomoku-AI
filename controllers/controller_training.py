@@ -1,0 +1,29 @@
+import game.game
+import numpy as np
+import ui.main_window
+from utils.player_stats import update_player_stats
+import logging
+
+# Use the existing logger by name
+logger = logging.getLogger('my_logger')
+
+class BaseTrainingController:
+    def __init__(self, view):
+        self.view:"ui.main_window.GomokuApp" = view
+        self.view.controller = self
+    def initialize_board(self):
+        game.game.Game().board.reset_board()
+    
+    def check_and_handle_winner(self):
+        if self.game.winner != 0:
+            print("er is een winnaar")
+            self.view.draw_line(self.game.board.winning_cells) #todo should the line be drawn when AI plays against AI?
+            self.view.end_game()
+            self.initialize_board()
+            update_player_stats(self.game,self.game.winner)
+            return True
+        else:
+            return False
+
+
+        

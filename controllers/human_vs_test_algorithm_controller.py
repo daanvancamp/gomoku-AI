@@ -36,7 +36,7 @@ class Human_vs_TestAlgorithmController(controller.BaseController):
         self.view.activate_game()
         self.color_human=color_human
 
-        if color_human!="red":
+        if self.game.player1.TYPE=="AI": #red/player1 always plays first
             self.algorithm_put_piece()
 
     def human_put_piece(self, row, col):

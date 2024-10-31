@@ -37,7 +37,6 @@ class Human_vs_AI_Training_Controller(controller.BaseController):
         self.mark_last_move_model = True
 
         if self.game.player1.TYPE=="AI": #player 1 always plays red and begins
-            print("first move== AI-move")
             self.AI_put_piece()
         
     def human_put_piece(self, row, col):
