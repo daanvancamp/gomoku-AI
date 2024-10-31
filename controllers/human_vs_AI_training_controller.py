@@ -12,7 +12,7 @@ logger = logging.getLogger('my_logger')
 class Human_vs_AI_Training_Controller(controller.BaseController):
     def __init__(self, view: "ui.main_window.GomokuApp",color_human):
         super().__init__(view)
-        self.last_round=False #todo toggle on and off when needed, temporarily enabled
+        self.last_round=False #todo toggle on and off when needed, temporarily disabled
         self.last_move_model=None
         logger.info("Initialize Human_vs_AI_Training_Controller")
         print(color_human)

@@ -176,10 +176,9 @@ class GomokuApp(Tk):
                                 color = self.color_player_2
 
                             if self.controller.last_move_model==(i,j):
-                                self.canvas.create_oval(value[2] + padding, value[3] + padding, value[4] - padding, value[5] - padding, fill="green", tags="piece")
+                                self.canvas.create_oval(value[2] + padding, value[3] + padding, value[4] - padding, value[5] - padding, fill="orange" if color==self.color_player_1 else "light blue" , tags="piece")
                             else:
                                 self.canvas.create_oval(value[2] + padding, value[3] + padding, value[4] - padding, value[5] - padding, fill=color, tags="piece")
-
 
 
     def draw_scoreboard(self, board, scoreboard):
@@ -240,10 +239,27 @@ class GomokuApp(Tk):
         
     def clear_canvas(self):
         self.canvas.delete("piece")
+        self.canvas.delete("line")
         
     def clear_text_on_canvas(self):
         self.canvas.delete("text")
     
+    def draw_line(self,winning_cells):
+        
+        first_cell = winning_cells[0] #start of the line, the list is sorted, form: (x,y)
+        last_cell = winning_cells[4] #end of the line, the list is sorted, form: (x,y)
+        for value in self.squares.values():
+            if value[0] == first_cell[0] and value[1] == first_cell[1]:
+                padding = 10
+                x1 = value[2] + padding
+                y1 = value[3] + padding
+            if value[0] == last_cell[0] and value[1] == last_cell[1]:
+                padding = 10
+                x2 = value[4] - padding
+                y2 = value[5] - padding
+
+        self.canvas.create_line(x1, y1, x2, y2, fill="white", width=5, tags="line")
+
     def end_game(self):
          mb.showinfo("End of the game","There's a winner, player"+str(self.controller.game.winner))
          self.canvas.config(state=DISABLED)

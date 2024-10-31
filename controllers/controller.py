@@ -18,6 +18,7 @@ class BaseController:
         #todo: verder uitwerken wat er gebeurt als er een winnaar is; de winnende lijn moet uitgetekend worden
         if self.game.winner != 0:
             print("er is een winnaar")
+            self.view.draw_line(self.game.board.winning_cells) #todo should the line be drawn when playing AI against AI?
             self.view.end_game()
             self.initialize_board()
             update_player_stats(self.game,self.game.winner)

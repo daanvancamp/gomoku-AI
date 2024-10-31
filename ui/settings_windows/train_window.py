@@ -1,4 +1,4 @@
-#todo: deze window werkt nog niet
+#todo: deze window werkt nog niet volledig
 
 import tkinter as tk
 from tkinter import ttk
