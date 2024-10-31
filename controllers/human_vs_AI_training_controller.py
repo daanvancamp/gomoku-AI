@@ -10,14 +10,13 @@ from utils import stats, player_stats
 logger = logging.getLogger('my_logger')
 
 class Human_vs_AI_Training_Controller(controller.BaseController):
-    def __init__(self, view: "ui.main_window.GomokuApp",color_human):
+    def __init__(self, view: "ui.main_window.GomokuApp",color_AI):
         super().__init__(view)
         self.last_round=False #todo toggle on and off when needed, temporarily disabled
         self.last_move_model=None
         logger.info("Initialize Human_vs_AI_Training_Controller")
-        print(color_human)
-        if color_human=="red": #red always plays first
-            print("color_human is red!!!!!!")
+        print(color_AI)
+        if color_AI!="red": #red always plays first
             player1 = game.game.GameFactory.create_player("Human", 1)
             player2 = game.game.GameFactory.create_player("AI", 2)
             self.AI_player=player2
@@ -38,7 +37,7 @@ class Human_vs_AI_Training_Controller(controller.BaseController):
         self.record_replay = True
         self.mark_last_move_model = True
 
-        if color_human!="red":
+        if color_AI=="red":
             self.AI_put_piece()
         
     def human_put_piece(self, row, col):

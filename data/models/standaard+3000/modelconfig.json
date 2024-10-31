@@ -7,7 +7,7 @@
     },
     "total end stats": {
         "losses": 31,
-        "wins": 44,
+        "wins": 46,
         "ties": 44
     },
     "games end stats": {
@@ -16,7 +16,7 @@
         "ties": 44
     },
     "training loops end stats": {
-        "wins": 10,
+        "wins": 12,
         "losses": 2,
         "ties": 0
     }

@@ -72,19 +72,6 @@ class NewGameWindow (Toplevel):#the methods of gomokuapp need to be callable fro
 			case "AI-Model":
 				self.master.controller = controllers.human_vs_AI_controller.Human_vs_AI_Controller(self.master,self.var_color_p1.get())
 				self.master.controller.AI_player.set_allow_overrule(self.var_allow_overrule.get())
-				
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

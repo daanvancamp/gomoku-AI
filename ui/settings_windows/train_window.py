@@ -29,16 +29,16 @@ class TrainWindow(tk.Toplevel):
 		self.label_info=Label(self, text="red begins always")
 		self.label_info.grid(row=1, column=0, sticky="w", padx=10)
 
-		self.label_p1 = Label(self, text="Player 1(Human)")
+		self.label_p1 = Label(self, text="Player 1(AI)")
 		self.label_p1.grid(row=2, column=1, sticky="w", padx=10)
 
 		self.label_p2 = Label(self, text="Player 2(?)")
 		self.label_p2.grid(row=2, column=2, sticky="w", padx=10)
 		
 		self.var_p1_type = StringVar()
-		self.var_p1_type.set("Human")
+		self.var_p1_type.set("AI-Model")
 		self.var_color_p1 = StringVar()
-		self.var_color_p1.set("red")
+		self.var_color_p1.set("red") #red begins always
 		self.var_p2_type = StringVar()
 		self.var_p2_type.set("AI-Model")
 
@@ -109,12 +109,10 @@ class TrainWindow(tk.Toplevel):
 
 		match self.var_p2_type.get():
 			case "Human":
-				self.master.controller = ...
-			case "Test Algorithm":
-				start=time()
-				self.master.controller = ...
-				print("time",time()-start)
-
-			case "AI-Model":
 				self.master.controller = controllers.human_vs_AI_training_controller.Human_vs_AI_Training_Controller(self.master,self.var_color_p1.get())
 				self.master.controller.AI_player.set_allow_overrule(self.var_allow_overrule.get())
+			case "Test Algorithm":
+				self.master.controller = ...
+			case "AI-Model":
+				self.master.controller = ...
+

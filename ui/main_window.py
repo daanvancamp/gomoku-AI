@@ -19,7 +19,6 @@ from configuration.config import *
 logger = logging.getLogger('my_logger')
 
 
-
 class WindowMode(enum.Enum):
     replay = 'replay'
     computer_move = 'computer_move'
@@ -244,7 +243,7 @@ class GomokuApp(Tk):
     def clear_text_on_canvas(self):
         self.canvas.delete("text")
     
-    def draw_line(self,winning_cells):
+    def draw_line(self,winning_cells): #draws a line through the winning cells
         
         first_cell = winning_cells[0] #start of the line, the list is sorted, form: (x,y)
         last_cell = winning_cells[4] #end of the line, the list is sorted, form: (x,y)
