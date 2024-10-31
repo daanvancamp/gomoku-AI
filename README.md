@@ -148,7 +148,7 @@ august 2024:
 
   **This design reached the end of his life.**
 
-  **We redesigned the hole code.**
+  **We redesigned the whole code.**
 
   restored some old features
 
