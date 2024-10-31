@@ -137,7 +137,6 @@ class PlayBoardProcessor():
         return (x,y)
 
     def match_shapes_to_centers(self,shapes, cell_centers, img,color):
-
         list_shapes = []
         for shape in shapes:
             closest_center = None

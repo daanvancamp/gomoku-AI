@@ -15,9 +15,8 @@ class Human_vs_AI_Training_Controller(controller.BaseController):
         self.last_round=False #todo toggle on and off when needed, temporarily disabled
         self.last_move_model=None
         logger.info("Initialize Human_vs_AI_Training_Controller")
-        print(color_AI)
         if color_AI!="red": #red always plays first
-            player1 = game.game.GameFactory.create_player("Human", 1)
+            player1 = game.game.GameFactory.create_player("Human", 1) #player 1 always plays red and begins
             player2 = game.game.GameFactory.create_player("AI", 2)
             self.AI_player=player2
         else:
@@ -37,7 +36,7 @@ class Human_vs_AI_Training_Controller(controller.BaseController):
         self.record_replay = True
         self.mark_last_move_model = True
 
-        if color_AI=="red":
+        if self.game.player1.TYPE=="red": #player 1 always plays red and begins
             self.AI_put_piece()
         
     def human_put_piece(self, row, col):
@@ -94,7 +93,7 @@ class Human_vs_AI_Training_Controller(controller.BaseController):
 
         next_max_score, next_scores, next_scores_normalized = gomoku_ai.calculate_score(15)
 
-        gomoku_ai.remember(old_state, action, score,self.game.board.board ,self.game.winner!=0 ) #todo how to get the variable to this line?
+        gomoku_ai.remember(old_state, action, score,self.game.board.board ,self.game.winner!=0 ) #todo does this work?
         gomoku_ai.train_short_memory(one_hot_board, action, short_score, scores, gomoku_ai.convert_to_one_hot(),next_scores,self.game.winner!=0)
         self.game.players[self.game.current_player.id - 1].move_loss.append(gomoku_ai.loss)
 
@@ -129,9 +128,11 @@ class Human_vs_AI_Training_Controller(controller.BaseController):
                     stats.log_message(f"{p.TYPE} {p.id}: average score loss: {sum([float(val) for val in p.score_loss]) / len([float(val) for val in p.score_loss])}")
                     stats.log_message(f"{p.TYPE} {p.id}: average move loss: {sum(p.final_move_loss) / len(p.final_move_loss)}")
                 p.reset_all_stats()
-        if len(data) > 0:
-            stats.plot_graph(data, 'accuracy')
-        if len(loss_data) > 0:
-            stats.plot_graph(loss_data, 'loss data')
-        if len(move_loss_data) > 0:
-            stats.plot_graph(move_loss_data, 'loss data')
+        
+        if self.show_graphs:
+            if len(data) > 0:
+                stats.plot_graph(data, 'accuracy')
+            if len(loss_data) > 0:
+                stats.plot_graph(loss_data, 'loss data')
+            if len(move_loss_data) > 0:
+                stats.plot_graph(move_loss_data, 'loss data')

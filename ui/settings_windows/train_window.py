@@ -44,6 +44,9 @@ class TrainWindow(tk.Toplevel):
 
 		self.var_allow_overrule=BooleanVar()
 		self.var_allow_overrule.set(False)
+		
+		self.var_show_graphs= BooleanVar()
+		self.var_show_graphs.set(False)
 
 		self.cb_choose_color=ttk.Combobox(self, state="readonly",values=["red","blue"],textvariable=self.var_color_p1)
 		self.cb_choose_color.grid(row=3, column=1, sticky="w", padx=10)
@@ -94,8 +97,8 @@ class TrainWindow(tk.Toplevel):
 		# self.gamerunsentry2.grid(row=9, column=0, sticky="w",pady=2,padx=distance_from_left_side)
 		# self.replaybutton2 = Checkbutton(self, text="Save replays", variable=Gamesettings.var_rep)
 		# self.replaybutton2.grid(row=10, column=0, sticky="w",pady=2,padx=distance_from_left_side)
-		# self.show_graphs_checkbutton=Checkbutton(self, text="Show graphs*", variable=Gamesettings.var_show_graphs)
-		# self.show_graphs_checkbutton.grid(row=11, column=0, sticky="w",pady=2,padx=distance_from_left_side)
+		self.show_graphs_checkbutton=Checkbutton(self, text="Show graphs*", variable=self.var_show_graphs)
+		self.show_graphs_checkbutton.grid(row=11, column=0, sticky="w",pady=2,padx=distance_from_left_side)
 
 		self.train_description = Label(self, text="It is recommended to run at least 3 000 games per training session.", wraplength=WIDTH-15)
 		self.train_description.grid(row=12, column=0, sticky="w",columnspan=2,padx=distance_from_left_side)
@@ -111,6 +114,7 @@ class TrainWindow(tk.Toplevel):
 			case "Human":
 				self.master.controller = controllers.human_vs_AI_training_controller.Human_vs_AI_Training_Controller(self.master,self.var_color_p1.get())
 				self.master.controller.AI_player.set_allow_overrule(self.var_allow_overrule.get())
+				self.master.controller.show_graphs = self.var_show_graphs.get()
 			case "Test Algorithm":
 				self.master.controller = ...
 			case "AI-Model":

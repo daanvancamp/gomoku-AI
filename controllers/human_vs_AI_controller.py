@@ -15,7 +15,7 @@ class Human_vs_AI_Controller(controller.BaseController):
         self.last_move_model=None
         logger.info("Initialize Human_vs_AI_Controller")
         if color_human=="red": #red always plays first
-            player1 = game.game.GameFactory.create_player("Human", 1)
+            player1 = game.game.GameFactory.create_player("Human", 1) #player 1 always plays red and begins
             player2 = game.game.GameFactory.create_player("AI", 2)
             self.AI_player=player2
         else:
@@ -35,7 +35,7 @@ class Human_vs_AI_Controller(controller.BaseController):
         self.record_replay = True
         self.mark_last_move_model = True
 
-        if color_human!="red":
+        if self.game.player1.TYPE=="red": #player 1 always plays red and begins
             self.AI_put_piece()
         
     def human_put_piece(self, row, col):
