@@ -1,12 +1,10 @@
 import game.game
 import ui.main_window
-from controllers.controller import BaseController
+from controllers.basecontrollers.controller import BaseController
 from utils import stats, player_stats
 
 import logging
 import numpy as np
-
-
 
 # Use the existing logger by name
 logger = logging.getLogger('my_logger')
@@ -20,6 +18,7 @@ class BaseTrainingController(BaseController): #training means that the AI plays 
         self.last_round = False #todo toggle on and off when needed, temporarily disabled
         self.record_replay = True
         self.last_move_model = None #has to be declared to prevent errors in main_window.py
+        self.show_graphs = None #todo let the user choose, add this to the menu in the future
 
     def AI_put_piece(self):
         logger.info("AI move")

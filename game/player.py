@@ -103,13 +103,11 @@ class AI_Player(Player):
         self.ai.set_allow_overrule(allow_overrule)#ai=GomokuAI
 
 
-@lru_cache(maxsize=None)
 class Human_Player(Player):
     def __init__(self, player_id):    
         super().__init__(player_id,"Human")  # Call the constructor of the base class
 
 
-@lru_cache(maxsize=None)
 class Test_Player(Player):
     def __init__(self, player_id):    
         super().__init__(player_id,"Test")  # Call the constructor of the base class

@@ -1,6 +1,6 @@
 import json
 import game.gameboard as gb
-from . import controller
+from .basecontrollers import controller
 from configuration.config import *
 import logging
 
@@ -16,11 +16,14 @@ class ReplayController(controller.BaseController):
         self.view = view
 
     def load_game(self, file_name):
-        f = open(file_name,)
-        self.moves = json.load(f)["moves"]
-        self.current_index = -1
-        self.activate_replay_buttons()
-        self.view.draw_pieces(self.game_board.board)
+        try:
+            f = open(file_name,)
+            self.moves = json.load(f)["moves"]
+            self.current_index = -1
+            self.activate_replay_buttons()
+            self.view.draw_pieces(self.game_board.board)
+        except Exception as e:
+            print("Please select a valid file, error:",e)
         
     def next_move(self):
         if self.current_index < (len(self.moves) - 1):

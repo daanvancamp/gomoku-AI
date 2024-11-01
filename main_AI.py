@@ -1,3 +1,4 @@
+#this is a temporary test file, that doesn't contain all the functionality of the game
 from time import time
 import game.game
 import ui.main_window

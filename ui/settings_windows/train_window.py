@@ -4,7 +4,7 @@ from tkinter import *
 from configuration.config import *
 from model_management.modelmanager import ModelManager
 import ui.main_window
-import controllers
+from controllers.training import human_vs_AI_training_controller,test_algorithm_vs_AI_training_controller,AI_vs_AI_training_controller
 
 distance_from_left_side = int(config["OTHER VARIABLES"]["distance_from_left_side"])
 WIDTH = int(config["OTHER VARIABLES"]["WIDTH"])
@@ -23,13 +23,13 @@ class TrainWindow(Toplevel):
 		self.button_new_training.grid(row=0, column=0, sticky="w", padx=10)
 
 		self.label_info=Label(self, text="red begins always")
-		self.label_info.grid(row=1, column=0, sticky="w", padx=10)
+		self.label_info.grid(row=0, column=1, sticky="w", padx=10)
 
 		self.label_p1 = Label(self, text="Player 1(AI)")
-		self.label_p1.grid(row=2, column=1, sticky="w", padx=10)
+		self.label_p1.grid(row=2, column=0, sticky="w", padx=10)
 
 		self.label_p2 = Label(self, text="Player 2(?)")
-		self.label_p2.grid(row=2, column=2, sticky="w", padx=10)
+		self.label_p2.grid(row=2, column=1, sticky="w", padx=10)
 		
 		self.var_p1_type = StringVar()
 		self.var_p1_type.set("AI-Model")
@@ -50,25 +50,25 @@ class TrainWindow(Toplevel):
 		self.var_p2_model.set("standaard+3000")
 
 		self.cb_choose_color=ttk.Combobox(self, state="readonly",values=["red","blue"],textvariable=self.var_color_p1)
-		self.cb_choose_color.grid(row=3, column=1, sticky="w", padx=10)
+		self.cb_choose_color.grid(row=3, column=0, sticky="w", padx=10)
 
 
 		self.radiobutton_7 = Radiobutton(self, text="Human", variable=self.var_p2_type, value="Human")
-		self.radiobutton_7.grid(row=3, column=2, sticky="w")
+		self.radiobutton_7.grid(row=3, column=1, sticky="w")
 		self.radiobutton_8 = Radiobutton(self, text="Test Algorithm", variable=self.var_p2_type, value="Test Algorithm")
-		self.radiobutton_8.grid(row=4, column=2, sticky="w")
+		self.radiobutton_8.grid(row=4, column=1, sticky="w")
 		self.radiobutton_9 = Radiobutton(self, text="AI-Model", variable=self.var_p2_type, value="AI-Model")
-		self.radiobutton_9.grid(row=5, column=2, sticky="w")
+		self.radiobutton_9.grid(row=5, column=1, sticky="w")
 
 		self.checkbox_allow_overrule = Checkbutton(self, text="Allow overrule", variable=self.var_allow_overrule)
-		self.checkbox_allow_overrule.grid(row=6, column=2, sticky="w")
+		self.checkbox_allow_overrule.grid(row=7, column=0,columnspan=2)
 
 
 		# #column 0
 		# self.label_model=Label(self, text="AI-Model: ")
 		# self.label_model.grid(row=1, column=0, sticky="w",padx=distance_from_left_side,pady=1)
 		self.CbModelTrain1 = ttk.Combobox(self, state="readonly", values=modelmanager_instance.list_models,textvariable=self.var_p1_model)
-		self.CbModelTrain1.grid(row=2, column=0, sticky="w",padx=distance_from_left_side,pady=1)
+		self.CbModelTrain1.grid(row=6, column=0, sticky="w",padx=distance_from_left_side,pady=1)
 		# self.label_value_number_of_training_loops_tab2_p1 =Label(self, textvariable=gomoku.player1.var_number_of_training_loops_comboboxes)
 		# self.label_value_number_of_training_loops_tab2_p1.grid(row=3, column=0, sticky="w",padx=distance_from_left_side,pady=1)
 		# self.overrule_button_player_1_tab2=Checkbutton(self, text="Allow overrule", variable=gomoku.player1.var_allow_overrule)
@@ -86,7 +86,7 @@ class TrainWindow(Toplevel):
 		# self.radiobutton8.grid(row=4, column=1, sticky="w")
 
 		self.CbModelTrain2 = ttk.Combobox(self, state="readonly", values=modelmanager_instance.list_models,textvariable=self.var_p2_model)
-		self.CbModelTrain2.grid(row=5, column=1, sticky="w")
+		self.CbModelTrain2.grid(row=6, column=1, sticky="w")
 		# self.label_value_number_of_training_loops_tab2_p2 = Label(self, textvariable=gomoku.player2.var_number_of_training_loops_comboboxes)
 		# self.label_value_number_of_training_loops_tab2_p2.grid(row=6, column=1, sticky="w")
 		# self.overrule_button_player_2_tab2=Checkbutton(self, text="Allow overrule", variable=gomoku.player2.var_allow_overrule)
@@ -108,17 +108,16 @@ class TrainWindow(Toplevel):
 		self.info_show_graphs.grid(row=13, column=0, sticky="w",columnspan=2,padx=distance_from_left_side)
 
 	def start_new_training(self):
-		from time import time
 		self.master.clear_canvas()
 		# The first move never needs to be overruled.
 		#p1=AI, p2=...
 		match self.var_p2_type.get():
 			case "Human":
-				self.master.controller = controllers.human_vs_AI_training_controller.Human_vs_AI_Training_Controller(self.master,self.var_color_p1.get(),self.var_p2_model.get()) #todo finish this
+				self.master.controller = human_vs_AI_training_controller.Human_vs_AI_TrainingController(self.master,self.var_color_p1.get(),self.var_p2_model.get()) #todo finish this
 				self.master.controller.AI_player.set_allow_overrule(self.var_allow_overrule.get())
 				self.master.controller.show_graphs = self.var_show_graphs.get()
 			case "Test Algorithm":
-				self.master.controller = ...
+				self.master.controller = test_algorithm_vs_AI_training_controller.TestAlgorithm_vs_AI_TrainingController(self.master,self.var_color_p1.get(),self.var_p2_model.get())
 			case "AI-Model":
-				self.master.controller = ...
+				self.master.controller = AI_vs_AI_training_controller.AI_vs_AI_TrainingController(self.master,self.var_color_p1.get(),self.var_p1_model.get(),self.var_p2_model.get())
 

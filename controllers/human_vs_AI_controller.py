@@ -1,6 +1,6 @@
 import game.game
 import ui.main_window
-from . import controller
+from .basecontrollers import controller
 from configuration.config import *
 import numpy as np
 import game.algorithms.ai.ai

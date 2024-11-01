@@ -1,7 +1,6 @@
-from controllers import controller_training
+from controllers.basecontrollers import controller_training
 import game.game
 import ui.main_window
-from . import controller
 from configuration.config import *
 import numpy as np
 import game.algorithms.ai.ai
@@ -10,10 +9,10 @@ from utils import stats, player_stats
 # Use the existing logger by name
 logger = logging.getLogger('my_logger')
 
-class Human_vs_AI_Training_Controller(controller_training.BaseTrainingController):
+class Human_vs_AI_TrainingController(controller_training.BaseTrainingController):
     def __init__(self, view: "ui.main_window.GomokuApp",color_AI,modelname="standaard+3000"):
         super().__init__(view)
-        logger.info("Initialize Human_vs_AI_Training_Controller")
+        logger.info("Initialize Human_vs_AI_TrainingController")
         if color_AI!="red": #red always plays first
             player1 = game.game.GameFactory.create_player("Human", 1) #player 1 always plays red and begins
             player2 = game.game.GameFactory.create_player("AI", 2)

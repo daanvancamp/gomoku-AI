@@ -1,6 +1,6 @@
 import game.game
 import ui.main_window
-from . import controller
+from .basecontrollers import controller
 from configuration.config import *
 import game.player
 import logging
@@ -16,7 +16,6 @@ class Human_vs_TestAlgorithmController(controller.BaseController):
             player1 = game.game.GameFactory.create_player("Human", 1)
             player2 = game.game.GameFactory.create_player("Test", 2)
         else:
-            print("blue selected")
             player1 = game.game.GameFactory.create_player("Test", 1)
             player2 = game.game.GameFactory.create_player("Human", 2)
 
