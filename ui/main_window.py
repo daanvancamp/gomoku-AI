@@ -174,7 +174,7 @@ class GomokuApp(Tk):
                             else:
                                 color = self.color_player_2
 
-                            if self.controller.last_move_model==(i,j):
+                            if getattr(self.controller, 'last_move_model', None)==(i,j):
                                 self.canvas.create_oval(value[2] + padding, value[3] + padding, value[4] - padding, value[5] - padding, fill="orange" if color==self.color_player_1 else "light blue" , tags="piece")
                             else:
                                 self.canvas.create_oval(value[2] + padding, value[3] + padding, value[4] - padding, value[5] - padding, fill=color, tags="piece")
@@ -182,15 +182,16 @@ class GomokuApp(Tk):
 
     def draw_scoreboard(self, board, scoreboard):
         self.clear_text_on_canvas()
-        for i in range(15):
-            for j in range(15):
-                if board[i][j] == 0:
-                    key_to_lookup = (i, j)
-                    for value in self.squares.values():
-                        if value[0] == i and value[1] == j:
-                            padding = 20
-                            if key_to_lookup in scoreboard:
-                                self.canvas.create_text(value[2]+padding, value[3]+padding, text=f"{scoreboard[key_to_lookup]:.2f}", font=('Helvetica', 12), fill="pink", tags="text")
+        if self.draw_scoreboard_bool:
+            for i in range(15):
+                for j in range(15):
+                    if board[i][j] == 0:
+                        key_to_lookup = (i, j)
+                        for value in self.squares.values():
+                            if value[0] == i and value[1] == j:
+                                padding = 20
+                                if key_to_lookup in scoreboard:
+                                    self.canvas.create_text(value[2]+padding, value[3]+padding, text=f"{scoreboard[key_to_lookup]:.2f}", font=('Helvetica', 12), fill="pink", tags="text")
                             
     def activate_game(self):  
         self.close_secondary_windows()
@@ -200,16 +201,16 @@ class GomokuApp(Tk):
         """Show the previous item in the list."""
         if self.controller.current_index >= 0:
             self.delete_pieces()
-            self.controller.previous()
-            self.draw_pieces(self.controller.game.board.board)
+            self.controller.previous_move()
+            self.draw_pieces(self.controller.game_board.board)
         self.update_replay_button_states()
 
     def show_next(self):
         """Show the next item in the list."""
         if self.controller.current_index < len(self.controller.moves) - 1:
             self.delete_pieces()
-            self.controller.next()
-            self.draw_pieces(self.controller.game.board.board)
+            self.controller.next_move()
+            self.draw_pieces(self.controller.game_board.board)
         self.update_replay_button_states()
 
     def update_replay_button_states(self):
@@ -239,12 +240,13 @@ class GomokuApp(Tk):
     def clear_canvas(self):
         self.canvas.delete("piece")
         self.canvas.delete("line")
+        self.canvas.delete("text")
         
     def clear_text_on_canvas(self):
         self.canvas.delete("text")
     
     def draw_line(self,winning_cells): #draws a line through the winning cells
-        padding = 25 #cell size= 50, so padding = 25
+        padding = 25 #cell size= 50, so padding = 25 (the line has to go through the middle of each cell)
 
         first_cell = winning_cells[0] #start of the line, the list is sorted, form: (x,y)
         last_cell = winning_cells[-1] #end of the line, the list is sorted, form: (x,y)

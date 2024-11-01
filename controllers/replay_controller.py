@@ -20,7 +20,6 @@ class ReplayController(controller.BaseController):
         self.moves = json.load(f)["moves"]
         self.current_index = -1
         self.activate_replay_buttons()
-        self.view.delete_pieces()
         self.view.draw_pieces(self.game_board.board)
         
     def next_move(self):

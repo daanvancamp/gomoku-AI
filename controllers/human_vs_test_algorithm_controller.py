@@ -9,14 +9,10 @@ import logging
 # Use the existing logger by name
 logger = logging.getLogger('my_logger')
 
-#todo: controller uitwerken om tegen test algoritme te spelen
-
 # controller.py
 class Human_vs_TestAlgorithmController(controller.BaseController):
     def __init__(self, view:"ui.main_window.GomokuApp", color_human):
         super().__init__(view)
-        self.last_move_model=None
-        start_p=time()
         if color_human=="red": #red always plays first
             player1 = game.game.GameFactory.create_player("Human", 1)
             player2 = game.game.GameFactory.create_player("Test", 2)
@@ -24,7 +20,6 @@ class Human_vs_TestAlgorithmController(controller.BaseController):
             print("blue selected")
             player1 = game.game.GameFactory.create_player("Test", 1)
             player2 = game.game.GameFactory.create_player("Human", 2)
-        print("created 2 players in",time()-start_p)
 
         game_board = game.game.GameFactory.create_game_board(int(config["OTHER VARIABLES"]["BOARDSIZE"]))
         self.game = game.game.GameFactory.initialize_new_game(game_board, player1, player2)
@@ -53,10 +48,11 @@ class Human_vs_TestAlgorithmController(controller.BaseController):
         self.view.draw_pieces(self.game.board.board) 
         test_algorithm = game.algorithms.test_algorithm.TestAlgorithm.TestAlgorithm(self.game.current_player)
         test_algorithm.board = self.game.board.board
-        scoreboard = test_algorithm.evaluate_board()
+
+        scoreboard = test_algorithm.evaluate_board()#calculate scoreboard 
         print("###########")
         print(scoreboard)
-        self.view.draw_scoreboard(self.game.board.board, scoreboard)
+        self.view.draw_scoreboard(self.game.board.board, scoreboard) #draw scoreboard if enabled
         
         
         

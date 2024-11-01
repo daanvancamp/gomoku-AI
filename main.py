@@ -1,10 +1,12 @@
 #todo add a button to clear the board to the menubar
-#This is the startup file, run this file to start the game
+#todo replace the consts.json with a configuration file
+#todo restore save replay function
+#todo restore training stats
+#This is the startup file, please run this file to start the game
 
 from datetime import datetime
 from utils.filereader import log_info_overruling
 from ui import main_window
-#from utils.music import initialiseer_muziek
 from configuration.config import *
 from logger_config import setup_logger
 

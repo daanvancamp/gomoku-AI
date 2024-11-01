@@ -11,6 +11,7 @@ class BaseController:
     def __init__(self, view):
         self.view:"ui.main_window.GomokuApp" = view
         self.view.controller = self
+
     def initialize_board(self):
         game.game.Game().board.reset_board()
     

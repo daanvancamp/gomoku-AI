@@ -24,8 +24,9 @@ class ReplayWindow(tk.Toplevel):
 		self.label_info_replay_file_loaded.grid(row=4, column=0, sticky="w",columnspan=2,padx=2)
 		
 	def browse_files(self):
-		self.var_replay_file.set(tk.filedialog.askopenfilename(filetypes=[("Json File", "*.json")],initialdir=config['Folders']['replay_folder']))
+		self.var_replay_file.set(tk.filedialog.askopenfilename(filetypes=[("Json File", "*.json")],initialdir=config['Folders']['replay_folder'])) #todo change initialdir so it is correct
 
 	def start_new_replay(self):
+		self.master.clear_canvas()
 		self.master.controller = controllers.replay_controller.ReplayController(self.master)
 		self.master.controller.load_game(self.var_replay_file.get())
