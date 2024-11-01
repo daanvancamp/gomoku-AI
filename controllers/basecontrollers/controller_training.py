@@ -70,7 +70,7 @@ class BaseTrainingController(BaseController): #training means that the AI plays 
         loss_data = {}
         move_loss_data = {}
         for p in self.game.players:
-            if p.TYPE == "AI":
+            if p.type == "AI":
                 p.ai.remember(self.game.board.board, p.final_action, p.score, self.game.board.board, True)
                 p.ai.train_long_memory()
                 p.score_loss.append(p.ai.loss)
@@ -78,17 +78,17 @@ class BaseTrainingController(BaseController): #training means that the AI plays 
                 p.final_move_loss.append(sum(move_loss)/len(move_loss)) #todo fix zero division error that occurs once in a while
                 p.ai.model.save_model(p.get_model_name())#todo check if this works
                 p.final_move_scores.append(sum(p.weighed_moves)/len(p.weighed_moves))
-                stats.log_message(f"{p.TYPE} {p.id}: score loss: {float(p.ai.loss)}")
-                stats.log_message(f"{p.TYPE} {p.id}: move loss: {sum(p.move_loss)/len(p.move_loss)}")
+                stats.log_message(f"{p.type} {p.id}: score loss: {float(p.ai.loss)}")
+                stats.log_message(f"{p.type} {p.id}: move loss: {sum(p.move_loss)/len(p.move_loss)}")
             p.reset_score()
             if self.last_round:
-                if p.TYPE == "AI":
-                    data[f"{p.TYPE} {p.id}: game accuracy"] = p.weighed_scores
-                    data[f"{p.TYPE} {p.id}: move accuracy"] = p.final_move_scores
-                    loss_data[f"{p.TYPE} {p.id}: score loss"] = [float(val) for val in p.score_loss]
-                    move_loss_data[f"{p.TYPE} {p.id}: move loss"] = p.final_move_loss
-                    stats.log_message(f"{p.TYPE} {p.id}: average score loss: {sum([float(val) for val in p.score_loss]) / len([float(val) for val in p.score_loss])}")
-                    stats.log_message(f"{p.TYPE} {p.id}: average move loss: {sum(p.final_move_loss) / len(p.final_move_loss)}")
+                if p.type == "AI":
+                    data[f"{p.type} {p.id}: game accuracy"] = p.weighed_scores
+                    data[f"{p.type} {p.id}: move accuracy"] = p.final_move_scores
+                    loss_data[f"{p.type} {p.id}: score loss"] = [float(val) for val in p.score_loss]
+                    move_loss_data[f"{p.type} {p.id}: move loss"] = p.final_move_loss
+                    stats.log_message(f"{p.type} {p.id}: average score loss: {sum([float(val) for val in p.score_loss]) / len([float(val) for val in p.score_loss])}")
+                    stats.log_message(f"{p.type} {p.id}: average move loss: {sum(p.final_move_loss) / len(p.final_move_loss)}")
                 p.reset_all_stats()
         
         if self.show_graphs:

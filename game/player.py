@@ -12,7 +12,7 @@ logger = logging.getLogger('my_logger')
 
 class Player:
     def __init__(self, player_id,playertype):
-        self.TYPE = playertype
+        self.type = playertype
         self.id = int(player_id) #id can be 1 or 2
         self.moves = 0
         self.wins = 0
@@ -37,9 +37,9 @@ class Player:
         return self.__str__()
 
     def __str__(self) -> str:
-        if self.TYPE =="human":
-            return f"Player {self.id}: {self.TYPE}  "
-        return f"Player {self.id}: {self.TYPE}"
+        if self.type =="human":
+            return f"Player {self.id}: {self.type}  "
+        return f"Player {self.id}: {self.type}"
 
     def calculate_score(self, max_score, is_winner, game_number):
         print(game_number+1)

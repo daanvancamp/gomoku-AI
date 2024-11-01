@@ -32,7 +32,7 @@ class TestAlgorithm_vs_AI_TrainingController(controller_training.BaseTrainingCon
         self.view.window_mode = ui.main_window.WindowMode.computer_move
         self.view.activate_game()
 
-        if self.game.player1.TYPE=="AI": #player 1 always plays red and begins, in other words, AI begins if it is red.
+        if self.game.player1.type=="AI": #player 1 always plays red and begins, in other words, AI begins if it is red.
             while True:
                 self.AI_put_piece()
                 if self.check_and_handle_winner():
