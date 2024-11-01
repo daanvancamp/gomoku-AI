@@ -21,6 +21,7 @@ class BaseTrainingController(BaseController): #training means that the AI plays 
         self.show_graphs = None #todo let the user choose, add this to the menu in the future
 
     def AI_put_piece(self):
+        self.view.window_mode = ui.main_window.WindowMode.computer_move
         logger.info("AI move")
         
         gomoku_ai:game.algorithms.ai.ai.AI_Algorithm = self.game.current_player.ai
@@ -51,7 +52,8 @@ class BaseTrainingController(BaseController): #training means that the AI plays 
 
         row, col = action
         self.game.put_piece(row, col)
-        self.view.draw_pieces(self.game.board.board)
+        if self.game.player1.type == "Human" or self.game.player2.type == "Human":
+            self.view.draw_pieces(self.game.board.board) #the calculations are faster than a tkinter canvas
 
         next_max_score, next_scores, next_scores_normalized = gomoku_ai.calculate_score(15)
 
@@ -64,6 +66,7 @@ class BaseTrainingController(BaseController): #training means that the AI plays 
         self.game.current_player.moves += 1
 
     def train_at_the_end_of_the_round(self):
+        self.view.window_mode = ui.main_window.WindowMode.computer_move
         print("training at the end of the round")
         player_stats.update_player_stats(self.game,self.game.player1.id if self.game.winner==1 else self.game.player2.id)
         data = {}

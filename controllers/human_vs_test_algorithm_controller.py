@@ -25,7 +25,6 @@ class Human_vs_TestAlgorithmController(controller.BaseController):
 
         self.game.player1.game = self.game
         self.game.player2.game = self.game
-        self.view.window_mode = ui.main_window.WindowMode.human_move
         self.view.activate_game()
         self.color_human=color_human
 
@@ -33,6 +32,7 @@ class Human_vs_TestAlgorithmController(controller.BaseController):
             self.algorithm_put_piece()
 
     def human_put_piece(self, row, col):
+        self.view.window_mode = ui.main_window.WindowMode.human_move
         if self.game.put_piece(row, col):
             self.view.draw_pieces(self.game.board.board)
 
@@ -41,6 +41,7 @@ class Human_vs_TestAlgorithmController(controller.BaseController):
                 self.check_and_handle_winner()
                 
     def algorithm_put_piece(self):
+        self.view.window_mode = ui.main_window.WindowMode.computer_move
         row, col = self.game.current_player.test_algorithm.ai_move()
         self.game.put_piece(row, col)
         self.view.draw_pieces(self.game.board.board) 

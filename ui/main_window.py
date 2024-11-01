@@ -178,7 +178,6 @@ class GomokuApp(Tk):
                             else:
                                 self.canvas.create_oval(value[2] + padding, value[3] + padding, value[4] - padding, value[5] - padding, fill=color, tags="piece")
 
-
     def draw_scoreboard(self, board, scoreboard):
         self.clear_text_on_canvas()
         if self.draw_scoreboard_bool:

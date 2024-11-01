@@ -3,6 +3,7 @@ import game.gameboard as gb
 from .basecontrollers import controller
 from configuration.config import *
 import logging
+import ui.main_window
 
 # Use the existing logger by name
 logger = logging.getLogger('my_logger')
@@ -14,6 +15,7 @@ class ReplayController(controller.BaseController):
         self.game_board = gb.GameBoard(int(config["OTHER VARIABLES"]["BOARDSIZE"]))
         self.current_index = -1
         self.view = view
+        self.view.window_mode = ui.main_window.WindowMode.replay
 
     def load_game(self, file_name):
         try:
