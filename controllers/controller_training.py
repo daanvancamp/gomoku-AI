@@ -1,11 +1,10 @@
 import game.game
 import ui.main_window
-from utils.player_stats import update_player_stats
 from controllers.controller import BaseController
+from utils import stats, player_stats
 
 import logging
 import numpy as np
-from utils import stats, player_stats
 
 
 

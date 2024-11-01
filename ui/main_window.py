@@ -99,7 +99,6 @@ class GomokuApp(Tk):
 
     
     def open_new_window(self, window_type):
-        start=time()
         self.close_secondary_windows()
 
         match window_type:
@@ -147,7 +146,7 @@ class GomokuApp(Tk):
                 self.squares[square_id] = (row, col, x1, y1, x2, y2)
 
                 # Bind click event to this rectangle
-                self.canvas.tag_bind(square_id, "<Button-1>", self.on_square_click)
+                self.canvas.tag_bind(square_id, "<Button-1>", self.on_square_click) # button-1 is a left click
 
     def on_square_click(self, event):
         if (self.window_mode == WindowMode.human_move):
@@ -192,8 +191,8 @@ class GomokuApp(Tk):
                                 padding = 20
                                 if key_to_lookup in scoreboard:
                                     self.canvas.create_text(value[2]+padding, value[3]+padding, text=f"{scoreboard[key_to_lookup]:.2f}", font=('Helvetica', 12), fill="pink", tags="text")
-                            
-    def activate_game(self):  
+       
+    def activate_game(self):
         self.close_secondary_windows()
         self.canvas.config(state="normal")
 

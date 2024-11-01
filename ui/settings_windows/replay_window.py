@@ -1,5 +1,4 @@
 import tkinter as tk
-import tkinter.filedialog
 from configuration.config import *
 import controllers.replay_controller
 import ui.main_window

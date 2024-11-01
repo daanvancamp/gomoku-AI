@@ -1,8 +1,9 @@
 import os
 import shutil
+import logging
+
 from model_management.AI_model import AI_Model
 from utils.singleton_class import Singleton
-import logging
 
 # Use the existing logger by name
 logger = logging.getLogger('my_logger')

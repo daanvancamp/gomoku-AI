@@ -1,11 +1,7 @@
 #todo: deze window werkt nog niet volledig
-
-import tkinter as tk
 from tkinter import ttk
-from tkinter.ttk import *
 from tkinter import *
 from configuration.config import *
-import controllers.human_vs_AI_training_controller
 from model_management.modelmanager import ModelManager
 import ui.main_window
 import controllers
@@ -14,7 +10,7 @@ distance_from_left_side = int(config["OTHER VARIABLES"]["distance_from_left_side
 WIDTH = int(config["OTHER VARIABLES"]["WIDTH"])
 HEIGHT = int(config["OTHER VARIABLES"]["HEIGHT"])
 modelmanager_instance = ModelManager()
-class TrainWindow(tk.Toplevel):
+class TrainWindow(Toplevel):
 	def __init__(self, master):
 		super().__init__(master,width=WIDTH, height=HEIGHT)
 
@@ -71,7 +67,7 @@ class TrainWindow(tk.Toplevel):
 		# #column 0
 		# self.label_model=Label(self, text="AI-Model: ")
 		# self.label_model.grid(row=1, column=0, sticky="w",padx=distance_from_left_side,pady=1)
-		self.CbModelTrain1 = Combobox(self, state="readonly", values=modelmanager_instance.list_models,textvariable=self.var_p1_model)
+		self.CbModelTrain1 = ttk.Combobox(self, state="readonly", values=modelmanager_instance.list_models,textvariable=self.var_p1_model)
 		self.CbModelTrain1.grid(row=2, column=0, sticky="w",padx=distance_from_left_side,pady=1)
 		# self.label_value_number_of_training_loops_tab2_p1 =Label(self, textvariable=gomoku.player1.var_number_of_training_loops_comboboxes)
 		# self.label_value_number_of_training_loops_tab2_p1.grid(row=3, column=0, sticky="w",padx=distance_from_left_side,pady=1)
@@ -89,7 +85,7 @@ class TrainWindow(tk.Toplevel):
 		# self.radiobutton8 = Radiobutton(self, text="AI-Model", variable=gomoku.player2.var_playerType, value="AI-Model")
 		# self.radiobutton8.grid(row=4, column=1, sticky="w")
 
-		self.CbModelTrain2 = Combobox(self, state="readonly", values=modelmanager_instance.list_models,textvariable=self.var_p2_model)
+		self.CbModelTrain2 = ttk.Combobox(self, state="readonly", values=modelmanager_instance.list_models,textvariable=self.var_p2_model)
 		self.CbModelTrain2.grid(row=5, column=1, sticky="w")
 		# self.label_value_number_of_training_loops_tab2_p2 = Label(self, textvariable=gomoku.player2.var_number_of_training_loops_comboboxes)
 		# self.label_value_number_of_training_loops_tab2_p2.grid(row=6, column=1, sticky="w")

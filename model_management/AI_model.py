@@ -1,6 +1,5 @@
 import os
 import json
-
 import logging
 
 # Use the existing logger by name

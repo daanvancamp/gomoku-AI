@@ -2,6 +2,7 @@
 #todo replace the consts.json with a configuration file
 #todo restore save replay function
 #todo restore training stats
+#todo add all training controllers
 #This is the startup file, please run this file to start the game
 
 from datetime import datetime

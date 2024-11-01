@@ -1,6 +1,5 @@
 from tkinter import *
 from tkinter import ttk
-import tkinter.filedialog
 from configuration.config import *
 import controllers.human_vs_AI_controller
 import controllers.human_vs_human_controller 
