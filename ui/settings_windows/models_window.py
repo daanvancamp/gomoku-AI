@@ -3,14 +3,16 @@ from tkinter import *
 from tkinter import ttk
 from model_management.modelmanager import ModelManager
 from configuration.config import *
+from ui.settings_windows import window
+
 
 WIDTH = int(config["OTHER VARIABLES"]["WIDTH"])
 HEIGHT = int(config["OTHER VARIABLES"]["HEIGHT"])
 modelmanager_instance = ModelManager()
 
-class ModelsWindow(Toplevel):
+class ModelsWindow(window.BaseWindow):
 	def __init__(self,master):
-		super().__init__(master,width=WIDTH,height=HEIGHT)
+		super().__init__(master,WIDTH,HEIGHT,"Models")
 
 		#todo: the values aren't displayed yet, fix this
 

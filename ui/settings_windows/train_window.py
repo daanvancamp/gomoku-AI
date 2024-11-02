@@ -5,19 +5,16 @@ from configuration.config import *
 from model_management.modelmanager import ModelManager
 import ui.main_window
 from controllers.training import human_vs_AI_training_controller,test_algorithm_vs_AI_training_controller,AI_vs_AI_training_controller
+from ui.settings_windows import window
 
 distance_from_left_side = int(config["OTHER VARIABLES"]["distance_from_left_side"])
 WIDTH = int(config["OTHER VARIABLES"]["WIDTH"])
 HEIGHT = int(config["OTHER VARIABLES"]["HEIGHT"])
 modelmanager_instance = ModelManager()
-class TrainWindow(Toplevel):
+class TrainWindow(window.BaseWindow):
 	def __init__(self, master):
-		super().__init__(master,width=WIDTH, height=HEIGHT)
+		super().__init__(master, WIDTH, HEIGHT, "Training")
 
-		self.title("Training")
-		self.geometry(f"{WIDTH}x{HEIGHT}")
-		
-		self.master: "ui.main_window.GomokuApp" = master
 		
 		self.button_new_training = Button(self, text="Train", command=self.start_new_training)
 		self.button_new_training.grid(row=0, column=0, sticky="w", padx=10)

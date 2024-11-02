@@ -5,7 +5,7 @@ from configuration.config import *
 import numpy as np
 import game.algorithms.ai.ai
 import logging
-
+#todo bugfix needed, when AI plays first, there is a bug
 # Use the existing logger by name
 logger = logging.getLogger('my_logger')
 

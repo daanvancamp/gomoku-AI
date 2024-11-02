@@ -25,8 +25,8 @@ class ReplayController(controller.BaseController):
             self.activate_replay_buttons()
             self.view.draw_pieces(self.game_board.board)
         except Exception as e:
-            print("Please select a valid file, error:",e)
-        
+            self.view.show_load_error(e)
+            
     def next_move(self):
         if self.current_index < (len(self.moves) - 1):
             self.current_index += 1

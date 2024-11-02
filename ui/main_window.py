@@ -1,6 +1,4 @@
-﻿from time import time
-from tkinter import ttk
-from tkinter import *
+﻿from tkinter import *
 import numpy as np
 import tkinter.messagebox as mb
 import logging
@@ -49,10 +47,6 @@ class GomokuApp(Tk):
         # Canvas to draw the chessboard
         self.canvas = Canvas(self, width=750, height=750)
         self.canvas.grid(row=1, column=0, padx=10)
-
-        # Label and Button for Main Window
-        # label = ttk.Label(self, text="Gomoku")
-        # label.grid(row=0, column=0, padx=10)
 
         self.menubar= Menu(self,font=("Helvetica", 12),tearoff=0)
         self.config(menu=self.menubar)
@@ -261,3 +255,7 @@ class GomokuApp(Tk):
 
     def end_game(self):
          mb.showinfo("End of the game","There's a winner, player"+str(self.controller.game.winner))
+
+    def show_load_error(self,error):
+        print("Please select a valid file, error:",error)
+        mb.showerror("invalid file",f"Please select a valid file, error:{error}")
