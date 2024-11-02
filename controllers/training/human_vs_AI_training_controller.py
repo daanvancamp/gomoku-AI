@@ -48,4 +48,15 @@ class Human_vs_AI_TrainingController(controller_training.BaseTrainingController)
                 self.train_at_the_end_of_the_round()
                 #todo finish this
 
+    def check_and_handle_winner(self):
+        if self.game.winner != 0:
+            print("er is een winnaar")
+            self.view.draw_line(self.game.board.winning_cells) #todo should the line be drawn when AI plays against AI?
+            self.view.end_game() #the additional line in comparison to the other training controllers: a messagebox is shown when a human is playing
+            self.initialize_board()
+            player_stats.update_player_stats(self.game,self.game.winner)
+            return True
+        else:
+            return False
+
     

@@ -1,7 +1,10 @@
-#todo add a button to stop the current game to the menubar
 #todo replace the consts.json with a configuration file
 #todo restore save replay function
 #todo restore training stats
+#todo add this to the program in the right place:  
+"""if record_replay:
+        filereader.save_replay(p1_moves, p2_moves)"""
+
 #This is the startup file, please run this file to start the game
 
 from datetime import datetime

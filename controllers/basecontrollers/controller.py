@@ -12,6 +12,10 @@ class BaseController:
         self.view:"ui.main_window.GomokuApp" = view
         self.view.controller = self
         self.view.clear_canvas()
+        record_replay = True
+        if record_replay:
+            self.p1_moves = []
+            self.p2_moves = []
 
 
     def initialize_board(self):

@@ -4,6 +4,8 @@ import tkinter.messagebox as mb
 import logging
 import enum
 
+from ui.frame_recognition_buttons import FrameRecognitionButtons
+
 from .settings_windows import replay_window
 from .settings_windows import new_game_window
 from .settings_windows import train_window
@@ -91,6 +93,7 @@ class GomokuApp(Tk):
         self.deactivate_replay_frame()
 
         self.frame_webcam = FrameWebcam(self)
+        self.frame_recognition_buttons = FrameRecognitionButtons(self)
         
         self.color_player_1 = "red"
         self.color_player_2 = "blue"
@@ -122,7 +125,7 @@ class GomokuApp(Tk):
                 new_window = scoreboard_window.ScoreboardWindow(self)
         
         self.show_replay_buttons(window_type=="Replay") #show replay buttons when using replay mode
-        self.show_frame_recognition(window_type=="PhysicalPlay")
+        self.show_recognition_widgets(window_type=="PhysicalPlay")
     
     def show_replay_buttons(self,show):
         if show:
@@ -133,11 +136,13 @@ class GomokuApp(Tk):
             self.next_button.pack_forget()
             self.deactivate_replay_frame()
 
-    def show_frame_recognition(self, show):
+    def show_recognition_widgets(self, show):
         if show:
             self.frame_webcam.grid(column=1, row=0, rowspan=3)
+            self.frame_recognition_buttons.grid(column=0, row=2)
         else:
             self.frame_webcam.grid_forget()
+            self.frame_recognition_buttons.grid_forget()
 
     def create_gomokuboard(self, grid_size):
         square_size = 50    # Each square will be 50x50 pixels

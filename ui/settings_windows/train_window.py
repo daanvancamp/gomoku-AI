@@ -100,7 +100,7 @@ class TrainWindow(window.BaseWindow):
 		self.show_graphs_checkbutton=Checkbutton(self, text="Show graphs*", variable=self.var_show_graphs)
 		self.show_graphs_checkbutton.grid(row=11, column=0, sticky="w",pady=2,padx=distance_from_left_side)
 
-		self.train_description = Label(self, text="It is recommended to run at least 3 000 games per training session.", wraplength=WIDTH-15)
+		self.train_description = Label(self, text="It is recommended to run at least 3 000 games per training session. If you select human vs AI, then the number of games is one.", wraplength=WIDTH-15)
 		self.train_description.grid(row=12, column=0, sticky="w",columnspan=2,padx=distance_from_left_side)
 
 		self.info_show_graphs=Label(self, text="*Don't forget to MANUALLY close the graphs at the end of each training session if you enable it.",foreground="red",wraplength=WIDTH-15)
@@ -111,17 +111,15 @@ class TrainWindow(window.BaseWindow):
 		#p1=AI, p2=...
 		match self.var_p2_type.get():
 			case "Human":
-				for i in range(self.var_game_runs.get()):
-					print(f"run{i+1} started")
-					self.master.controller = human_vs_AI_training_controller.Human_vs_AI_TrainingController(self.master,self.var_color_p1.get(),self.var_p2_model.get()) #todo finish this
-					self.master.controller.AI_player.set_allow_overrule(self.var_allow_overrule.get())
-					self.master.controller.show_graphs = self.var_show_graphs.get()
-					while self.master.controller.game.winner == 0: #todo search a better solution
-						self.master.update()
+				self.master.controller = human_vs_AI_training_controller.Human_vs_AI_TrainingController(self.master,self.var_color_p1.get(),self.var_p2_model.get()) #todo finish this
+				self.master.controller.AI_player.set_allow_overrule(self.var_allow_overrule.get())
+				self.master.controller.show_graphs = self.var_show_graphs.get()
+
 			case "Test Algorithm":
 				print(f"run{i+1} started")
 				for i in range(self.var_game_runs.get()):
 					self.master.controller = test_algorithm_vs_AI_training_controller.TestAlgorithm_vs_AI_TrainingController(self.master,self.var_color_p1.get(),self.var_p2_model.get())
+
 			case "AI-Model":
 				for i in range(self.var_game_runs.get()):
 					print(f"run{i+1} started")
