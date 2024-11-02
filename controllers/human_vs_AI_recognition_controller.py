@@ -38,6 +38,10 @@ class Human_vs_AI_RecognitionController(controller.BaseController):
             self.view.window_mode = ui.main_window.WindowMode.recognition
 
         
+    def human_get_move(self):
+        human_move =...
+        self.human_put_piece(human_move[0], human_move[1])
+
     def human_put_piece(self, row, col):
         if self.game.put_piece(row, col): #if the square is empty do..., otherwise do nothing
             self.view.draw_pieces(self.game.board.board)

@@ -15,13 +15,13 @@ class BaseTrainingController(BaseController): #training means that the AI plays 
 
         self.last_round = False #todo toggle on and off when needed, temporarily disabled
         self.record_replay = True
-        self.last_move_model = None #has to be declared to prevent errors in main_window.py
+        self.last_move_model = None
         self.show_graphs = None #todo let the user choose, add this to the menu in the future
     
     def check_and_handle_winner(self):
         if self.game.winner != 0:
             print("There's a winner")
-            self.view.draw_line(self.game.board.winning_cells) #todo should the line be drawn when AI plays against AI?
+            self.view.draw_line(self.game.board.winning_cells)
             self.initialize_board()
             player_stats.update_player_stats(self.game,self.game.winner)
             return True

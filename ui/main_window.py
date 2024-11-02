@@ -11,6 +11,7 @@ from .settings_windows import scoreboard_window
 from .settings_windows import models_window
 import controllers
 from configuration.config import *
+from ui.frame_webcam import FrameWebcam
 
 
 # Use the existing logger by name
@@ -38,27 +39,29 @@ class GomokuApp(Tk):
 
         self.title("Gomoku")
         self.config(background="#357EC7")
+        self.bind("<Escape>", lambda e: self.toggle_fullscreen(False))
+        self.bind("<F11>", lambda e: self.toggle_fullscreen())
         self.resizable(True, True)
         self.attributes("-fullscreen", False) #todo: set to true in production
-        self.tk.call('tk', 'scaling', 1.5)#adjust depending on your screen resolution
 
         self.window_mode = WindowMode.pause
         self.game_type = GameType.human_vs_human
         
         # Canvas to draw the chessboard
         self.canvas = Canvas(self, width=750, height=750)
-        self.canvas.grid(row=1, column=0, padx=10)
+        self.canvas.grid(row=0, column=0, rowspan=2, padx=10)
 
-        self.menubar= Menu(self,font=("Helvetica", 12),tearoff=0)
+        self.menubar = Menu(self,font=("Helvetica", 12),tearoff=0)
         self.config(menu=self.menubar)
         self.new_game_menu = Menu(self.menubar,tearoff=0)
 
         self.new_game_menu.add_command(label="Play", command=lambda:self.open_new_window("Play"))
+        self.new_game_menu.add_command(label="Play with physical board", command=lambda:self.open_new_window("PhysicalPlay"))
         self.new_game_menu.add_command(label="Train", command=lambda:self.open_new_window("Train"))
         self.new_game_menu.add_command(label="Replay", command=lambda:self.open_new_window("Replay"))
         self.menubar.add_cascade(label="New Game",menu=self.new_game_menu)
 
-        self.models_menu= Menu(self.menubar,tearoff=0)
+        self.models_menu = Menu(self.menubar,tearoff=0)
         self.models_menu.add_command(label="models", command=lambda:self.open_new_window("Models"))
         self.menubar.add_cascade(label="Models",menu=self.models_menu)
         
@@ -68,7 +71,7 @@ class GomokuApp(Tk):
         
         self.squares = {}
         
-        self.BOARDSIZE=int(config["OTHER VARIABLES"]["BOARDSIZE"])
+        self.BOARDSIZE = int(config["OTHER VARIABLES"]["BOARDSIZE"])
         self.create_gomokuboard(self.BOARDSIZE)
         
         board = np.zeros((self.BOARDSIZE, self.BOARDSIZE))
@@ -86,21 +89,31 @@ class GomokuApp(Tk):
         self.next_button.pack(side=LEFT, padx=5)  # Place button2 next to button1 on the left side
 
         self.deactivate_replay_frame()
+
+        self.frame_webcam = FrameWebcam(self)
         
         self.color_player_1 = "red"
         self.color_player_2 = "blue"
         
         self.draw_scoreboard_bool = False
 
-    
+    def toggle_fullscreen(self,fullscreen=True): #esc to exit fullscreen, f11 to enter fullscreen or to exit fullscreen
+        if not self.attributes('-fullscreen') and fullscreen:
+            self.attributes('-fullscreen', True)
+        else:
+            self.attributes('-fullscreen', False)
+
     def open_new_window(self, window_type):
         self.close_secondary_windows()
+        self.last_window_type = window_type
 
         match window_type:
             case "Replay":
                 new_window = replay_window.ReplayWindow(self)
             case "Play":
                 new_window = new_game_window.NewGameWindow(self)
+            case "PhysicalPlay":
+                new_window = ... #todo add new window
             case "Models":
                 new_window = models_window.ModelsWindow(self)
             case "Train":
@@ -109,6 +122,7 @@ class GomokuApp(Tk):
                 new_window = scoreboard_window.ScoreboardWindow(self)
         
         self.show_replay_buttons(window_type=="Replay") #show replay buttons when using replay mode
+        self.show_frame_recognition(window_type=="PhysicalPlay")
     
     def show_replay_buttons(self,show):
         if show:
@@ -117,6 +131,13 @@ class GomokuApp(Tk):
         else:
             self.prev_button.pack_forget()
             self.next_button.pack_forget()
+            self.deactivate_replay_frame()
+
+    def show_frame_recognition(self, show):
+        if show:
+            self.frame_webcam.grid(column=1, row=0, rowspan=3)
+        else:
+            self.frame_webcam.grid_forget()
 
     def create_gomokuboard(self, grid_size):
         square_size = 50    # Each square will be 50x50 pixels
@@ -219,7 +240,7 @@ class GomokuApp(Tk):
             self.next_button.config(state=NORMAL)
 
     def activate_replay_frame(self):
-        self.frame_replay.grid(row=3, column=0, padx=10)  
+        self.frame_replay.grid(row=2, column=0, padx=10)  
         self.close_secondary_windows()
         
     def deactivate_replay_frame(self):

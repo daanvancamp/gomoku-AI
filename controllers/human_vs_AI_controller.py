@@ -59,10 +59,8 @@ class Human_vs_AI_Controller(controller.BaseController):
                
         np_scores = np.array(scores).reshape(15, 15)
         short_score = np_scores[action[0]][action[1]]
-        if self.mark_last_move_model:
-            self.last_move_model=action #=last move for example :(3,6)
-        else:
-            self.last_move_model=None
+        
+        self.last_move_model = action #=last move for example :(3,6)
 
         if max_score <= 0:
             # prevent division with negative values or zero
