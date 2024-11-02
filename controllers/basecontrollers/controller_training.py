@@ -65,6 +65,8 @@ class BaseTrainingController(BaseController): #training means that the AI plays 
         self.game.current_player.final_action = action
         self.game.current_player.moves += 1
 
+        self.view.window_mode = ui.main_window.WindowMode.human_move
+
     def train_at_the_end_of_the_round(self):
         self.view.window_mode = ui.main_window.WindowMode.computer_move
         print("training at the end of the round")

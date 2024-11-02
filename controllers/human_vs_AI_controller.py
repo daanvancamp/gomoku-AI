@@ -39,7 +39,6 @@ class Human_vs_AI_Controller(controller.BaseController):
             self.AI_put_piece()
         
     def human_put_piece(self, row, col):
-        self.view.window_mode = ui.main_window.WindowMode.human_move
         if self.game.put_piece(row, col):
             self.view.draw_pieces(self.game.board.board)
             if not self.check_and_handle_winner():
@@ -84,4 +83,6 @@ class Human_vs_AI_Controller(controller.BaseController):
 
         row, col = action
         self.game.put_piece(row, col)
-        self.view.draw_pieces(self.game.board.board) 
+        self.view.draw_pieces(self.game.board.board)
+        self.view.window_mode = ui.main_window.WindowMode.human_move
+

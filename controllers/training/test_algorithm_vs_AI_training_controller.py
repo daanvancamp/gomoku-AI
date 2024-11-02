@@ -55,10 +55,10 @@ class TestAlgorithm_vs_AI_TrainingController(controller_training.BaseTrainingCon
         self.view.window_mode = ui.main_window.WindowMode.computer_move
         row, col = self.game.current_player.test_algorithm.ai_move()
         self.game.put_piece(row, col)
-        self.view.draw_pieces(self.game.board.board) 
+        self.view.draw_pieces(self.game.board.board)
+
         test_algorithm = game.algorithms.test_algorithm.TestAlgorithm.TestAlgorithm(self.game.current_player)
         test_algorithm.board = self.game.board.board
-
         scoreboard = test_algorithm.evaluate_board()#calculate scoreboard 
         print("###########")
         print(scoreboard)
