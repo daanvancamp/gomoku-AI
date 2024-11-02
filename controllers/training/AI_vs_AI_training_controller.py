@@ -20,7 +20,7 @@ class AI_vs_AI_TrainingController(controller_training.BaseTrainingController):
             player2.load_model(modelname_2,True)
         else:
             player1.load_model(modelname_2,True)
-            player2.load_model(modelname_1,True) 
+            player2.load_model(modelname_1,True)
 
         game_board = game.game.GameFactory.create_game_board(int(config["OTHER VARIABLES"]["BOARDSIZE"]))
         self.game:game.game.Game = game.game.GameFactory.initialize_new_game(game_board, player1, player2)

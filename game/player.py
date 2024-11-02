@@ -94,6 +94,7 @@ class AI_Player(Player):
     def load_model(self, model,training):
         self.ai.load_model(model)
         self.AI_model=AI_Model(model,training)
+        self.ai.train = training
 
     def get_model_name(self):
         return self.AI_model.modelname

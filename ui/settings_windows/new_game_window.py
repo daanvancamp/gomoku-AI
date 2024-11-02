@@ -71,19 +71,15 @@ class NewGameWindow (Toplevel):#the methods of gomokuapp need to be callable fro
 		# self.label_value_number_of_training_loops_p2.grid(row=8, column=1, sticky="w")
 
 	def start_new_game(self):
-		from time import time
-		self.master.clear_canvas()
 		#p1=Human, p2=...
 		match self.var_p2_type.get():
 			case "Human":
 				self.master.controller = controllers.human_vs_human_controller.Human_vs_HumanController(self.master)
 			case "Test Algorithm":
-				start=time()
 				self.master.controller = controllers.human_vs_test_algorithm_controller.Human_vs_TestAlgorithmController(self.master,self.var_color_p1.get())
-				print("time",time()-start)
 			case "AI-Model":
-				self.master.controller = controllers.human_vs_AI_controller.Human_vs_AI_Controller(self.master,self.var_color_p1.get(),self.var_p2_model.get())
-				self.master.controller.AI_player.set_allow_overrule(self.var_allow_overrule.get())# The first move never needs to be overruled.
+					self.master.controller = controllers.human_vs_AI_controller.Human_vs_AI_Controller(self.master,self.var_color_p1.get(),self.var_p2_model.get())
+					self.master.controller.AI_player.set_allow_overrule(self.var_allow_overrule.get())# The first move never needs to be overruled.
 
 
 

@@ -11,14 +11,22 @@ logger = logging.getLogger('my_logger')
 
 class BaseTrainingController(BaseController): #training means that the AI plays against AI, Human or test algorithm, while improving its model.
     def __init__(self, view):
-        self.view:"ui.main_window.GomokuApp" = view
-        self.view.controller = self
-        #todo can be changed to super().__init__(view) if the init function of the basecontroller still is the same as the two lines above
+        super().__init__(view)
 
         self.last_round = False #todo toggle on and off when needed, temporarily disabled
         self.record_replay = True
         self.last_move_model = None #has to be declared to prevent errors in main_window.py
         self.show_graphs = None #todo let the user choose, add this to the menu in the future
+    
+    def check_and_handle_winner(self):
+        if self.game.winner != 0:
+            print("There's a winner")
+            self.view.draw_line(self.game.board.winning_cells) #todo should the line be drawn when AI plays against AI?
+            self.initialize_board()
+            player_stats.update_player_stats(self.game,self.game.winner)
+            return True
+        else:
+            return False
 
     def AI_put_piece(self):
         self.view.window_mode = ui.main_window.WindowMode.computer_move
@@ -68,7 +76,7 @@ class BaseTrainingController(BaseController): #training means that the AI plays 
         self.view.window_mode = ui.main_window.WindowMode.human_move
 
     def train_at_the_end_of_the_round(self):
-        self.view.window_mode = ui.main_window.WindowMode.computer_move
+        self.view.window_mode = ui.main_window.WindowMode.pause
         print("training at the end of the round")
         player_stats.update_player_stats(self.game,self.game.player1.id if self.game.winner==1 else self.game.player2.id)
         data = {}

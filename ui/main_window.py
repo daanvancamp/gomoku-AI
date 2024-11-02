@@ -177,6 +177,7 @@ class GomokuApp(Tk):
                                 self.canvas.create_oval(value[2] + padding, value[3] + padding, value[4] - padding, value[5] - padding, fill="orange" if color==self.color_player_1 else "light blue" , tags="piece")
                             else:
                                 self.canvas.create_oval(value[2] + padding, value[3] + padding, value[4] - padding, value[5] - padding, fill=color, tags="piece")
+        self.update()
 
     def draw_scoreboard(self, board, scoreboard):
         self.clear_text_on_canvas()
@@ -193,7 +194,6 @@ class GomokuApp(Tk):
        
     def activate_game(self):
         self.close_secondary_windows()
-        self.canvas.config(state="normal")
 
     def show_previous(self):
         """Show the previous item in the list."""
@@ -261,4 +261,3 @@ class GomokuApp(Tk):
 
     def end_game(self):
          mb.showinfo("End of the game","There's a winner, player"+str(self.controller.game.winner))
-         self.canvas.config(state=DISABLED)

@@ -48,6 +48,8 @@ class TrainWindow(Toplevel):
 		self.var_p1_model.set("standaard+3000")
 		self.var_p2_model= StringVar()
 		self.var_p2_model.set("standaard+3000")
+		self.var_game_runs = IntVar()
+		self.var_game_runs.set(10)
 
 		self.cb_choose_color=ttk.Combobox(self, state="readonly",values=["red","blue"],textvariable=self.var_color_p1)
 		self.cb_choose_color.grid(row=3, column=0, sticky="w", padx=10)
@@ -94,8 +96,8 @@ class TrainWindow(Toplevel):
 
 		# self.gamerunslabel = Label(self, text="Number of games: ")
 		# self.gamerunslabel.grid(row=8, column=0, sticky="w",pady=2,padx=distance_from_left_side)
-		# self.gamerunsentry2 = Entry(self, textvariable=Gamesettings.var_game_runs)
-		# self.gamerunsentry2.grid(row=9, column=0, sticky="w",pady=2,padx=distance_from_left_side)
+		self.gamerunsentry2 = Entry(self, textvariable=self.var_game_runs)
+		self.gamerunsentry2.grid(row=9, column=0, sticky="w",pady=2,padx=distance_from_left_side)
 		# self.replaybutton2 = Checkbutton(self, text="Save replays", variable=Gamesettings.var_rep)
 		# self.replaybutton2.grid(row=10, column=0, sticky="w",pady=2,padx=distance_from_left_side)
 		self.show_graphs_checkbutton=Checkbutton(self, text="Show graphs*", variable=self.var_show_graphs)
@@ -108,16 +110,18 @@ class TrainWindow(Toplevel):
 		self.info_show_graphs.grid(row=13, column=0, sticky="w",columnspan=2,padx=distance_from_left_side)
 
 	def start_new_training(self):
-		self.master.clear_canvas()
 		# The first move never needs to be overruled.
 		#p1=AI, p2=...
 		match self.var_p2_type.get():
 			case "Human":
-				self.master.controller = human_vs_AI_training_controller.Human_vs_AI_TrainingController(self.master,self.var_color_p1.get(),self.var_p2_model.get()) #todo finish this
-				self.master.controller.AI_player.set_allow_overrule(self.var_allow_overrule.get())
-				self.master.controller.show_graphs = self.var_show_graphs.get()
+				for i in range(self.var_game_runs.get()):
+					self.master.controller = human_vs_AI_training_controller.Human_vs_AI_TrainingController(self.master,self.var_color_p1.get(),self.var_p2_model.get()) #todo finish this
+					self.master.controller.AI_player.set_allow_overrule(self.var_allow_overrule.get())
+					self.master.controller.show_graphs = self.var_show_graphs.get()
 			case "Test Algorithm":
-				self.master.controller = test_algorithm_vs_AI_training_controller.TestAlgorithm_vs_AI_TrainingController(self.master,self.var_color_p1.get(),self.var_p2_model.get())
+				for i in range(self.var_game_runs.get()):
+					self.master.controller = test_algorithm_vs_AI_training_controller.TestAlgorithm_vs_AI_TrainingController(self.master,self.var_color_p1.get(),self.var_p2_model.get())
 			case "AI-Model":
-				self.master.controller = AI_vs_AI_training_controller.AI_vs_AI_TrainingController(self.master,self.var_color_p1.get(),self.var_p1_model.get(),self.var_p2_model.get())
+				for i in range(self.var_game_runs.get()):
+					self.master.controller = AI_vs_AI_training_controller.AI_vs_AI_TrainingController(self.master,self.var_color_p1.get(),self.var_p1_model.get(),self.var_p2_model.get())
 
