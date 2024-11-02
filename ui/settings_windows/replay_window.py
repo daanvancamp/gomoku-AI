@@ -2,13 +2,12 @@ import tkinter as tk
 import tkinter.filedialog
 from configuration.config import *
 import controllers.replay_controller
-import ui.main_window
 from ui.settings_windows import window
 
 #todo: window verdwijnt soms
 class ReplayWindow(window.BaseWindow):
 	def __init__(self, master):
-		super().__init__(master,250,100,"Replay Window") #optimize the window size
+		super().__init__(master,250,150,"Replay Window") #optimize the window size
 
 		self.var_replay_file = tk.StringVar()
 		self.replaylabel = tk.Label(self, text="Choose the replay file: ")
@@ -23,7 +22,7 @@ class ReplayWindow(window.BaseWindow):
 		self.label_info_replay_file_loaded.grid(row=4, column=0, sticky="w",columnspan=2,padx=2)
 		
 	def browse_files(self):
-		self.var_replay_file.set(tkinter.filedialog.askopenfilename(filetypes=[("Json File", "*.json")],initialdir=config['Folders']['replay_folder'])) #todo change initialdir so it is correct
+		self.var_replay_file.set(tkinter.filedialog.askopenfilename(filetypes=[("Json File", "*.json")],initialdir=config['Folders']['replay_folder']))
 		
 	def start_new_replay(self):
 		if self.var_replay_file.get() == "": 

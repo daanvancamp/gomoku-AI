@@ -8,19 +8,19 @@ import logging
 from utils import stats, player_stats
 # Use the existing logger by name
 logger = logging.getLogger('my_logger')
-
+#todo there's a bugfix needed
 class Human_vs_AI_TrainingController(controller_training.BaseTrainingController):
     def __init__(self, view: "ui.main_window.GomokuApp",color_AI,modelname="standaard+3000"):
         super().__init__(view)
         logger.info("Initialize Human_vs_AI_TrainingController")
-        if color_AI!="red": #red always plays first
-            player1 = game.game.GameFactory.create_player("Human", 1) #player 1 always plays red and begins
-            player2 = game.game.GameFactory.create_player("AI", 2)
-            self.AI_player=player2
-        else:
+        if color_AI=="red": #red always plays first
             player1 = game.game.GameFactory.create_player("AI", 1)
             player2 = game.game.GameFactory.create_player("Human", 2)
-            self.AI_player=player1
+            self.AI_player = player1
+        else:
+            player1 = game.game.GameFactory.create_player("Human", 1) #player 1 always plays red and begins
+            player2 = game.game.GameFactory.create_player("AI", 2)
+            self.AI_player = player2
 
         self.AI_player.load_model(modelname,True)
 

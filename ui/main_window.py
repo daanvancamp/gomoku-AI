@@ -22,6 +22,7 @@ class WindowMode(enum.Enum):
     computer_move = 'computer_move'
     human_move = 'human_move'
     pause = 'pause'
+    recognition='recognition'#recognition in progress
 
 class GameType(enum.Enum):
     human_vs_human = 'human_vs_human'

@@ -8,7 +8,7 @@ import logging
 # Use the existing logger by name
 logger = logging.getLogger('my_logger')
 
-class Human_vs_AI_Controller(controller.BaseController):
+class Human_vs_AI_RecognitionController(controller.BaseController):
     def __init__(self, view: "ui.main_window.GomokuApp",color_human, modelname="standaard+3000"):
         super().__init__(view)
         self.last_move_model=None
@@ -30,13 +30,14 @@ class Human_vs_AI_Controller(controller.BaseController):
 
         self.view.activate_game()
 
-        self.record_replay = True #todo let the user choose, add this to the menu in the future
+        self.record_replay = True
 
         if self.game.player1.type=="AI": #player 1 always plays red and begins
             self.AI_put_piece()
         else:
-            self.view.window_mode = ui.main_window.WindowMode.human_move
-   
+            self.view.window_mode = ui.main_window.WindowMode.recognition
+
+        
     def human_put_piece(self, row, col):
         if self.game.put_piece(row, col): #if the square is empty do..., otherwise do nothing
             self.view.draw_pieces(self.game.board.board)

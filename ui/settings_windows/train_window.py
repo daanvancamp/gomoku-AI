@@ -1,9 +1,9 @@
 #todo: deze window werkt nog niet volledig
+from time import sleep
 from tkinter import ttk
 from tkinter import *
 from configuration.config import *
 from model_management.modelmanager import ModelManager
-import ui.main_window
 from controllers.training import human_vs_AI_training_controller,test_algorithm_vs_AI_training_controller,AI_vs_AI_training_controller
 from ui.settings_windows import window
 
@@ -112,13 +112,18 @@ class TrainWindow(window.BaseWindow):
 		match self.var_p2_type.get():
 			case "Human":
 				for i in range(self.var_game_runs.get()):
+					print(f"run{i+1} started")
 					self.master.controller = human_vs_AI_training_controller.Human_vs_AI_TrainingController(self.master,self.var_color_p1.get(),self.var_p2_model.get()) #todo finish this
 					self.master.controller.AI_player.set_allow_overrule(self.var_allow_overrule.get())
 					self.master.controller.show_graphs = self.var_show_graphs.get()
+					while self.master.controller.game.winner == 0: #todo search a better solution
+						self.master.update()
 			case "Test Algorithm":
+				print(f"run{i+1} started")
 				for i in range(self.var_game_runs.get()):
 					self.master.controller = test_algorithm_vs_AI_training_controller.TestAlgorithm_vs_AI_TrainingController(self.master,self.var_color_p1.get(),self.var_p2_model.get())
 			case "AI-Model":
 				for i in range(self.var_game_runs.get()):
+					print(f"run{i+1} started")
 					self.master.controller = AI_vs_AI_training_controller.AI_vs_AI_TrainingController(self.master,self.var_color_p1.get(),self.var_p1_model.get(),self.var_p2_model.get())
 
