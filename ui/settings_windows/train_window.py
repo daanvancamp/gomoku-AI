@@ -20,14 +20,12 @@ class TrainWindow(window.BaseWindow):
 		self.label_info=Label(self, text="red begins always")
 		self.label_info.grid(row=0, column=1, sticky="w", padx=10)
 
-		self.label_p1 = Label(self, text="Player 1(AI)")
+		self.label_p1 = Label(self, text="Player 1 (AI)")
 		self.label_p1.grid(row=2, column=0, sticky="w", padx=10)
 
-		self.label_p2 = Label(self, text="Player 2(?)")
+		self.label_p2 = Label(self, text="Player 2 (?)")
 		self.label_p2.grid(row=2, column=1, sticky="w", padx=10)
 		
-		self.var_p1_type = StringVar()
-		self.var_p1_type.set("AI-Model")
 		self.var_color_p1 = StringVar()
 		self.var_color_p1.set("red") #red begins always
 		self.var_p2_type = StringVar()

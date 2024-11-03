@@ -1,5 +1,4 @@
 import game.game
-import numpy as np
 import ui.main_window
 from utils.player_stats import update_player_stats
 import logging
@@ -13,7 +12,10 @@ class BaseController:
         self.view:"ui.main_window.GomokuApp" = view
         self.view.controller = self
         self.view.clear_canvas()
+        self.view.hide_unnecessary_widgets()
+
         self.record_replay = True #todo add this option to the GUI
+        self.last_move_model=None #value remains none when playing Human vs Human or Human vs Test
 
     def initialize_board(self):
         game.game.Game().board.reset_board()

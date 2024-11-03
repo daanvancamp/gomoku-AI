@@ -14,7 +14,6 @@ class BaseTrainingController(BaseController): #training means that the AI plays 
         super().__init__(view)
 
         self.last_round = False #todo toggle on and off when needed, temporarily disabled
-        self.last_move_model = None
         self.show_graphs = None #todo let the user choose, add this to the menu in the future
     
     def check_and_handle_winner(self):

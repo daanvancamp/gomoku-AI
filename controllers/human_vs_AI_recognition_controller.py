@@ -11,8 +11,8 @@ logger = logging.getLogger('my_logger')
 class Human_vs_AI_RecognitionController(controller.BaseController):
     def __init__(self, view: "ui.main_window.GomokuApp",color_human, modelname="standaard+3000"):
         super().__init__(view)
-        self.last_move_model=None
         logger.info("Initialize Human_vs_AI_Controller")
+
         if color_human=="red": #red always plays first
             player1 = game.game.GameFactory.create_player("Human", 1) #player 1 always plays red and begins
             player2 = game.game.GameFactory.create_player("AI", 2)
@@ -30,13 +30,10 @@ class Human_vs_AI_RecognitionController(controller.BaseController):
 
         self.view.activate_game()
 
-        self.record_replay = True
-
         if self.game.player1.type=="AI": #player 1 always plays red and begins
             self.AI_put_piece()
         else:
             self.view.window_mode = ui.main_window.WindowMode.recognition
-
         
     def human_get_move(self):
         human_move =...
@@ -49,7 +46,7 @@ class Human_vs_AI_RecognitionController(controller.BaseController):
                 self.AI_put_piece()
                 self.check_and_handle_winner()
 
-            logger.info("Human move")       
+            logger.info("Human move")
 
     def AI_put_piece(self):
         self.view.window_mode = ui.main_window.WindowMode.computer_move
@@ -64,10 +61,8 @@ class Human_vs_AI_RecognitionController(controller.BaseController):
                
         np_scores = np.array(scores).reshape(15, 15)
         short_score = np_scores[action[0]][action[1]]
-        if self.mark_last_move_model:
-            self.last_move_model=action #=last move for example :(3,6)
-        else:
-            self.last_move_model=None
+        
+        self.last_move_model = action #=last move for example :(3,6)
 
         if max_score <= 0:
             # prevent division with negative values or zero

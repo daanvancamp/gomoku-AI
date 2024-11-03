@@ -1,9 +1,5 @@
-#todo replace the consts.json with a configuration file
-#todo restore save replay function
-#todo restore training stats
-#todo add this to the program in the right place:  and finish save replay function
-"""if record_replay:
-        filereader.save_replay(p1_moves, p2_moves)"""
+#todo restore model stats
+#todo inheritance when using human_vs_ai_recognition?
 
 #This is the startup file, please run this file to start the game
 

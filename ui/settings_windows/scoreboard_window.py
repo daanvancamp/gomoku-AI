@@ -4,7 +4,7 @@ import ui.main_window
 
 WIDTH=int(config["OTHER VARIABLES"]["WIDTH"])
 HEIGHT=int(config["OTHER VARIABLES"]["HEIGHT"])
-#todo: window verder afwerken
+
 class ScoreboardWindow (tk.Toplevel):#the methods of gomokuapp need to be callable from the frame
 	def __init__(self, master: "ui.main_window.GomokuApp"):
 		super().__init__(master)

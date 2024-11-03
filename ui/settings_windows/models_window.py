@@ -105,10 +105,3 @@ class ModelsWindow(window.BaseWindow):
 		self.label_value_ties_tab4.grid(row=8, column=1, sticky="w")
 		self.label_relative_value_ties=Label(self, textvariable=self.var_relative_value_ties)
 		self.label_relative_value_ties.grid(row=8, column=2, sticky="w")
-
-		self.frame_stats_buttons=Frame(self)
-		self.frame_stats_buttons.grid(row=9, column=0, columnspan=3,pady=15)
-		self.button_reset_stats=Button(self.frame_stats_buttons, text="Reset Stats", command=lambda: self.reset_all_stats())
-		self.button_reset_stats.grid(row=0, column=0)
-		self.button_reset_end_states=Button(self.frame_stats_buttons, text="Reset End States", command=lambda: self.reset_end_states())
-		self.button_reset_end_states.grid(row=0, column=1)

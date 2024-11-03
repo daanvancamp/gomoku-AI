@@ -5,12 +5,7 @@ import logging
 import enum
 
 from ui.frame_recognition_buttons import FrameRecognitionButtons
-
-from .settings_windows import replay_window
-from .settings_windows import new_game_window
-from .settings_windows import train_window
-from .settings_windows import scoreboard_window
-from .settings_windows import models_window
+from .settings_windows import replay_window,new_game_window,train_window,scoreboard_window,models_window,physical_play_window
 import controllers
 from configuration.config import *
 from ui.frame_webcam import FrameWebcam
@@ -115,7 +110,7 @@ class GomokuApp(Tk):
             case "Play":
                 new_window = new_game_window.NewGameWindow(self)
             case "PhysicalPlay":
-                new_window = ... #todo add new window
+                new_window = physical_play_window.PhysicalPlayWindow(self)
             case "Models":
                 new_window = models_window.ModelsWindow(self)
             case "Train":
@@ -123,9 +118,10 @@ class GomokuApp(Tk):
             case "Scoreboard":
                 new_window = scoreboard_window.ScoreboardWindow(self)
         
-        self.show_replay_buttons(window_type=="Replay") #show replay buttons when using replay mode
-        self.show_recognition_widgets(window_type=="PhysicalPlay")
-    
+    def hide_unnecessary_widgets(self): #this function is used so the buttons are hided when starting a controller, not when opening a new window. (A user could close a window without starting a new game.)
+        self.show_replay_buttons(self.last_window_type=="Replay") #show replay buttons when using replay mode
+        self.show_recognition_widgets(self.last_window_type=="PhysicalPlay")
+
     def show_replay_buttons(self,show):
         if show:
             self.prev_button.pack(side=LEFT, padx=5)  # Place button1 on the left side of the frame
@@ -193,7 +189,7 @@ class GomokuApp(Tk):
                             else:
                                 color = self.color_player_2
 
-                            if getattr(self.controller, 'last_move_model', None)==(i,j):
+                            if self.controller.last_move_model == (i,j):
                                 self.canvas.create_oval(value[2] + padding, value[3] + padding, value[4] - padding, value[5] - padding, fill="orange" if color==self.color_player_1 else "light blue" , tags="piece")
                             else:
                                 self.canvas.create_oval(value[2] + padding, value[3] + padding, value[4] - padding, value[5] - padding, fill=color, tags="piece")

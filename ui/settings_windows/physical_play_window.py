@@ -2,6 +2,7 @@ from tkinter import *
 from tkinter import ttk
 from configuration.config import *
 import controllers.human_vs_AI_controller
+import controllers.human_vs_AI_recognition_controller
 import controllers.human_vs_human_controller 
 import controllers.human_vs_test_algorithm_controller
 from model_management.modelmanager import ModelManager
@@ -9,24 +10,24 @@ import ui.main_window
 from ui.settings_windows import window
 
 
-modelmanager_instance=ModelManager()
+modelmanager_instance = ModelManager()
 WIDTH=int(config["OTHER VARIABLES"]["WIDTH"])
 HEIGHT=int(config["OTHER VARIABLES"]["HEIGHT"])
-
-class NewGameWindow (window.BaseWindow):
+#todo: window verder afwerken
+class PhysicalPlayWindow (window.BaseWindow):
 	def __init__(self, master: "ui.main_window.GomokuApp"):
-		super().__init__(master,WIDTH,HEIGHT,"New Game")
+		super().__init__(master,WIDTH,HEIGHT,"New Physical Game")
 
-		self.button_new_game = Button(self, text="New Game", command=self.start_new_game)
-		self.button_new_game.grid(row=0, column=0, sticky="w", padx=10)
+		self.button_new_physical_game = Button(self, text="New Physical Game", command=self.start_new_physical_game)
+		self.button_new_physical_game.grid(row=0, column=0, sticky="w", padx=10)
 
-		self.label_info=Label(self, text="red begins always")
+		self.label_info = Label(self, text="red begins always")
 		self.label_info.grid(row=1, column=0, sticky="w", padx=10)
 
-		self.label_p1 = Label(self, text="Player 1 (Human)")
+		self.label_p1 = Label(self, text="Player 1(Human)")
 		self.label_p1.grid(row=2, column=0, sticky="w", padx=10)
 
-		self.label_p2 = Label(self, text="Player 2 (?)")
+		self.label_p2 = Label(self, text="Player 2(AI)")
 		self.label_p2.grid(row=2, column=1, sticky="w", padx=10)
 		
 		self.var_color_p1 = StringVar()
@@ -34,26 +35,20 @@ class NewGameWindow (window.BaseWindow):
 		self.var_p2_type = StringVar()
 		self.var_p2_type.set("AI-Model")
 
-		self.var_p2_model= StringVar()
+		self.var_p2_model = StringVar()
 		self.var_p2_model.set("standaard+3000")
 
 		self.var_allow_overrule=BooleanVar()
 		self.var_allow_overrule.set(True)
 
-		self.cb_choose_color=ttk.Combobox(self, state="readonly",values=["red","blue"],textvariable=self.var_color_p1)
+		self.cb_choose_color = ttk.Combobox(self, state="readonly",values=["red","blue"],textvariable=self.var_color_p1)
 		self.cb_choose_color.grid(row=3, column=0, sticky="w", padx=10)
-
-		self.radiobutton_7 = Radiobutton(self, text="Human", variable=self.var_p2_type, value="Human")
-		self.radiobutton_7.grid(row=3, column=1, sticky="w")
-		self.radiobutton_8 = Radiobutton(self, text="Test Algorithm", variable=self.var_p2_type, value="Test Algorithm")
-		self.radiobutton_8.grid(row=4, column=1, sticky="w")
-		self.radiobutton_9 = Radiobutton(self, text="AI-Model", variable=self.var_p2_type, value="AI-Model")
-		self.radiobutton_9.grid(row=5, column=1, sticky="w")
 
 		self.checkbox_allow_overrule = Checkbutton(self, text="Allow overrule", variable=self.var_allow_overrule)
 		self.checkbox_allow_overrule.grid(row=7, column=0,columnspan=2)
 
 		self.CbModel2 = ttk.Combobox(self, state="readonly", values=modelmanager_instance.list_models,textvariable=self.var_p2_model)
+
 		self.CbModel2.grid(row=6, column=1,sticky="w",padx=10)
 
 		# self.label_value_number_of_training_loops_p1 = tk.Label(self, textvariable=gomoku.player1.var_number_of_training_loops_comboboxes)
@@ -62,16 +57,11 @@ class NewGameWindow (window.BaseWindow):
 		# self.label_value_number_of_training_loops_p2 = tk.Label(self, textvariable=gomoku.player2.var_number_of_training_loops_comboboxes)
 		# self.label_value_number_of_training_loops_p2.grid(row=8, column=1, sticky="w")
 
-	def start_new_game(self):
-		#p1=Human, p2=...
-		match self.var_p2_type.get():
-			case "Human":
-				self.master.controller = controllers.human_vs_human_controller.Human_vs_HumanController(self.master)
-			case "Test Algorithm":
-				self.master.controller = controllers.human_vs_test_algorithm_controller.Human_vs_TestAlgorithmController(self.master,self.var_color_p1.get())
-			case "AI-Model":
-					self.master.controller = controllers.human_vs_AI_controller.Human_vs_AI_Controller(self.master,self.var_color_p1.get(),self.var_p2_model.get())
-					self.master.controller.AI_player.set_allow_overrule(self.var_allow_overrule.get())# The first move never needs to be overruled.
+	def start_new_physical_game(self):
+		#p1=Human, p2=AI
+		self.master.controller = controllers.human_vs_AI_recognition_controller.Human_vs_AI_RecognitionController(self.master,self.var_color_p1.get(),self.var_p2_model.get())
+		self.master.controller.AI_player.set_allow_overrule(self.var_allow_overrule.get())# The first move never needs to be overruled.
+			
 
 
 

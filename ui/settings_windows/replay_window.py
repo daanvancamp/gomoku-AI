@@ -4,7 +4,6 @@ from configuration.config import *
 import controllers.replay_controller
 from ui.settings_windows import window
 
-#todo: window verdwijnt soms
 class ReplayWindow(window.BaseWindow):
 	def __init__(self, master):
 		super().__init__(master,250,150,"Replay Window") #optimize the window size
@@ -26,7 +25,7 @@ class ReplayWindow(window.BaseWindow):
 		
 	def start_new_replay(self):
 		if self.var_replay_file.get() == "": 
-			self.label_info_replay_file_loaded.config(text="Please select a replay file")
+			self.label_info_replay_file_loaded.config(text="Please select a replay file to continue")
 			return
 		self.master.clear_canvas()
 		self.master.controller = controllers.replay_controller.ReplayController(self.master)
