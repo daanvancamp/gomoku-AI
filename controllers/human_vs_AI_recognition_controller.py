@@ -5,6 +5,7 @@ from configuration.config import *
 import numpy as np
 import game.algorithms.ai.ai
 import logging
+import cv2
 # Use the existing logger by name
 logger = logging.getLogger('my_logger')
 
@@ -16,11 +17,11 @@ class Human_vs_AI_RecognitionController(controller.BaseController):
         if color_human=="red": #red always plays first
             player1 = game.game.GameFactory.create_player("Human", 1) #player 1 always plays red and begins
             player2 = game.game.GameFactory.create_player("AI", 2)
-            self.AI_player=player2
+            self.AI_player = player2
         else:
             player1 = game.game.GameFactory.create_player("AI", 1)
             player2 = game.game.GameFactory.create_player("Human", 2)
-            self.AI_player=player1
+            self.AI_player = player1
 
         self.AI_player.load_model(modelname,False)
 
@@ -29,24 +30,31 @@ class Human_vs_AI_RecognitionController(controller.BaseController):
         self.initialize_board()
 
         self.view.activate_game()
+        
+        self.cap = cv2.VideoCapture(1, cv2.CAP_DSHOW) #faster connection time
+        if not self.cap.isOpened():
+            self.view.show_error("Camera not found","Please make sure the camera is connected to your computer and try again.")
+            self.view.window_mode = ui.main_window.WindowMode.pause
+            return
+        
+        self.view.frame_webcam.update_video_feed()
 
         if self.game.player1.type=="AI": #player 1 always plays red and begins
             self.AI_put_piece()
         else:
             self.view.window_mode = ui.main_window.WindowMode.recognition
         
-    def human_get_move(self):
+    def human_get_and_process_move(self):
         human_move =...
         self.human_put_piece(human_move[0], human_move[1])
 
     def human_put_piece(self, row, col):
         if self.game.put_piece(row, col): #if the square is empty do..., otherwise do nothing
+            logger.info("Human move")
             self.view.draw_pieces(self.game.board.board)
             if not self.check_and_handle_winner():
                 self.AI_put_piece()
                 self.check_and_handle_winner()
-
-            logger.info("Human move")
 
     def AI_put_piece(self):
         self.view.window_mode = ui.main_window.WindowMode.computer_move

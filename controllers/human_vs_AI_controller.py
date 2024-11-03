@@ -16,11 +16,11 @@ class Human_vs_AI_Controller(controller.BaseController):
         if color_human=="red": #red always plays first
             player1 = game.game.GameFactory.create_player("Human", 1) #player 1 always plays red and begins
             player2 = game.game.GameFactory.create_player("AI", 2)
-            self.AI_player=player2
+            self.AI_player = player2
         else:
             player1 = game.game.GameFactory.create_player("AI", 1)
             player2 = game.game.GameFactory.create_player("Human", 2)
-            self.AI_player=player1
+            self.AI_player = player1
 
         self.AI_player.load_model(modelname,False)
 
@@ -37,13 +37,12 @@ class Human_vs_AI_Controller(controller.BaseController):
    
     def human_put_piece(self, row, col):
         if self.game.put_piece(row, col): #if the square is empty do..., otherwise do nothing
+            logger.info("Human move") 
             self.view.draw_pieces(self.game.board.board)
             if not self.check_and_handle_winner():
                 self.AI_put_piece()
                 self.check_and_handle_winner()
-
-            logger.info("Human move")       
-
+                  
     def AI_put_piece(self):
         self.view.window_mode = ui.main_window.WindowMode.computer_move
         logger.info("AI move")

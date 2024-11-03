@@ -281,3 +281,6 @@ class GomokuApp(Tk):
     def show_load_error(self,error):
         print("Please select a valid file, error:",error)
         mb.showerror("invalid file",f"Please select a valid file, error:{error}")
+
+    def show_error(self, title, errormessage):
+        mb.showerror(title,errormessage)

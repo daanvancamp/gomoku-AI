@@ -11,7 +11,7 @@ import logging
 from utils import filereader, stats, player_stats
 # Use the existing logger by name
 logger = logging.getLogger('my_logger')
-#todo there's a bugfix needed
+#todo there's a bugfix needed (zero division error)
 class Human_vs_AI_TrainingController(controller_training.BaseTrainingController):
     def __init__(self, view: "ui.main_window.GomokuApp",color_AI,modelname="standaard+3000"):
         super().__init__(view)
@@ -55,6 +55,7 @@ class Human_vs_AI_TrainingController(controller_training.BaseTrainingController)
             print("er is een winnaar")
             self.view.draw_line(self.game.board.winning_cells)
             self.view.end_game() #the additional line in comparison to the other training controllers: a messagebox is shown when a human is playing
+            self.view.window_mode = ui.main_window.WindowMode.pause
             self.initialize_board()
             player_stats.update_player_stats(self.game,self.game.winner)
             if self.record_replay: #the replay is always recorded, but only saved if the user wants it

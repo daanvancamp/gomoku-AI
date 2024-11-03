@@ -20,6 +20,7 @@ class BaseTrainingController(BaseController): #training means that the AI plays 
         if self.game.winner != 0:
             print("There's a winner")
             self.view.draw_line(self.game.board.winning_cells)
+            self.view.window_mode = ui.main_window.WindowMode.pause
             self.initialize_board()
             player_stats.update_player_stats(self.game,self.game.winner)
             if self.record_replay: #the replay is always recorded, but only saved if the user wants it
