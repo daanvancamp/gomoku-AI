@@ -25,6 +25,10 @@ class Game(metaclass=Singleton):
     def put_piece(self, row, col) -> bool:
         if self.board.square_empty(row, col):
             self.board.put_piece(row, col, self.current_player.id)
+            if self.current_player.id == 1:
+                self.p1_moves.append((row, col))
+            else:
+                self.p2_moves.append((row, col))
         else:
             return False
 

@@ -13,11 +13,7 @@ class BaseController:
         self.view:"ui.main_window.GomokuApp" = view
         self.view.controller = self
         self.view.clear_canvas()
-        self.record_replay = True #todo add option to GUI
-        if self.record_replay:
-            self.p1_moves = []
-            self.p2_moves = []
-
+        self.record_replay = True #todo add this option to the GUI
 
     def initialize_board(self):
         game.game.Game().board.reset_board()
@@ -25,12 +21,12 @@ class BaseController:
     def check_and_handle_winner(self):
         if self.game.winner != 0:
             print("er is een winnaar")
-            self.view.draw_line(self.game.board.winning_cells) #todo should the line be drawn when AI plays against AI?
+            self.view.draw_line(self.game.board.winning_cells)
             self.view.end_game()
             self.initialize_board()
             update_player_stats(self.game,self.game.winner)
             if self.record_replay:
-                filereader.save_replay(self.p1_moves, self.p2_moves)
+                filereader.save_replay(self.game.p1_moves, self.game.p2_moves)
             return True
         else:
             return False

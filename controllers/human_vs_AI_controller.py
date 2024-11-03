@@ -30,8 +30,6 @@ class Human_vs_AI_Controller(controller.BaseController):
 
         self.view.activate_game()
 
-        self.record_replay = True #todo let the user choose, add this to the menu in the future
-
         if self.game.player1.type=="AI": #player 1 always plays red and begins
             self.AI_put_piece()
         else:
@@ -67,12 +65,6 @@ class Human_vs_AI_Controller(controller.BaseController):
             score = 0
         else:
             score = short_score / max_score
-
-        if self.record_replay:
-            if self.game.current_player.id == 1:
-                self.game.p1_moves.append(action)
-            else:
-                self.game.p2_moves.append(action)
 
         self.game.current_player.weighed_moves.append(score)
         self.game.current_player.final_action = action

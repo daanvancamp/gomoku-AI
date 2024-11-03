@@ -1,7 +1,7 @@
 import game.game
 import ui.main_window
 from controllers.basecontrollers.controller import BaseController
-from utils import stats, player_stats
+from utils import filereader, stats, player_stats
 
 import logging
 import numpy as np
@@ -14,7 +14,6 @@ class BaseTrainingController(BaseController): #training means that the AI plays 
         super().__init__(view)
 
         self.last_round = False #todo toggle on and off when needed, temporarily disabled
-        self.record_replay = True
         self.last_move_model = None
         self.show_graphs = None #todo let the user choose, add this to the menu in the future
     
@@ -24,6 +23,8 @@ class BaseTrainingController(BaseController): #training means that the AI plays 
             self.view.draw_line(self.game.board.winning_cells)
             self.initialize_board()
             player_stats.update_player_stats(self.game,self.game.winner)
+            if self.record_replay: #the replay is always recorded, but only saved if the user wants it
+                filereader.save_replay(self.game.p1_moves, self.game.p2_moves)
             return True
         else:
             return False
@@ -52,20 +53,15 @@ class BaseTrainingController(BaseController): #training means that the AI plays 
         else:
             score = short_score / max_score
 
-        if self.record_replay:
-            if self.game.current_player.id == 1:
-                self.game.p1_moves.append(action)
-            else:
-                self.game.p2_moves.append(action)
-
         row, col = action
         self.game.put_piece(row, col)
+
         if self.game.player1.type == "Human" or self.game.player2.type == "Human":
             self.view.draw_pieces(self.game.board.board) #the calculations are faster than a tkinter canvas
 
         next_max_score, next_scores, next_scores_normalized = gomoku_ai.calculate_score(15)
 
-        gomoku_ai.remember(old_state, action, score,self.game.board.board ,self.game.winner!=0 ) #todo does this work?
+        gomoku_ai.remember(old_state, action, score,self.game.board.board ,self.game.winner!=0 )
         gomoku_ai.train_short_memory(one_hot_board, action, short_score, scores, gomoku_ai.convert_to_one_hot(),next_scores,self.game.winner!=0)
         self.game.players[self.game.current_player.id - 1].move_loss.append(gomoku_ai.loss)
 
@@ -89,7 +85,7 @@ class BaseTrainingController(BaseController): #training means that the AI plays 
                 p.score_loss.append(p.ai.loss)
                 move_loss = [float(val) for val in p.move_loss]
                 p.final_move_loss.append(sum(move_loss)/len(move_loss)) #todo fix zero division error that occurs once in a while
-                p.ai.model.save_model(p.get_model_name())#todo check if this works
+                p.ai.model.save_model(p.get_model_name())
                 p.final_move_scores.append(sum(p.weighed_moves)/len(p.weighed_moves))
                 stats.log_message(f"{p.type} {p.id}: score loss: {float(p.ai.loss)}")
                 stats.log_message(f"{p.type} {p.id}: move loss: {sum(p.move_loss)/len(p.move_loss)}")

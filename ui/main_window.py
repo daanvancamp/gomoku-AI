@@ -15,7 +15,6 @@ import controllers
 from configuration.config import *
 from ui.frame_webcam import FrameWebcam
 
-
 # Use the existing logger by name
 logger = logging.getLogger('my_logger')
 

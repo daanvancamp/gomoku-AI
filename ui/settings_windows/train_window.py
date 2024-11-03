@@ -1,5 +1,3 @@
-#todo: deze window werkt nog niet volledig
-from time import sleep
 from tkinter import ttk
 from tkinter import *
 from configuration.config import *
@@ -111,13 +109,13 @@ class TrainWindow(window.BaseWindow):
 		#p1=AI, p2=...
 		match self.var_p2_type.get():
 			case "Human":
-				self.master.controller = human_vs_AI_training_controller.Human_vs_AI_TrainingController(self.master,self.var_color_p1.get(),self.var_p2_model.get()) #todo finish this
+				self.master.controller = human_vs_AI_training_controller.Human_vs_AI_TrainingController(self.master,self.var_color_p1.get(),self.var_p2_model.get())
 				self.master.controller.AI_player.set_allow_overrule(self.var_allow_overrule.get())
 				self.master.controller.show_graphs = self.var_show_graphs.get()
 
 			case "Test Algorithm":
-				print(f"run{i+1} started")
 				for i in range(self.var_game_runs.get()):
+					print(f"run{i+1} started")
 					self.master.controller = test_algorithm_vs_AI_training_controller.TestAlgorithm_vs_AI_TrainingController(self.master,self.var_color_p1.get(),self.var_p2_model.get())
 
 			case "AI-Model":
