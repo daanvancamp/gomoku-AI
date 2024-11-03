@@ -1,17 +1,16 @@
 import cv2
 import numpy as np
-from game import gomoku
 import math
 import logging
+from configuration.config import config
 
 # Use the existing logger by name
 logger = logging.getLogger('my_logger')
 
 class PlayBoardProcessor():
 
-    def __init__(self, instance:gomoku.GomokuGame):
-        self.BOARD_SIZE=instance.GRID_SIZE
-        self.game_instance=instance
+    def __init__(self):
+        self.BOARD_SIZE=int(config["OTHER VARIABLES"]["BOARDSIZE"])
         self.avg_distances = None
         self.vid=cv2.VideoCapture(1, cv2.CAP_DSHOW)
         self.previous_state_board=[]

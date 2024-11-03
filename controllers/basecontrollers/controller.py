@@ -3,6 +3,7 @@ import numpy as np
 import ui.main_window
 from utils.player_stats import update_player_stats
 import logging
+from utils import filereader
 
 # Use the existing logger by name
 logger = logging.getLogger('my_logger')
@@ -12,8 +13,8 @@ class BaseController:
         self.view:"ui.main_window.GomokuApp" = view
         self.view.controller = self
         self.view.clear_canvas()
-        record_replay = True
-        if record_replay:
+        self.record_replay = True #todo add option to GUI
+        if self.record_replay:
             self.p1_moves = []
             self.p2_moves = []
 
@@ -28,6 +29,8 @@ class BaseController:
             self.view.end_game()
             self.initialize_board()
             update_player_stats(self.game,self.game.winner)
+            if self.record_replay:
+                filereader.save_replay(self.p1_moves, self.p2_moves)
             return True
         else:
             return False
