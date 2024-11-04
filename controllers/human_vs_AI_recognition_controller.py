@@ -31,7 +31,7 @@ class Human_vs_AI_RecognitionController(controller.BaseController):
 
         self.view.activate_game()
         
-        self.cap = cv2.VideoCapture(1, cv2.CAP_DSHOW) #faster connection time
+        self.cap = cv2.VideoCapture(1,cv2.CAP_ANY) #faster connection time #isopened returns true until cap.release is used if you connect a webcam at first
         if not self.cap.isOpened():
             self.view.show_error("Camera not found","Please make sure the camera is connected to your computer and try again.")
             self.view.window_mode = ui.main_window.WindowMode.pause
