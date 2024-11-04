@@ -40,17 +40,12 @@ class FrameWebcam(tk.Frame):
             self.thread = Thread(target=self.check_connection_webcam)
             self.thread.start()
             
-        
-        
     def check_connection_webcam(self):
-        while True:
+        while not self.master.controller.cap.isOpened():
             sleep(0.5) #minimize CPU usage
-            self.master.controller.cap = cv2.VideoCapture(1)
-            if self.master.controller.cap.isOpened():
-                self.after_id = self.master.after(20, self.update_video_feed)
-                break
-            else:
-                self.after_id = None
+            self.master.controller.cap = cv2.VideoCapture(1,cv2.CAP_ANY)
+            self.after_id = None
+        self.after_id = self.master.after(20, self.update_video_feed)
 
 
     
