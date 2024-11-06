@@ -6,6 +6,7 @@ import numpy as np
 import game.algorithms.ai.ai
 import logging
 import cv2
+from game.playboard_processor import PlayBoardProcessor
 # Use the existing logger by name
 logger = logging.getLogger('my_logger')
 
@@ -31,6 +32,7 @@ class Human_vs_AI_RecognitionController(controller.BaseController):
 
         self.view.activate_game()
         
+        self.playboard_processor = PlayBoardProcessor("red", "blue", color_human) #red always plays first
         self.cap = cv2.VideoCapture(1,cv2.CAP_ANY) #faster connection time #isopened returns true until cap.release is used if you connect a webcam at first
         if not self.cap.isOpened():
             self.view.show_error("Camera not found","Please make sure the camera is connected to your computer and try again.")
@@ -44,9 +46,24 @@ class Human_vs_AI_RecognitionController(controller.BaseController):
         else:
             self.view.window_mode = ui.main_window.WindowMode.recognition
         
-    def human_get_and_process_move(self):
-        human_move =...
-        self.human_put_piece(human_move[0], human_move[1])
+    def human_get_and_process_move(self,frame):
+        human_move, edited_frame = self.playboard_processor.get_move(frame)
+        match human_move:
+            case (x,y) if isinstance(x, int) and isinstance(y, int):
+                self.human_put_piece(human_move[0], human_move[1])
+                self.view.frame_webcam.show_board(edited_frame)
+
+            case "multiple moves detected":
+                self.view.show_error("Multiple moves detected","Please only make one move at a time.")
+
+            case "no moves detected":
+                self.view.show_error("No moves detected","Did you make any moves?")
+
+            case "no chessboard detected":
+                self.view.show_error("Chessboard not detected","Please make sure the chessboard is clearly visible and try again.")
+
+            case _:
+                self.view.show_error("Unknown error","Please try again.")
 
     def human_put_piece(self, row, col):
         if self.game.put_piece(row, col): #if the square is empty do..., otherwise do nothing
@@ -85,5 +102,5 @@ class Human_vs_AI_RecognitionController(controller.BaseController):
         row, col = action
         self.game.put_piece(row, col)
         self.view.draw_pieces(self.game.board.board)
-        self.view.window_mode = ui.main_window.WindowMode.human_move
+        self.view.window_mode = ui.main_window.WindowMode.recognition
 

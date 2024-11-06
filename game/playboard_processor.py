@@ -9,20 +9,21 @@ logger = logging.getLogger('my_logger')
 
 class PlayBoardProcessor():
 
-    def __init__(self):
-        self.BOARD_SIZE=int(config["OTHER VARIABLES"]["BOARDSIZE"])
+    def __init__(self, P1COL, P2COL, COLOR_TO_DETECT):
+        self.BOARD_SIZE = int(config["OTHER VARIABLES"]["BOARDSIZE"])
         self.avg_distances = None
-        self.vid=cv2.VideoCapture(1, cv2.CAP_DSHOW)
-        self.previous_state_board=[]
+        self.previous_state_board = []
         self.pieces=None
-        self.color_p1=self.game_instance.P1COL
-        self.color_p2=self.game_instance.P2COL
 
-    def calculate_euclidean_distance(self,p1, p2):
-        return math.dist(p1, p2)#todo:test and verify
+        self.COLOR_P1 = P1COL
+        self.COLOR_P2 = P2COL
+        self.COLOR_TO_DETECT = COLOR_TO_DETECT
+
+    def calculate_euclidean_distance(self,p1 , p2):
+        return math.dist(p1, p2)
         return np.sqrt((p1[0] - p2[0]) ** 2 + (p1[1] - p2[1]) ** 2)
 
-    def calculate_average_horizontal_vertical_distance(self,corners):
+    def calculate_average_horizontal_vertical_distance(self, corners):
         corners = corners.reshape((self.BOARD_SIZE - 1, self.BOARD_SIZE - 1, 2))
     
         horizontal_distances = []
@@ -48,7 +49,7 @@ class PlayBoardProcessor():
 
         return avg_horizontal_distance, avg_vertical_distance
 
-    def extrapolate_full_board_corners(self,corners):
+    def extrapolate_full_board_corners(self, corners):
         avg_horizontal, avg_vertical = self.avg_distances
 
         full_board_corners = np.zeros((self.BOARD_SIZE + 1, self.BOARD_SIZE + 1, 2), dtype=np.float32)
@@ -73,7 +74,7 @@ class PlayBoardProcessor():
 
         return full_board_corners
 
-    def calculate_cell_centers(self,corners):
+    def calculate_cell_centers(self, corners):
         centers = []
         for i in range(self.BOARD_SIZE):
             for j in range(self.BOARD_SIZE):
@@ -86,7 +87,7 @@ class PlayBoardProcessor():
                 centers.append((center_x, center_y))
         return np.array(centers)
 
-    def mark_pieces(self,cell_centers, img):    
+    def mark_pieces(self, cell_centers, img):    
             hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
 
             lower_blue = np.array([100, 150, 50])
@@ -115,7 +116,7 @@ class PlayBoardProcessor():
 
             return list_shapes
 
-    def detect_and_draw_ellipses(self,img, mask, color, shape="ellipses", min_area=50):
+    def detect_and_draw_ellipses(self, img, mask, color, shape="ellipses", min_area=50):
         contours, _ = cv2.findContours(mask, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
         min_area = (self.avg_horizontal * self.avg_vertical)/60
         max_area = (self.avg_horizontal * self.avg_vertical)+10
@@ -171,25 +172,19 @@ class PlayBoardProcessor():
 
         return list_shapes
 
-    def get_move(self):
+    def get_move(self,img):
         number_of_inner_corners = (self.BOARD_SIZE - 1, self.BOARD_SIZE - 1)
-
-        ret_img,img=self.vid.read()
-
-        if not ret_img:
-            print("Error: Could not read frame.")
-            return
 
         gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 
         gray = cv2.medianBlur(gray, 13)
        
         ret, inner_corners = cv2.findChessboardCornersSB(gray, number_of_inner_corners,
-                                                flags= cv2.CALIB_CB_EXHAUSTIVE +cv2.CALIB_CB_ACCURACY )
+                                                flags= cv2.CALIB_CB_EXHAUSTIVE + cv2.CALIB_CB_ACCURACY )
     
         if not ret:
             print("no chessboard detected at first")
-            ret, inner_corners= cv2.findChessboardCorners(gray, number_of_inner_corners, flags= cv2.CALIB_CB_PLAIN +cv2.CALIB_CB_FAST_CHECK )
+            ret, inner_corners = cv2.findChessboardCorners(gray, number_of_inner_corners, flags= cv2.CALIB_CB_PLAIN + cv2.CALIB_CB_FAST_CHECK )
 
         if ret:
             print("Chessboard detected")
@@ -207,27 +202,28 @@ class PlayBoardProcessor():
 
             cell_centers = self.calculate_cell_centers(all_corners)
 
-            self.pieces= self.mark_pieces(cell_centers,img.copy())
+            self.pieces = self.mark_pieces(cell_centers,img.copy())
 
-            color_current_player=self.game_instance.P1COL if gomoku.current_player==1 else self.game_instance.P2COL
             human_move=[]
             for piece in self.pieces:
-                if piece not in self.previous_state_board and piece[0]==color_current_player:
+                if piece not in self.previous_state_board and piece[0]==self.COLOR_TO_DETECT:
                     print(piece,"detected")
                     human_move.append(piece[1])
-            self.previous_state_board=self.pieces
 
-            if len(human_move)==0:
-                print("No move detected") #todo:show in GUI
-            elif len(human_move)==1:
-                print(human_move[0]) #todo: show last detected move in GUI
-                return human_move
-            else:
-                print("Multiple moves detected") #todo: show in GUI
+            self.previous_state_board = self.pieces
 
-            return None
+            match len(human_move):
+                case 0:
+                    print("No moves detected")
+                    return "no moves detected", None
+                case 1:
+                    print(human_move) #todo: show last detected move in GUI
+                    return human_move, img_with_corners
+                case _:
+                    print("Multiple moves detected")
+                    return "multiple moves detected", None
 
         else:
             print("No chessboard detected")
-            return None
+            return "no chessboard detected", None
             #todo: add backup if possible

@@ -42,10 +42,18 @@ class FrameWebcam(tk.Frame):
             
     def check_connection_webcam(self):
         while not self.master.controller.cap.isOpened():
-            sleep(0.5) #minimize CPU usage
             self.master.controller.cap = cv2.VideoCapture(1,cv2.CAP_ANY)
             self.after_id = None
+            if not self.master.controller.cap.isOpened():
+                sleep(0.5) #minimize CPU usage
         self.after_id = self.master.after(20, self.update_video_feed)
+    
+    def show_board(self,frame_board):
+        img = Image.fromarray(frame_board)
+        imgtk = ImageTk.PhotoImage(image=img)
+
+        self.label_board.imgtk = imgtk
+        self.label_board.configure(image=imgtk)
 
 
     

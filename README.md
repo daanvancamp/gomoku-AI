@@ -2,17 +2,13 @@
 https://github.com/Mig26/gomoku-thesis-proj
 
 **The latest stable release is version 1.4. The recognition doesn't work in this version yet, but all the other features should work perfectly, if not: please report the bug.** That version is the compiled version of the python code. It is made for those who don't want to experience issues caused by features that are in development or those who just want to play it as fast as possible without having to install python or anything else.
-**Version 1.4 will remain the best version if performance is very important.** The newer versions will be a little bit slower, because of the extra features and longer loading times.
 
-stable release:https://github.com/daanvancamp/gomoku-thesis-proj/releases/tag/v1.4
+latest stable release:https://github.com/daanvancamp/gomoku-thesis-proj/releases/tag/v1.4
 
 Note: the project is still under development. Some added features aren't stable as of right now, but overall it works better than the program of Mikko (from which I started). The project will hopefully be finished in april of 2025, so you can expect a complete version ultimately then, but it could be done earlier. **The stable version doesn't contain all latest features, but you can download it from the releases tab.** An executable will be released every few weeks.
 
-If you clone the repos, then you will most likely experience stability problems or bugs.(Please download the latest stable release instead.)
-
-I added support for physical boards via webcam, you can easily turn the recogniton via webcam on and off. There's a built-in checkbox for that. It is turned off by default. I also optimized a few things. The code for the webcam can be found here. You need to run both programs simultaneously if you want to use the recognition, otherwise, it won't work as expected. The data is transfered via a json file. A file is used to save system resources; a thread puts more strain on the hardware. A constant connection with the webcam is also recommended because it takes about 5 seconds to connect to the webcam. The program should run perfectly fine on a relatively low-spec computer. 
+I added support for physical boards via webcam. I also optimized a few things. The code for the recognition can be found here, but it is already built in.
 https://github.com/daanvancamp/five_in_a_row_recognition
-The usage of the recognition feature can be controlled via a checkbox.
 
 
 I also want to mention the following: "please don't hesitate to report any bugs". There are probably many undiscovered bugs. Please check if your bug if listed below before reporting it, because then it's a known issue/bug. Feature suggestions are also more than welcome, because they can help to develop a better, more versatile program. **Don't report any bugs in the code in this repository. Only report bugs that were caused by the executable file.**
@@ -150,13 +146,7 @@ august 2024:
 
   **We redesigned the whole code.**
 
-  restored some old features
-
-  **There won't be any new features in a long time because we are working on the new design and mainly focusing on restoring the old features. The first release is almost done.**
-  
-  
-
-
+  almost all old features are now restored and improved We also got rid of the tabs.
 
 **issues:**
 
@@ -165,7 +155,8 @@ You shouldn't experience any issues if you use the latest release.
 
 **roadmap(in descending priority):**
 
-restoring all old features that were deleted due to the redesign
+restoring the last old features that were deleted due to the redesign
+new features
 
 developped by:
 daanvancamp & wimnevelsteen
