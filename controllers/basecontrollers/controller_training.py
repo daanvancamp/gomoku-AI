@@ -74,7 +74,6 @@ class BaseTrainingController(BaseController): #training means that the AI plays 
     def train_at_the_end_of_the_round(self):
         self.view.window_mode = ui.main_window.WindowMode.pause
         print("training at the end of the round")
-        player_stats.update_player_stats(self.game,self.game.player1.id if self.game.winner==1 else self.game.player2.id)
         data = {}
         loss_data = {}
         move_loss_data = {}

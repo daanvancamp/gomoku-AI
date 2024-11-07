@@ -7,29 +7,29 @@ logger = logging.getLogger('my_logger')
 
 class AI_Model():
     def __init__(self,name,training=False) -> None:
-        self.training=training
+        self.training = training
+        print(self.training)
 
-        self.number_of_training_loops=None
-        self.number_of_training_loops_against_human=None
-        self.number_of_training_loops_against_ai_model=None
-        self.number_of_training_loops_against_test_algorithm=None
-        self.wins=None
-        self.wins_games=None
-        self.wins_training=None
-        self.losses_games=None
-        self.losses=None
-        self.losses_training=None
-        self.ties=None
-        self.ties_games=None
-        self.ties_training=None
-
+        self.number_of_training_loops = None
+        self.number_of_training_loops_against_human = None
+        self.number_of_training_loops_against_ai_model = None
+        self.number_of_training_loops_against_test_algorithm = None
+        self.wins = None
+        self.wins_games = None
+        self.wins_training = None
+        self.losses_games = None
+        self.losses = None
+        self.losses_training = None
+        self.ties = None
+        self.ties_games = None
+        self.ties_training = None
 
         self.parent_dir = "data/models"
         self.name_config_file = "/modelconfig.json"
         self.modelname=name
         self.directory = self.modelname
         self.path = os.path.join(self.parent_dir, self.directory)
-        self.path_config_file=self.path+self.name_config_file
+        self.path_config_file = self.path+self.name_config_file
 
         self.initial_json_data = json.load(open("data/templatemodel"+self.name_config_file,"r"))
 
@@ -69,24 +69,27 @@ class AI_Model():
             case "Test Algorithm":
                 self.number_of_training_loops_against_test_algorithm = self.get_value_from_config_file("training stats","training loops against Test Algorithm")
 
-    def log_win(self):
+    def log_win(self,opponent):
         self.add_one_to_value_from_config_file("total end stats","wins")
         self.wins = self.get_value_from_config_file("total end stats","wins")
-
+        print(self.training)
         if self.training:
+            print("updating training stats")
             self.add_one_to_value_from_config_file("training loops end stats","wins")
             self.wins_training = self.get_value_from_config_file("training loops end stats","wins")
+            self.log_number_of_training_loops(opponent)
         else:
             self.add_one_to_value_from_config_file("games end stats","wins")
             self.wins_games = self.get_value_from_config_file("games end stats","wins")
                 
-    def log_loss(self):
+    def log_loss(self,opponent):
         self.add_one_to_value_from_config_file("total end stats","losses")
         self.losses = self.get_value_from_config_file("total end stats","losses")
 
         if self.training:
             self.add_one_to_value_from_config_file("training loops end stats","losses")
             self.losses_training = self.get_value_from_config_file("training loops end stats","losses")
+            self.log_number_of_training_loops(opponent)
             
         else:
             self.add_one_to_value_from_config_file("games end stats","losses")
