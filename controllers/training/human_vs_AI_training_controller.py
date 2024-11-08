@@ -1,11 +1,7 @@
-import controllers
 from controllers.basecontrollers import controller_training
-import controllers.basecontrollers
-import controllers.basecontrollers.controller
 import game.game
 import ui.main_window
-from configuration.config import *
-import numpy as np
+from configuration.config import config
 import game.algorithms.ai.ai
 import logging
 from utils import filereader, stats, player_stats

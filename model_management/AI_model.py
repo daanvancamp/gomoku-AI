@@ -6,9 +6,8 @@ import logging
 logger = logging.getLogger('my_logger')
 
 class AI_Model():
-    def __init__(self,name,training=False) -> None:
+    def __init__(self, name, training=False) -> None:
         self.training = training
-        print(self.training)
 
         self.number_of_training_loops = None
         self.number_of_training_loops_against_human = None
@@ -26,14 +25,14 @@ class AI_Model():
 
         self.parent_dir = "data/models"
         self.name_config_file = "/modelconfig.json"
-        self.modelname=name
+        self.modelname = name
         self.directory = self.modelname
         self.path = os.path.join(self.parent_dir, self.directory)
         self.path_config_file = self.path+self.name_config_file
 
         self.initial_json_data = json.load(open("data/templatemodel"+self.name_config_file,"r"))
 
-    def add_one_to_value_from_config_file(self,category,item):
+    def add_one_to_value_from_config_file(self, category, item):
         if os.path.exists(self.path_config_file):
             try:
                 with open(self.path_config_file, "r") as file:
@@ -46,7 +45,7 @@ class AI_Model():
         else:
             raise Exception("Config file not found, try to delete the model and create it again, or replace the config file with the template file")
 
-    def get_value_from_config_file(self,category,item):
+    def get_value_from_config_file(self, category, item):
         if os.path.exists(self.path_config_file):
             try:
                 with open(self.path_config_file, "r") as file:
@@ -57,7 +56,7 @@ class AI_Model():
         else:
             pass #can occur when model is deleted
 
-    def log_number_of_training_loops(self,opponent):
+    def log_number_of_training_loops(self, opponent):
         self.add_one_to_value_from_config_file("training stats","training loops")
         self.number_of_training_loops = self.get_value_from_config_file("training stats","training loops")
         self.add_one_to_value_from_config_file("training stats","training loops against "+ opponent)
@@ -69,10 +68,9 @@ class AI_Model():
             case "Test Algorithm":
                 self.number_of_training_loops_against_test_algorithm = self.get_value_from_config_file("training stats","training loops against Test Algorithm")
 
-    def log_win(self,opponent):
+    def log_win(self, opponent):
         self.add_one_to_value_from_config_file("total end stats","wins")
         self.wins = self.get_value_from_config_file("total end stats","wins")
-        print(self.training)
         if self.training:
             print("updating training stats")
             self.add_one_to_value_from_config_file("training loops end stats","wins")
@@ -82,7 +80,7 @@ class AI_Model():
             self.add_one_to_value_from_config_file("games end stats","wins")
             self.wins_games = self.get_value_from_config_file("games end stats","wins")
                 
-    def log_loss(self,opponent):
+    def log_loss(self, opponent):
         self.add_one_to_value_from_config_file("total end stats","losses")
         self.losses = self.get_value_from_config_file("total end stats","losses")
 
@@ -107,19 +105,19 @@ class AI_Model():
             self.add_one_to_value_from_config_file("games end stats","ties")
             self.ties_games = self.get_value_from_config_file("games end stats","ties")
         
-    def get_number_of_training_loops(self,key):
-        return self.get_value_from_config_file("training stats",key)
+    def get_number_of_training_loops(self, key):
+        return self.get_value_from_config_file("training stats", key)
     
-    def get_number_of_wins(self,category):
+    def get_number_of_wins(self, category):
         return self.get_value_from_config_file(category,"wins")
 
-    def get_number_of_losses(self,category):
+    def get_number_of_losses(self, category):
         return self.get_value_from_config_file(category,"losses")
 
-    def get_number_of_ties(self,category):
+    def get_number_of_ties(self, category):
         return self.get_value_from_config_file(category,"ties")
 
-    def reset_stats(self,print_info:bool):
+    def reset_stats(self, print_info:bool):
         try:
             with open(self.path_config_file, 'w') as out_file:
                 json.dump(self.initial_json_data, out_file, indent = 4, ensure_ascii = False)
@@ -133,8 +131,8 @@ class AI_Model():
         try:
             with open(self.path_config_file, 'r+') as file:
                 json_data = json.load(file)
-                list_categories=["total end stats","games end stats","training loops end stats"]
-                list_items=["wins","losses","ties"]
+                list_categories = ["total end stats","games end stats","training loops end stats"]
+                list_items = ["wins","losses","ties"]
 
                 for category in list_categories:
                     for item in list_items:

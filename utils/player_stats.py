@@ -1,7 +1,7 @@
 from utils import stats
 from configuration.config import config
 
-def reset_player_stats(game):#todo integrate in the right place
+def reset_player_stats(game):
     for i in range(len(game.players)):
         game.players[i].reset_score()
 

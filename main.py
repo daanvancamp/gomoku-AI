@@ -1,4 +1,3 @@
-#todo restore model stats
 #todo inheritance when using human_vs_ai_recognition?
 
 #This is the startup file, please run this file to start the game
