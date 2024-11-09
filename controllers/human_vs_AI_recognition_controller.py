@@ -56,9 +56,6 @@ class Human_vs_AI_RecognitionController(controller.BaseController):
 					self.human_put_piece(one_human_move[0], one_human_move[1])
 					self.view.frame_webcam.show_board(edited_frame)
 
-			case "multiple moves detected":
-				self.view.show_error("Multiple moves detected","Please only make one move at a time.")
-
 			case "no moves detected":
 				self.view.show_error("No moves detected","Did you make any moves?")
 
@@ -66,7 +63,10 @@ class Human_vs_AI_RecognitionController(controller.BaseController):
 				self.view.show_error("Chessboard not detected","Please make sure the chessboard is clearly visible and try again.")
 
 			case _:
-				self.view.show_error("Unknown error",f"Please try again. move: {human_move}")
+				if len(human_move)>1:
+					self.view.show_error("Multiple moves detected",f"Please only make one move at a time:{human_move}")
+				else:
+					self.view.show_error("Unknown error",f"Please try again. move: {human_move}")
 
 	def human_put_piece(self, row, col):
 		if self.game.put_piece(row, col): #if the square is empty do..., otherwise do nothing

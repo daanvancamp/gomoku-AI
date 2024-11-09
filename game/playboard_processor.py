@@ -106,8 +106,8 @@ class PlayBoardProcessor():
             blue_ellipses = self.detect_and_draw_ellipses(img, mask_blue, color=(255, 0, 0), shape="blue ellipses")
             red_ellipses = self.detect_and_draw_ellipses(img, mask_red, color=(0, 0, 255), shape="red ellipses")
 
-            list_blue_shapes=self.match_shapes_to_centers(blue_ellipses, cell_centers, img,"blue")
-            list_red_shapes=self.match_shapes_to_centers(red_ellipses, cell_centers, img,"red")
+            list_blue_shapes = self.match_shapes_to_centers(blue_ellipses, cell_centers, img,"blue")
+            list_red_shapes = self.match_shapes_to_centers(red_ellipses, cell_centers, img,"red")
 
             print("detected",len(list_blue_shapes),"blue pieces")
             print("detected",len(list_red_shapes),"red pieces")
@@ -220,8 +220,7 @@ class PlayBoardProcessor():
                     print(human_move) #todo: show last detected move in GUI
                     return human_move, img_with_corners
                 case _:
-                    print("Multiple moves detected")
-                    return "multiple moves detected", None
+                    return human_move, None #multiple moves detected
 
         else:
             print("No chessboard detected")
