@@ -78,7 +78,7 @@ class Human_vs_AI_RecognitionController(controller.BaseController):
 
 	def AI_put_piece(self):
 		self.view.window_mode = ui.main_window.WindowMode.computer_move
-		logger.info("AI move")             
+		logger.info("AI move")
 		
 		gomoku_ai:game.algorithms.ai.ai.AI_Algorithm = self.game.current_player.ai
 		gomoku_ai.board = self.game.board.board

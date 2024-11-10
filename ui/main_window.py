@@ -260,7 +260,7 @@ class GomokuApp(Tk):
 	def clear_text_on_canvas(self):
 		self.canvas.delete("text")
 	
-	def draw_line(self,winning_cells): #draws a line through the winning cells
+	def draw_line(self, winning_cells): #draws a line through the winning cells
 		padding = 25 #cell size= 50, so padding = 25 (the line has to go through the middle of each cell)
 
 		first_cell = winning_cells[0] #start of the line, the list is sorted, form: (x,y)
@@ -277,9 +277,9 @@ class GomokuApp(Tk):
 		self.canvas.create_line(x1, y1, x2, y2, fill="white", width=4, tags="line")
 
 	def end_game(self):
-		 mb.showinfo("End of the game","There's a winner, player"+str(self.controller.game.winner))
+		mb.showinfo("End of the game","There's a winner, "+str(self.controller.get_player(self.controller.game.winner)))
 
-	def show_load_error(self,error):
+	def show_load_error(self, error):
 		print("Please select a valid file, error:",error)
 		self.show_error("invalid file",f"Please select a valid file, error:{error}")
 

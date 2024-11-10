@@ -37,6 +37,7 @@ class FrameWebcam(tk.Frame):
 
             self.master.controller.cap.release() #this results in self.master.controller.cap.isOpened() returning False
 
+            mb.showwarning("Webcam not available", "Reattach it and try again. (The program will try to reconnect automatically.)")
             self.thread = Thread(target=self.check_connection_webcam)
             self.thread.start()
             

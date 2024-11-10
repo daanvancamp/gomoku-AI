@@ -37,8 +37,6 @@ class Player:
         return self.__str__()
 
     def __str__(self) -> str:
-        if self.type =="human":
-            return f"Player {self.id}: {self.type}  "
         return f"Player {self.id}: {self.type}"
 
     def calculate_score(self, max_score, is_winner, game_number):
