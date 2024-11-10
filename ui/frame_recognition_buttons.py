@@ -16,4 +16,4 @@ class FrameRecognitionButtons(tk.Frame):
         if ret:
             self.master.controller.human_get_and_process_move(frame)
         else:
-            self.master.showerror("No webcam available", "Please connect a webcam and try again")
+            self.master.show_error("No webcam available", "Please connect a webcam and try again")
