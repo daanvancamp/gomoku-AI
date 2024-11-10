@@ -219,7 +219,7 @@ class AI_Algorithm:
                             else:
                                 break
             
-                        if  (count == 4 and open_ends >= 0) or adjacent_two == 2 or (count == 3 and open_ends >= 1):
+                        if  (count == 4 and open_ends >= 0) or adjacent_two == 2:
                             winning_moves.append((row, col))
                             break
          if winning_moves:
