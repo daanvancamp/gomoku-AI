@@ -5,10 +5,11 @@ import logging
 import enum
 
 from ui.frame_recognition_buttons import FrameRecognitionButtons
-from .settings_windows import replay_window,new_game_window,train_window,scoreboard_window,models_window,physical_play_window
-import controllers
-from configuration.config import *
 from ui.frame_webcam import FrameWebcam
+
+from .settings_windows import replay_window, new_game_window, train_window, scoreboard_window, models_window, physical_play_window
+import controllers
+from configuration.config import config
 
 # Use the existing logger by name
 logger = logging.getLogger('my_logger')

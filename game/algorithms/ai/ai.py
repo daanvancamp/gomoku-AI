@@ -177,9 +177,9 @@ class AI_Algorithm:
 
     def can_win_in_one_move(self)->list:
          log_info_overruling("function can_win_in_one_move called")
-         winning_moves=[]
+         winning_moves = []
          directions = [(0, 1), (1, 0), (1, 1), (1, -1)]
-         current_player=self.current_player_id
+         current_player = self.current_player_id
          for row in range(len(self.board)):
             for col in range(len(self.board)):
                 if self.board[row][col] == 0:
