@@ -26,7 +26,7 @@ class Human_vs_AI_Controller(controller.BaseController):
 
         game_board = game.game.GameFactory.create_game_board(int(config["OTHER VARIABLES"]["BOARDSIZE"]))
         self.game:game.game.Game = game.game.GameFactory.initialize_new_game(game_board, player1, player2)
-        self.initialize_board()
+        self.initialize_board() #load the selected situation if requested by the user
 
         self.view.activate_game()
 

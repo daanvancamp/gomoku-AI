@@ -1,9 +1,10 @@
 import game.game
+import game.algorithms.ai.ai
 import ui.main_window
 from .basecontrollers import controller
 from configuration.config import *
+
 import numpy as np
-import game.algorithms.ai.ai
 import logging
 import cv2
 from game.playboard_processor import PlayBoardProcessor

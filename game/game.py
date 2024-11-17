@@ -60,6 +60,6 @@ class GameFactory:
         return gameboard.GameBoard(grid_size)
 
     def initialize_new_game(game_board:gameboard.GameBoard, player1, player2):
-        game = Game()
+        game = Game()#singleton class
         game.initialize_game(player1, player2, game_board)#it is a singleton class
         return game

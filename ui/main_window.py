@@ -1,6 +1,6 @@
 ﻿from tkinter import *
-import numpy as np
 import tkinter.messagebox as mb
+import numpy as np
 import logging
 import enum
 
@@ -20,7 +20,7 @@ class WindowMode(enum.Enum):
 	computer_move = 'computer_move'
 	human_move = 'human_move'
 	pause = 'pause'
-	recognition='recognition'#recognition in progress
+	recognition ='recognition'#recognition in progress
 
 class GameType(enum.Enum):
 	human_vs_human = 'human_vs_human'
@@ -36,7 +36,7 @@ class GomokuApp(Tk):
 
 		self.title("Gomoku")
 		self.config(background="#357EC7")
-		self.bind("<Escape>", lambda e: self.toggle_fullscreen(False))
+		self.bind("<Escape>", lambda e: self.toggle_fullscreen(True))
 		self.bind("<F11>", lambda e: self.toggle_fullscreen())
 		self.resizable(True, True)
 		self.attributes("-fullscreen", True) #todo: set to true in production
@@ -95,11 +95,8 @@ class GomokuApp(Tk):
 		
 		self.draw_scoreboard_bool = False
 
-	def toggle_fullscreen(self,fullscreen=True): #esc to exit fullscreen, f11 to enter fullscreen or to exit fullscreen
-		if not self.attributes('-fullscreen') and fullscreen:
-			self.attributes('-fullscreen', True)
-		else:
-			self.attributes('-fullscreen', False)
+	def toggle_fullscreen(self,esc_was_used=False): #esc to exit fullscreen, f11 to enter fullscreen or to exit fullscreen
+		self.attributes('-fullscreen', not self.attributes('-fullscreen')) if not esc_was_used else self.attributes('-fullscreen', False)
 
 	def open_new_window(self, window_type):
 		self.close_secondary_windows()

@@ -1,8 +1,9 @@
 import game.game
 import ui.main_window
 from utils.player_stats import update_player_stats
-import logging
 from utils import filereader
+
+import logging
 
 # Use the existing logger by name
 logger = logging.getLogger('my_logger')

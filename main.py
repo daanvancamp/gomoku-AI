@@ -1,5 +1,4 @@
-#todo inheritance when using human_vs_ai_recognition?
-#todo readd the feature to load a situation, using a text file
+#todo readd the feature to load a situation, using a text file, how should it be done?
 
 #This is the startup file, please run this file to start the game
 
