@@ -1,3 +1,4 @@
+from tkinter import NO
 import cv2
 import numpy as np
 import math
@@ -13,14 +14,14 @@ class PlayBoardProcessor():
         self.BOARD_SIZE = int(config["OTHER VARIABLES"]["BOARDSIZE"])
         self.avg_distances = None
         self.previous_state_board = []
-        self.pieces=None
+        self.pieces = None
 
         self.COLOR_P1 = P1COL
         self.COLOR_P2 = P2COL
         self.COLOR_TO_DETECT = COLOR_TO_DETECT
 
-    def calculate_euclidean_distance(self,p1 , p2):
-        return math.dist(p1, p2)
+    def calculate_euclidean_distance(self,p1 , p2) -> float:
+        return math.dist(p1, p2)#calculate euclidean distance
         return np.sqrt((p1[0] - p2[0]) ** 2 + (p1[1] - p2[1]) ** 2)
 
     def calculate_average_horizontal_vertical_distance(self, corners):
@@ -73,7 +74,7 @@ class PlayBoardProcessor():
         full_board_corners[-1, -1] = [full_board_corners[-2, -2, 0] + avg_horizontal, full_board_corners[-2, -2, 1] + avg_vertical]
 
         return full_board_corners
-
+    
     def calculate_cell_centers(self, corners):
         centers = []
         for i in range(self.BOARD_SIZE):
@@ -148,15 +149,15 @@ class PlayBoardProcessor():
                     min_distance = distance
                     closest_center = center
         
-            max_distance=((self.avg_horizontal+self.avg_vertical)/2)*0.75
+            max_distance = ((self.avg_horizontal+self.avg_vertical)/2)*0.75
 
             if min_distance>max_distance:
                 continue
 
             if closest_center.any():
-                result=np.where(cell_centers == closest_center)
+                result = np.where(cell_centers == closest_center)
                 index = (result[0][0], result[1][0])
-                coordinates= self.get_coordinates(index)
+                coordinates = self.get_coordinates(index)
 
                 list_shapes.append((color,coordinates))
 
@@ -180,15 +181,14 @@ class PlayBoardProcessor():
         gray = cv2.medianBlur(gray, 13)
        
         ret, inner_corners = cv2.findChessboardCornersSB(gray, number_of_inner_corners,
-                                                flags= cv2.CALIB_CB_EXHAUSTIVE + cv2.CALIB_CB_ACCURACY )
+                                                flags = cv2.CALIB_CB_EXHAUSTIVE + cv2.CALIB_CB_ACCURACY )
     
         if not ret:
             print("no chessboard detected at first")
-            ret, inner_corners = cv2.findChessboardCorners(gray, number_of_inner_corners, flags= cv2.CALIB_CB_PLAIN + cv2.CALIB_CB_FAST_CHECK )
-
+            ret, inner_corners = cv2.findChessboardCorners(gray, number_of_inner_corners, flags = cv2.CALIB_CB_PLAIN + cv2.CALIB_CB_FAST_CHECK )
+        
         if ret:
             print("Chessboard detected")
-        
             inner_corners = cv2.cornerSubPix(gray, inner_corners, (11, 11), (-1, -1), 
                                         criteria=(cv2.TERM_CRITERIA_EPS + cv2.TERM_CRITERIA_MAX_ITER, 30, 0.001))
         
@@ -204,7 +204,7 @@ class PlayBoardProcessor():
 
             self.pieces = self.mark_pieces(cell_centers,img.copy())
 
-            human_move=[]
+            human_move = []
             for piece in self.pieces:
                 if piece not in self.previous_state_board and piece[0]==self.COLOR_TO_DETECT:
                     print(piece,"detected")
@@ -215,14 +215,14 @@ class PlayBoardProcessor():
             match len(human_move):
                 case 0:
                     print("No moves detected")
-                    return "no moves detected", None
+                    return None, None,"no moves detected"
                 case 1:
-                    print(human_move) #todo: show last detected move in GUI
-                    return human_move, img_with_corners
+                    print(human_move)
+                    return human_move, img_with_corners,None
                 case _:
-                    return human_move, None #multiple moves detected
+                    return human_move, None, "multiple moves detected"
 
         else:
             print("No chessboard detected")
-            return "no chessboard detected", None
+            return None, None,"no chessboard detected"
             #todo: add backup if possible

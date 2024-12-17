@@ -5,7 +5,7 @@ class FrameRecognitionButtons(tk.Frame):
         super().__init__(master)
         self.master = master
 
-        self.button_move_done = tk.Button(self, text="Move done", command=lambda: self.process_move())
+        self.button_move_done = tk.Button(self, text="Move done?", command = self.process_move)
         self.button_move_done.grid(row=0, column=0,pady=2,padx=2)
         self.master.bind("<Right>", lambda event: self.process_move())
         self.master.bind("<space>", lambda event: self.process_move())

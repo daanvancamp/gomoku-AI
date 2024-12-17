@@ -39,7 +39,7 @@ class GomokuApp(Tk):
 		self.bind("<Escape>", lambda e: self.toggle_fullscreen(True))
 		self.bind("<F11>", lambda e: self.toggle_fullscreen())
 		self.resizable(True, True)
-		self.attributes("-fullscreen", True) #todo: set to true in production
+		self.attributes("-fullscreen", True)
 
 		self.window_mode = WindowMode.pause
 		self.game_type = GameType.human_vs_human
@@ -50,8 +50,8 @@ class GomokuApp(Tk):
 
 		self.menubar = Menu(self,font=("Helvetica", 12),tearoff=0)
 		self.config(menu=self.menubar)
-		self.new_game_menu = Menu(self.menubar,tearoff=0)
 
+		self.new_game_menu = Menu(self.menubar,tearoff=0)
 		self.new_game_menu.add_command(label="Play", command=lambda:self.open_new_window("Play"))
 		self.new_game_menu.add_command(label="Play with physical board", command=lambda:self.open_new_window("PhysicalPlay"))
 		self.new_game_menu.add_command(label="Train", command=lambda:self.open_new_window("Train"))
@@ -189,7 +189,10 @@ class GomokuApp(Tk):
 								color = self.color_player_2
 
 							if self.controller.last_move_model == (i,j):
-								self.canvas.create_oval(value[2] + padding, value[3] + padding, value[4] - padding, value[5] - padding, fill="orange" if color==self.color_player_1 else "light blue" , tags="piece")
+								if self.overruled_last_move:
+									self.canvas.create_rectangle(value[2] + padding, value[3] + padding, value[4] - padding, value[5] - padding, fill="dark orange" if color==self.color_player_1 else "light blue" , tags="piece")
+								else:
+									self.canvas.create_oval(value[2] + padding, value[3] + padding, value[4] - padding, value[5] - padding, fill="dark orange" if color==self.color_player_1 else "light blue" , tags="piece")
 							else:
 								self.canvas.create_oval(value[2] + padding, value[3] + padding, value[4] - padding, value[5] - padding, fill=color, tags="piece")
 		self.update()
@@ -273,6 +276,10 @@ class GomokuApp(Tk):
 				y2 = value[5] - padding
 
 		self.canvas.create_line(x1, y1, x2, y2, fill="white", width=4, tags="line")
+
+	def display_coordinates(self,detected_move):
+		self.frame_recognition_buttons.button_move_done.config(text=detected_move)
+		self.after(5000,self.frame_recognition_buttons.button_move_done.config(text="Move done?"))
 
 	def end_game(self):
 		mb.showinfo("End of the game","There's a winner, "+str(self.controller.get_player(self.controller.game.winner)))

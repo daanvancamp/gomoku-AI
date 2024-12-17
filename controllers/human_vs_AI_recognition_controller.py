@@ -48,26 +48,13 @@ class Human_vs_AI_RecognitionController(controller.BaseController):
 			self.view.window_mode = ui.main_window.WindowMode.recognition
 		
 	def human_get_and_process_move(self,frame):
-		human_move, edited_frame = self.playboard_processor.get_move(frame)
-		match human_move:
-			case [one_human_move]:
-				if isinstance(one_human_move[0],str) or isinstance(one_human_move[1] ,str):
-					self.view.show_error("Invalid move",f"invalid coordinates:{one_human_move}")
-				else:
-					self.human_put_piece(one_human_move[0], one_human_move[1])
-					self.view.frame_webcam.show_board(edited_frame)
-
-			case "no moves detected":
-				self.view.show_error("No moves detected","Did you make any moves?")
-
-			case "no chessboard detected":
-				self.view.show_error("Chessboard not detected","Please make sure the chessboard is clearly visible and try again.")
-
-			case _:
-				if len(human_move)>1:
-					self.view.show_error("Multiple moves detected",f"Please only make one move at a time:{human_move}")
-				else:
-					self.view.show_error("Unknown error",f"Please try again. move: {human_move}")
+		human_move, edited_frame, error_message = self.playboard_processor.get_move(frame)
+		if error_message is None:
+			self.human_put_piece(human_move[0], human_move[1])
+			self.view.frame_webcam.show_board(edited_frame)
+			self.view.display_coordinates((human_move[0], human_move[1]))
+		else:
+			self.view.show_error("Error while analyzing frame",error_message)
 
 	def human_put_piece(self, row, col):
 		if self.game.put_piece(row, col): #if the square is empty do..., otherwise do nothing
@@ -87,6 +74,7 @@ class Human_vs_AI_RecognitionController(controller.BaseController):
 		gomoku_ai.convert_to_one_hot()
 		max_score, scores, scores_normalized = gomoku_ai.calculate_score()
 		action = gomoku_ai.get_action(scores_normalized)
+		self.view.overruled_last_move = gomoku_ai.overruled_last_move
 			   
 		np_scores = np.array(scores).reshape(15, 15)
 		short_score = np_scores[action[0]][action[1]]
