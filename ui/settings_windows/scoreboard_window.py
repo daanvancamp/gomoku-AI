@@ -10,7 +10,7 @@ class ScoreboardWindow (tk.Toplevel):#the methods of gomokuapp need to be callab
 		super().__init__(master)
 
 		self.check_var = tk.BooleanVar()
-		self.check_var.set(self.master.draw_scoreboard_bool) #show the last setting
+		self.check_var.set(self.master.draw_scoreboard) #show the last setting
 		self.title("Scoreboard Window")
 		self.geometry(f"{WIDTH}x{HEIGHT}")
 		self.master: "ui.main_window.GomokuApp" = master
@@ -21,7 +21,7 @@ class ScoreboardWindow (tk.Toplevel):#the methods of gomokuapp need to be callab
 		self.master = master
 
 	def apply_changes(self):
-		self.master.draw_scoreboard_bool = self.check_var.get()
+		self.master.draw_scoreboard = self.check_var.get()
 		self.master.close_secondary_windows()
 		
 

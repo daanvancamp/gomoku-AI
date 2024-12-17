@@ -1,4 +1,3 @@
-from tkinter import NO
 import cv2
 import numpy as np
 import math
@@ -20,11 +19,11 @@ class PlayBoardProcessor():
         self.COLOR_P2 = P2COL
         self.COLOR_TO_DETECT = COLOR_TO_DETECT
 
-    def calculate_euclidean_distance(self,p1 , p2) -> float:
+    @staticmethod
+    def calculate_euclidean_distance(p1 , p2) -> float:
         return math.dist(p1, p2)#calculate euclidean distance
-        return np.sqrt((p1[0] - p2[0]) ** 2 + (p1[1] - p2[1]) ** 2)
 
-    def calculate_average_horizontal_vertical_distance(self, corners):
+    def calculate_average_horizontal_vertical_distance(self, corners)->tuple[float, float]:
         corners = corners.reshape((self.BOARD_SIZE - 1, self.BOARD_SIZE - 1, 2))
     
         horizontal_distances = []
@@ -88,7 +87,7 @@ class PlayBoardProcessor():
                 centers.append((center_x, center_y))
         return np.array(centers)
 
-    def mark_pieces(self, cell_centers, img):    
+    def mark_pieces(self, cell_centers, img)->list:
             hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
 
             lower_blue = np.array([100, 150, 50])
@@ -117,27 +116,27 @@ class PlayBoardProcessor():
 
             return list_shapes
 
-    def detect_and_draw_ellipses(self, img, mask, color, shape="ellipses", min_area=50):
+    def detect_and_draw_ellipses(self, img, mask, color, shape="ellipses", min_area=50)->list:
         contours, _ = cv2.findContours(mask, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
         min_area = (self.avg_horizontal * self.avg_vertical)/60
         max_area = (self.avg_horizontal * self.avg_vertical)+10
         detected_ellipses = []
-        for cnt in contours:
-            area = cv2.contourArea(cnt)
-            if max_area>=area >= min_area and len(cnt) >= 5:
-                ellipse = cv2.fitEllipse(cnt)
+        for contour in contours:
+            area = cv2.contourArea(contour)
+            if max_area>=area >= min_area and len(contour) >= 5:
+                ellipse = cv2.fitEllipse(contour)
                 cv2.ellipse(img, ellipse, color, 2)
                 center = (int(ellipse[0][0]), int(ellipse[0][1]))
                 detected_ellipses.append(center)
     
-        return detected_ellipses 
+        return detected_ellipses
 
-    def get_coordinates(self,index):
+    def get_coordinates(self,index)->tuple[float,float]:
         x = index[0]//self.BOARD_SIZE
         y = index[0]%self.BOARD_SIZE
         return (x,y)
 
-    def match_shapes_to_centers(self,shapes, cell_centers, img,color):
+    def match_shapes_to_centers(self,shapes, cell_centers, img,color)->list:
         list_shapes = []
         for shape in shapes:
             closest_center = None
@@ -161,15 +160,13 @@ class PlayBoardProcessor():
 
                 list_shapes.append((color,coordinates))
 
+                shape_point = tuple(map(int, shape))
+                closest_center_point = tuple(map(int, closest_center))
 
-                shape_point = tuple(map(int, shape))  # Converteer shape naar een tuple van integers
-                closest_center_point = tuple(map(int, closest_center))  # Converteer closest_center naar een tuple van integers
-            
-
-                # Teken een lijn van het object naar het dichtstbijzijnde celcentrum
+                # Draw a line to the nearest cell center
                 cv2.line(img, shape_point, closest_center_point, (0, 255, 0), 2)
-                cv2.circle(img, shape_point, 5, (0, 255, 255), -1)  # Teken een geel punt op het gedetecteerde object
-                cv2.circle(img, closest_center_point, 5, (255, 255, 0), -1)  # Teken een blauw punt op het celcentrum
+                cv2.circle(img, shape_point, 5, (0, 255, 255), -1)  # Draw yellow point on detected object
+                cv2.circle(img, closest_center_point, 5, (255, 255, 0), -1)  # Draw blue point on cell center
 
         return list_shapes
 

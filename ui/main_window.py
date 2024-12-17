@@ -93,7 +93,8 @@ class GomokuApp(Tk):
 		self.color_player_1 = "red"
 		self.color_player_2 = "blue"
 		
-		self.draw_scoreboard_bool = False
+		self.draw_scoreboard = False
+		self.overruled_last_move = None
 
 	def toggle_fullscreen(self,esc_was_used=False): #esc to exit fullscreen, f11 to enter fullscreen or to exit fullscreen
 		self.attributes('-fullscreen', not self.attributes('-fullscreen')) if not esc_was_used else self.attributes('-fullscreen', False)
@@ -153,7 +154,6 @@ class GomokuApp(Tk):
 				else:
 					color = "white"
 
-				
 				# Create rectangle and store its ID
 				square_id = self.canvas.create_rectangle(x1, y1, x2, y2, fill=color)
 				
@@ -195,11 +195,11 @@ class GomokuApp(Tk):
 									self.canvas.create_oval(value[2] + padding, value[3] + padding, value[4] - padding, value[5] - padding, fill="dark orange" if color==self.color_player_1 else "light blue" , tags="piece")
 							else:
 								self.canvas.create_oval(value[2] + padding, value[3] + padding, value[4] - padding, value[5] - padding, fill=color, tags="piece")
-		self.update()
+		self.update()#prevent flashing
 
 	def draw_scoreboard(self, board, scoreboard):
 		self.clear_text_on_canvas()
-		if self.draw_scoreboard_bool:
+		if self.draw_scoreboard:
 			for i in range(15):
 				for j in range(15):
 					if board[i][j] == 0:
@@ -231,15 +231,9 @@ class GomokuApp(Tk):
 
 	def update_replay_button_states(self):
 		"""Enable or disable buttons based on the current index."""
-		if self.controller.current_index == -1:
-			self.prev_button.config(state=DISABLED)
-		else:
-			self.prev_button.config(state=NORMAL)
-
-		if self.controller.current_index == len(self.controller.moves) - 1:
-			self.next_button.config(state=DISABLED)
-		else:
-			self.next_button.config(state=NORMAL)
+		current_index = self.controller.current_index
+		self.prev_button.config(state=DISABLED if current_index == -1 else NORMAL)
+		self.next_button.config(state=DISABLED if current_index == len(self.controller.moves) - 1 else NORMAL)
 
 	def activate_replay_frame(self):
 		self.frame_replay.grid(row=2, column=0, padx=10)  
