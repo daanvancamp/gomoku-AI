@@ -8,7 +8,7 @@ from ui.frame_recognition_buttons import FrameRecognitionButtons
 from ui.frame_webcam import FrameWebcam
 from ui.label_highest_scoring_moves import LabelHighestScoringMoves
 
-from .settings_windows import replay_window, new_game_window, train_window, scoreboard_window, models_window, physical_play_window
+from .settings_windows import replay_window, new_game_window, train_window, models_window, physical_play_window
 import controllers
 from configuration.config import config
 
@@ -36,7 +36,7 @@ class GomokuApp(Tk):
 		super().__init__()
 
 		self.title("Gomoku")
-		self.config(background=str(config["Settings"]["ui_bg"]))
+		self.config(background='#357EC7')
 		self.bind("<Escape>", lambda e: self.toggle_fullscreen(True))
 		self.bind("<F11>", lambda e: self.toggle_fullscreen())
 		self.resizable(True, True)
@@ -62,10 +62,6 @@ class GomokuApp(Tk):
 		self.models_menu = Menu(self.menubar,tearoff=0)
 		self.models_menu.add_command(label="models", command=lambda:self.open_new_window("Models"))
 		self.menubar.add_cascade(label="Models",menu=self.models_menu)
-		
-		self.scoreboard_menu = Menu(self.menubar,tearoff=0)
-		self.scoreboard_menu.add_command(label="scoreboard", command=lambda:self.open_new_window("Scoreboard"))
-		self.menubar.add_cascade(label="Scoreboard",menu=self.scoreboard_menu)
 		
 		self.squares = {}
 		
@@ -96,7 +92,6 @@ class GomokuApp(Tk):
 		self.color_player_1 = "red"
 		self.color_player_2 = "blue"
 		
-		self.draw_scoreboard = False
 		self.overruled_last_move = None
 
 	def toggle_fullscreen(self,esc_was_used=False): #esc to exit fullscreen, f11 to enter fullscreen or to exit fullscreen
@@ -117,8 +112,6 @@ class GomokuApp(Tk):
 				new_window = models_window.ModelsWindow(self)
 			case "Train":
 				new_window = train_window.TrainWindow(self)
-			case "Scoreboard":
-				new_window = scoreboard_window.ScoreboardWindow(self)
 		
 	def hide_unnecessary_widgets(self): #this function is used so the buttons are hided when starting a controller, not when opening a new window. (A user could close a window without starting a new game.)
 		self.show_replay_buttons(self.last_window_type=="Replay") #show replay buttons when using replay mode
@@ -210,19 +203,6 @@ class GomokuApp(Tk):
 								self.canvas.create_oval(value[2] + padding, value[3] + padding, value[4] - padding, value[5] - padding, fill=color, tags="piece")
 		self.update()#prevent flashing
 
-	def draw_scoreboard(self, board, scoreboard):
-		self.clear_text_on_canvas()
-		if self.draw_scoreboard:
-			for i in range(15):
-				for j in range(15):
-					if board[i][j] == 0:
-						key_to_lookup = (i, j)
-						for value in self.squares.values():
-							if value[0] == i and value[1] == j:
-								padding = 20
-								if key_to_lookup in scoreboard:
-									self.canvas.create_text(value[2]+padding, value[3]+padding, text=f"{scoreboard[key_to_lookup]:.2f}", font=('Helvetica', 12), fill="pink", tags="text")
-	   
 	def activate_game(self):
 		self.close_secondary_windows()
 

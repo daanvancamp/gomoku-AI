@@ -19,10 +19,6 @@ class PlayBoardProcessor():
         self.COLOR_P2 = P2COL
         self.COLOR_TO_DETECT = COLOR_TO_DETECT
 
-    @staticmethod
-    def calculate_euclidean_distance(p1 , p2) -> float:
-        return math.dist(p1, p2)#calculate euclidean distance
-
     def calculate_average_horizontal_vertical_distance(self, corners)->tuple[float, float]:
         corners = corners.reshape((self.BOARD_SIZE - 1, self.BOARD_SIZE - 1, 2))
     
@@ -36,12 +32,12 @@ class PlayBoardProcessor():
                 # add horizontal distances
                 if j + 1 < self.BOARD_SIZE - 1:
                     p2 = corners[i, j + 1]
-                    horizontal_distances.append(self.calculate_euclidean_distance(p1, p2))
+                    horizontal_distances.append(math.dist(p1, p2))
 
                 # add vertical distances
                 if i + 1 < self.BOARD_SIZE - 1:
                     p3 = corners[i + 1, j]
-                    vertical_distances.append(self.calculate_euclidean_distance(p1, p3))
+                    vertical_distances.append(math.dist(p1, p3))
 
         # calculate average distances
         avg_horizontal_distance = np.mean(horizontal_distances)
@@ -131,7 +127,7 @@ class PlayBoardProcessor():
     
         return detected_ellipses
 
-    def get_coordinates(self,index)->tuple[float,float]:
+    def get_coordinates(self, index)->tuple[float,float]:
         x = index[0]//self.BOARD_SIZE
         y = index[0]%self.BOARD_SIZE
         return (x,y)
@@ -170,7 +166,7 @@ class PlayBoardProcessor():
 
         return list_shapes
 
-    def get_move(self,img):
+    def get_move(self, img):
         number_of_inner_corners = (self.BOARD_SIZE - 1, self.BOARD_SIZE - 1)
 
         gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)

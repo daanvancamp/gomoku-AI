@@ -7,15 +7,15 @@ from tkinter import messagebox as mb
 
 class FrameWebcam(tk.Frame):
     def __init__(self, master):
-        super().__init__(master)
+        super().__init__(master,bg="#357EC7")
         self.master = master
 
         self.after_id = None
         self.thread = None
 
-        self.label_videofeed = tk.Label(self, text="no video feed available")
+        self.label_videofeed = tk.Label(self, text = "no video feed available",bg="#357EC7",fg="white")
         self.label_videofeed.grid(row=0, column=0,pady=2,padx=2)
-        self.label_board = tk.Label(self, text="no board available")
+        self.label_board = tk.Label(self, text = "no board available",bg="#357EC7",fg="white")
         self.label_board.grid(row=1, column=0,pady=2,padx=2)
 
     def update_video_feed(self):
@@ -38,7 +38,7 @@ class FrameWebcam(tk.Frame):
             self.master.controller.cap.release() #this results in self.master.controller.cap.isOpened() returning False
 
             mb.showwarning("Webcam not available", "Reattach it and try again. (The program will try to reconnect automatically.)")
-            self.thread = Thread(target=self.check_connection_webcam)
+            self.thread = Thread(target = self.check_connection_webcam)
             self.thread.start()
             
     def check_connection_webcam(self):
@@ -51,10 +51,10 @@ class FrameWebcam(tk.Frame):
     
     def show_board(self,frame_board):
         img = Image.fromarray(frame_board)
-        imgtk = ImageTk.PhotoImage(image=img)
+        imgtk = ImageTk.PhotoImage(image = img)
 
         self.label_board.imgtk = imgtk
-        self.label_board.configure(image=imgtk)
+        self.label_board.configure(image = imgtk)
 
 
     

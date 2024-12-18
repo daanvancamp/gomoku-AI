@@ -4,7 +4,7 @@ class LabelHighestScoringMoves(Label):
 	def __init__(self, master):
 		super().__init__(master)
 		self.master = master
-		self.config(bg="blue", fg="white")
+		self.config(bg="#357EC7", fg="white",font=("bold",14),width=40,wraplength=40)
 
 	def update(self, highest_scoring_moves):
-		self.config(text=f"Moves with highest score: {highest_scoring_moves}")
+		self.config(text=f"Moves with highest score: {highest_scoring_moves}"if len(highest_scoring_moves)<10 else highest_scoring_moves[:10]+"...")

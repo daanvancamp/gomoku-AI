@@ -14,14 +14,14 @@ class Human_vs_AI_Controller(controller.BaseController):
 		logger.info("Initialize Human_vs_AI_Controller")
 
 		if color_human=="red": #red always plays first
-			player1 = game.game.GameFactory.create_player("Human", 1) #player 1 always plays red and begins
-			player2 = game.game.GameFactory.create_player("AI", 2)
-			self.AI_player = player2
-		else:
-			player1 = game.game.GameFactory.create_player("AI", 1)
-			player2 = game.game.GameFactory.create_player("Human", 2)
-			self.AI_player = player1
-
+			p1_type,p2_type = ("Human", "AI")
+		else :
+			p1_type,p2_type = ("AI", "Human")
+		
+		player1 = game.game.GameFactory.create_player(p1_type, 1)
+		player2 = game.game.GameFactory.create_player(p2_type, 2)
+			
+		self.AI_player = player1 if color_human!="red" else player2
 		self.AI_player.load_model(modelname,False)
 
 		game_board = game.game.GameFactory.create_game_board(int(config["OTHER VARIABLES"]["BOARDSIZE"]))
@@ -56,11 +56,8 @@ class Human_vs_AI_Controller(controller.BaseController):
 		action = gomoku_ai.get_action(scores_normalized)
 		self.view.overruled_last_move = gomoku_ai.overruled_last_move
 
-		if not self.view.overruled_last_move:
-			coordinates_best_moves = list(zip(np.where(scores == max_score)[0], np.where(scores == max_score)[1]))#AI chooses one of these moves if it isn't overruled
-			self.view.label_highest_scoring_moves.update(coordinates_best_moves)
-		else:
-			self.view.label_highest_scoring_moves.update("")
+		coordinates_best_moves = list(zip(*np.where(scores == max_score)))#AI or the overruling chooses one of these moves
+		self.view.label_highest_scoring_moves.update(coordinates_best_moves)
 
 		np_scores = np.array(scores).reshape(15, 15)
 		short_score = np_scores[action[0]][action[1]]

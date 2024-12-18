@@ -2,10 +2,10 @@ import tkinter as tk
 
 class FrameRecognitionButtons(tk.Frame):
     def __init__(self, master):
-        super().__init__(master)
+        super().__init__(master,bg="#357EC7")
         self.master = master
 
-        self.button_move_done = tk.Button(self, text="Move done?", command = self.process_move)
+        self.button_move_done = tk.Button(self, text="Move done?",bg="green",fg="white", command = self.process_move)
         self.button_move_done.grid(row=0, column=0,pady=2,padx=2)
         self.master.bind("<Right>", lambda event: self.process_move())
         self.master.bind("<space>", lambda event: self.process_move())

@@ -12,8 +12,7 @@ class AI_vs_AI_TrainingController(controller_training.BaseTrainingController):
     def __init__(self, view: "ui.main_window.GomokuApp",color_p1,modelname_1="standaard+3000",modelname_2="standaard+3000"):
         super().__init__(view)
         logger.info("Initialize AI_vs_AI_TrainingController")
-        player1 = game.game.GameFactory.create_player("AI", 1)
-        player2 = game.game.GameFactory.create_player("AI", 2)
+        player1, player2 = (game.game.GameFactory.create_player("AI", i) for i in (1, 2))
         
         if color_p1=="red": #red always plays first
             player1.load_model(modelname_1,True)
