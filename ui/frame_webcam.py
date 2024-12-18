@@ -13,9 +13,9 @@ class FrameWebcam(tk.Frame):
         self.after_id = None
         self.thread = None
 
-        self.label_videofeed=tk.Label(self, text="no video feed available")
+        self.label_videofeed = tk.Label(self, text="no video feed available")
         self.label_videofeed.grid(row=0, column=0,pady=2,padx=2)
-        self.label_board=tk.Label(self, text="no board available")
+        self.label_board = tk.Label(self, text="no board available")
         self.label_board.grid(row=1, column=0,pady=2,padx=2)
 
     def update_video_feed(self):

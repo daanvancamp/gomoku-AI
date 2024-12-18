@@ -75,7 +75,13 @@ class Human_vs_AI_RecognitionController(controller.BaseController):
 		max_score, scores, scores_normalized = gomoku_ai.calculate_score()
 		action = gomoku_ai.get_action(scores_normalized)
 		self.view.overruled_last_move = gomoku_ai.overruled_last_move
-			   
+		
+		if not self.view.overruled_last_move:
+			coordinates_best_moves = list(zip(np.where(scores == max_score)[0], np.where(scores == max_score)[1]))#AI chooses one of these moves if it isn't overruled
+			self.view.label_highest_scoring_moves.update(coordinates_best_moves)
+		else:
+			self.view.label_highest_scoring_moves.update("")
+
 		np_scores = np.array(scores).reshape(15, 15)
 		short_score = np_scores[action[0]][action[1]]
 		

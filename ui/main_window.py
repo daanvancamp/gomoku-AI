@@ -6,6 +6,7 @@ import enum
 
 from ui.frame_recognition_buttons import FrameRecognitionButtons
 from ui.frame_webcam import FrameWebcam
+from ui.label_highest_scoring_moves import LabelHighestScoringMoves
 
 from .settings_windows import replay_window, new_game_window, train_window, scoreboard_window, models_window, physical_play_window
 import controllers
@@ -35,7 +36,7 @@ class GomokuApp(Tk):
 		super().__init__()
 
 		self.title("Gomoku")
-		self.config(background="#357EC7")
+		self.config(background=str(config["Settings"]["ui_bg"]))
 		self.bind("<Escape>", lambda e: self.toggle_fullscreen(True))
 		self.bind("<F11>", lambda e: self.toggle_fullscreen())
 		self.resizable(True, True)
@@ -78,7 +79,6 @@ class GomokuApp(Tk):
 		self.frame_replay = Frame(self)
 
 		self.prev_button = Button(self.frame_replay, text="◄ Previous", command=self.show_previous)
-
 		self.next_button = Button(self.frame_replay, text="Next ►", command=self.show_next)
 
 		# Place the buttons in the frame
@@ -89,7 +89,10 @@ class GomokuApp(Tk):
 
 		self.frame_webcam = FrameWebcam(self)
 		self.frame_recognition_buttons = FrameRecognitionButtons(self)
-		
+
+		self.label_highest_scoring_moves = LabelHighestScoringMoves(self)
+		self.label_highest_scoring_moves.grid(row=3, column=0,pady=2,padx=2)
+
 		self.color_player_1 = "red"
 		self.color_player_2 = "blue"
 		
@@ -120,6 +123,14 @@ class GomokuApp(Tk):
 	def hide_unnecessary_widgets(self): #this function is used so the buttons are hided when starting a controller, not when opening a new window. (A user could close a window without starting a new game.)
 		self.show_replay_buttons(self.last_window_type=="Replay") #show replay buttons when using replay mode
 		self.show_recognition_widgets(self.last_window_type=="PhysicalPlay")
+		self.show_highest_scores_label(self.last_window_type=="Play" or self.last_window_type=="PhysicalPlay" or self.last_window_type=="Train")
+
+	def show_highest_scores_label(self,show):
+		if show:
+			self.label_highest_scoring_moves.grid(row=3, column=0,pady=2,padx=2)
+			self.label_highest_scoring_moves.config(text="")
+		else:
+			self.label_highest_scoring_moves.grid_forget()
 
 	def show_replay_buttons(self,show):
 		if show:
@@ -176,6 +187,7 @@ class GomokuApp(Tk):
 		self.canvas.delete("piece")
 
 	def draw_pieces(self, board):
+		self.delete_pieces() #remove the previous drawing, remove all old pieces(This is a visual improvement, this doesn't reset the board)
 		board_np = np.array(board)
 		for i in range(self.BOARDSIZE):
 			for j in range(self.BOARDSIZE):
@@ -190,6 +202,7 @@ class GomokuApp(Tk):
 
 							if self.controller.last_move_model == (i,j):
 								if self.overruled_last_move:
+									print("drawing rectangle at ",i,j)
 									self.canvas.create_rectangle(value[2] + padding, value[3] + padding, value[4] - padding, value[5] - padding, fill="dark orange" if color==self.color_player_1 else "light blue" , tags="piece")
 								else:
 									self.canvas.create_oval(value[2] + padding, value[3] + padding, value[4] - padding, value[5] - padding, fill="dark orange" if color==self.color_player_1 else "light blue" , tags="piece")
