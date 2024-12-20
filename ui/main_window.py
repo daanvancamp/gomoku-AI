@@ -45,7 +45,7 @@ class GomokuApp(Tk):
 		
 		# Canvas to draw the chessboard
 		self.canvas = Canvas(self, width=750, height=750)
-		self.canvas.grid(row=0, column=0, rowspan=2, padx=10)
+		self.canvas.grid(row=0, column=0, rowspan=2, padx=10,pady=10)
 
 		self.menubar = Menu(self,font=("Helvetica", 12),tearoff=0)
 		self.config(menu=self.menubar)
@@ -142,6 +142,7 @@ class GomokuApp(Tk):
 
 	def create_gomokuboard(self, grid_size):
 		square_size = 50    # Each square will be 50x50 pixels
+		self.square_mapping = {} 
 		# Create the squares for the chessboard
 		for row in range(grid_size):
 			for col in range(grid_size):
@@ -161,6 +162,7 @@ class GomokuApp(Tk):
 				
 				# Save the row, col, and coordinates as data for this square
 				self.squares[square_id] = (row, col, x1, y1, x2, y2)
+				self.square_mapping[(row, col)] = (x1, y1, x2, y2)
 
 				# Bind click event to this rectangle
 				self.canvas.tag_bind(square_id, "<Button-1>", self.on_square_click) # button-1 is a left click
@@ -177,28 +179,29 @@ class GomokuApp(Tk):
 	def delete_pieces(self):
 		self.canvas.delete("piece")
 
-	def get_piece_color(self,player_id):
+	def get_piece_color(self,player_id,i,j):
+		if self.controller.last_move_model == (i,j):
+			return "dark orange" if player_id == 1 else "light blue"#the slightly different colors show the last move, so it's easier to see
 		return self.color_player_1 if player_id == 1 else self.color_player_2
 
 	def draw_pieces(self, board):
-		self.delete_pieces() #remove the previous drawing, remove all old pieces(This is a visual improvement, this doesn't reset the board)
+		self.delete_pieces() #remove the previous drawing, remove all old pieces
 		board_np = np.array(board)
 		for i in range(self.BOARDSIZE):
 			for j in range(self.BOARDSIZE):
 				if board_np[i,j] != 0:
-					for value in self.squares.values():
-						if value[0] == i and value[1] == j:
-							padding = 10
-							color = self.get_piece_color(board_np[i,j])
+					x1, y1, x2, y2 = self.square_mapping[(i, j)]
+					color = self.get_piece_color(board_np[i,j],i,j)
+					
+					padding = 10
+					if self.controller.last_move_model == (i, j) and self.overruled_last_move:
+						draw_method = self.canvas.create_rectangle #show an overruled move as a square
+					else:
+						draw_method = self.canvas.create_oval
 
-							if self.controller.last_move_model == (i,j):
-								if self.overruled_last_move:
-									print("drawing rectangle at ",i,j)
-									self.canvas.create_rectangle(value[2] + padding, value[3] + padding, value[4] - padding, value[5] - padding, fill="dark orange" if color==self.color_player_1 else "light blue" , tags="piece")
-								else:
-									self.canvas.create_oval(value[2] + padding, value[3] + padding, value[4] - padding, value[5] - padding, fill="dark orange" if color==self.color_player_1 else "light blue" , tags="piece")
-							else:
-								self.canvas.create_oval(value[2] + padding, value[3] + padding, value[4] - padding, value[5] - padding, fill=color, tags="piece")
+					draw_method(x1 + padding, y1 + padding, x2 - padding, y2 - padding, fill=color, tags="piece")
+
+							
 		self.update()#prevent flashing
 
 	def activate_game(self):
