@@ -27,7 +27,7 @@ class Human_vs_AI_RecognitionController(controller.BaseController):
 		self.AI_player = player1 if color_human != "red" else player2
 		self.AI_player.load_model(modelname,False)
 
-		game_board = game.game.GameFactory.create_game_board(int(config["OTHER VARIABLES"]["BOARDSIZE"]))
+		game_board = game.game.GameFactory.create_game_board(int(config["GAME"]["board_size"]))
 		self.game:game.game.Game = game.game.GameFactory.initialize_new_game(game_board, player1, player2)
 		self.initialize_board()
 

@@ -57,7 +57,7 @@ class BaseTrainingController(BaseController): #training means that the AI plays 
         self.game.put_piece(row, col)
 
         if self.game.player1.type == "Human" or self.game.player2.type == "Human":
-            self.view.draw_pieces(self.game.board.board) #the calculations are faster than a tkinter canvas
+            self.view.draw_pieces(self.game.board.board) #the calculations are faster than a tkinter canvas, so they can't be shown when AI plays against AI
 
         next_max_score, next_scores, next_scores_normalized = gomoku_ai.calculate_score(15)
 

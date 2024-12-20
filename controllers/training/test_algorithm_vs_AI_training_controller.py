@@ -12,9 +12,9 @@ class TestAlgorithm_vs_AI_TrainingController(controller_training.BaseTrainingCon
 	def __init__(self, view: "ui.main_window.GomokuApp",color_AI,modelname="standaard+3000"):
 		super().__init__(view)
 		logger.info("Initialize TestAlgorithm_vs_AI_TrainingController")
-		if color_AI=="red": #red always plays first
+		if color_AI=="red": #red always plays first (and is player 1)
 			p1_type,p2_type = ("AI", "Test")
-		else :
+		else:
 			p1_type,p2_type = ("Test", "AI")
 
 		player1 = game.game.GameFactory.create_player(p1_type, 1)
@@ -32,22 +32,15 @@ class TestAlgorithm_vs_AI_TrainingController(controller_training.BaseTrainingCon
 		self.view.window_mode = ui.main_window.WindowMode.computer_move
 		self.view.activate_game()
 
-		if self.game.player1.type=="AI": #player 1 always plays red and begins, in other words, AI begins if it is red.
-			while True:
-				self.AI_put_piece()
-				if self.check_and_handle_winner():
-					break
-				self.algorithm_put_piece()
-				if self.check_and_handle_winner():
-					break
-		else:
-			while True:
-				self.algorithm_put_piece()
-				if self.check_and_handle_winner():
-					break
-				self.AI_put_piece()
-				if self.check_and_handle_winner():
-					break
+		p1_play, p2_play = (self.AI_put_piece, self.algorithm_put_piece) if self.game.player1.type=="AI" else (self.algorithm_put_piece, self.AI_put_piece)
+
+		while True:
+			p1_play()
+			if self.check_and_handle_winner():
+				break
+			p2_play()
+			if self.check_and_handle_winner():
+				break
 
 		self.train_at_the_end_of_the_round()
 
@@ -56,5 +49,4 @@ class TestAlgorithm_vs_AI_TrainingController(controller_training.BaseTrainingCon
 		row, col = self.game.current_player.test_algorithm.ai_move()
 		self.game.put_piece(row, col)
 		self.view.draw_pieces(self.game.board.board)
-
 	

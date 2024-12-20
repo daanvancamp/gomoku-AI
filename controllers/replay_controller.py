@@ -28,7 +28,7 @@ class ReplayController(controller.BaseController):
             self.view.show_load_error(e)
             
     def next_move(self):
-        if self.current_index < (len(self.moves) - 1):
+        if self.current_index < len(self.moves) - 1:
             self.current_index += 1
             position_tuple = eval(self.moves[self.current_index]['position'])
             player_id = eval(self.moves[self.current_index]['player'])

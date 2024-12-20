@@ -7,8 +7,8 @@ from configuration.config import config
 from ui.settings_windows import window
 
 
-WIDTH = int(config["OTHER VARIABLES"]["WIDTH"])
-HEIGHT = int(config["OTHER VARIABLES"]["HEIGHT"])
+WIDTH = int(config["UI"]["width"])
+HEIGHT = int(config["UI"]["height"])
 modelmanager_instance:ModelManager = ModelManager()
 #todo bugfix needed
 class ModelsWindow(window.BaseWindow):
@@ -17,11 +17,11 @@ class ModelsWindow(window.BaseWindow):
 
 		self.master.after(0, self.refresh_stats)
 
-		self.var_losses=IntVar()
+		self.var_losses = IntVar()
 		self.var_losses.set(0)
-		self.var_wins=IntVar()
+		self.var_wins = IntVar()
 		self.var_wins.set(0)
-		self.var_ties=IntVar()
+		self.var_ties = IntVar()
 		self.var_ties.set(0)
 
 		self.var_relative_value_losses = StringVar()
@@ -37,7 +37,7 @@ class ModelsWindow(window.BaseWindow):
 
 		self.var_name_model = StringVar()
 
-		self.var_number_of_training_loops=StringVar()
+		self.var_number_of_training_loops = StringVar()
 		self.var_number_of_training_loops.set("0 (against H:0,T'A':0, AI:0 )")
 
 
@@ -93,14 +93,14 @@ class ModelsWindow(window.BaseWindow):
 		self.label_relative_value_losses = Label(self, textvariable=self.var_relative_value_losses)
 		self.label_relative_value_losses.grid(row=6, column=2, sticky="w")
 
-		self.label_wins=Label(self, text="Wins: ")
+		self.label_wins = Label(self, text="Wins: ")
 		self.label_wins.grid(row=7, column=0, sticky="w",padx=10)
 		self.label_value_wins_tab4 = Label(self, textvariable=self.var_wins)
 		self.label_value_wins_tab4.grid(row=7, column=1, sticky="w")
 		self.label_relative_value_wins = Label(self, textvariable=self.var_relative_value_wins)
 		self.label_relative_value_wins.grid(row=7, column=2, sticky="w")
 
-		self.label_ties=Label(self, text="Ties: ")
+		self.label_ties = Label(self, text="Ties: ")
 		self.label_ties.grid(row=8, column=0, sticky="w",padx=10)
 		self.label_value_ties_tab4 = Label(self, textvariable=self.var_ties)
 		self.label_value_ties_tab4.grid(row=8, column=1, sticky="w")

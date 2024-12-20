@@ -4,7 +4,6 @@ import ui.main_window
 from configuration.config import *
 import game.algorithms.ai.ai
 import logging
-from utils import stats, player_stats
 # Use the existing logger by name
 logger = logging.getLogger('my_logger')
 
@@ -14,14 +13,11 @@ class AI_vs_AI_TrainingController(controller_training.BaseTrainingController):
         logger.info("Initialize AI_vs_AI_TrainingController")
         player1, player2 = (game.game.GameFactory.create_player("AI", i) for i in (1, 2))
         
-        if color_p1=="red": #red always plays first
-            player1.load_model(modelname_1,True)
-            player2.load_model(modelname_2,True)
-        else:
-            player1.load_model(modelname_2,True)
-            player2.load_model(modelname_1,True)
+        p1_model, p2_model = (modelname_1, modelname_2) if color_p1 == "red" else (modelname_2, modelname_1)
+        player1.load_model(p1_model, True)
+        player2.load_model(p2_model, True)
 
-        game_board = game.game.GameFactory.create_game_board(int(config["OTHER VARIABLES"]["BOARDSIZE"]))
+        game_board = game.game.GameFactory.create_game_board(int(config["GAME"]["board_size"]))
         self.game:game.game.Game = game.game.GameFactory.initialize_new_game(game_board, player1, player2)
         self.initialize_board()
 

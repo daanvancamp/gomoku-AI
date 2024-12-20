@@ -4,9 +4,7 @@ import numpy as np
 import logging
 import enum
 
-from ui.frame_recognition_buttons import FrameRecognitionButtons
-from ui.frame_webcam import FrameWebcam
-from ui.label_highest_scoring_moves import LabelHighestScoringMoves
+from ui.widgets_main_window import frame_recognition_buttons, frame_webcam, label_highest_scoring_moves
 
 from .settings_windows import replay_window, new_game_window, train_window, models_window, physical_play_window
 import controllers
@@ -65,7 +63,7 @@ class GomokuApp(Tk):
 		
 		self.squares = {}
 		
-		self.BOARDSIZE = int(config["OTHER VARIABLES"]["BOARDSIZE"])
+		self.BOARDSIZE = int(config["GAME"]["board_size"])
 		self.create_gomokuboard(self.BOARDSIZE)
 		
 		board = np.zeros((self.BOARDSIZE, self.BOARDSIZE))
@@ -83,10 +81,10 @@ class GomokuApp(Tk):
 
 		self.deactivate_replay_frame()
 
-		self.frame_webcam = FrameWebcam(self)
-		self.frame_recognition_buttons = FrameRecognitionButtons(self)
+		self.frame_webcam = frame_webcam.FrameWebcam(self)
+		self.frame_recognition_buttons = frame_recognition_buttons.FrameRecognitionButtons(self)
 
-		self.label_highest_scoring_moves = LabelHighestScoringMoves(self)
+		self.label_highest_scoring_moves = label_highest_scoring_moves.LabelHighestScoringMoves(self)
 		self.label_highest_scoring_moves.grid(row=3, column=0,pady=2,padx=2)
 
 		self.color_player_1 = "red"
@@ -179,6 +177,9 @@ class GomokuApp(Tk):
 	def delete_pieces(self):
 		self.canvas.delete("piece")
 
+	def get_piece_color(self,player_id):
+		return self.color_player_1 if player_id == 1 else self.color_player_2
+
 	def draw_pieces(self, board):
 		self.delete_pieces() #remove the previous drawing, remove all old pieces(This is a visual improvement, this doesn't reset the board)
 		board_np = np.array(board)
@@ -188,10 +189,7 @@ class GomokuApp(Tk):
 					for value in self.squares.values():
 						if value[0] == i and value[1] == j:
 							padding = 10
-							if board_np[i,j] == 1:
-								color = self.color_player_1
-							else:
-								color = self.color_player_2
+							color = self.get_piece_color(board_np[i,j])
 
 							if self.controller.last_move_model == (i,j):
 								if self.overruled_last_move:

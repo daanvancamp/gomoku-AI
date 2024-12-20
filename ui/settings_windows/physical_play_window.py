@@ -11,8 +11,8 @@ from ui.settings_windows import window
 
 
 modelmanager_instance = ModelManager()
-WIDTH=int(config["OTHER VARIABLES"]["WIDTH"])
-HEIGHT=int(config["OTHER VARIABLES"]["HEIGHT"])
+WIDTH = int(config["UI"]["width"])
+HEIGHT = int(config["UI"]["height"])
 #todo: window verder afwerken
 class PhysicalPlayWindow (window.BaseWindow):
 	def __init__(self, master: "ui.main_window.GomokuApp"):

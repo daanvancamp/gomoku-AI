@@ -20,7 +20,7 @@ class Human_vs_TestAlgorithmController(controller.BaseController):
 		player1 = game.game.GameFactory.create_player(p1_type, 1)
 		player2 = game.game.GameFactory.create_player(p2_type, 2)
 
-		game_board = game.game.GameFactory.create_game_board(int(config["OTHER VARIABLES"]["BOARDSIZE"]))
+		game_board = game.game.GameFactory.create_game_board(int(config["GAME"]["board_size"]))
 		self.game = game.game.GameFactory.initialize_new_game(game_board, player1, player2)
 		self.initialize_board()
 

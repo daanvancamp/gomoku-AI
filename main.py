@@ -1,6 +1,7 @@
 #todo readd the feature to load a situation, using a text file, how should it be done?
 #todo show graphs after training process
-
+#fix bug in models tab
+#todo improve player_stats.py, too much unnecessary nesting
 #This is the startup file, please run this file to start the game
 
 from datetime import datetime

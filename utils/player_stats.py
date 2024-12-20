@@ -10,7 +10,9 @@ def update_player_stats(game, winning_player):
     AI_players=[p for p in game.players if p.type=="AI"]
     if winning_player > -1: # run if game was not a tie
         print("win player", winning_player)
+        corresponding_player = game.players[winning_player-1]
         match winning_player:
+            
             case 1:
                 if game.player1.type =="AI":
                     game.player1.AI_model.log_win(game.player2.type)
@@ -31,7 +33,7 @@ def update_player_stats(game, winning_player):
             else:
                 game.players[i].losses += 1
                 is_winner = False
-            game.players[i].calculate_score(int(config["OTHER VARIABLES"]["BOARDSIZE"]) ** 2, is_winner, game.current_game)
+            game.players[i].calculate_score(int(config["GAME"]["board_size"]) ** 2, is_winner, game.current_game)
             if game.last_round:
                 game.players[i].calculate_win_rate(game.current_game)
     else:

@@ -100,7 +100,6 @@ class AI_Model():
         if self.training:
             self.add_one_to_value_from_config_file("training loops end stats","ties")
             self.ties_training = self.get_value_from_config_file("training loops end stats","ties")
-            
         else:
             self.add_one_to_value_from_config_file("games end stats","ties")
             self.ties_games = self.get_value_from_config_file("games end stats","ties")

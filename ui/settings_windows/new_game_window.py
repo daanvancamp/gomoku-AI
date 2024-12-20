@@ -9,9 +9,9 @@ import ui.main_window
 from ui.settings_windows import window
 
 
-modelmanager_instance=ModelManager()
-WIDTH=int(config["OTHER VARIABLES"]["WIDTH"])
-HEIGHT=int(config["OTHER VARIABLES"]["HEIGHT"])
+modelmanager_instance = ModelManager()
+WIDTH = int(config["UI"]["width"])
+HEIGHT = int(config["UI"]["height"])
 
 class NewGameWindow (window.BaseWindow):
 	def __init__(self, master: "ui.main_window.GomokuApp"):
@@ -20,7 +20,7 @@ class NewGameWindow (window.BaseWindow):
 		self.button_new_game = Button(self, text="New Game", command=self.start_new_game)
 		self.button_new_game.grid(row=0, column=0, sticky="w", padx=10)
 
-		self.label_info=Label(self, text="red begins always")
+		self.label_info = Label(self, text="red begins always")
 		self.label_info.grid(row=1, column=0, sticky="w", padx=10)
 
 		self.label_p1 = Label(self, text="Player 1 (Human)")
@@ -34,13 +34,13 @@ class NewGameWindow (window.BaseWindow):
 		self.var_p2_type = StringVar()
 		self.var_p2_type.set("AI-Model")
 
-		self.var_p2_model= StringVar()
+		self.var_p2_model = StringVar()
 		self.var_p2_model.set("standaard+3000")
 
-		self.var_allow_overrule=BooleanVar()
+		self.var_allow_overrule = BooleanVar()
 		self.var_allow_overrule.set(True)
 
-		self.cb_choose_color=ttk.Combobox(self, state="readonly",values=["red","blue"],textvariable=self.var_color_p1)
+		self.cb_choose_color = ttk.Combobox(self, state="readonly",values=["red","blue"],textvariable=self.var_color_p1)
 		self.cb_choose_color.grid(row=3, column=0, sticky="w", padx=10)
 
 		self.radiobutton_7 = Radiobutton(self, text="Human", variable=self.var_p2_type, value="Human")

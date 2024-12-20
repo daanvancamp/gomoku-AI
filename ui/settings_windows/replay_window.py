@@ -24,7 +24,7 @@ class ReplayWindow(window.BaseWindow):
 		self.var_replay_file.set(tkinter.filedialog.askopenfilename(filetypes=[("Json File", "*.json")],initialdir=config['Folders']['replay_folder']))
 		
 	def start_new_replay(self):
-		if self.var_replay_file.get() == "": 
+		if self.var_replay_file.get() == "":
 			self.label_info_replay_file_loaded.config(text="Please select a replay file to continue")
 			return
 		self.master.clear_canvas()

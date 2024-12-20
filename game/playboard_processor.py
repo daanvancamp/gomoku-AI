@@ -10,14 +10,14 @@ logger = logging.getLogger('my_logger')
 class PlayBoardProcessor():
 
     def __init__(self, P1COL, P2COL, COLOR_TO_DETECT):
-        self.BOARD_SIZE = int(config["OTHER VARIABLES"]["BOARDSIZE"])
-        self.avg_distances = None
-        self.previous_state_board = []
-        self.pieces = None
-
         self.COLOR_P1 = P1COL
         self.COLOR_P2 = P2COL
         self.COLOR_TO_DETECT = COLOR_TO_DETECT
+
+        self.BOARD_SIZE = int(config["GAME"]["board_size"])
+        self.avg_distances = None
+        self.previous_state_board = []
+        self.pieces = None
 
     def calculate_average_horizontal_vertical_distance(self, corners)->tuple[float, float]:
         corners = corners.reshape((self.BOARD_SIZE - 1, self.BOARD_SIZE - 1, 2))

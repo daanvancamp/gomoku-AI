@@ -85,7 +85,7 @@ class Player:
 class AI_Player(Player):
     def __init__(self, player_id):
         super().__init__(player_id,"AI")  # Call the constructor of the base class
-        self.ai = AI_Algorithm(int(config["OTHER VARIABLES"]["BOARDSIZE"]))
+        self.ai = AI_Algorithm(int(config["GAME"]["board_size"]))
         self.ai.train = False
 
     def load_model(self, model,training):

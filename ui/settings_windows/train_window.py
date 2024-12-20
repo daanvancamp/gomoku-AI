@@ -5,9 +5,9 @@ from model_management.modelmanager import ModelManager
 from controllers.training import human_vs_AI_training_controller,test_algorithm_vs_AI_training_controller,AI_vs_AI_training_controller
 from ui.settings_windows import window
 
-distance_from_left_side = int(config["OTHER VARIABLES"]["distance_from_left_side"])
-WIDTH = int(config["OTHER VARIABLES"]["WIDTH"])
-HEIGHT = int(config["OTHER VARIABLES"]["HEIGHT"])
+distance_from_left_side = int(config["UI"]["distance_from_left_side"])
+WIDTH = int(config["UI"]["WIDTH"])
+HEIGHT = int(config["UI"]["HEIGHT"])
 modelmanager_instance = ModelManager()
 class TrainWindow(window.BaseWindow):
 	def __init__(self, master):
@@ -17,7 +17,7 @@ class TrainWindow(window.BaseWindow):
 		self.button_new_training = Button(self, text="Train", command=self.start_new_training)
 		self.button_new_training.grid(row=0, column=0, sticky="w", padx=10)
 
-		self.label_info=Label(self, text="red begins always")
+		self.label_info = Label(self, text="red begins always")
 		self.label_info.grid(row=0, column=1, sticky="w", padx=10)
 
 		self.label_p1 = Label(self, text="Player 1 (AI)")
@@ -39,7 +39,7 @@ class TrainWindow(window.BaseWindow):
 
 		self.var_p1_model= StringVar()
 		self.var_p1_model.set("standaard+3000")
-		self.var_p2_model= StringVar()
+		self.var_p2_model = StringVar()
 		self.var_p2_model.set("standaard+3000")
 		self.var_game_runs = IntVar()
 		self.var_game_runs.set(10)

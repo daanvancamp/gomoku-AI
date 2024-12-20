@@ -12,7 +12,7 @@ logger = logging.getLogger('my_logger')
 class ModelManager(metaclass=Singleton):
     def __init__(self):
         self.parent_dir = "data/models"
-        self.list_models=self.get_list_models()
+        self.list_models = self.get_list_models()
 
     def create_new_model(self, modelName:str):
         directory = modelName

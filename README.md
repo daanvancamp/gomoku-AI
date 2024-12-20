@@ -42,9 +42,7 @@ july 2024:
   I added an on-screen hover effect when the mouse hovers over the board to make it look better and to prevent misclicks.
   
   I added a checkbox to train the model against yourself. (human vs DVC-AI) My name is Daan Van Camp, so my initials are DVC.
-  
-  Wim added a way to load a situation and load from there, so it's easier to find the weaknesses of the model.
-  
+    
   The last move of the model is now red so it's easier to find the last move and anticipate upon it.
   
   Human training checkbox has now moved to a more appropriate place.
@@ -144,9 +142,17 @@ august 2024:
 
   **This design reached the end of his life.**
 
-  **We redesigned the whole code.**
+september,october,november,december 2024:
 
-  almost all old features are now restored and improved We also got rid of the tabs.
+  **We redesigned the whole code, using the MVC-architecture.**
+
+  all old features are now restored and improved
+  
+  new fullscreen gui
+
+  recognition using webcam is functional
+
+
 
 **issues:**
 
@@ -155,7 +161,8 @@ You shouldn't experience any issues if you use the latest release.
 
 **roadmap(in descending priority):**
 
-restoring the last old features that were deleted due to the redesign
+last bugfixes
+
 new features
 
 developped by:
