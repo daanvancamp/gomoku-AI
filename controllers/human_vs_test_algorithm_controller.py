@@ -10,9 +10,9 @@ logger = logging.getLogger('my_logger')
 
 # controller.py
 class Human_vs_TestAlgorithmController(controller.BaseController):
-	def __init__(self, view:"ui.main_window.GomokuApp", color_human):
+	def __init__(self, view:"ui.main_window.GomokuApp", color_human,initial_board=None):
 		super().__init__(view)
-		self.set_up_game(("Human", "Test") if color_human=="red" else ("Test", "Human"))
+		self.set_up_game(("Human", "Test") if color_human=="red" else ("Test", "Human"),initial_board)
 
 		self.game.player1.game = self.game
 		self.game.player2.game = self.game

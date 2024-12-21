@@ -231715,3 +231715,1035 @@ It will choose on its own, it can win in a few (1 or 2) moves if it does the rig
 [0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0]
 status: a normal move will be executed by the AI
 allow_overrule: True
+
+
+function get_valid_moves called
+the involved player is player 2
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+status: a normal move will be executed by the AI
+allow_overrule: True
+
+
+function get_valid_moves called
+the involved player is player 2
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+status: a normal move will be executed by the AI
+allow_overrule: True
+
+
+function get_valid_moves called
+the involved player is player 2
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 2, 1, 1, 1, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+status: a normal move will be executed by the AI
+allow_overrule: True
+
+
+function get_valid_moves called
+the involved player is player 2
+player 1 has a threat at 6, 10
+player 1 has a winning threat at 6, 10
+player 1 has 4 in a row: _xxxx_
+function can_win_in_a_few_moves called
+winning moves that could lead to a win found or the opponent is one move away from the win
+overruled: [(6, 10)]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 2, 1, 1, 1, 1, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+status: an overruled move is executed by the AI
+allow_overrule: True
+
+
+function get_valid_moves called
+the involved player is player 2
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 2, 0, 0, 1, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 2, 1, 1, 1, 1, 2, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+status: a normal move will be executed by the AI
+allow_overrule: True
+
+
+function get_valid_moves called
+the involved player is player 2
+player 1 has a threat at 3, 11
+player 1 has a threat at 7, 7
+function can_win_in_a_few_moves called
+It will choose on its own, it can win in a few (1 or 2) moves if it does the right move.
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 1, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 2, 0, 0, 1, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 2, 1, 1, 1, 1, 2, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+status: a normal move will be executed by the AI
+allow_overrule: True
+
+
+function get_valid_moves called
+the involved player is player 2
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+status: a normal move will be executed by the AI
+allow_overrule: True
+
+
+function get_valid_moves called
+the involved player is player 2
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+status: a normal move will be executed by the AI
+allow_overrule: True
+
+
+function get_valid_moves called
+the involved player is player 2
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+status: a normal move will be executed by the AI
+allow_overrule: True
+
+
+function get_valid_moves called
+the involved player is player 2
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 1, 1, 2, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 2, 1, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+status: a normal move will be executed by the AI
+allow_overrule: True
+
+
+function get_valid_moves called
+the involved player is player 2
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+status: a normal move will be executed by the AI
+allow_overrule: True
+
+
+function get_valid_moves called
+the involved player is player 2
+[1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0]
+[0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0]
+[0, 0, 0, 0, 2, 1, 1, 1, 1, 2, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 1, 0, 2, 2, 0, 0, 0, 0, 0, 0]
+[1, 0, 0, 0, 0, 1, 0, 2, 2, 0, 0, 0, 0, 0, 0]
+[0, 1, 0, 0, 0, 2, 1, 2, 2, 1, 0, 0, 0, 0, 0]
+[0, 0, 1, 0, 0, 0, 0, 1, 1, 2, 0, 0, 0, 0, 0]
+[0, 0, 0, 2, 0, 0, 1, 2, 2, 2, 1, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0]
+status: a normal move will be executed by the AI
+allow_overrule: True
+
+
+function get_valid_moves called
+the involved player is player 2
+player 1 has a threat at 4, 5
+player 1 has a winning threat at 4, 5
+player 1 has 4 in a row: _xxxx_
+function can_win_in_a_few_moves called
+It will choose on its own, it can win in a few (1 or 2) moves if it does the right move.
+[1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0]
+[0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 2, 0, 0, 0, 0]
+[0, 0, 0, 0, 2, 1, 1, 1, 1, 2, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 1, 2, 2, 2, 0, 0, 0, 0, 0, 0]
+[1, 0, 0, 0, 0, 1, 0, 2, 2, 0, 0, 0, 0, 0, 0]
+[0, 1, 0, 0, 0, 2, 1, 2, 2, 1, 0, 0, 0, 0, 0]
+[0, 0, 1, 0, 0, 0, 0, 1, 1, 2, 0, 0, 0, 0, 0]
+[0, 0, 0, 2, 0, 0, 1, 2, 2, 2, 1, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0]
+status: a normal move will be executed by the AI
+allow_overrule: True
+
+
+function get_valid_moves called
+the involved player is player 2
+player 1 has a threat at 5, 3
+player 1 has a threat at 5, 7
+function can_win_in_a_few_moves called
+It will choose on its own, it can win in a few (1 or 2) moves if it does the right move.
+[1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 1, 0, 0, 0]
+[0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 2, 0, 0, 0, 0]
+[0, 0, 0, 0, 2, 1, 1, 1, 1, 2, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 1, 2, 2, 2, 0, 0, 0, 0, 0, 0]
+[1, 0, 0, 0, 0, 1, 0, 2, 2, 0, 0, 0, 0, 0, 0]
+[0, 1, 0, 0, 0, 2, 1, 2, 2, 1, 0, 0, 0, 0, 0]
+[0, 0, 1, 0, 0, 0, 0, 1, 1, 2, 0, 0, 0, 0, 0]
+[0, 0, 0, 2, 0, 0, 1, 2, 2, 2, 1, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0]
+status: a normal move will be executed by the AI
+allow_overrule: True
+
+
+function get_valid_moves called
+the involved player is player 2
+player 1 has a threat at 4, 8
+player 1 has a winning threat at 4, 8
+player 1 has 3 in a row and 1 nearby: xxx_x or x_xxx
+player 1 has a threat at 5, 3
+player 1 has a winning threat at 5, 3
+player 1 has 4 in a row: _xxxx_
+player 1 has a threat at 5, 8
+player 1 has a winning threat at 5, 8
+player 1 has 4 in a row: _xxxx_
+player 1 has a threat at 8, 4
+function can_win_in_a_few_moves called
+It will choose on its own, it can win in a few (1 or 2) moves if it does the right move.
+[1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 1, 0, 0, 0]
+[0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 2, 0, 0, 0, 0]
+[0, 0, 0, 0, 2, 1, 1, 1, 1, 2, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 1, 2, 2, 2, 0, 0, 0, 0, 0, 0]
+[1, 0, 0, 0, 0, 1, 2, 2, 2, 0, 0, 0, 0, 0, 0]
+[0, 1, 0, 0, 0, 2, 1, 2, 2, 1, 0, 0, 0, 0, 0]
+[0, 0, 1, 0, 0, 0, 0, 1, 1, 2, 0, 0, 0, 0, 0]
+[0, 0, 0, 2, 0, 0, 1, 2, 2, 2, 1, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0]
+status: a normal move will be executed by the AI
+allow_overrule: True
+
+
+function get_valid_moves called
+the involved player is player 2
+player 1 has a threat at 3, 8
+player 1 has a threat at 4, 8
+player 1 has a winning threat at 4, 8
+player 1 has 3 in a row and 1 nearby: xxx_x or x_xxx
+player 1 has a threat at 5, 3
+player 1 has a winning threat at 5, 3
+player 1 has 4 in a row: _xxxx_
+player 1 has a threat at 7, 4
+player 1 has a threat at 8, 4
+function can_win_in_a_few_moves called
+It will choose on its own, it can win in a few (1 or 2) moves if it does the right move.
+[1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 2, 0, 1, 0, 0, 0, 1, 0, 0, 0]
+[0, 0, 0, 0, 1, 1, 1, 1, 2, 0, 2, 0, 0, 0, 0]
+[0, 0, 0, 0, 2, 1, 1, 1, 1, 2, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 1, 2, 2, 2, 0, 0, 0, 0, 0, 0]
+[1, 0, 0, 0, 0, 1, 2, 2, 2, 0, 0, 0, 0, 0, 0]
+[0, 1, 0, 0, 0, 2, 1, 2, 2, 1, 0, 0, 0, 0, 0]
+[0, 0, 1, 0, 0, 0, 0, 1, 1, 2, 0, 0, 0, 0, 0]
+[0, 0, 0, 2, 0, 0, 1, 2, 2, 2, 1, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0]
+status: a normal move will be executed by the AI
+allow_overrule: True
+
+
+function get_valid_moves called
+the involved player is player 2
+player 1 has a threat at 3, 8
+player 1 has a threat at 3, 9
+player 1 has a winning threat at 3, 9
+player 1 has 4 in a row: _xxxx_
+player 1 has a threat at 7, 4
+player 1 has a threat at 8, 4
+player 1 has a winning threat at 8, 4
+player 1 has 4 in a row: _xxxx_
+function can_win_in_a_few_moves called
+It will choose on its own, it can win in a few (1 or 2) moves if it does the right move.
+[1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 2, 0, 1, 1, 0, 0, 1, 0, 0, 0]
+[0, 0, 0, 2, 1, 1, 1, 1, 2, 0, 2, 0, 0, 0, 0]
+[0, 0, 0, 0, 2, 1, 1, 1, 1, 2, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 1, 2, 2, 2, 0, 0, 0, 0, 0, 0]
+[1, 0, 0, 0, 0, 1, 2, 2, 2, 0, 0, 0, 0, 0, 0]
+[0, 1, 0, 0, 0, 2, 1, 2, 2, 1, 0, 0, 0, 0, 0]
+[0, 0, 1, 0, 0, 0, 0, 1, 1, 2, 0, 0, 0, 0, 0]
+[0, 0, 0, 2, 0, 0, 1, 2, 2, 2, 1, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0]
+status: a normal move will be executed by the AI
+allow_overrule: True
+
+
+function get_valid_moves called
+the involved player is player 2
+player 1 has a threat at 2, 9
+player 1 has a winning threat at 2, 9
+player 1 has 4 in a row: _xxxx_
+player 1 has a threat at 3, 9
+player 1 has a winning threat at 3, 9
+player 1 has 4 in a row: _xxxx_
+player 1 has a threat at 7, 4
+player 1 has a winning threat at 7, 4
+player 1 has 4 in a row: _xxxx_
+function can_win_in_a_few_moves called
+It will choose on its own, it can win in a few (1 or 2) moves if it does the right move.
+[1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 2, 0, 1, 1, 0, 0, 1, 0, 0, 0]
+[0, 0, 0, 2, 1, 1, 1, 1, 2, 0, 2, 0, 0, 0, 0]
+[0, 0, 0, 0, 2, 1, 1, 1, 1, 2, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 1, 2, 2, 2, 0, 0, 0, 0, 0, 0]
+[1, 0, 0, 0, 2, 1, 2, 2, 2, 0, 0, 0, 0, 0, 0]
+[0, 1, 0, 0, 0, 2, 1, 2, 2, 1, 0, 0, 0, 0, 0]
+[0, 0, 1, 0, 0, 0, 0, 1, 1, 2, 0, 0, 0, 0, 0]
+[0, 0, 0, 2, 0, 0, 1, 2, 2, 2, 1, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0]
+status: a normal move will be executed by the AI
+allow_overrule: True
+
+
+function get_valid_moves called
+the involved player is player 2
+player 1 has a threat at 2, 9
+player 1 has a winning threat at 2, 9
+player 1 has 4 in a row: _xxxx_
+player 1 has a threat at 3, 9
+player 1 has a winning threat at 3, 9
+player 1 has 4 in a row: _xxxx_
+player 1 has a threat at 4, 6
+player 1 has a winning threat at 4, 6
+player 1 has 3 in a row and 1 nearby: xxx_x or x_xxx
+player 1 has a threat at 4, 10
+player 1 has a winning threat at 4, 10
+player 1 has 4 in a row: _xxxx_
+function can_win_in_a_few_moves called
+It will choose on its own, it can win in a few (1 or 2) moves if it does the right move.
+[1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 2, 0, 1, 1, 1, 0, 1, 0, 0, 0]
+[0, 0, 0, 2, 1, 1, 1, 1, 2, 0, 2, 0, 0, 0, 0]
+[0, 0, 0, 0, 2, 1, 1, 1, 1, 2, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 2, 1, 2, 2, 2, 0, 0, 0, 0, 0, 0]
+[1, 0, 0, 0, 2, 1, 2, 2, 2, 0, 0, 0, 0, 0, 0]
+[0, 1, 0, 0, 0, 2, 1, 2, 2, 1, 0, 0, 0, 0, 0]
+[0, 0, 1, 0, 0, 0, 0, 1, 1, 2, 0, 0, 0, 0, 0]
+[0, 0, 0, 2, 0, 0, 1, 2, 2, 2, 1, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0]
+status: a normal move will be executed by the AI
+allow_overrule: True
+
+
+function get_valid_moves called
+the involved player is player 2
+player 1 has a threat at 2, 9
+player 1 has a winning threat at 2, 9
+player 1 has 4 in a row: _xxxx_
+player 1 has a threat at 4, 6
+player 1 has a winning threat at 4, 6
+player 1 has 3 in a row and 1 nearby: xxx_x or x_xxx
+player 1 has a threat at 4, 10
+player 1 has a winning threat at 4, 10
+player 1 has 4 in a row: _xxxx_
+function can_win_in_a_few_moves called
+It will choose on its own, it can win in a few (1 or 2) moves if it does the right move.
+[1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 1, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 2, 0, 1, 1, 1, 0, 1, 0, 0, 0]
+[0, 0, 0, 2, 1, 1, 1, 1, 2, 0, 2, 0, 0, 0, 0]
+[0, 0, 0, 0, 2, 1, 1, 1, 1, 2, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 2, 1, 2, 2, 2, 0, 0, 0, 0, 0, 0]
+[1, 0, 0, 0, 2, 1, 2, 2, 2, 0, 0, 0, 0, 0, 0]
+[0, 1, 0, 0, 0, 2, 1, 2, 2, 1, 0, 0, 0, 0, 0]
+[0, 0, 1, 0, 0, 0, 0, 1, 1, 2, 0, 0, 0, 0, 0]
+[0, 0, 0, 2, 0, 0, 1, 2, 2, 2, 1, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0]
+status: a normal move will be executed by the AI
+allow_overrule: True
+
+
+function get_valid_moves called
+the involved player is player 2
+[1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 2, 0, 0, 0, 0]
+[0, 0, 0, 0, 2, 1, 1, 1, 1, 2, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 1, 0, 2, 2, 0, 0, 0, 0, 0, 0]
+[1, 0, 0, 0, 0, 1, 0, 2, 2, 0, 0, 0, 0, 0, 0]
+[0, 1, 0, 0, 0, 2, 1, 2, 2, 1, 0, 0, 0, 0, 0]
+[0, 0, 1, 0, 0, 0, 0, 1, 1, 2, 0, 0, 0, 0, 0]
+[0, 0, 0, 2, 0, 0, 1, 2, 2, 2, 1, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0]
+status: a normal move will be executed by the AI
+allow_overrule: True
+
+
+function get_valid_moves called
+the involved player is player 2
+player 1 has a threat at 4, 8
+player 1 has a winning threat at 4, 8
+player 1 has 3 in a row and 1 nearby: xxx_x or x_xxx
+player 1 has a threat at 8, 4
+function can_win_in_a_few_moves called
+It will choose on its own, it can win in a few (1 or 2) moves if it does the right move.
+[1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 2, 0, 0, 0, 0]
+[0, 0, 0, 0, 2, 1, 1, 1, 1, 2, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 1, 2, 2, 2, 0, 0, 0, 0, 0, 0]
+[1, 0, 0, 0, 0, 1, 0, 2, 2, 0, 0, 0, 0, 0, 0]
+[0, 1, 0, 0, 0, 2, 1, 2, 2, 1, 0, 0, 0, 0, 0]
+[0, 0, 1, 0, 0, 0, 0, 1, 1, 2, 0, 0, 0, 0, 0]
+[0, 0, 0, 2, 0, 0, 1, 2, 2, 2, 1, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0]
+status: a normal move will be executed by the AI
+allow_overrule: True
+
+
+function get_valid_moves called
+the involved player is player 2
+player 1 has a threat at 4, 8
+player 1 has a winning threat at 4, 8
+player 1 has 3 in a row and 1 nearby: xxx_x or x_xxx
+player 1 has a threat at 5, 5
+player 1 has a threat at 8, 4
+function can_win_in_a_few_moves called
+It will choose on its own, it can win in a few (1 or 2) moves if it does the right move.
+[1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 2, 0, 0, 0, 0]
+[0, 0, 0, 0, 2, 1, 1, 1, 1, 2, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 1, 2, 2, 2, 2, 0, 0, 0, 0, 0]
+[1, 0, 0, 0, 0, 1, 0, 2, 2, 0, 0, 0, 0, 0, 0]
+[0, 1, 0, 0, 0, 2, 1, 2, 2, 1, 0, 0, 0, 0, 0]
+[0, 0, 1, 0, 0, 0, 0, 1, 1, 2, 0, 0, 0, 0, 0]
+[0, 0, 0, 2, 0, 0, 1, 2, 2, 2, 1, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0]
+status: a normal move will be executed by the AI
+allow_overrule: True
+
+
+function get_valid_moves called
+the involved player is player 2
+player 1 has a threat at 5, 4
+player 1 has a winning threat at 5, 4
+player 1 has 4 in a row: _xxxx_
+player 1 has a threat at 8, 9
+player 1 has a threat at 10, 9
+player 1 has a winning threat at 10, 9
+player 1 has 4 in a row: _xxxx_
+player 1 has a threat at 12, 5
+function can_win_in_a_few_moves called
+winning moves that could lead to a win found or the opponent is one move away from the win
+overruled: [(5, 4), (8, 9), (10, 9), (12, 5)]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 1, 2, 2, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 1, 2, 2, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 2, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+status: an overruled move is executed by the AI
+allow_overrule: True
+
+
+function get_valid_moves called
+the involved player is player 2
+player 1 has a threat at 5, 4
+player 1 has a winning threat at 5, 4
+player 1 has 4 in a row: _xxxx_
+player 1 has a threat at 8, 9
+player 1 has a threat at 12, 5
+function can_win_in_a_few_moves called
+winning moves that could lead to a win found or the opponent is one move away from the win
+overruled: [(5, 4), (8, 9), (12, 5)]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 1, 2, 2, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 1, 2, 2, 1, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 2, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 1, 0, 2, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+status: an overruled move is executed by the AI
+allow_overrule: True
+
+
+function get_valid_moves called
+the involved player is player 2
+player 1 has a threat at 8, 9
+player 1 has a threat at 12, 5
+function can_win_in_a_few_moves called
+winning moves that could lead to a win found or the opponent is one move away from the win
+overruled: [(8, 9), (12, 5)]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 2, 0, 0, 1, 2, 2, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 1, 2, 2, 1, 1, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 2, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 1, 0, 2, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+status: an overruled move is executed by the AI
+allow_overrule: True
+
+
+function get_valid_moves called
+the involved player is player 2
+player 1 has a threat at 5, 10
+player 1 has a threat at 9, 6
+function can_win_in_a_few_moves called
+winning moves that could lead to a win found or the opponent is one move away from the win
+overruled: [(5, 10), (9, 6)]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 2, 0, 0, 1, 2, 2, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 1, 2, 2, 1, 1, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 2, 2, 1, 0, 1, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 1, 0, 2, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 1, 0, 2, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+status: an overruled move is executed by the AI
+allow_overrule: True
+
+
+function get_valid_moves called
+the involved player is player 2
+player 1 has a threat at 4, 11
+player 1 has a winning threat at 4, 11
+player 1 has 4 in a row: _xxxx_
+function can_win_in_a_few_moves called
+winning moves that could lead to a win found or the opponent is one move away from the win
+overruled: [(4, 11)]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 2, 0, 0, 1, 2, 2, 1, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 1, 2, 2, 1, 1, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 2, 2, 1, 0, 1, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 1, 0, 2, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 2, 0, 1, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 1, 0, 2, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+status: an overruled move is executed by the AI
+allow_overrule: True
+
+
+function get_valid_moves called
+the involved player is player 2
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 0, 0, 0]
+[0, 0, 0, 0, 2, 0, 0, 1, 2, 2, 1, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 1, 2, 2, 1, 1, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 2, 2, 1, 0, 1, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 1, 0, 2, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 2, 0, 1, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 1, 0, 2, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+status: a normal move will be executed by the AI
+allow_overrule: True
+
+
+function get_valid_moves called
+the involved player is player 2
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 0, 0, 0]
+[0, 0, 0, 0, 2, 0, 0, 1, 2, 2, 1, 1, 0, 0, 0]
+[0, 0, 0, 0, 0, 1, 2, 2, 1, 1, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 2, 2, 1, 0, 1, 2, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 1, 0, 2, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 2, 0, 1, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 1, 0, 2, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+status: a normal move will be executed by the AI
+allow_overrule: True
+
+
+function get_valid_moves called
+the involved player is player 2
+player 1 has a threat at 3, 9
+player 1 has a threat at 7, 13
+function can_win_in_a_few_moves called
+winning moves that could lead to a win found or the opponent is one move away from the win
+overruled: [(3, 9), (7, 13)]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 0, 0, 0]
+[0, 0, 0, 0, 2, 0, 0, 1, 2, 2, 1, 1, 0, 0, 0]
+[0, 0, 0, 0, 0, 1, 2, 2, 1, 1, 2, 0, 1, 0, 0]
+[0, 0, 0, 0, 2, 2, 1, 0, 1, 2, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 1, 0, 2, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 2, 0, 1, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 1, 0, 2, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+status: an overruled move is executed by the AI
+allow_overrule: True
+
+
+function get_valid_moves called
+the involved player is player 2
+player 1 has a threat at 8, 14
+player 1 has a winning threat at 8, 14
+player 1 has 4 in a row: _xxxx_
+function can_win_in_a_few_moves called
+winning moves that could lead to a win found or the opponent is one move away from the win
+overruled: [(8, 14)]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 0, 0, 0]
+[0, 0, 0, 0, 2, 0, 0, 1, 2, 2, 1, 1, 0, 0, 0]
+[0, 0, 0, 0, 0, 1, 2, 2, 1, 1, 2, 0, 1, 0, 0]
+[0, 0, 0, 0, 2, 2, 1, 0, 1, 2, 0, 0, 0, 1, 0]
+[0, 0, 0, 0, 0, 0, 0, 1, 0, 2, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 2, 0, 1, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 1, 0, 2, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+status: an overruled move is executed by the AI
+allow_overrule: True
+
+
+function get_valid_moves called
+the involved player is player 2
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 0, 0, 0]
+[0, 0, 0, 0, 2, 0, 0, 1, 2, 2, 1, 1, 0, 0, 0]
+[0, 0, 0, 0, 0, 1, 2, 2, 1, 1, 2, 0, 1, 1, 0]
+[0, 0, 0, 0, 2, 2, 1, 0, 1, 2, 0, 0, 0, 1, 0]
+[0, 0, 0, 0, 0, 0, 0, 1, 0, 2, 0, 0, 0, 0, 2]
+[0, 0, 0, 0, 0, 0, 2, 0, 1, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 1, 0, 2, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+status: a normal move will be executed by the AI
+allow_overrule: True
+
+
+function get_valid_moves called
+the involved player is player 2
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 0, 0, 0]
+[0, 0, 0, 0, 2, 0, 0, 1, 2, 2, 1, 1, 0, 2, 0]
+[0, 0, 0, 0, 0, 1, 2, 2, 1, 1, 2, 0, 1, 1, 0]
+[0, 0, 0, 0, 2, 2, 1, 0, 1, 2, 0, 0, 1, 1, 0]
+[0, 0, 0, 0, 0, 0, 0, 1, 0, 2, 0, 0, 0, 0, 2]
+[0, 0, 0, 0, 0, 0, 2, 0, 1, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 1, 0, 2, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+status: a normal move will be executed by the AI
+allow_overrule: True
+
+
+function get_valid_moves called
+the involved player is player 2
+player 1 has a threat at 5, 12
+player 1 has a threat at 9, 12
+function can_win_in_a_few_moves called
+winning moves that could lead to a win found or the opponent is one move away from the win
+overruled: [(5, 12), (9, 12)]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 0, 0, 0]
+[0, 0, 0, 0, 2, 0, 0, 1, 2, 2, 1, 1, 0, 2, 0]
+[0, 0, 0, 0, 0, 1, 2, 2, 1, 1, 2, 0, 1, 1, 0]
+[0, 0, 0, 0, 2, 2, 1, 0, 1, 2, 0, 2, 1, 1, 0]
+[0, 0, 0, 0, 0, 0, 0, 1, 0, 2, 0, 0, 1, 0, 2]
+[0, 0, 0, 0, 0, 0, 2, 0, 1, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 1, 0, 2, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+status: an overruled move is executed by the AI
+allow_overrule: True
+
+
+function get_valid_moves called
+the involved player is player 2
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 0, 0, 0]
+[0, 0, 0, 0, 2, 0, 0, 1, 2, 2, 1, 1, 2, 2, 0]
+[0, 0, 0, 0, 0, 1, 2, 2, 1, 1, 2, 0, 1, 1, 0]
+[0, 0, 0, 0, 2, 2, 1, 0, 1, 2, 0, 2, 1, 1, 0]
+[0, 0, 0, 0, 0, 0, 0, 1, 0, 2, 0, 1, 1, 0, 2]
+[0, 0, 0, 0, 0, 0, 2, 0, 1, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 1, 0, 2, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+status: a normal move will be executed by the AI
+allow_overrule: True
+
+
+function get_valid_moves called
+the involved player is player 2
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 0, 0, 0]
+[0, 0, 0, 0, 2, 0, 0, 1, 2, 2, 1, 1, 2, 2, 0]
+[0, 0, 0, 0, 0, 1, 2, 2, 1, 1, 2, 0, 1, 1, 0]
+[0, 0, 0, 0, 2, 2, 1, 0, 1, 2, 0, 2, 1, 1, 0]
+[0, 0, 0, 0, 0, 0, 0, 1, 0, 2, 1, 1, 1, 0, 2]
+[0, 0, 0, 0, 0, 0, 2, 0, 1, 0, 2, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 1, 0, 2, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+status: a normal move will be executed by the AI
+allow_overrule: True
+
+
+function get_valid_moves called
+the involved player is player 2
+player 1 has a threat at 10, 10
+function can_win_in_a_few_moves called
+winning moves that could lead to a win found or the opponent is one move away from the win
+overruled: [(10, 10)]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 0, 0, 0]
+[0, 0, 0, 0, 2, 0, 0, 1, 2, 2, 1, 1, 2, 2, 0]
+[0, 0, 0, 0, 0, 1, 2, 2, 1, 1, 2, 2, 1, 1, 0]
+[0, 0, 0, 0, 2, 2, 1, 0, 1, 2, 0, 2, 1, 1, 0]
+[0, 0, 0, 0, 0, 0, 0, 1, 0, 2, 1, 1, 1, 0, 2]
+[0, 0, 0, 0, 0, 0, 2, 0, 1, 0, 2, 1, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 1, 0, 2, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+status: an overruled move is executed by the AI
+allow_overrule: True
+
+
+function get_valid_moves called
+the involved player is player 2
+player 1 has a threat at 10, 12
+player 1 has a winning threat at 10, 12
+player 1 has 4 in a row: _xxxx_
+function can_win_in_a_few_moves called
+winning moves that could lead to a win found or the opponent is one move away from the win
+overruled: [(10, 12)]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 0, 0, 0]
+[0, 0, 0, 0, 2, 0, 0, 1, 2, 2, 1, 1, 2, 2, 0]
+[0, 0, 0, 0, 0, 1, 2, 2, 1, 1, 2, 2, 1, 1, 0]
+[0, 0, 0, 0, 2, 2, 1, 0, 1, 2, 0, 2, 1, 1, 0]
+[0, 0, 0, 0, 0, 0, 0, 1, 0, 2, 1, 1, 1, 0, 2]
+[0, 0, 0, 0, 0, 0, 2, 0, 1, 0, 2, 1, 1, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 1, 0, 2, 2, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+status: an overruled move is executed by the AI
+allow_overrule: True
+
+
+function get_valid_moves called
+the involved player is player 2
+player 1 has a threat at 7, 10
+player 1 has a winning threat at 7, 10
+player 1 has 4 in a row: _xxxx_
+player 1 has a threat at 11, 14
+player 1 has a winning threat at 11, 14
+player 1 has 3 in a row and 1 nearby: xxx_x or x_xxx
+function can_win_in_a_few_moves called
+winning moves that could lead to a win found or the opponent is one move away from the win
+overruled: [(7, 10), (11, 14)]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 0, 0, 0]
+[0, 0, 0, 0, 2, 0, 0, 1, 2, 2, 1, 1, 2, 2, 0]
+[0, 0, 0, 0, 0, 1, 2, 2, 1, 1, 2, 2, 1, 1, 0]
+[0, 0, 0, 0, 2, 2, 1, 0, 1, 2, 0, 2, 1, 1, 0]
+[0, 0, 0, 0, 0, 0, 0, 1, 0, 2, 1, 1, 1, 0, 2]
+[0, 0, 0, 0, 0, 0, 2, 0, 1, 0, 2, 1, 1, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 1, 0, 2, 2, 0, 2, 1, 0]
+[0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+status: an overruled move is executed by the AI
+allow_overrule: True
+
+
+function get_valid_moves called
+the involved player is player 2
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 0, 0, 0]
+[0, 0, 0, 0, 2, 0, 0, 1, 2, 2, 1, 1, 2, 2, 0]
+[0, 0, 0, 0, 0, 1, 2, 2, 1, 1, 2, 2, 1, 1, 0]
+[0, 0, 0, 0, 2, 2, 1, 0, 1, 2, 2, 2, 1, 1, 0]
+[0, 0, 0, 0, 0, 0, 0, 1, 0, 2, 1, 1, 1, 0, 2]
+[0, 0, 0, 0, 0, 0, 2, 0, 1, 0, 2, 1, 1, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 1, 0, 2, 2, 0, 2, 1, 0]
+[0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+status: a normal move will be executed by the AI
+allow_overrule: True

@@ -1,6 +1,7 @@
 from tkinter import *
 from tkinter import ttk
 from tkinter import filedialog
+from tkinter import messagebox
 from configuration.config import *
 import controllers.human_vs_AI_controller
 import controllers.human_vs_human_controller 
@@ -99,24 +100,27 @@ class NewGameWindow (window.BaseWindow):
 						if int(line[col]) not in [0, 1, 2]:
 							return None
 			print("board loaded")
+			print(board)
 			return board
 		except:
 			return None
 
 	def start_new_game(self):
+		initial_board = None
 		if self.var_start_from_file.get():
 			initial_board = self.load_board_from_file()
 			if initial_board is None:
-				self.master.show_error_message("Unvalid file")
+				messagebox.showerror("Error", "Invalid file selected",parent=self)
 				return
+
 		#p1=Human, p2=...
 		match self.var_p2_type.get():
 			case "Human":
-				self.master.controller = controllers.human_vs_human_controller.Human_vs_HumanController(self.master)
+					self.master.controller = controllers.human_vs_human_controller.Human_vs_HumanController(self.master,initial_board)
 			case "Test Algorithm":
-				self.master.controller = controllers.human_vs_test_algorithm_controller.Human_vs_TestAlgorithmController(self.master,self.var_color_p1.get())
+					self.master.controller = controllers.human_vs_test_algorithm_controller.Human_vs_TestAlgorithmController(self.master,self.var_color_p1.get(),initial_board)
 			case "AI-Model":
-				self.master.controller = controllers.human_vs_AI_controller.Human_vs_AI_Controller(self.master,self.var_color_p1.get(),self.var_p2_model.get())
+				self.master.controller = controllers.human_vs_AI_controller.Human_vs_AI_Controller(self.master,self.var_color_p1.get(),self.var_p2_model.get(),initial_board)
 				self.master.controller.AI_player.set_allow_overrule(self.var_allow_overrule.get())# The first move never needs to be overruled.
 
 

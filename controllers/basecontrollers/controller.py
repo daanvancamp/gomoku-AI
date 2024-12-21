@@ -22,20 +22,23 @@ class BaseController:
 		self.record_replay = True #todo add this option to the GUI
 		self.last_move_model=None #value remains none when playing Human vs Human or Human vs Test
 
-	def set_up_game(self,player_types,initial_board=None):
+	def set_up_game(self,player_types,board=None):
 		p1_type, p2_type = player_types
 		player1 = game.game.GameFactory.create_player(p1_type, 1) #player 1 always plays red and begins
 		player2 = game.game.GameFactory.create_player(p2_type, 2)
 
 		game_board = game.game.GameFactory.create_game_board(int(config["GAME"]["board_size"]))
-		if initial_board is not None:
-			game_board.board = initial_board
 		self.game:game.game.Game = game.game.GameFactory.initialize_new_game(game_board, player1, player2)
-
-		self.initialize_board()
+		
+		if board is not None:
+			self.game.board.board = board
+			print("initial board loaded")
+			self.view.draw_pieces(self.game.board.board)
+		else:
+			self.reset_board()
 		self.view.activate_game()
 
-	def initialize_board(self):
+	def reset_board(self):
 		game.game.Game().board.reset_board()
 	
 	def check_and_handle_winner(self):
@@ -45,7 +48,7 @@ class BaseController:
 			if any(p.type == "Human" for p in (self.game.player1, self.game.player2)):#if there's a human_player
 				self.view.end_game()
 			self.view.window_mode = ui.main_window.WindowMode.pause
-			self.initialize_board()
+			self.reset_board()
 			update_player_stats(self.game,self.game.winner)
 			if self.record_replay:
 				filereader.save_replay(self.game.p1_moves, self.game.p2_moves)

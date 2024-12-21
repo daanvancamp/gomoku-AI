@@ -6,13 +6,13 @@
         "training loops against Test Algorithm": 0
     },
     "total end stats": {
-        "losses": 300,
-        "wins": 468,
+        "losses": 301,
+        "wins": 471,
         "ties": 44
     },
     "games end stats": {
-        "wins": 110,
-        "losses": 34,
+        "wins": 113,
+        "losses": 35,
         "ties": 44
     },
     "training loops end stats": {

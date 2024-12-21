@@ -4,9 +4,9 @@ from .basecontrollers import controller
 from configuration.config import *
 
 class Human_vs_HumanController(controller.BaseController):
-    def __init__(self, view: "ui.main_window.GomokuApp"):
+    def __init__(self, view: "ui.main_window.GomokuApp", initial_board=None):
         super().__init__(view)
-        self.set_up_game(("Human", "Human"))
+        self.set_up_game(("Human", "Human"),initial_board)
 
         self.view.window_mode = ui.main_window.WindowMode.human_move
 
