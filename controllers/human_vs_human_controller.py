@@ -6,13 +6,10 @@ from configuration.config import *
 class Human_vs_HumanController(controller.BaseController):
     def __init__(self, view: "ui.main_window.GomokuApp"):
         super().__init__(view)
-        player1, player2 = (game.game.GameFactory.create_player("Human", i) for i in (1, 2))
-        game_board = game.game.GameFactory.create_game_board(int(config["GAME"]["board_size"]))
+        self.set_up_game(("Human", "Human"))
 
-        self.game = game.game.GameFactory.initialize_new_game(game_board, player1, player2)
-        self.initialize_board()
         self.view.window_mode = ui.main_window.WindowMode.human_move
-        self.view.activate_game()
+
 
     def human_put_piece(self, row, col):
         self.game.put_piece(row, col)

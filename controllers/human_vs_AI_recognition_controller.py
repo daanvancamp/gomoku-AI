@@ -16,23 +16,19 @@ class Human_vs_AI_RecognitionController(controller.BaseController):
 		super().__init__(view)
 		logger.info("Initialize Human_vs_AI_Controller")
 
-		if color_human=="red": #red always plays first
-			p1_type,p2_type = ("Human", "AI")
-		else :
-			p1_type,p2_type = ("AI", "Human")
+		self.set_up_game(("Human", "AI") if color_human=="red" else ("AI", "Human"))#red always begins
 
-		player1 = game.game.GameFactory.create_player(p1_type, 1) #player 1 always plays red and begins
-		player2 = game.game.GameFactory.create_player(p2_type, 2)
-
-		self.AI_player = player1 if color_human != "red" else player2
+		self.AI_player = self.game.player1 if color_human != "red" else self.game.player2
 		self.AI_player.load_model(modelname,False)
-
-		game_board = game.game.GameFactory.create_game_board(int(config["GAME"]["board_size"]))
-		self.game:game.game.Game = game.game.GameFactory.initialize_new_game(game_board, player1, player2)
-		self.initialize_board()
-
-		self.view.activate_game()
 		
+		self.set_up_recognition(color_human)
+
+		if self.game.player1.type=="AI": #player 1 always plays red and begins
+			self.AI_put_piece()
+		else:
+			self.view.window_mode = ui.main_window.WindowMode.recognition
+	
+	def set_up_recognition(self,color_human):
 		self.playboard_processor = PlayBoardProcessor("red", "blue", color_human)
 		self.cap = cv2.VideoCapture(1,cv2.CAP_ANY) #faster connection time #isopened returns true until cap.release is used if you connect a webcam at first
 		if not self.cap.isOpened():
@@ -42,11 +38,6 @@ class Human_vs_AI_RecognitionController(controller.BaseController):
 		
 		self.view.frame_webcam.update_video_feed()
 
-		if self.game.player1.type=="AI": #player 1 always plays red and begins
-			self.AI_put_piece()
-		else:
-			self.view.window_mode = ui.main_window.WindowMode.recognition
-		
 	def human_get_and_process_move(self,frame):
 		human_move, edited_frame, error_message = self.playboard_processor.get_move(frame)
 		if error_message is None:

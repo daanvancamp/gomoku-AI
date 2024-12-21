@@ -43,7 +43,7 @@ class Game(metaclass=Singleton):
             self.current_player = self.player2
         else: 
             self.current_player = self.player1
-        print("switched to player:",self.current_player)
+        # print("switched to player:",self.current_player)
    
 
 class GameFactory:

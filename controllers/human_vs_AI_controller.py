@@ -13,22 +13,10 @@ class Human_vs_AI_Controller(controller.BaseController):
 		super().__init__(view)
 		logger.info("Initialize Human_vs_AI_Controller")
 
-		if color_human=="red": #red always plays first
-			p1_type,p2_type = ("Human", "AI")
-		else :
-			p1_type,p2_type = ("AI", "Human")
-		
-		player1 = game.game.GameFactory.create_player(p1_type, 1)
-		player2 = game.game.GameFactory.create_player(p2_type, 2)
-			
-		self.AI_player = player1 if color_human!="red" else player2
+		self.set_up_game(("Human", "AI") if color_human=="red" else ("AI", "Human"))
+
+		self.AI_player = self.game.player1 if color_human!="red" else self.game.player2
 		self.AI_player.load_model(modelname,False)
-
-		game_board = game.game.GameFactory.create_game_board(int(config["GAME"]["board_size"]))
-		self.game:game.game.Game = game.game.GameFactory.initialize_new_game(game_board, player1, player2)
-		self.initialize_board() #load the selected situation if requested by the user
-
-		self.view.activate_game()
 
 		if self.game.player1.type=="AI": #player 1 always plays red and begins
 			self.AI_put_piece()
@@ -36,7 +24,7 @@ class Human_vs_AI_Controller(controller.BaseController):
 			self.view.window_mode = ui.main_window.WindowMode.human_move
    
 	def human_put_piece(self, row, col):
-		if self.game.put_piece(row, col): #if the square is empty do..., otherwise do nothing
+		if self.game.put_piece(row, col): #if the square is empty do..., otherwise nothing
 			logger.info("Human move") 
 			self.view.draw_pieces(self.game.board.board)
 			if not self.check_and_handle_winner():

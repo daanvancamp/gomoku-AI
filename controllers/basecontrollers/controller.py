@@ -2,8 +2,10 @@ import game.game
 import ui.main_window
 from utils.player_stats import update_player_stats
 from utils import filereader
+from configuration.config import config
 
 import logging
+
 
 # Use the existing logger by name
 logger = logging.getLogger('my_logger')
@@ -20,6 +22,19 @@ class BaseController:
 		self.record_replay = True #todo add this option to the GUI
 		self.last_move_model=None #value remains none when playing Human vs Human or Human vs Test
 
+	def set_up_game(self,player_types,initial_board=None):
+		p1_type, p2_type = player_types
+		player1 = game.game.GameFactory.create_player(p1_type, 1) #player 1 always plays red and begins
+		player2 = game.game.GameFactory.create_player(p2_type, 2)
+
+		game_board = game.game.GameFactory.create_game_board(int(config["GAME"]["board_size"]))
+		if initial_board is not None:
+			game_board.board = initial_board
+		self.game:game.game.Game = game.game.GameFactory.initialize_new_game(game_board, player1, player2)
+
+		self.initialize_board()
+		self.view.activate_game()
+
 	def initialize_board(self):
 		game.game.Game().board.reset_board()
 	
@@ -27,7 +42,8 @@ class BaseController:
 		if self.game.winner != 0:
 			print("er is een winnaar")
 			self.view.draw_line(self.game.board.winning_cells)
-			self.view.end_game()
+			if any(p.type == "Human" for p in (self.game.player1, self.game.player2)):#if there's a human_player
+				self.view.end_game()
 			self.view.window_mode = ui.main_window.WindowMode.pause
 			self.initialize_board()
 			update_player_stats(self.game,self.game.winner)

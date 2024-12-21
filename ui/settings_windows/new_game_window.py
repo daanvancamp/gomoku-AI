@@ -8,7 +8,7 @@ import controllers.human_vs_test_algorithm_controller
 from model_management.modelmanager import ModelManager
 import ui.main_window
 from ui.settings_windows import window
-
+import os
 
 modelmanager_instance = ModelManager()
 WIDTH = int(config["UI"]["width"])
@@ -86,7 +86,7 @@ class NewGameWindow (window.BaseWindow):
 
 	def browse_state_files(self):
 		file_path = filedialog.askopenfilename(filetypes=[("txt File", "*.txt")],initialdir=r".\test_situations")
-		self.var_state_board_path.set(file_path)
+		self.var_state_board_path.set(file_path if os.path.exists(file_path) else "")
 
 	def load_board_from_file(self)->list[list[int]]:
 		try:
@@ -102,7 +102,6 @@ class NewGameWindow (window.BaseWindow):
 			return board
 		except:
 			return None
-
 
 	def start_new_game(self):
 		if self.var_start_from_file.get():

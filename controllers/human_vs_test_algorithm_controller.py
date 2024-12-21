@@ -12,26 +12,15 @@ logger = logging.getLogger('my_logger')
 class Human_vs_TestAlgorithmController(controller.BaseController):
 	def __init__(self, view:"ui.main_window.GomokuApp", color_human):
 		super().__init__(view)
-		if color_human=="red": #red always plays first
-			p1_type,p2_type = ("Human", "Test")
-		else :
-			p1_type,p2_type = ("Test", "Human")
-
-		player1 = game.game.GameFactory.create_player(p1_type, 1)
-		player2 = game.game.GameFactory.create_player(p2_type, 2)
-
-		game_board = game.game.GameFactory.create_game_board(int(config["GAME"]["board_size"]))
-		self.game = game.game.GameFactory.initialize_new_game(game_board, player1, player2)
-		self.initialize_board()
+		self.set_up_game(("Human", "Test") if color_human=="red" else ("Test", "Human"))
 
 		self.game.player1.game = self.game
 		self.game.player2.game = self.game
-		self.view.activate_game()
-		self.color_human=color_human
-		self.view.window_mode = ui.main_window.WindowMode.human_move
 
 		if self.game.player1.type=="Test": #red/player1 always plays first
 			self.algorithm_put_piece()
+		else:
+			self.view.window_mode = ui.main_window.WindowMode.human_move
 
 	def human_put_piece(self, row, col):
 		if self.game.put_piece(row, col):

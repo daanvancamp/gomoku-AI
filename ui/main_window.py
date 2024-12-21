@@ -35,8 +35,8 @@ class GomokuApp(Tk):
 
 		self.title("Gomoku")
 		self.config(background='#357EC7')
-		self.bind("<Escape>", lambda e: self.toggle_fullscreen(True))
-		self.bind("<F11>", lambda e: self.toggle_fullscreen())
+		self.bind("<Escape>", lambda e: self.toggle_fullscreen_state(True))
+		self.bind("<F11>", lambda e: self.toggle_fullscreen_state())
 		self.resizable(True, True)
 		self.attributes("-fullscreen", True)
 
@@ -62,6 +62,7 @@ class GomokuApp(Tk):
 		self.menubar.add_cascade(label="Models",menu=self.models_menu)
 		
 		self.squares = {}
+		self.square_size = 50
 		
 		self.BOARDSIZE = int(config["GAME"]["board_size"])
 		self.create_gomokuboard(self.BOARDSIZE)
@@ -92,7 +93,7 @@ class GomokuApp(Tk):
 		
 		self.overruled_last_move = None
 
-	def toggle_fullscreen(self,esc_was_used=False): #esc to exit fullscreen, f11 to enter fullscreen or to exit fullscreen
+	def toggle_fullscreen_state(self,esc_was_used=False): #esc to exit fullscreen, f11 to enter fullscreen or to exit fullscreen
 		self.attributes('-fullscreen', not self.attributes('-fullscreen')) if not esc_was_used else self.attributes('-fullscreen', False)
 
 	def open_new_window(self, window_type):
@@ -141,15 +142,14 @@ class GomokuApp(Tk):
 			self.frame_recognition_buttons.grid_forget()
 
 	def create_gomokuboard(self, grid_size):
-		square_size = 50    # Each square will be 50x50 pixels
-		self.square_mapping = {} 
+		self.squares_mapping = {} 
 		# Create the squares for the chessboard
 		for row in range(grid_size):
 			for col in range(grid_size):
-				x1 = col * square_size
-				y1 = row * square_size
-				x2 = x1 + square_size
-				y2 = y1 + square_size
+				x1 = col * self.square_size
+				y1 = row * self.square_size
+				x2 = x1 + self.square_size
+				y2 = y1 + self.square_size
 
 				# Alternate the colors
 				if (row + col) % 2 == 0:
@@ -162,7 +162,7 @@ class GomokuApp(Tk):
 				
 				# Save the row, col, and coordinates as data for this square
 				self.squares[square_id] = (row, col, x1, y1, x2, y2)
-				self.square_mapping[(row, col)] = (x1, y1, x2, y2)
+				self.squares_mapping[(row, col)] = (x1, y1, x2, y2)
 
 				# Bind click event to this rectangle
 				self.canvas.tag_bind(square_id, "<Button-1>", self.on_square_click) # button-1 is a left click
@@ -179,29 +179,27 @@ class GomokuApp(Tk):
 	def delete_pieces(self):
 		self.canvas.delete("piece")
 
-	def get_piece_color(self,player_id,i,j):
-		if self.controller.last_move_model == (i,j):
-			return "dark orange" if player_id == 1 else "light blue"#the slightly different colors show the last move, so it's easier to see
+	def get_piece_color(self,player_id,row,col):
+		if self.controller.last_move_model == (row,col):
+			return "dark orange" if player_id == 1 else "light blue"#the slightly different colors show the last move of the AI, so it's easier to see
 		return self.color_player_1 if player_id == 1 else self.color_player_2
 
 	def draw_pieces(self, board):
 		self.delete_pieces() #remove the previous drawing, remove all old pieces
 		board_np = np.array(board)
-		for i in range(self.BOARDSIZE):
-			for j in range(self.BOARDSIZE):
-				if board_np[i,j] != 0:
-					x1, y1, x2, y2 = self.square_mapping[(i, j)]
-					color = self.get_piece_color(board_np[i,j],i,j)
-					
-					padding = 10
-					if self.controller.last_move_model == (i, j) and self.overruled_last_move:
-						draw_method = self.canvas.create_rectangle #show an overruled move as a square
-					else:
-						draw_method = self.canvas.create_oval
+		padding = 10
+		for (i, j), piece in np.ndenumerate(board_np):
+			if piece != 0:#if the cell is not empty
+				x1, y1, x2, y2 = self.squares_mapping[(i, j)]
+				color = self.get_piece_color(piece,i,j)
+				
+				if self.controller.last_move_model == (i, j) and self.overruled_last_move:
+					draw_method = self.canvas.create_rectangle #show an overruled move as a square
+				else:
+					draw_method = self.canvas.create_oval
 
-					draw_method(x1 + padding, y1 + padding, x2 - padding, y2 - padding, fill=color, tags="piece")
+				draw_method(x1 + padding, y1 + padding, x2 - padding, y2 - padding, fill=color, tags="piece")
 
-							
 		self.update()#prevent flashing
 
 	def activate_game(self):
@@ -248,22 +246,15 @@ class GomokuApp(Tk):
 		
 	def clear_text_on_canvas(self):
 		self.canvas.delete("text")
-	
-	def draw_line(self, winning_cells): #draws a line through the winning cells
-		padding = 25 #cell size= 50, so padding = 25 (the line has to go through the middle of each cell)
 
+	def draw_line(self, winning_cells): #draws a line through the winning cells
 		first_cell = winning_cells[0] #start of the line, the list is sorted, form: (x,y)
 		last_cell = winning_cells[-1] #end of the line, the list is sorted, form: (x,y)
-		for value in self.squares.values():
-			if value[0] == first_cell[0] and value[1] == first_cell[1]:
-				x1 = value[2] + padding
-				y1 = value[3] + padding
+		x1, y1 = self.squares_mapping[first_cell][:2]
+		x2, y2 = self.squares_mapping[last_cell][2:]
 
-			if value[0] == last_cell[0] and value[1] == last_cell[1]:
-				x2 = value[4] - padding
-				y2 = value[5] - padding
-
-		self.canvas.create_line(x1, y1, x2, y2, fill="white", width=4, tags="line")
+		padding = self.square_size/2 #the line has to go through the middle of each cell
+		self.canvas.create_line(x1 + padding, y1 + padding, x2 - padding, y2 - padding, fill="white", width=4, tags="line")
 
 	def display_coordinates(self,detected_move):
 		self.frame_recognition_buttons.button_move_done.config(text=detected_move)

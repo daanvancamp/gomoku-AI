@@ -15,19 +15,6 @@ class BaseTrainingController(BaseController): #training means that the AI plays 
 
         self.last_round = False #todo toggle on and off when needed, temporarily disabled
         self.show_graphs = None #todo let the user choose, add this to the menu in the future
-    
-    def check_and_handle_winner(self):
-        if self.game.winner != 0:
-            print("There's a winner")
-            self.view.draw_line(self.game.board.winning_cells)
-            self.view.window_mode = ui.main_window.WindowMode.pause
-            self.initialize_board()
-            player_stats.update_player_stats(self.game,self.game.winner)
-            if self.record_replay: #the replay is always recorded, but only saved if the user wants it
-                filereader.save_replay(self.game.p1_moves, self.game.p2_moves)
-            return True
-        else:
-            return False
 
     def AI_put_piece(self):
         self.view.window_mode = ui.main_window.WindowMode.computer_move
@@ -56,7 +43,7 @@ class BaseTrainingController(BaseController): #training means that the AI plays 
         row, col = action
         self.game.put_piece(row, col)
 
-        if self.game.player1.type == "Human" or self.game.player2.type == "Human":
+        if any(p.type == "Human" for p in (self.game.player1, self.game.player2)):
             self.view.draw_pieces(self.game.board.board) #the calculations are faster than a tkinter canvas, so they can't be shown when AI plays against AI
 
         next_max_score, next_scores, next_scores_normalized = gomoku_ai.calculate_score(15)
