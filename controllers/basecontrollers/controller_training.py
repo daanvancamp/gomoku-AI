@@ -10,11 +10,9 @@ import numpy as np
 logger = logging.getLogger('my_logger')
 
 class BaseTrainingController(BaseController): #training means that the AI plays against AI, Human or test algorithm, while improving its model.
-    def __init__(self, view):
+    def __init__(self, view, last_round):
         super().__init__(view)
-
-        self.last_round = False #todo toggle on and off when needed, temporarily disabled
-        self.show_graphs = None #todo let the user choose, add this to the menu in the future
+        self.last_round = last_round
 
     def AI_put_piece(self):
         self.view.window_mode = ui.main_window.WindowMode.computer_move
@@ -86,13 +84,12 @@ class BaseTrainingController(BaseController): #training means that the AI plays 
                     stats.log_message(f"{p.type} {p.id}: average move loss: {sum(p.final_move_loss) / len(p.final_move_loss)}")
                 p.reset_all_stats()
         
-        if self.show_graphs:
-            if len(data) > 0:
-                stats.plot_graph(data, 'accuracy')
-            if len(loss_data) > 0:
-                stats.plot_graph(loss_data, 'loss data')
-            if len(move_loss_data) > 0:
-                stats.plot_graph(move_loss_data, 'loss data')
+        if len(data) > 0:
+            stats.plot_graph(data, 'accuracy')
+        if len(loss_data) > 0:
+            stats.plot_graph(loss_data, 'loss data')
+        if len(move_loss_data) > 0:
+            stats.plot_graph(move_loss_data, 'loss data')
 
 
         

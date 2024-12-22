@@ -9,8 +9,8 @@ from utils import filereader, stats, player_stats
 logger = logging.getLogger('my_logger')
 #todo there's a bugfix needed (zero division error)
 class Human_vs_AI_TrainingController(controller_training.BaseTrainingController):
-	def __init__(self, view: "ui.main_window.GomokuApp",color_AI,modelname="standaard+3000"):
-		super().__init__(view)
+	def __init__(self, view: "ui.main_window.GomokuApp",color_AI,modelname="standaard+3000",last_round=False):
+		super().__init__(view,last_round)
 		logger.info("Initialize Human_vs_AI_TrainingController")
 		self.last_round = True #only one round
 

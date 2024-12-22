@@ -8,8 +8,8 @@ import logging
 logger = logging.getLogger('my_logger')
 
 class AI_vs_AI_TrainingController(controller_training.BaseTrainingController):
-	def __init__(self, view: "ui.main_window.GomokuApp",color_p1,modelname_1="standaard+3000",modelname_2="standaard+3000"):
-		super().__init__(view)
+	def __init__(self, view: "ui.main_window.GomokuApp",color_p1,modelname_1="standaard+3000",modelname_2="standaard+3000",last_round=False):
+		super().__init__(view,last_round)
 		logger.info("Initialize AI_vs_AI_TrainingController")
 		self.set_up_game(("AI", "AI"))
 
@@ -18,7 +18,6 @@ class AI_vs_AI_TrainingController(controller_training.BaseTrainingController):
 		self.game.player2.load_model(p2_model, True)
 
 		self.view.window_mode = ui.main_window.WindowMode.computer_move
-
 
 		while True:
 			self.AI_put_piece() #current player does a move (the player switches after each move)

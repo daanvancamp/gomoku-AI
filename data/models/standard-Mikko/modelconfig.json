@@ -3,8 +3,8 @@
   "training stats": {
     "training loops": 0,
     "training loops against Human": 0,
-    "training loops against AI-Model": 0,
-    "training loops against Test Algorithm": 0
+    "training loops against AI": 0,
+    "training loops against Test": 0
   },
 
   "total end stats": {

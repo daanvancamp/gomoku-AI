@@ -512,5 +512,5 @@ class AI_Algorithm:
 			if new_normalized_score < 0:
 				new_normalized_score = 0
 			scores_normalized.append(new_normalized_score)
-		return max_score, scored_board, scores_normalized#return de hoogste score, het board met scores, de scores genormaliseerd
+		return max_score, scored_board, scores_normalized#return the highest score, the board with scores and the normalised scores
 

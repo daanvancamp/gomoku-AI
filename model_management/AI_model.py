@@ -28,9 +28,9 @@ class AI_Model():
         self.modelname = name
         self.directory = self.modelname
         self.path = os.path.join(self.parent_dir, self.directory)
-        self.path_config_file = self.path+self.name_config_file
+        self.path_config_file = self.path + self.name_config_file
 
-        self.initial_json_data = json.load(open("data/templatemodel"+self.name_config_file,"r"))
+        self.initial_json_data = json.load(open("data/templatemodel" + self.name_config_file,"r"))
 
     def add_one_to_value_from_config_file(self, category, item):
         if os.path.exists(self.path_config_file):
@@ -64,9 +64,9 @@ class AI_Model():
             case "Human":
                 self.number_of_training_loops_against_human = self.get_value_from_config_file("training stats","training loops against Human")
             case "AI":
-                self.number_of_training_loops_against_ai_model = self.get_value_from_config_file("training stats","training loops against AI-Model")
-            case "Test Algorithm":
-                self.number_of_training_loops_against_test_algorithm = self.get_value_from_config_file("training stats","training loops against Test Algorithm")
+                self.number_of_training_loops_against_ai_model = self.get_value_from_config_file("training stats","training loops against AI")
+            case "Test":
+                self.number_of_training_loops_against_test_algorithm = self.get_value_from_config_file("training stats","training loops against Test")
 
     def log_win(self, opponent):
         self.add_one_to_value_from_config_file("total end stats","wins")

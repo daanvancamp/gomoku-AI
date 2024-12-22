@@ -50,16 +50,16 @@ class ModelsWindow(window.BaseWindow):
 			i+=1
 		self.Lb1.grid(row=0, column=2,padx=10)
 
-		if "standaard" in models or "Standaard" in models:
-			for item in models:
-				if item=="standaard"or item=="Standaard":
-					self.Lb1.selection_set(models.index(item))
-					self.Lb1.activate(models.index(item))
-					self.last_selected_model = item
+		standard_item = [item for item in models if item.lower() == "standaard"]
+
+		if standard_item:
+			index = models.index(standard_item[0])
 		else:
-			self.Lb1.selection_set(0)
-			self.Lb1.activate(0)
-			self.last_selected_model = models[0]
+			index = 0
+
+		self.Lb1.selection_set(index)
+		self.Lb1.activate(index)
+		self.last_selected_model = models[index]
 
 		self.frame_buttons = Frame(self)
 		self.frame_buttons.grid(row=0, column=0, columnspan=2,sticky='e')
@@ -147,7 +147,7 @@ class ModelsWindow(window.BaseWindow):
 			case "Games":
 				stats_category = "games end stats"
 			case "Training":
-				stats_category = "training stats"
+				stats_category = "training loops end stats"
 		return stats_category
 
 	def create_new_model(self, modelname):

@@ -2,8 +2,8 @@
     "training stats": {
         "training loops": 558,
         "training loops against Human": 2,
-        "training loops against AI-Model": 232,
-        "training loops against Test Algorithm": 324
+        "training loops against AI": 232,
+        "training loops against Test": 324
     },
     "total end stats": {
         "losses": 125,
