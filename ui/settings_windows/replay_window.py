@@ -1,6 +1,6 @@
 import tkinter as tk
 import tkinter.filedialog
-from configuration.config import *
+from configuration.config import config
 import controllers.replay_controller
 from ui.settings_windows import window
 
@@ -27,6 +27,5 @@ class ReplayWindow(window.BaseWindow):
 		if self.var_replay_file.get() == "":
 			self.label_info_replay_file_loaded.config(text="Please select a replay file to continue")
 			return
-		self.master.clear_canvas()
 		self.master.controller = controllers.replay_controller.ReplayController(self.master)
 		self.master.controller.load_game(self.var_replay_file.get())

@@ -6,7 +6,7 @@ import enum
 
 from ui.widgets_main_window import frame_recognition_buttons, frame_webcam, label_highest_scoring_moves
 
-from .settings_windows import replay_window, new_game_window, train_window, models_window, physical_play_window
+from .settings_windows import replay_window, new_game_window, train_window, models_window, physical_play_window, evaluate_window
 import controllers
 from configuration.config import config
 
@@ -55,6 +55,7 @@ class GomokuApp(Tk):
 		self.new_game_menu.add_command(label="Play with physical board", command=lambda:self.open_new_window("PhysicalPlay"))
 		self.new_game_menu.add_command(label="Train", command=lambda:self.open_new_window("Train"))
 		self.new_game_menu.add_command(label="Replay", command=lambda:self.open_new_window("Replay"))
+		self.new_game_menu.add_command(label="Evaluate", command=lambda:self.open_new_window("Evaluate"))
 		self.menubar.add_cascade(label="New Game",menu=self.new_game_menu)
 
 		self.models_menu = Menu(self.menubar,tearoff=0)
@@ -111,11 +112,13 @@ class GomokuApp(Tk):
 				new_window = models_window.ModelsWindow(self)
 			case "Train":
 				new_window = train_window.TrainWindow(self)
+			case "Evaluate":
+				new_window = evaluate_window.EvaluateWindow(self)
 		
-	def hide_unnecessary_widgets(self): #this function is used so the buttons are hided when starting a controller, not when opening a new window. (A user could close a window without starting a new game.)
+	def hide_unnecessary_widgets(self): #this function is used so the buttons are hided when starting a controller, not when opening a new window. (A user may want to close a window without starting a new game.)
 		self.show_replay_buttons(self.last_window_type=="Replay") #show replay buttons when using replay mode
 		self.show_recognition_widgets(self.last_window_type=="PhysicalPlay")
-		self.show_highest_scores_label(self.last_window_type=="Play" or self.last_window_type=="PhysicalPlay" or self.last_window_type=="Train")
+		self.show_highest_scores_label(self.last_window_type in ["Play","Train","Evaluate","Replay"])
 
 	def show_highest_scores_label(self,show):
 		if show:

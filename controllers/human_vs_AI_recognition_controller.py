@@ -45,8 +45,7 @@ class Human_vs_AI_RecognitionController(controller.BaseController):
 			self.human_put_piece(*human_move)
 			self.view.frame_webcam.show_board(edited_frame)
 			self.view.display_coordinates(*human_move)
-			speak_coordinates(*human_move)
-
+			speak_coordinates(*human_move,self.game.current_player.type)
 		else:
 			self.view.show_error("Error while analyzing frame",error_message)
 
@@ -69,7 +68,7 @@ class Human_vs_AI_RecognitionController(controller.BaseController):
 		max_score, scores, scores_normalized = gomoku_ai.calculate_score()
 		action = gomoku_ai.get_action(scores_normalized)
 		self.view.overruled_last_move = gomoku_ai.overruled_last_move
-		speak_coordinates(*action)
+		speak_coordinates(*action,self.game.current_player.type)
 		
 		coordinates_best_moves = list(zip(*np.where(scores == max_score))) # AI or the overruling chooses one of these moves
 		self.view.label_highest_scoring_moves.update(coordinates_best_moves)

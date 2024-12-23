@@ -44,16 +44,15 @@ class Player:
 	def calculate_score(self, max_score, is_winner, game_number):
 		print(game_number+1)
 		if max_score > 0:
-			if is_winner:
-				self.score = (max_score - self.moves) / max_score
-			else:
-				self.score = -((max_score - self.moves) / max_score)
+			self.score = (max_score - self.moves) / max_score
+			if not is_winner:
+				self.score = -self.score
 			# weighed_score = self.score / max_score
-			self.weighed_scores.append(self.score)
 		else:
 			self.score = 0
-			self.weighed_scores.append(0)
+		self.weighed_scores.append(self.score)
 		print(f"score: {self.score}")
+
 		self.sum_score += self.score
 		self.avg_score = self.sum_score / (game_number+1)
 		self.all_moves.append(self.moves)
