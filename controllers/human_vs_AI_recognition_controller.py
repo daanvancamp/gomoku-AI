@@ -1,13 +1,14 @@
 import game.game
 import game.algorithms.ai.ai
+from game.playboard_processor import PlayBoardProcessor
 import ui.main_window
+from utils.speak_coordinates import speak_coordinates
 from .basecontrollers import controller
-from configuration.config import *
 
 import numpy as np
 import logging
 import cv2
-from game.playboard_processor import PlayBoardProcessor
+
 # Use the existing logger by name
 logger = logging.getLogger('my_logger')
 
@@ -16,7 +17,7 @@ class Human_vs_AI_RecognitionController(controller.BaseController):
 		super().__init__(view)
 		logger.info("Initialize Human_vs_AI_Controller")
 
-		self.set_up_game(("Human", "AI") if color_human=="red" else ("AI", "Human"))#red always begins
+		self.set_up_game(("Human", "AI") if color_human=="red" else ("AI", "Human")) # red always begins
 
 		self.AI_player = self.game.player1 if color_human != "red" else self.game.player2
 		self.AI_player.load_model(modelname,False)
@@ -30,7 +31,7 @@ class Human_vs_AI_RecognitionController(controller.BaseController):
 	
 	def set_up_recognition(self,color_human):
 		self.playboard_processor = PlayBoardProcessor("red", "blue", color_human)
-		self.cap = cv2.VideoCapture(1,cv2.CAP_ANY) #faster connection time #isopened returns true until cap.release is used if you connect a webcam at first
+		self.cap = cv2.VideoCapture(1,cv2.CAP_ANY) # faster connection time # isopened returns true until cap.release is used if you connect a webcam at first
 		if not self.cap.isOpened():
 			self.view.show_error("Camera not found","Please make sure the camera is connected to your computer and try again.")
 			self.view.window_mode = ui.main_window.WindowMode.pause
@@ -41,14 +42,16 @@ class Human_vs_AI_RecognitionController(controller.BaseController):
 	def human_get_and_process_move(self,frame):
 		human_move, edited_frame, error_message = self.playboard_processor.get_move(frame)
 		if error_message is None:
-			self.human_put_piece(human_move[0], human_move[1])
+			self.human_put_piece(*human_move)
 			self.view.frame_webcam.show_board(edited_frame)
-			self.view.display_coordinates((human_move[0], human_move[1]))
+			self.view.display_coordinates(*human_move)
+			speak_coordinates(*human_move)
+
 		else:
 			self.view.show_error("Error while analyzing frame",error_message)
 
 	def human_put_piece(self, row, col):
-		if self.game.put_piece(row, col): #if the square is empty do..., otherwise do nothing
+		if self.game.put_piece(row, col): # if the square is empty do..., otherwise do nothing
 			logger.info("Human move")
 			self.view.draw_pieces(self.game.board.board)
 			if not self.check_and_handle_winner():
@@ -66,8 +69,9 @@ class Human_vs_AI_RecognitionController(controller.BaseController):
 		max_score, scores, scores_normalized = gomoku_ai.calculate_score()
 		action = gomoku_ai.get_action(scores_normalized)
 		self.view.overruled_last_move = gomoku_ai.overruled_last_move
+		speak_coordinates(*action)
 		
-		coordinates_best_moves = list(zip(*np.where(scores == max_score)))#AI or the overruling chooses one of these moves
+		coordinates_best_moves = list(zip(*np.where(scores == max_score))) # AI or the overruling chooses one of these moves
 		self.view.label_highest_scoring_moves.update(coordinates_best_moves)
 
 		np_scores = np.array(scores).reshape(15, 15)

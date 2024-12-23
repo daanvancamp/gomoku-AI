@@ -1,11 +1,7 @@
 from tkinter import *
-from tkinter import ttk
-from tkinter import filedialog
-from tkinter import messagebox
-from configuration.config import *
-import controllers.human_vs_AI_controller
-import controllers.human_vs_human_controller 
-import controllers.human_vs_test_algorithm_controller
+from tkinter import ttk, filedialog, messagebox
+from configuration.config import config
+from controllers import human_vs_AI_controller, human_vs_human_controller, human_vs_test_algorithm_controller
 from model_management.modelmanager import ModelManager
 import ui.main_window
 from ui.settings_windows import window
@@ -48,14 +44,14 @@ class NewGameWindow (window.BaseWindow):
 		self.cb_choose_color = ttk.Combobox(self, state="readonly",values=["red","blue"],textvariable=self.var_color_p1)
 		self.cb_choose_color.grid(row=3, column=0, sticky="w", padx=10)
 
-		self.radiobutton_7 = Radiobutton(self, text="Human", variable = self.var_p2_type, value="Human")
+		self.radiobutton_7 = Radiobutton(self, text="Human", variable=self.var_p2_type, value="Human")
 		self.radiobutton_7.grid(row=3, column=1, sticky="w")
-		self.radiobutton_8 = Radiobutton(self, text="Test Algorithm", variable = self.var_p2_type, value="Test Algorithm")
+		self.radiobutton_8 = Radiobutton(self, text="Test Algorithm", variable=self.var_p2_type, value="Test Algorithm")
 		self.radiobutton_8.grid(row=4, column=1, sticky="w")
-		self.radiobutton_9 = Radiobutton(self, text="AI-Model", variable = self.var_p2_type, value="AI-Model")
+		self.radiobutton_9 = Radiobutton(self, text="AI-Model", variable=self.var_p2_type, value="AI-Model")
 		self.radiobutton_9.grid(row=5, column=1, sticky="w")
 
-		self.CbModel2 = ttk.Combobox(self, state="readonly", values = modelmanager_instance.list_models,textvariable=self.var_p2_model)
+		self.CbModel2 = ttk.Combobox(self, state="readonly", values=modelmanager_instance.list_models,textvariable=self.var_p2_model)
 		self.CbModel2.grid(row=6, column=1,sticky="w",padx=10)
 
 		self.checkbox_allow_overrule = Checkbutton(self, text="Allow overrule", variable=self.var_allow_overrule)
@@ -71,7 +67,7 @@ class NewGameWindow (window.BaseWindow):
 		self.label_load_state.grid(row=1, column=0, sticky="w")
 		self.load_state_entry = Entry(self.bottomframe, textvariable=self.var_state_board_path, width=50)
 		self.load_state_entry.grid(row=2, column=0, sticky="w",columnspan=2)
-		self.button_browse_state_file = Button(self.bottomframe, text="...", command = lambda: self.browse_state_files())
+		self.button_browse_state_file = Button(self.bottomframe, text="...", command =lambda: self.browse_state_files())
 		self.button_browse_state_file.grid(row=2, column=2, sticky="w")
 
 		# self.label_value_number_of_training_loops_p1 = tkLabel(self, textvariable=gomoku.player1.var_number_of_training_loops_comboboxes)
@@ -100,7 +96,7 @@ class NewGameWindow (window.BaseWindow):
 			return None
 
 	def start_new_game(self):
-		if self.var_state_board_path!="":
+		if self.var_state_board_path.get()!="":
 			initial_board = self.load_board_from_file()
 			if initial_board is None:
 				messagebox.showerror("Error", "Invalid file selected", parent=self)
@@ -111,11 +107,11 @@ class NewGameWindow (window.BaseWindow):
 		#p1=Human, p2=...
 		match self.var_p2_type.get():
 			case "Human":
-				self.master.controller = controllers.human_vs_human_controller.Human_vs_HumanController(self.master,initial_board)
+				self.master.controller = human_vs_human_controller.Human_vs_HumanController(self.master,initial_board)
 			case "Test Algorithm":
-				self.master.controller = controllers.human_vs_test_algorithm_controller.Human_vs_TestAlgorithmController(self.master,self.var_color_p1.get(),initial_board)
+				self.master.controller = human_vs_test_algorithm_controller.Human_vs_TestAlgorithmController(self.master,self.var_color_p1.get(),initial_board)
 			case "AI-Model":
-				self.master.controller = controllers.human_vs_AI_controller.Human_vs_AI_Controller(self.master,self.var_color_p1.get(),self.var_p2_model.get(),initial_board)
+				self.master.controller = human_vs_AI_controller.Human_vs_AI_Controller(self.master,self.var_color_p1.get(),self.var_p2_model.get(),initial_board)
 				self.master.controller.AI_player.set_allow_overrule(self.var_allow_overrule.get())# The first move never needs to be overruled.
 
 

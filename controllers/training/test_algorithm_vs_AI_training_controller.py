@@ -1,10 +1,7 @@
 from controllers.basecontrollers import controller_training
-import game.game
 import ui.main_window
-from configuration.config import *
-import game.algorithms.ai.ai
 import logging
-from utils import stats, player_stats
+
 # Use the existing logger by name
 logger = logging.getLogger('my_logger')
 

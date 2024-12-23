@@ -8,7 +8,6 @@ import logging
 # Use the existing logger by name
 logger = logging.getLogger('my_logger')
 
-# controller.py
 class Human_vs_TestAlgorithmController(controller.BaseController):
 	def __init__(self, view:"ui.main_window.GomokuApp", color_human,initial_board=None):
 		super().__init__(view)

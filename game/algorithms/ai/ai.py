@@ -1,4 +1,3 @@
-from functools import lru_cache
 import os.path
 from time import time
 import torch
@@ -231,9 +230,9 @@ class AI_Algorithm:
 			return True
 		else:
 			if not opponent_can_win and can_win_in_two_moves: #if the opponent can't win and the model can win in two moves 
-				log_info_overruling("It will choose on its own, it can win in a few (1 or 2) moves if it does the right move. The opponent can't win")
+				log_info_overruling("It will choose on its own, it can win in a few (1 or 2) moves if it does the right move. The opponent can't win in one move.")
 				return True
-			log_info_overruling("winning moves that could lead to a win found or the opponent is one move away from the win")				
+			log_info_overruling("moves that could lead to a win found or the opponent is one move away from the win")				
 			return False
 
 	def get_valid_moves(self)->list:
@@ -317,8 +316,10 @@ class AI_Algorithm:
 
 							if count == 3 and open_ends == 2:
 								opponent_can_win_in_one_move = False
+								log_info_overruling(f"opponent can win in one move")
 							else:
 								opponent_can_win_in_one_move = True
+								log_info_overruling(f"opponent cannot win in one move")
 
 							break  # There's no need to search any further for this cell.
 		
@@ -387,7 +388,7 @@ class AI_Algorithm:
 					action = (pred_indices[0][idx], pred_indices[1][idx])
 			else:
 				action = None
-				logger.info("AI_Algorithm probleem in exploitation") 
+				logger.info("AI_Algorithm problem in exploitation") 
 				
 		attempts = 0
 		max_attempts = 70

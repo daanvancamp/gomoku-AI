@@ -1,5 +1,4 @@
-#todo add save replay checkbox to gui
-#This is the startup file, please run this file to start the game
+# This is the startup file, please run this file to start the game
 
 from datetime import datetime
 from utils.filereader import log_info_overruling
@@ -22,4 +21,3 @@ if __name__ == "__main__":
     logger.info("Starting the application")
     app = main_window.GomokuApp()    
     app.mainloop()
-    

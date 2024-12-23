@@ -169,20 +169,20 @@ class PlayBoardProcessor():
     def get_move(self, img):
         number_of_inner_corners = (self.BOARD_SIZE - 1, self.BOARD_SIZE - 1)
 
-        gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+        grayscaled_image = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 
-        gray = cv2.medianBlur(gray, 13)
+        grayscaled_image = cv2.medianBlur(grayscaled_image, 13)
        
-        ret, inner_corners = cv2.findChessboardCornersSB(gray, number_of_inner_corners,
+        ret, inner_corners = cv2.findChessboardCornersSB(grayscaled_image, number_of_inner_corners,
                                                 flags = cv2.CALIB_CB_EXHAUSTIVE + cv2.CALIB_CB_ACCURACY )
     
         if not ret:
             print("no chessboard detected at first")
-            ret, inner_corners = cv2.findChessboardCorners(gray, number_of_inner_corners, flags = cv2.CALIB_CB_PLAIN + cv2.CALIB_CB_FAST_CHECK )
+            ret, inner_corners = cv2.findChessboardCorners(grayscaled_image, number_of_inner_corners, flags = cv2.CALIB_CB_PLAIN + cv2.CALIB_CB_FAST_CHECK )
         
         if ret:
             print("Chessboard detected")
-            inner_corners = cv2.cornerSubPix(gray, inner_corners, (11, 11), (-1, -1), 
+            inner_corners = cv2.cornerSubPix(grayscaled_image, inner_corners, (11, 11), (-1, -1), 
                                         criteria=(cv2.TERM_CRITERIA_EPS + cv2.TERM_CRITERIA_MAX_ITER, 30, 0.001))
         
             self.avg_distances = self.calculate_average_horizontal_vertical_distance(inner_corners)

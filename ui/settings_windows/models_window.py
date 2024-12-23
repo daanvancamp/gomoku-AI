@@ -1,16 +1,14 @@
-#todo dit window werkt nog niet
 from tkinter import *
 from tkinter import ttk
 from model_management.modelmanager import ModelManager
-from model_management.AI_model import AI_Model
 from configuration.config import config
 from ui.settings_windows import window
 
 
 WIDTH = int(config["UI"]["width"])
 HEIGHT = int(config["UI"]["height"])
-modelmanager_instance:ModelManager = ModelManager()
-#todo bugfix needed
+modelmanager_instance = ModelManager()
+
 class ModelsWindow(window.BaseWindow):
 	def __init__(self,master):
 		super().__init__(master,WIDTH,HEIGHT,"Models")
@@ -51,11 +49,7 @@ class ModelsWindow(window.BaseWindow):
 		self.Lb1.grid(row=0, column=2,padx=10)
 
 		standard_item = [item for item in models if item.lower() == "standaard"]
-
-		if standard_item:
-			index = models.index(standard_item[0])
-		else:
-			index = 0
+		index = models.index(standard_item[0]) if standard_item else 0
 
 		self.Lb1.selection_set(index)
 		self.Lb1.activate(index)
@@ -108,6 +102,7 @@ class ModelsWindow(window.BaseWindow):
 		self.label_relative_value_ties.grid(row=8, column=2, sticky="w")
 
 	def refresh_stats(self):
+		if not self.Lb1.winfo_exists(): return
 		try:
 			self.last_selected_model = self.Lb1.get(self.Lb1.curselection()[0])
 		except IndexError:

@@ -1,18 +1,15 @@
 from controllers.basecontrollers import controller_training
-import game.game
 import ui.main_window
-from configuration.config import config
-import game.algorithms.ai.ai
 import logging
-from utils import filereader, stats, player_stats
 # Use the existing logger by name
 logger = logging.getLogger('my_logger')
-#todo there's a bugfix needed (zero division error)
+
+# todo there's a bugfix needed (zero division error)
 class Human_vs_AI_TrainingController(controller_training.BaseTrainingController):
 	def __init__(self, view: "ui.main_window.GomokuApp",color_AI,modelname="standaard+3000",last_round=False):
 		super().__init__(view,last_round)
 		logger.info("Initialize Human_vs_AI_TrainingController")
-		self.last_round = True #only one round
+		self.last_round = True #training against a human always consists of one round
 
 		self.set_up_game(("AI", "Human") if color_AI=="red" else ("Human", "AI"))
 

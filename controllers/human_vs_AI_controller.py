@@ -1,7 +1,6 @@
 import game.game
 import ui.main_window
 from .basecontrollers import controller
-from configuration.config import config
 import numpy as np
 import game.algorithms.ai.ai
 import logging
