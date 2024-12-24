@@ -1,7 +1,7 @@
 import game.game
 import ui.main_window
 from controllers.basecontrollers.controller import BaseController
-from utils import filereader, stats, player_stats
+from utils import stats
 
 import logging
 import numpy as np

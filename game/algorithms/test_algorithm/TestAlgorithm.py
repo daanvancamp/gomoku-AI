@@ -6,7 +6,6 @@ logger = logging.getLogger('my_logger')
 
 class TestAlgorithm:
     def  __init__(self, player):
-        print("input player:", player)
         self.player = player
         self.DEPTH = 5
         self.board = None
