@@ -186,12 +186,12 @@ class GomokuApp(Tk):
 		self.delete_pieces() # remove the previous drawing, remove all old pieces
 		board_np = np.array(board)
 		padding = 10
-		for (i, j), piece in np.ndenumerate(board_np):
+		for (row, col), piece in np.ndenumerate(board_np):
 			if piece != 0:#if the cell is not empty
-				x1, y1, x2, y2 = self.squares_mapping[(i, j)]
-				color = self.get_piece_color(piece,i,j)
+				x1, y1, x2, y2 = self.squares_mapping[(row, col)]
+				color = self.get_piece_color(piece,row,col)
 				
-				if self.controller.last_move_model == (i, j) and self.overruled_last_move:
+				if self.controller.last_move_model == (row, col) and self.overruled_last_move:
 					draw_method = self.canvas.create_rectangle #show an overruled move as a square
 				else:
 					draw_method = self.canvas.create_oval
