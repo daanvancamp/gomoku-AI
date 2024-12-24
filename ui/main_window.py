@@ -119,7 +119,6 @@ class GomokuApp(Tk):
 		self.show_replay_buttons(self.last_window_type=="Replay") #show replay buttons when using replay mode
 		self.show_recognition_widgets(self.last_window_type=="PhysicalPlay")
 		self.show_highest_scores_label(self.last_window_type in ["Play","Train","Evaluate","Replay"])
-		self.unbind("<Right>")
 
 	def show_highest_scores_label(self,show):
 		if show:

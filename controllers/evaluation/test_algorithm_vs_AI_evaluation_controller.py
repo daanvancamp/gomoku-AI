@@ -31,4 +31,5 @@ class TestAlgorithm_vs_AI_EvaluationController(BaseEvaluationController):
 			self.AI_put_piece()
 		else:
 			self.algorithm_put_piece()
-		self.check_and_handle_winner()
+		if self.check_and_handle_winner():
+			self.view.unbind("<Right>", lambda event: self.next_move(),self.binding_id)

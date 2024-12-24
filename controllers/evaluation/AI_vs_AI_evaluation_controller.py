@@ -19,7 +19,10 @@ class AI_vs_AI_EvaluationController(BaseEvaluationController):
 		if self.game.winner != 0:
 			return
 		self.AI_put_piece()
-		self.check_and_handle_winner()
+
+		if self.check_and_handle_winner():
+			self.view.unbind("<Right>", lambda event: self.next_move(),self.binding_id)
+
 	
 
 	

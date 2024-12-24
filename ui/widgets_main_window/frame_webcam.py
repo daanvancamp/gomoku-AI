@@ -9,7 +9,6 @@ class FrameWebcam(tk.Frame):
 	def __init__(self, master):
 		super().__init__(master,bg="#357EC7")
 		self.master = master
-
 		self.after_id = None
 
 		self.label_videofeed = tk.Label(self, text = "no video feed available",bg="#357EC7",fg="white")#this shows the videofeed, without any drawings

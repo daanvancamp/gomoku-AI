@@ -12,7 +12,7 @@ class BaseEvaluationController(BaseController): #evaluation means that the AI pl
 		super().__init__(view)
 		self.view.window_mode = ui.main_window.WindowMode.computer_move
 		self.view.game_type = ui.main_window.GameType.evaluate
-		self.view.bind("<Right>", lambda event: self.next_move())
+		self.binding_id = self.view.bind("<Right>", lambda event: self.next_move())
 
 	def AI_put_piece(self):
 		logger.info("AI move")
@@ -52,5 +52,3 @@ class BaseEvaluationController(BaseController): #evaluation means that the AI pl
 		self.game.current_player.weighed_moves.append(score)
 		self.game.current_player.final_action = action
 		self.game.current_player.moves += 1
-
-		
