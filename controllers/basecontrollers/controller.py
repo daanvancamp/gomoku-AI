@@ -42,19 +42,23 @@ class BaseController:
 		game.game.Game().board.reset_board()
 	
 	def check_and_handle_winner(self):
-		if self.game.winner != 0:
-			print("er is een winnaar")
-			self.view.draw_line(self.game.board.winning_cells)
-			if any(p.type == "Human" for p in (self.game.player1, self.game.player2)):#if there's a human_player
-				self.view.end_game()
-			self.view.window_mode = ui.main_window.WindowMode.pause
-			self.reset_board()
-			update_player_stats(self.game,self.game.winner)
-			if self.record_replay:
-				filereader.save_replay(self.game.p1_moves, self.game.p2_moves)
-			return True
-		else:
+		if self.game.winner == 0:#no winner, or tie
 			return False
+		
+		if self.game.winner > 0: #one player won
+			print("there's a winner")
+			self.view.draw_line(self.game.board.winning_cells)
+			if any(p.type == "Human" for p in (self.game.player1, self.game.player2)) or self.view.game_type == ui.main_window.GameType.evaluate:#if there's a human_player
+				self.view.end_game()
+		elif self.game.winner == -1: # draw
+			self.view.end_game_draw()
+
+		self.view.window_mode = ui.main_window.WindowMode.pause
+		self.reset_board()
+		update_player_stats(self.game,self.game.winner)
+		if self.record_replay:
+			filereader.save_replay(self.game.p1_moves, self.game.p2_moves)
+		return True
 
 	def get_player(self, player_id):
 		match player_id:

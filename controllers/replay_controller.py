@@ -12,7 +12,7 @@ class ReplayController(controller.BaseController):
 	def __init__(self, view):
 		super().__init__(view)
 		self.moves = None
-		self.game_board = gb.GameBoard(int(config["OTHER VARIABLES"]["BOARDSIZE"]))
+		self.game_board = gb.GameBoard(int(config["GAME"]["board_size"]))
 		self.current_index = -1
 		self.view = view
 		self.view.window_mode = ui.main_window.WindowMode.replay

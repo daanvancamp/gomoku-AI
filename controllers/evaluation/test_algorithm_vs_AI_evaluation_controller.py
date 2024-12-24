@@ -23,3 +23,12 @@ class TestAlgorithm_vs_AI_EvaluationController(BaseEvaluationController):
 		row, col = self.game.current_player.test_algorithm.ai_move()
 		self.game.put_piece(row, col)
 		self.view.draw_pieces(self.game.board.board)
+
+	def next_move(self):
+		if self.game.winner != 0: 
+			return
+		if self.game.current_player.type == "AI":
+			self.AI_put_piece()
+		else:
+			self.algorithm_put_piece()
+		self.check_and_handle_winner()

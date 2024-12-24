@@ -14,6 +14,12 @@ class AI_vs_AI_EvaluationController(BaseEvaluationController):
 		self.game.player1.load_model(p1_model, True)
 		self.game.player2.load_model(p2_model, True)
 		for p in self.game.players: p.set_allow_overrule(allow_overrule)
+
+	def next_move(self):
+		if self.game.winner != 0:
+			return
+		self.AI_put_piece()
+		self.check_and_handle_winner()
 	
 
 	

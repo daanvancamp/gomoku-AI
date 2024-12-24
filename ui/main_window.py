@@ -24,6 +24,8 @@ class WindowMode(enum.Enum):
 class GameType(enum.Enum):
 	human_vs_human = 'human_vs_human'
 	replay = 'replay'
+	evaluate = 'evaluate'
+	physical_play = 'physical_play'
 
 
 
@@ -81,8 +83,6 @@ class GomokuApp(Tk):
 		self.prev_button.pack(side=LEFT, padx=5)  # Place button1 on the left side of the frame
 		self.next_button.pack(side=LEFT, padx=5)  # Place button2 next to button1 on the left side
 
-		self.deactivate_replay_frame()
-
 		self.frame_webcam = frame_webcam.FrameWebcam(self)
 		self.frame_recognition_buttons = frame_recognition_buttons.FrameRecognitionButtons(self)
 
@@ -119,6 +119,7 @@ class GomokuApp(Tk):
 		self.show_replay_buttons(self.last_window_type=="Replay") #show replay buttons when using replay mode
 		self.show_recognition_widgets(self.last_window_type=="PhysicalPlay")
 		self.show_highest_scores_label(self.last_window_type in ["Play","Train","Evaluate","Replay"])
+		self.unbind("<Right>")
 
 	def show_highest_scores_label(self,show):
 		if show:
@@ -129,11 +130,8 @@ class GomokuApp(Tk):
 
 	def show_replay_buttons(self,show):
 		if show:
-			self.prev_button.pack(side=LEFT, padx=5)  # Place button1 on the left side of the frame
-			self.next_button.pack(side=LEFT, padx=5)  # Place button2 next to button1 on the left side
+			self.activate_replay_frame()
 		else:
-			self.prev_button.pack_forget()
-			self.next_button.pack_forget()
 			self.deactivate_replay_frame()
 
 	def show_recognition_widgets(self, show):
@@ -265,6 +263,9 @@ class GomokuApp(Tk):
 
 	def end_game(self):
 		mb.showinfo("End of the game","There's a winner, "+str(self.controller.get_player(self.controller.game.winner)))
+
+	def end_game_draw(self):
+		mb.showinfo("End of the game","The game ended in a draw")
 
 	def show_load_error(self, error):
 		print("Please select a valid file, error:",error)

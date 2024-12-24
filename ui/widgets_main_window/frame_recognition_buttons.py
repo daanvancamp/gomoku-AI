@@ -7,10 +7,11 @@ class FrameRecognitionButtons(tk.Frame):
 
         self.button_move_done = tk.Button(self, text="Move done?",bg="green",fg="white", command = self.process_move)
         self.button_move_done.grid(row=0, column=0,pady=2,padx=2)
-        self.master.bind("<Right>", lambda event: self.process_move())
-        self.master.bind("<space>", lambda event: self.process_move())
+        self.bind("<Right>", lambda event: self.process_move())#todo check if this works
+        self.bind("<space>", lambda event: self.process_move())
 
     def process_move(self):
+
         ret, frame = self.master.controller.cap.read()
 
         if ret:
