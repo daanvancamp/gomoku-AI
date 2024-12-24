@@ -63,9 +63,6 @@ class GameBoard:
     def remove_piece(self, row, col):
         self.board[row][col] = 0
 
-    def check_board_full(self, marker_id):
-        pass
-
     def reset_board(self):
         self.board = [[0] * self.grid_size for _ in range(self.grid_size)]
     
