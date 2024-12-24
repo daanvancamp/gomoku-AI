@@ -5,7 +5,6 @@ import logging
 import enum
 
 from ui.widgets_main_window import frame_recognition_buttons, frame_webcam, label_highest_scoring_moves
-
 from .settings_windows import replay_window, new_game_window, train_window, models_window, physical_play_window, evaluate_window
 import controllers
 from configuration.config import config
@@ -65,7 +64,9 @@ class GomokuApp(Tk):
 		self.menubar.add_cascade(label="Models",menu=self.models_menu)
 		
 		self.squares = {}
-		self.square_size = 50
+		self.SQUARE_SIZE = 50
+		self.PLAYER_COLORS = {1: "red", 2: "blue"}
+		self.HIGHLIGHT_COLORS = {1: "dark orange", 2: "light blue"}# highlight because it was the last move of the AI
 		
 		self.BOARDSIZE = int(config["GAME"]["board_size"])
 		self.create_gomokuboard(self.BOARDSIZE)
@@ -88,13 +89,10 @@ class GomokuApp(Tk):
 
 		self.label_highest_scoring_moves = label_highest_scoring_moves.LabelHighestScoringMoves(self)
 		self.label_highest_scoring_moves.grid(row=3, column=0,pady=2,padx=2)
-
-		self.color_player_1 = "red"
-		self.color_player_2 = "blue"
 		
 		self.overruled_last_move = None
 
-	def toggle_fullscreen_state(self,esc_was_used=False): #esc to exit fullscreen, f11 to enter fullscreen or to exit fullscreen
+	def toggle_fullscreen_state(self,esc_was_used=False): #esc to exit fullscreen, f11 to enter/exit fullscreen
 		self.attributes('-fullscreen', not self.attributes('-fullscreen')) if not esc_was_used else self.attributes('-fullscreen', False)
 
 	def open_new_window(self, window_type):
@@ -146,10 +144,10 @@ class GomokuApp(Tk):
 		# Create the squares for the chessboard
 		for row in range(grid_size):
 			for col in range(grid_size):
-				x1 = col * self.square_size
-				y1 = row * self.square_size
-				x2 = x1 + self.square_size
-				y2 = y1 + self.square_size
+				x1 = col * self.SQUARE_SIZE
+				y1 = row * self.SQUARE_SIZE
+				x2 = x1 + self.SQUARE_SIZE
+				y2 = y1 + self.SQUARE_SIZE
 
 				# Alternate the colors
 				if (row + col) % 2 == 0:
@@ -173,7 +171,7 @@ class GomokuApp(Tk):
 			square_id = self.canvas.find_closest(event.x, event.y)[0]
 			# Retrieve row, column, and coordinates from the stored dictionary
 			row, col, x1, y1, x2, y2 = self.squares[square_id]
-			#print(f"Clicked on square ({row},{col})")
+
 			self.controller.human_put_piece(row, col)
 				  
 	def delete_pieces(self):
@@ -181,11 +179,11 @@ class GomokuApp(Tk):
 
 	def get_piece_color(self,player_id,row,col):
 		if self.controller.last_move_model == (row,col):
-			return "dark orange" if player_id == 1 else "light blue"#the slightly different colors show the last move of the AI, so it's easier to see
-		return self.color_player_1 if player_id == 1 else self.color_player_2
+			return self.HIGHLIGHT_COLORS[player_id] # the slightly different colors show the last move of the AI, so it's easier to see
+		return self.PLAYER_COLORS[player_id]
 
 	def draw_pieces(self, board):
-		self.delete_pieces() #remove the previous drawing, remove all old pieces
+		self.delete_pieces() # remove the previous drawing, remove all old pieces
 		board_np = np.array(board)
 		padding = 10
 		for (i, j), piece in np.ndenumerate(board_np):
@@ -205,21 +203,25 @@ class GomokuApp(Tk):
 	def activate_game(self):
 		self.close_secondary_windows()
 
+	def show_move(self, direction):
+		if direction=="previous" and self.controller.current_index >= 0:
+			self.controller.previous_move()
+		elif direction =="next" and self.controller.current_index < len(self.controller.moves) - 1:
+			self.controller.next_move()
+		else:
+			self.update_replay_button_states()
+			return
+		self.delete_pieces()
+		self.draw_pieces(self.controller.game_board.board)
+		self.update_replay_button_states()
+
 	def show_previous(self):
 		"""Show the previous item in the list."""
-		if self.controller.current_index >= 0:
-			self.delete_pieces()
-			self.controller.previous_move()
-			self.draw_pieces(self.controller.game_board.board)
-		self.update_replay_button_states()
+		self.show_move("previous")
 
 	def show_next(self):
 		"""Show the next item in the list."""
-		if self.controller.current_index < len(self.controller.moves) - 1:
-			self.delete_pieces()
-			self.controller.next_move()
-			self.draw_pieces(self.controller.game_board.board)
-		self.update_replay_button_states()
+		self.show_move("next")
 
 	def update_replay_button_states(self):
 		"""Enable or disable buttons based on the current index."""
@@ -253,12 +255,8 @@ class GomokuApp(Tk):
 		x1, y1 = self.squares_mapping[first_cell][:2]
 		x2, y2 = self.squares_mapping[last_cell][2:]
 
-		padding = self.square_size/2 #the line has to go through the middle of each cell
+		padding = self.SQUARE_SIZE/2 #the line has to go through the middle of each cell
 		self.canvas.create_line(x1 + padding, y1 + padding, x2 - padding, y2 - padding, fill="white", width=4, tags="line")
-
-	def display_coordinates(self,detected_move):
-		self.frame_recognition_buttons.button_move_done.config(text=detected_move)
-		self.after(5000,self.frame_recognition_buttons.button_move_done.config(text="Move done?"))
 
 	def end_game(self):
 		mb.showinfo("End of the game","There's a winner, "+str(self.controller.get_player(self.controller.game.winner)))

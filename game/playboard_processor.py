@@ -197,23 +197,21 @@ class PlayBoardProcessor():
 
             self.pieces = self.mark_pieces(cell_centers,img.copy())
 
-            human_move = []
-            for piece in self.pieces:
+            list_human_moves = []
+            for piece in self.pieces:#piece has the following type: [color,(x,y)]
                 if piece not in self.previous_state_board and piece[0]==self.COLOR_TO_DETECT:
                     print(piece,"detected")
-                    human_move.append(piece[1])
+                    list_human_moves.append(piece[1])
 
-            self.previous_state_board = self.pieces
-
-            match len(human_move):
+            match len(list_human_moves):
                 case 0:
                     print("No moves detected")
                     return None, None,"no moves detected"
                 case 1:
-                    print(human_move)
-                    return human_move, img_with_corners,None
+                    self.previous_state_board = self.pieces
+                    return list_human_moves[0], img_with_corners,None # human_move_list is a list with one item in this case
                 case _:
-                    return human_move, None, "multiple moves detected"
+                    return list_human_moves, None, "multiple moves detected"
 
         else:
             print("No chessboard detected")

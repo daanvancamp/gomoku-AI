@@ -42,10 +42,10 @@ class Human_vs_AI_RecognitionController(controller.BaseController):
 	def human_get_and_process_move(self,frame):
 		human_move, edited_frame, error_message = self.playboard_processor.get_move(frame)
 		if error_message is None:
+			print(human_move)
+			speak_coordinates(*human_move,self.game.current_player.type)
 			self.human_put_piece(*human_move)
 			self.view.frame_webcam.show_board(edited_frame)
-			self.view.display_coordinates(*human_move)
-			speak_coordinates(*human_move,self.game.current_player.type)
 		else:
 			self.view.show_error("Error while analyzing frame",error_message)
 
@@ -68,7 +68,6 @@ class Human_vs_AI_RecognitionController(controller.BaseController):
 		max_score, scores, scores_normalized = gomoku_ai.calculate_score()
 		action = gomoku_ai.get_action(scores_normalized)
 		self.view.overruled_last_move = gomoku_ai.overruled_last_move
-		speak_coordinates(*action,self.game.current_player.type)
 		
 		coordinates_best_moves = list(zip(*np.where(scores == max_score))) # AI or the overruling chooses one of these moves
 		self.view.label_highest_scoring_moves.update(coordinates_best_moves)
@@ -88,8 +87,8 @@ class Human_vs_AI_RecognitionController(controller.BaseController):
 		self.game.current_player.final_action = action
 		self.game.current_player.moves += 1
 
-		row, col = action
-		self.game.put_piece(row, col)
+		speak_coordinates(*action,self.game.current_player.type)
+		self.game.put_piece(*action)
 		self.view.draw_pieces(self.game.board.board)
 		self.view.window_mode = ui.main_window.WindowMode.recognition
 
