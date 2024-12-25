@@ -1,7 +1,7 @@
 # This is the startup file, please run this file to start the game
 
 from datetime import datetime
-from utils.filereader import log_info_overruling
+from file_management.filereader import log_info_overruling
 from ui import main_window
 from configuration.config import *
 from logger_config import setup_logger

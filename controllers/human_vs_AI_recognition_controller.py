@@ -2,7 +2,7 @@ import game.game
 import game.algorithms.ai.ai
 from game.playboard_processor import PlayBoardProcessor
 import ui.main_window
-from utils.speak_coordinates import speak_coordinates
+from features.speak_coordinates import speak_coordinates
 from .basecontrollers import controller
 
 import numpy as np

@@ -1,7 +1,7 @@
 import game.game
 import ui.main_window
-from utils.player_stats import update_player_stats
-from utils import filereader
+from game.stats.player_stats import update_player_stats
+from file_management import filereader
 from configuration.config import config
 
 import logging

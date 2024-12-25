@@ -1,4 +1,4 @@
-from utils import stats
+from game.stats import stats
 from configuration.config import config
 
 def reset_player_stats(game):

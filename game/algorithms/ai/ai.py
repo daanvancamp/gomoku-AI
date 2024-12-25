@@ -7,8 +7,8 @@ import torch.nn.functional as F
 import numpy as np
 import random
 from collections import deque
-from utils.filereader import log_info_overruling
-import utils
+from file_management.filereader import log_info_overruling
+import file_management
 import logging
 
 # Use the existing logger by name
@@ -433,7 +433,7 @@ class AI_Algorithm:
 
 	def calculate_score(self, board_size=15):
 		directions = [(0, 1), (0, -1), (1, 0), (-1, 0), (1, 1), (-1, -1), (1, -1), (-1, 1)]
-		score_board = utils.filereader.load_scores("./configuration/consts.json")
+		score_board = file_management.filereader.load_scores("./configuration/consts.json")
 		scored_board = np.zeros((board_size, board_size))
 		for row in range(len(self.board[0])):
 			for col in range(len(self.board[1])):

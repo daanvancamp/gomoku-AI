@@ -42,13 +42,13 @@ class GameBoard:
                     break
             if count >= 5:  # Victory condition 
                 match winning_direction:    # sort the array so that a strike can be drawn correctly, the code to draw the line is in the main_window.py file
-                    case (1, 0): #if winning_direction==(1,0):
+                    case (1, 0):
                         winning_cells.sort()
-                    case(0, 1):#if winning_direction==(0,1):
+                    case(0, 1):
                         winning_cells.sort(key=lambda i: i[1])
-                    case(1, 1):#if winning_direction==(1,1):
+                    case(1, 1):
                         winning_cells.sort(key=operator.itemgetter(0, 1))
-                    case(1, -1):#if winning_direction==(1,-1):
+                    case(1, -1):
                         winning_cells.sort(key=operator.itemgetter(0, 1), reverse=True)
                 self.winning_cells = winning_cells
                 return True

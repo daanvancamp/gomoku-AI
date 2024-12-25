@@ -1,6 +1,6 @@
 from . import player
 from . import gameboard
-from utils.singleton_class import Singleton
+from core.singleton_class import Singleton
 
 import logging
 
