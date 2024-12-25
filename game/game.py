@@ -41,11 +41,7 @@ class Game(metaclass=Singleton):
 		return True
 	
 	def switch_player(self):
-		if self.current_player.id == 1:
-			self.current_player = self.player2
-		else: 
-			self.current_player = self.player1
-		# print("switched to player:",self.current_player)
+		self.current_player =  self.players[2-self.current_player.id]
    
 
 class GameFactory:
