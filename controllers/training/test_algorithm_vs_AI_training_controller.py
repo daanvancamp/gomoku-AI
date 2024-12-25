@@ -33,7 +33,6 @@ class TestAlgorithm_vs_AI_TrainingController(controller_training.BaseTrainingCon
 		self.train_at_the_end_of_the_round()
 
 	def algorithm_put_piece(self):
-		self.view.window_mode = ui.main_window.WindowMode.computer_move
 		row, col = self.game.current_player.test_algorithm.ai_move()
 		self.game.put_piece(row, col)
 		self.view.draw_pieces(self.game.board.board)

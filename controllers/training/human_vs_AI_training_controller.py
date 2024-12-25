@@ -4,7 +4,6 @@ import logging
 # Use the existing logger by name
 logger = logging.getLogger('my_logger')
 
-# todo there's a bugfix needed (zero division error)
 class Human_vs_AI_TrainingController(controller_training.BaseTrainingController):
 	def __init__(self, view: "ui.main_window.GomokuApp",color_AI,modelname="standaard+3000",last_round=False):
 		super().__init__(view,last_round)

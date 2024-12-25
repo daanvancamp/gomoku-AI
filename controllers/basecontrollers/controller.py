@@ -21,6 +21,7 @@ class BaseController:
 
 		self.record_replay = True
 		self.last_move_model = None #value remains none when playing Human vs Human or Human vs Test
+		self.BOARD_SIZE = int(config["GAME"]["board_size"])
 
 	def set_up_game(self,player_types,board=None):
 		p1_type, p2_type = player_types

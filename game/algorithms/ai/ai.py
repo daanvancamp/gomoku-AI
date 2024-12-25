@@ -79,12 +79,12 @@ class AI_Algorithm:
 		self.game = None
 		self.one_hot_board = None
 		self.learning_rate = 0.00075
-		self.board_size = _board_size
+		self.BOARD_SIZE = _board_size
 		self.board = None
 		self.gamma = 0.2
 		self.epsilon = 0.25
 		self.memory = deque(maxlen=MAX_MEMORY)
-		self.model = self.build_model(self.board_size)
+		self.model = self.build_model(self.BOARD_SIZE)
 		self.optimizer= optim.SGD(params=self.model.parameters(), lr=self.learning_rate)
 		self.criterion = nn.MSELoss()
 		self.loss = 0
@@ -361,7 +361,7 @@ class AI_Algorithm:
 	def get_action(self, scores)->tuple:
 		logger.info("AI_Algorithm get_action")         
 		valid_moves = self.get_valid_moves()
-		np_scores = np.array(scores).reshape(15, 15)
+		np_scores = np.array(scores).reshape(self.BOARD_SIZE, self.BOARD_SIZE)
 		#current_state = torch.tensor(self.get_state(self.one_hot_board), dtype=torch.float)
 		# solved userwarning, it is recommended to use the following instead of the previous line:
 		current_state = self.get_state(self.one_hot_board).clone().detach().requires_grad_(True)

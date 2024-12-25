@@ -9,7 +9,7 @@ logger = logging.getLogger('my_logger')
 
 class PlayBoardProcessor():
 
-    def __init__(self, P1COL, P2COL, COLOR_TO_DETECT):
+    def __init__(self, P1COL:str, P2COL:str, COLOR_TO_DETECT:str): #the order in which the colors are passed in this class doesn't matter for the recognition
         self.COLOR_P1 = P1COL
         self.COLOR_P2 = P2COL
         self.COLOR_TO_DETECT = COLOR_TO_DETECT

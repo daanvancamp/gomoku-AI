@@ -21,40 +21,40 @@ class BaseTrainingController(BaseController): #training means that the AI plays 
         gomoku_ai:game.algorithms.ai.ai.AI_Algorithm = self.game.current_player.ai
         gomoku_ai.board = self.game.board.board
         gomoku_ai.current_player_id = self.game.current_player.id
+        previous_current_player = self.game.current_player
         
         old_state = self.game.board.board
-        one_hot_board= gomoku_ai.convert_to_one_hot()
+        one_hot_board = gomoku_ai.convert_to_one_hot()
         max_score, scores, scores_normalized = gomoku_ai.calculate_score()
-        action = gomoku_ai.get_action(scores_normalized)
+        action = gomoku_ai.get_action(scores_normalized) #coordinates: (x,y)
                
-        np_scores = np.array(scores).reshape(15, 15)
+        np_scores = np.array(scores).reshape(self.BOARD_SIZE, self.BOARD_SIZE)
         short_score = np_scores[action[0]][action[1]]
         
-        self.last_move_model = action #=last move for example :(3,6)
-
         if max_score <= 0:
             # prevent division with negative values or zero
             score = 0
         else:
             score = short_score / max_score
 
+        self.last_move_model = action #=last move for example :(3,6)
         row, col = action
-        self.game.put_piece(row, col)
+        self.game.put_piece(row, col)#player switches, that's the reason why previous_current_player is needed from here in IN THIS FUNCTION
 
         if any(p.type == "Human" for p in (self.game.player1, self.game.player2)):
             self.view.draw_pieces(self.game.board.board) #the calculations are faster than a tkinter canvas, so they can't be shown when AI plays against AI
 
-        next_max_score, next_scores, next_scores_normalized = gomoku_ai.calculate_score(15)
-
+        next_max_score, next_scores, next_scores_normalized = gomoku_ai.calculate_score(self.BOARD_SIZE)
         gomoku_ai.remember(old_state, action, score,self.game.board.board ,self.game.winner!=0 )
         gomoku_ai.train_short_memory(one_hot_board, action, short_score, scores, gomoku_ai.convert_to_one_hot(),next_scores,self.game.winner!=0)
-        self.game.players[self.game.current_player.id - 1].move_loss.append(gomoku_ai.loss)
+        self.game.players[previous_current_player.id - 1].move_loss.append(gomoku_ai.loss)
 
-        self.game.current_player.weighed_moves.append(score)
-        self.game.current_player.final_action = action
-        self.game.current_player.moves += 1
+        previous_current_player.weighed_moves.append(score)#!=self.game.current_player, it switches in self.game.put_piece
+        previous_current_player.final_action = action
+        previous_current_player.moves += 1
 
-        self.view.window_mode = ui.main_window.WindowMode.human_move
+        if any(p.type == "Human" for p in (self.game.player1, self.game.player2)):
+            self.view.window_mode = ui.main_window.WindowMode.human_move
 
     def train_at_the_end_of_the_round(self):
         self.view.window_mode = ui.main_window.WindowMode.pause
@@ -68,7 +68,7 @@ class BaseTrainingController(BaseController): #training means that the AI plays 
                 p.ai.train_long_memory()
                 p.score_loss.append(p.ai.loss)
                 move_loss = [float(val) for val in p.move_loss]
-                p.final_move_loss.append(sum(move_loss)/len(move_loss)) #todo fix zero division error that occurs once in a while
+                p.final_move_loss.append(sum(move_loss)/len(move_loss))
                 p.ai.model.save_model(p.get_model_name())
                 p.final_move_scores.append(sum(p.weighed_moves)/len(p.weighed_moves))
                 stats.log_message(f"{p.type} {p.id}: score loss: {float(p.ai.loss)}")

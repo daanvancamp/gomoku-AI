@@ -72,7 +72,7 @@ class Human_vs_AI_RecognitionController(controller.BaseController):
 		coordinates_best_moves = list(zip(*np.where(scores == max_score))) # AI or the overruling chooses one of these moves
 		self.view.label_highest_scoring_moves.update(coordinates_best_moves)
 
-		np_scores = np.array(scores).reshape(15, 15)
+		np_scores = np.array(scores).reshape(self.BOARD_SIZE, self.BOARD_SIZE)
 		short_score = np_scores[action[0]][action[1]]
 		
 		self.last_move_model = action #=last move for example :(3,6)
