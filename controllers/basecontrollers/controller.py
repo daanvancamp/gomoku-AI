@@ -41,6 +41,8 @@ class BaseController:
 		else:
 			self.reset_board()
 		self.view.activate_game()
+		if self.game.player1.type == "Human":
+			self.view.window_mode = ui.main_window.WindowMode.human_move
 
 	def reset_board(self):
 		game.game.Game().board.reset_board()

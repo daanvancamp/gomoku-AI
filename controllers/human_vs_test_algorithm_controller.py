@@ -12,8 +12,6 @@ class Human_vs_TestAlgorithmController(controller.BaseController):
 
 		if self.game.player1.type=="Test": #red/player1 always plays first
 			self.algorithm_put_piece()
-		else:
-			self.view.window_mode = ui.main_window.WindowMode.human_move
 
 	def human_put_piece(self, row, col):
 		if self.game.put_piece(row, col):

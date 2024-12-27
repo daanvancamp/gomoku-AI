@@ -20,8 +20,6 @@ class Human_vs_AI_Controller(controller.BaseController):
 
 		if self.game.player1.type=="AI": #player 1 always plays red and begins
 			self.AI_put_piece()
-		else:
-			self.view.window_mode = ui.main_window.WindowMode.human_move
    
 	def human_put_piece(self, row, col):
 		if self.game.put_piece(row, col): #if the square is empty do..., otherwise nothing

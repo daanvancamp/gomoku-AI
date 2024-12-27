@@ -25,9 +25,7 @@ class Human_vs_AI_RecognitionController(controller.BaseController):
 
 		if self.game.player1.type=="AI": #player 1 always plays red and begins
 			self.AI_put_piece()
-		else:
-			self.view.window_mode = ui.main_window.WindowMode.recognition
-	
+			
 	def set_up_recognition(self,color_human):
 		self.playboard_processor = PlayBoardProcessor("red", "blue", color_human)
 		self.cap = cv2.VideoCapture(1,cv2.CAP_ANY) # faster connection time # isopened returns true until cap.release is used if you connect a webcam at first
