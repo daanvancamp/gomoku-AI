@@ -1,21 +1,23 @@
 import json
 import game.gameboard as gb
-from .basecontrollers import controller
-from configuration.config import *
+from configuration.config import config
 import logging
 import ui.main_window
 
 # Use the existing logger by name
 logger = logging.getLogger('my_logger')
 
-class ReplayController(controller.BaseController):
+class ReplayController():
 	def __init__(self, view):
-		super().__init__(view)
+		self.view:"ui.main_window.GomokuApp" = view
+		self.view.controller = self
+		self.view.clear_canvas()
+		self.view.hide_unnecessary_widgets()
+		self.view.window_mode = ui.main_window.WindowMode.replay
+
 		self.moves = None
 		self.game_board = gb.GameBoard(int(config["GAME"]["board_size"]))
 		self.current_index = -1
-		self.view = view
-		self.view.window_mode = ui.main_window.WindowMode.replay
 
 	def load_game(self, file_name):
 		try:
