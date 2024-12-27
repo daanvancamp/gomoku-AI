@@ -8,14 +8,15 @@ import logging
 logger = logging.getLogger('my_logger')
 
 class Human_vs_AI_Controller(controller.BaseController):
-	def __init__(self, view: "ui.main_window.GomokuApp",color_human, modelname="standaard+3000",initial_board=None):
+	def __init__(self, view: "ui.main_window.GomokuApp",color_human, modelname,initial_board,allow_overrule):
 		super().__init__(view)
 		logger.info("Initialize Human_vs_AI_Controller")
 
 		self.set_up_game(("Human", "AI") if color_human=="red" else ("AI", "Human"),initial_board)
 
-		self.AI_player = self.game.player1 if color_human!="red" else self.game.player2
-		self.AI_player.load_model(modelname,False)
+		AI_player = self.game.player1 if color_human!="red" else self.game.player2
+		AI_player.load_model(modelname,False)
+		AI_player.set_allow_overrule(allow_overrule)
 
 		if self.game.player1.type=="AI": #player 1 always plays red and begins
 			self.AI_put_piece()
@@ -26,6 +27,7 @@ class Human_vs_AI_Controller(controller.BaseController):
 		if self.game.put_piece(row, col): #if the square is empty do..., otherwise nothing
 			logger.info("Human move") 
 			self.view.draw_pieces(self.game.board.board)
+
 			if not self.check_and_handle_winner():
 				self.AI_put_piece()
 				self.check_and_handle_winner()

@@ -30,7 +30,10 @@ class BaseController:
 
 		game_board = game.game.GameFactory.create_game_board(int(config["GAME"]["board_size"]))
 		self.game:game.game.Game = game.game.GameFactory.initialize_new_game(game_board, player1, player2)
-		
+		if any(p.type == "Test" for p in (self.game.player1, self.game.player2)):
+			self.game.player1.game = self.game#needed for the test algorithm
+			self.game.player2.game = self.game
+
 		if board is not None:
 			self.game.board.board = board
 			print("initial board loaded")

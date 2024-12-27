@@ -3,7 +3,6 @@
 from datetime import datetime
 from file_management.filereader import log_info_overruling
 from ui import main_window
-from configuration.config import *
 from logger_config import setup_logger
 
 def log_new_run():
@@ -19,5 +18,5 @@ def main():
 # Running the application
 if __name__ == "__main__":    
     logger.info("Starting the application")
-    app = main_window.GomokuApp()    
+    app = main_window.GomokuApp()
     app.mainloop()

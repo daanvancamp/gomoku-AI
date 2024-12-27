@@ -14,9 +14,6 @@ class TestAlgorithm_vs_AI_TrainingController(controller_training.BaseTrainingCon
 
 		self.AI_player = self.game.player1 if color_AI=="red" else self.game.player2
 		self.AI_player.load_model(modelname,True)
-		
-		self.game.player1.game = self.game#needed for the test algorithm
-		self.game.player2.game = self.game
 
 		self.view.window_mode = ui.main_window.WindowMode.computer_move
 

@@ -1,4 +1,3 @@
-import game.game
 import game.algorithms.ai.ai
 from game.playboard_processor import PlayBoardProcessor
 import ui.main_window
@@ -53,6 +52,7 @@ class Human_vs_AI_RecognitionController(controller.BaseController):
 		if self.game.put_piece(row, col): # if the square is empty do..., otherwise do nothing
 			logger.info("Human move")
 			self.view.draw_pieces(self.game.board.board)
+
 			if not self.check_and_handle_winner():
 				self.AI_put_piece()
 				self.check_and_handle_winner()

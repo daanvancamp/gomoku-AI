@@ -1,6 +1,7 @@
 from tkinter import *
 from tkinter import ttk
-from configuration.config import *
+
+from configuration.config import config
 import controllers.human_vs_AI_controller
 import controllers.human_vs_AI_recognition_controller
 import controllers.human_vs_human_controller 
@@ -13,7 +14,7 @@ from ui.settings_windows import window
 modelmanager_instance = ModelManager()
 WIDTH = int(config["UI"]["width"])
 HEIGHT = int(config["UI"]["height"])
-#todo: window verder afwerken
+
 class PhysicalPlayWindow (window.BaseWindow):
 	def __init__(self, master: "ui.main_window.GomokuApp"):
 		super().__init__(master,WIDTH,HEIGHT,"New Physical Game")

@@ -4,7 +4,7 @@ import logging
 
 # Use the existing logger by name
 logger = logging.getLogger('my_logger')
-#don't change anything, development in progress
+
 class TestAlgorithm_vs_AI_EvaluationController(BaseEvaluationController):
 	def __init__(self, view: "ui.main_window.GomokuApp",color_AI,modelname,allow_overrule):
 		super().__init__(view)
@@ -12,12 +12,9 @@ class TestAlgorithm_vs_AI_EvaluationController(BaseEvaluationController):
 
 		self.set_up_game(("AI", "Test") if color_AI=="red" else ("Test", "AI"))
 
-		self.AI_player = self.game.player1 if color_AI=="red" else self.game.player2
-		self.AI_player.load_model(modelname,True)
-		self.AI_player.set_allow_overrule(allow_overrule)
-		
-		self.game.player1.game = self.game#needed for the test algorithm
-		self.game.player2.game = self.game
+		AI_player = self.game.player1 if color_AI=="red" else self.game.player2
+		AI_player.load_model(modelname,True)
+		AI_player.set_allow_overrule(allow_overrule)
 
 	def algorithm_put_piece(self):
 		row, col = self.game.current_player.test_algorithm.ai_move()
@@ -32,4 +29,4 @@ class TestAlgorithm_vs_AI_EvaluationController(BaseEvaluationController):
 		else:
 			self.algorithm_put_piece()
 		if self.check_and_handle_winner():
-			self.view.unbind("<Right>", lambda event: self.next_move(),self.binding_id)
+			self.view.unbind("<Right>",self.binding_id)

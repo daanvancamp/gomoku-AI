@@ -1,5 +1,6 @@
 from tkinter import *
 from tkinter import ttk
+
 from model_management.modelmanager import ModelManager
 from configuration.config import config
 from ui.settings_windows import window
@@ -136,14 +137,12 @@ class ModelsWindow(window.BaseWindow):
 		self.master.after(100,self.refresh_stats)
 		
 	def get_stats_category(self,stats_category):
-		match stats_category: #the names are abbreviated to improve the user experience, so they need to be converted
-			case "Total":
-				stats_category = "total end stats"
-			case "Games":
-				stats_category = "games end stats"
-			case "Training":
-				stats_category = "training loops end stats"
-		return stats_category
+		mapping = {
+            "Total": "total end stats",
+            "Games": "games end stats",
+            "Training": "training loops end stats"
+        }
+		return mapping.get(stats_category)
 
 	def create_new_model(self, modelname):
 		modelmanager_instance.create_new_model(modelname)

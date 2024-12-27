@@ -8,5 +8,7 @@ class BaseWindow(Toplevel):
 		self.title(title)
 		self.geometry(f"{WIDTH}x{HEIGHT}")
 		self.attributes("-topmost", True)
+
+		self.bind("<Escape>", lambda e: self.destroy())
 		
 		self.master: "ui.main_window.GomokuApp" = master

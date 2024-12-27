@@ -1,8 +1,5 @@
-import game.game
 import ui.main_window
 from .basecontrollers import controller
-from configuration.config import *
-import game.player
 import logging
 
 # Use the existing logger by name
@@ -12,9 +9,6 @@ class Human_vs_TestAlgorithmController(controller.BaseController):
 	def __init__(self, view:"ui.main_window.GomokuApp", color_human,initial_board=None):
 		super().__init__(view)
 		self.set_up_game(("Human", "Test") if color_human=="red" else ("Test", "Human"),initial_board)
-
-		self.game.player1.game = self.game
-		self.game.player2.game = self.game
 
 		if self.game.player1.type=="Test": #red/player1 always plays first
 			self.algorithm_put_piece()
