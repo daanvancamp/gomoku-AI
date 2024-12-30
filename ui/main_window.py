@@ -53,9 +53,9 @@ class GomokuApp(Tk):
 
 		self.new_game_menu = Menu(self.menubar,tearoff=0)
 		self.new_game_menu.add_command(label="Play", command=lambda:self.open_new_window("Play"))
-		self.new_game_menu.add_command(label="Play with physical board", command=lambda:self.open_new_window("PhysicalPlay"))
-		self.new_game_menu.add_command(label="Train", command=lambda:self.open_new_window("Train"))
+		self.new_game_menu.add_command(label="Play with physical board", command=lambda:self.open_new_window("Play with physical board"))
 		self.new_game_menu.add_command(label="Replay", command=lambda:self.open_new_window("Replay"))
+		self.new_game_menu.add_command(label="Train", command=lambda:self.open_new_window("Train"))
 		self.new_game_menu.add_command(label="Evaluate", command=lambda:self.open_new_window("Evaluate"))
 		self.menubar.add_cascade(label="New Game",menu=self.new_game_menu)
 
@@ -100,18 +100,19 @@ class GomokuApp(Tk):
 		self.last_window_type = window_type
 
 		match window_type:
-			case "Replay":
-				new_window = replay_window.ReplayWindow(self)
 			case "Play":
 				new_window = new_game_window.NewGameWindow(self)
-			case "PhysicalPlay":
+			case "Play with physical board":
 				new_window = physical_play_window.PhysicalPlayWindow(self)
-			case "Models":
-				new_window = models_window.ModelsWindow(self)
+			case "Replay":
+				new_window = replay_window.ReplayWindow(self)
 			case "Train":
 				new_window = train_window.TrainWindow(self)
 			case "Evaluate":
 				new_window = evaluate_window.EvaluateWindow(self)
+
+			case "Models":
+				new_window = models_window.ModelsWindow(self)
 		
 	def hide_unnecessary_widgets(self): #this function is used so the buttons are hided when starting a controller, not when opening a new window. (A user may want to close a window without starting a new game.)
 		self.show_replay_buttons(self.last_window_type=="Replay") #show replay buttons when using replay mode
