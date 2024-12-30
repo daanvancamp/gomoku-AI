@@ -6,8 +6,8 @@ from ui import main_window
 from logger_config import setup_logger
 
 def log_new_run():
-    log_info_overruling("\n\n\n\n\ndate and time: "+datetime.now().isoformat())
-    log_info_overruling("\nnew run of the code begins:")
+    log_info_overruling("\n\n\n\n\ndate and time: " + datetime.now().isoformat())
+    log_info_overruling("\nnew run begins:")
 
 # Set up the logger
 logger = setup_logger()

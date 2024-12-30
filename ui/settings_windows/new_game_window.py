@@ -61,15 +61,12 @@ class NewGameWindow (window.BaseWindow):
 		self.bottomframe = Frame(self, highlightbackground="blue", highlightthickness=3, borderwidth=1)
 		self.bottomframe.grid(row=8, column=0, sticky="w",columnspan=2, padx=10, pady=15)
 
-		self.label_unvalid_file = Label(self.bottomframe, text="")
-		self.label_unvalid_file.grid(row=0, column=1, sticky="e",columnspan=2)
-
 		self.label_load_state = Label(self.bottomframe, text="Choose file board state: ")
-		self.label_load_state.grid(row=1, column=0, sticky="w")
+		self.label_load_state.grid(row=0, column=0, sticky="w")
 		self.load_state_entry = Entry(self.bottomframe, textvariable=self.var_state_board_path, width=50)
-		self.load_state_entry.grid(row=2, column=0, sticky="w",columnspan=2)
-		self.button_browse_state_file = Button(self.bottomframe, text="...", command =lambda: self.browse_state_files())
-		self.button_browse_state_file.grid(row=2, column=2, sticky="w")
+		self.load_state_entry.grid(row=1, column=0, sticky="w",columnspan=2)
+		self.button_browse_state_file = Button(self.bottomframe, text="...", command=lambda: self.browse_state_files())
+		self.button_browse_state_file.grid(row=1, column=2, sticky="w")
 
 	def browse_state_files(self):
 		file_path = filedialog.askopenfilename(filetypes=[("txt File", "*.txt")],initialdir=r".\test_situations")

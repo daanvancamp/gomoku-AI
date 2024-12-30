@@ -3,6 +3,7 @@ import tkinter.messagebox as mb
 import numpy as np
 import logging
 import enum
+import sys
 
 from .widgets_main_window import frame_recognition_buttons, frame_webcam, label_highest_scoring_moves
 from .widgets_main_window import menubar
@@ -32,13 +33,14 @@ class GameType(enum.Enum):
 class GomokuApp(Tk):
 	def __init__(self):
 		logger.info("Initialize GomokuApp")
-		
 		super().__init__()
 
 		self.title("Gomoku")
 		self.config(background='#357EC7')
 		self.bind("<Escape>", lambda e: self.toggle_fullscreen_state(True))
 		self.bind("<F11>", lambda e: self.toggle_fullscreen_state())
+		self.bind("<Return>",lambda event: sys.exit())
+		self.bind("x",lambda event: sys.exit())
 		self.resizable(True, True)
 		self.attributes("-fullscreen", True)
 
@@ -74,7 +76,7 @@ class GomokuApp(Tk):
 		self.HIGHLIGHT_COLORS = {1: "dark orange", 2: "light blue"}# highlight because it was the last move of the AI
 		
 		self.BOARDSIZE = int(config["GAME"]["board_size"])
-		self.create_gomokuboard(self.BOARDSIZE)
+		self.create_gomokuboard()
 		
 		board = np.zeros((self.BOARDSIZE, self.BOARDSIZE))
 		self.draw_pieces(board)
@@ -104,7 +106,7 @@ class GomokuApp(Tk):
 		
 	def hide_unnecessary_widgets(self): #this function is used so the buttons are hided when starting a controller, not when opening a new window. (A user may want to close a window without starting a new game.)
 		self.show_replay_buttons(self.last_window_type=="Replay") #show replay buttons when using replay mode
-		self.show_recognition_widgets(self.last_window_type=="PhysicalPlay")
+		self.show_recognition_widgets(self.last_window_type=="Play with physical board")
 		self.show_highest_scores_label(self.last_window_type in ["Play","Train","Evaluate","Replay"])
 
 	def show_highest_scores_label(self,show):
@@ -128,11 +130,11 @@ class GomokuApp(Tk):
 			self.frame_webcam.grid_forget()
 			self.frame_recognition_buttons.grid_forget()
 
-	def create_gomokuboard(self, grid_size):
+	def create_gomokuboard(self):
 		self.squares_mapping = {} 
 		# Create the squares for the chessboard
-		for row in range(grid_size):
-			for col in range(grid_size):
+		for row in range(self.BOARDSIZE):
+			for col in range(self.BOARDSIZE):
 				x1 = col * self.SQUARE_SIZE
 				y1 = row * self.SQUARE_SIZE
 				x2 = x1 + self.SQUARE_SIZE

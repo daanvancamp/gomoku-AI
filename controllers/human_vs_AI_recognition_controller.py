@@ -14,7 +14,7 @@ logger = logging.getLogger('my_logger')
 class Human_vs_AI_RecognitionController(controller.BaseController):
 	def __init__(self, view: "ui.main_window.GomokuApp",color_human, modelname="standaard+3000"):
 		super().__init__(view)
-		logger.info("Initialize Human_vs_AI_Controller")
+		logger.info("Initialize Human_vs_AI_RecognitionController")
 
 		self.set_up_game(("Human", "AI") if color_human=="red" else ("AI", "Human")) # red always begins
 
