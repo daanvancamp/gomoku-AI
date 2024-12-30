@@ -4,7 +4,8 @@ import numpy as np
 import logging
 import enum
 
-from ui.widgets_main_window import frame_recognition_buttons, frame_webcam, label_highest_scoring_moves
+from .widgets_main_window import frame_recognition_buttons, frame_webcam, label_highest_scoring_moves
+from .widgets_main_window import menubar
 from .settings_windows import replay_window, new_game_window, train_window, models_window, physical_play_window, evaluate_window
 import controllers
 from configuration.config import config
@@ -48,32 +49,8 @@ class GomokuApp(Tk):
 		self.canvas = Canvas(self, width=750, height=750)
 		self.canvas.grid(row=0, column=0, rowspan=2, padx=10,pady=10)
 
-		self.menubar = Menu(self,font=("Helvetica", 12),tearoff=0)
+		self.menubar = menubar.Menubar(self,font=("Helvetica", 12),tearoff=0)
 		self.config(menu=self.menubar)
-
-		self.new_game_menu = Menu(self.menubar,tearoff=0)
-		self.new_game_menu.add_command(label="Play", command=lambda:self.open_new_window("Play"))
-		self.new_game_menu.add_command(label="Play with physical board", command=lambda:self.open_new_window("Play with physical board"))
-		self.new_game_menu.add_command(label="Replay", command=lambda:self.open_new_window("Replay"))
-		self.new_game_menu.add_command(label="Train", command=lambda:self.open_new_window("Train"))
-		self.new_game_menu.add_command(label="Evaluate", command=lambda:self.open_new_window("Evaluate"))
-		self.menubar.add_cascade(label="New Game",menu=self.new_game_menu)
-
-		self.models_menu = Menu(self.menubar,tearoff=0)
-		self.models_menu.add_command(label="models", command=lambda:self.open_new_window("Models"))
-		self.menubar.add_cascade(label="Models",menu=self.models_menu)
-		
-		self.squares = {}
-		self.SQUARE_SIZE = 50
-		self.PLAYER_COLORS = {1: "red", 2: "blue"}
-		self.HIGHLIGHT_COLORS = {1: "dark orange", 2: "light blue"}# highlight because it was the last move of the AI
-		
-		self.BOARDSIZE = int(config["GAME"]["board_size"])
-		self.create_gomokuboard(self.BOARDSIZE)
-		
-		board = np.zeros((self.BOARDSIZE, self.BOARDSIZE))
-		self.draw_pieces(board)
-		self.controller = controllers
 		
 		self.frame_replay = Frame(self)
 
@@ -91,6 +68,17 @@ class GomokuApp(Tk):
 		self.label_highest_scoring_moves.grid(row=3, column=0,pady=2,padx=2)
 		
 		self.overruled_last_move = None
+		self.squares = {}
+		self.SQUARE_SIZE = 50
+		self.PLAYER_COLORS = {1: "red", 2: "blue"}
+		self.HIGHLIGHT_COLORS = {1: "dark orange", 2: "light blue"}# highlight because it was the last move of the AI
+		
+		self.BOARDSIZE = int(config["GAME"]["board_size"])
+		self.create_gomokuboard(self.BOARDSIZE)
+		
+		board = np.zeros((self.BOARDSIZE, self.BOARDSIZE))
+		self.draw_pieces(board)
+		self.controller = controllers
 
 	def toggle_fullscreen_state(self,esc_was_used=False): #esc to exit fullscreen, f11 to enter/exit fullscreen
 		self.attributes('-fullscreen', not self.attributes('-fullscreen')) if not esc_was_used else self.attributes('-fullscreen', False)
