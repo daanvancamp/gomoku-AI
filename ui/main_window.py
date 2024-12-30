@@ -198,7 +198,7 @@ class GomokuApp(Tk):
 
 				draw_method(x1 + padding, y1 + padding, x2 - padding, y2 - padding, fill=color, tags="piece")
 
-		self.update()#prevent flashing
+		self.update() # prevent flashing
 
 	def activate_game(self):
 		self.close_secondary_windows()
