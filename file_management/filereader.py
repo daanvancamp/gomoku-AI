@@ -9,9 +9,8 @@ def empty_file(filename):
     except PermissionError:
         print("Please close the file and try again")
 
-
 def log_info_overruling(message):
-    path_logging_overruling=r".\logging_overruling.txt"
+    path_logging_overruling=r".\data\logging_overruling.txt"
     try:
         with open(path_logging_overruling, "a") as file:
             file.write(message+"\n") #newline

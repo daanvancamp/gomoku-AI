@@ -11,9 +11,8 @@ class GameBoard:
         
         self.winning_cells = None
         self.grid_size = grid_size
-        self.board_size = self.grid_size
 
-    def check_tie(self):
+    def check_tie(self) -> bool: # check if the board is full
         return np.all(np.array(self.board)!=0)
 
     def check_win(self, row, col, player_id):
