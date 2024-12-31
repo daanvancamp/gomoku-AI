@@ -92,7 +92,7 @@ class GomokuApp(Tk):
 		match window_type:
 			case "Play":
 				new_window = new_game_window.NewGameWindow(self)
-			case "Play with physical board":
+			case "PhysicalPlay":
 				new_window = physical_play_window.PhysicalPlayWindow(self)
 			case "Replay":
 				new_window = replay_window.ReplayWindow(self)
@@ -106,7 +106,7 @@ class GomokuApp(Tk):
 		
 	def hide_unnecessary_widgets(self): #this function is used so the buttons are hided when starting a controller, not when opening a new window. (A user may want to close a window without starting a new game.)
 		self.show_replay_buttons(self.last_window_type=="Replay") #show replay buttons when using replay mode
-		self.show_recognition_widgets(self.last_window_type=="Play with physical board")
+		self.show_recognition_widgets(self.last_window_type=="PhysicalPlay")
 		self.show_highest_scores_label(self.last_window_type in ["Play","Train","Evaluate","Replay"])
 
 	def show_highest_scores_label(self,show):

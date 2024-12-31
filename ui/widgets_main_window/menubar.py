@@ -8,22 +8,22 @@ class Menubar(Menu):
 		self.new_game_menu = Menu(self,tearoff=0)
 
 		commands = [
-			("Play", "p"),
-			("Play with physical board", "b"),
-			("Replay", "r"), # a seperator is added here
-			("Train", "t"),
-			("Evaluate", "e"),
+			("Play","Play", "p"),
+			("Play with physical board","PhysicalPlay", "b"),
+			("Replay","Replay", "r"), # a seperator is added here
+			("Train","Train", "t"),
+			("Evaluate","Evaluate", "e"),
 		]
 
-		for index, (label, _) in enumerate(commands):
+		for index, (label, internal_name,_) in enumerate(commands):
 			self.new_game_menu.add_command(
-				label=label, command=lambda lbl=label: self.master.open_new_window(lbl))
+				label=label, command=lambda name=internal_name: self.master.open_new_window(name))
 			
 			if index == 2:
 				self.new_game_menu.add_separator()
 
-		for label, key in commands:
-			self.master.bind(key, lambda event, lbl=label: self.master.open_new_window(lbl))
+		for label,internal_name, key in commands:
+			self.master.bind(key, lambda event, name=internal_name: self.master.open_new_window(name))
 
 		self.add_cascade(label="New Game",menu=self.new_game_menu)
 

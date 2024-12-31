@@ -64,7 +64,7 @@ class NewGameWindow (window.BaseWindow):
 		self.label_load_state = Label(self.bottomframe, text="Choose file board state: ")
 		self.label_load_state.grid(row=0, column=0, sticky="w")
 		self.load_state_entry = Entry(self.bottomframe, textvariable=self.var_state_board_path, width=50)
-		self.load_state_entry.grid(row=1, column=0, sticky="w",columnspan=2)
+		self.load_state_entry.grid(row=1, column=0,columnspan=2, sticky="w")
 		self.button_browse_state_file = Button(self.bottomframe, text="...", command=lambda: self.browse_state_files())
 		self.button_browse_state_file.grid(row=1, column=2, sticky="w")
 
