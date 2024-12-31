@@ -12,14 +12,14 @@ import cv2
 logger = logging.getLogger('my_logger')
 
 class Human_vs_AI_RecognitionController(controller.BaseController):
-	def __init__(self, view: "ui.main_window.GomokuApp",color_human, modelname="standaard+3000"):
+	def __init__(self, view: "ui.main_window.GomokuApp",color_human, modelname,allow_overrule):
 		super().__init__(view)
-		logger.info("Initialize Human_vs_AI_RecognitionController")
 
 		self.set_up_game(("Human", "AI") if color_human=="red" else ("AI", "Human")) # red always begins
 
-		self.AI_player = self.game.player1 if color_human != "red" else self.game.player2
-		self.AI_player.load_model(modelname,False)
+		AI_player = self.game.player1 if color_human != "red" else self.game.player2
+		AI_player.load_model(modelname,False)
+		AI_player.set_allow_overrule(allow_overrule)
 		
 		self.set_up_recognition(color_human)
 

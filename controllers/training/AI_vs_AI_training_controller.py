@@ -7,7 +7,6 @@ logger = logging.getLogger('my_logger')
 class AI_vs_AI_TrainingController(controller_training.BaseTrainingController):
 	def __init__(self, view: "ui.main_window.GomokuApp",modelname_1,modelname_2,last_round):
 		super().__init__(view,last_round)
-		logger.info("Initialize AI_vs_AI_TrainingController")
 		self.set_up_game(("AI", "AI"))
 
 		self.game.player1.load_model(modelname_1, True)

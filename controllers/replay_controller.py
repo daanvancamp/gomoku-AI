@@ -9,6 +9,7 @@ logger = logging.getLogger('my_logger')
 
 class ReplayController():
 	def __init__(self, view):
+		logger.info(f"Initialize ReplayController")
 		self.view:"ui.main_window.GomokuApp" = view
 		self.view.controller = self
 		self.view.clear_canvas()

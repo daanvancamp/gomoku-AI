@@ -12,6 +12,7 @@ logger = logging.getLogger('my_logger')
 
 class BaseController:
 	def __init__(self, view):
+		logger.info(f"Initialize {self.__class__.__name__}") #show the name of the subclass: Human_vs_AIcontroller, Human_vs_Humancontroller...
 		self.view:"ui.main_window.GomokuApp" = view
 		self.view.controller = self
 		self.view.clear_canvas()

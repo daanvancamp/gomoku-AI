@@ -8,8 +8,6 @@ logger = logging.getLogger('my_logger')
 class TestAlgorithm_vs_AI_TrainingController(controller_training.BaseTrainingController):
 	def __init__(self, view: "ui.main_window.GomokuApp",color_AI,modelname="standaard+3000",last_round=False):
 		super().__init__(view,last_round)
-		logger.info("Initialize TestAlgorithm_vs_AI_TrainingController")
-
 		self.set_up_game(("AI", "Test") if color_AI=="red" else ("Test", "AI"))
 
 		self.AI_player = self.game.player1 if color_AI=="red" else self.game.player2

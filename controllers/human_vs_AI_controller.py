@@ -10,8 +10,6 @@ logger = logging.getLogger('my_logger')
 class Human_vs_AI_Controller(controller.BaseController):
 	def __init__(self, view: "ui.main_window.GomokuApp",color_human, modelname,initial_board,allow_overrule):
 		super().__init__(view)
-		logger.info("Initialize Human_vs_AI_Controller")
-
 		self.set_up_game(("Human", "AI") if color_human=="red" else ("AI", "Human"),initial_board)
 
 		AI_player = self.game.player1 if color_human!="red" else self.game.player2

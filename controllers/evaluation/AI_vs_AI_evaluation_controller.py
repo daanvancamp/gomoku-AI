@@ -8,7 +8,6 @@ logger = logging.getLogger('my_logger')
 class AI_vs_AI_EvaluationController(BaseEvaluationController):
 	def __init__(self, view: "ui.main_window.GomokuApp",modelname_1,modelname_2,allow_overrule):
 		super().__init__(view)
-		logger.info("Initialize AI_vs_AI_EvaluationController")
 		self.set_up_game(("AI", "AI"))
 
 		self.game.player1.load_model(modelname_1, True)
