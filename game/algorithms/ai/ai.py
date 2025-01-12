@@ -9,6 +9,7 @@ import random
 from collections import deque
 from file_management.filereader import log_info_overruling
 import file_management
+from configuration.config import config
 import logging
 
 # Use the existing logger by name
@@ -73,8 +74,7 @@ class ConvNet(nn.Module):
 
 
 class AI_Algorithm:
-	def __init__(self,_board_size=15):
-		start=time()
+	def __init__(self,_board_size=int(config["GAME"]["board_size"])):
 		self.n_games = 0
 		self.game = None
 		self.one_hot_board = None
@@ -94,7 +94,6 @@ class AI_Algorithm:
 		self.threat_moves =[]
 		self.valid_moves = []
 		self.overruled_last_move = False
-		print("elapsed time while creating gomokuai",time()-start)
 
 	def load_model(self, model):
 		self.model.load_model(model)
@@ -431,7 +430,7 @@ class AI_Algorithm:
 
 		return self.one_hot_board
 
-	def calculate_score(self, board_size=15):
+	def calculate_score(self, board_size=int(config["GAME"]["board_size"])):
 		directions = [(0, 1), (0, -1), (1, 0), (-1, 0), (1, 1), (-1, -1), (1, -1), (-1, 1)]
 		score_board = file_management.filereader.load_scores("./configuration/consts.json")
 		scored_board = np.zeros((board_size, board_size))

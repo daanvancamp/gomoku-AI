@@ -1,5 +1,6 @@
 import random
 import logging
+from configuration.config import config
 
 # Use the existing logger by name
 logger = logging.getLogger('my_logger')
@@ -9,6 +10,7 @@ class TestAlgorithm:
         self.player = player
         self.DEPTH = 5
         self.board = None
+        self.BOARD_SIZE = int(config["GAME"]["board_size"])
     
     def check_line(self, row, col, direction):
         score_player1 = score_player2 = previous = 0
@@ -80,7 +82,7 @@ class TestAlgorithm:
     def evaluate_board(self):
         scores = {}
         board = self.board
-        grid_size = 15
+        grid_size = self.BOARD_SIZE
         directions = [(0, 1), (1, 0), (1, 1), (1, -1), (0, -1), (-1, 0), (-1, 1), (-1, -1)]
         for row in range(grid_size):
             for col in range(grid_size):
@@ -112,16 +114,16 @@ class TestAlgorithm:
 
     def get_available_moves(self):
         moves = []
-        for row in range(15):
-            for col in range(15):
+        for row in range(self.BOARD_SIZE):
+            for col in range(self.BOARD_SIZE):
                  if self.board[row][col] == 0:
                      moves.append((row, col))
         return moves
 
 
     def check_game_over(self):
-        for row in range(15):
-            for col in range(15):
+        for row in range(self.BOARD_SIZE):
+            for col in range(self.BOARD_SIZE):
                 if self.board[row][col] == 0:
                     return False
         return True
