@@ -173,7 +173,7 @@ class AI_Algorithm:
 			self.overruled_last_move = False
 			return self.valid_moves
 
-	def can_win_in_a_few_moves(self, opponent_can_win)->list:
+	def can_win_in_a_few_moves(self, opponent_can_win) -> list:
 		log_info_overruling("function can_win_in_a_few_moves called")
 		winning_moves = []
 		directions = [(0, 1), (1, 0), (1, 1), (1, -1)]

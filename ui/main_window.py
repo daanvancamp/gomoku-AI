@@ -111,7 +111,7 @@ class GomokuApp(Tk):
 
 	def show_highest_scores_label(self,show):
 		if show:
-			self.label_highest_scoring_moves.grid(row=3, column=0,pady=2,padx=2)
+			self.label_highest_scoring_moves.grid(row=3,column=0,pady=2,padx=2)
 			self.label_highest_scoring_moves.config(text="")
 		else:
 			self.label_highest_scoring_moves.grid_forget()
@@ -124,7 +124,7 @@ class GomokuApp(Tk):
 
 	def show_recognition_widgets(self, show):
 		if show:
-			self.frame_webcam.grid(column=1, row=0, rowspan=3)
+			self.frame_webcam.grid(column=1,row=0,rowspan=3)
 			self.frame_recognition_buttons.grid(column=0, row=2)
 		else:
 			self.frame_webcam.grid_forget()
@@ -250,13 +250,13 @@ class GomokuApp(Tk):
 		self.canvas.create_line(x1 + padding, y1 + padding, x2 - padding, y2 - padding, fill="white", width=4, tags="line")
 
 	def end_game(self):
-		mb.showinfo("End of the game","There's a winner, "+str(self.controller.get_player(self.controller.game.winner)))
+		mb.showinfo("End of the game" ,f"There's a winner: {self.controller.get_player(self.controller.game.winner)}")
 
 	def end_game_draw(self):
-		mb.showinfo("End of the game","The game ended in a draw")
+		mb.showinfo("End of the game, The game ended in a draw")
 
 	def show_load_error(self, error):
-		print("Please select a valid file, error:",error)
+		print(f"Please select a valid file, error:,{error}")
 		self.show_error("invalid file",f"Please select a valid file, error:{error}")
 
 	def show_error(self, title, errormessage):

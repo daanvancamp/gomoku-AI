@@ -10,14 +10,14 @@ class Menubar(Menu):
 		commands = [
 			("Play","Play", "p"),
 			("Play with physical board","PhysicalPlay", "b"),
-			("Replay","Replay", "r"), # a seperator is added here
+			("Replay","Replay", "r"),
 			("Train","Train", "t"),
 			("Evaluate","Evaluate", "e"),
 		]
 
-		for index, (label, internal_name,_) in enumerate(commands):
+		for index, (label, internal_name,abbreviation) in enumerate(commands):
 			self.new_game_menu.add_command(
-				label=label, command=lambda name=internal_name: self.master.open_new_window(name))
+				label=f"{label} ({abbreviation})", command=lambda name=internal_name: self.master.open_new_window(name))
 			
 			if index == 2:
 				self.new_game_menu.add_separator()

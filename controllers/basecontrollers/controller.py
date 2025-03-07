@@ -10,7 +10,7 @@ import logging
 # Use the existing logger by name
 logger = logging.getLogger('my_logger')
 
-class BaseController:
+class BaseController: # all controllers except the replay controller inherit from this class
 	def __init__(self, view):
 		logger.info(f"Initialize {self.__class__.__name__}") #show the name of the subclass: Human_vs_AIcontroller, Human_vs_Humancontroller...
 		self.view:"ui.main_window.GomokuApp" = view
@@ -55,7 +55,7 @@ class BaseController:
 		if self.game.winner > 0: #one player won
 			print("there's a winner")
 			self.view.draw_line(self.game.board.winning_cells)
-			if any(p.type == "Human" for p in (self.game.player1, self.game.player2)) or self.view.game_type == ui.main_window.GameType.evaluate:#if there's a human_player
+			if any(p.type == "Human" for p in (self.game.player1, self.game.player2)) or self.view.game_type == ui.main_window.GameType.evaluate:#if there's a human_player (watching)
 				self.view.end_game()
 		elif self.game.winner == -1: # draw
 			self.view.end_game_draw()
