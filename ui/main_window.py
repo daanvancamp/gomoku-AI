@@ -1,4 +1,4 @@
-﻿from tkinter import *
+import tkinter as tk
 import tkinter.messagebox as mb
 import numpy as np
 import logging
@@ -30,7 +30,7 @@ class GameType(enum.Enum):
 
 
 
-class GomokuApp(Tk):
+class GomokuApp(tk.Tk):
 	def __init__(self):
 		logger.info("Initialize GomokuApp")
 		super().__init__()
@@ -48,20 +48,20 @@ class GomokuApp(Tk):
 		self.game_type = GameType.human_vs_human
 		
 		# Canvas to draw the chessboard
-		self.canvas = Canvas(self, width=750, height=750)
+		self.canvas = tk.Canvas(self, width=750, height=750)
 		self.canvas.grid(row=0, column=0, rowspan=2, padx=10,pady=10)
 
 		self.menubar = menubar.Menubar(self,font=("Helvetica", 12),tearoff=0)
 		self.config(menu=self.menubar)
 		
-		self.frame_replay = Frame(self)
+		self.frame_replay = tk.Frame(self)
 
-		self.prev_button = Button(self.frame_replay, text="◄ Previous", command=self.show_previous)
-		self.next_button = Button(self.frame_replay, text="Next ►", command=self.show_next)
+		self.prev_button = tk.Button(self.frame_replay, text="? Previous", command=self.show_previous)
+		self.next_button = tk.Button(self.frame_replay, text="Next ?", command=self.show_next)
 
 		# Place the buttons in the frame
-		self.prev_button.pack(side=LEFT, padx=5)  # Place button1 on the left side of the frame
-		self.next_button.pack(side=LEFT, padx=5)  # Place button2 next to button1 on the left side
+		self.prev_button.pack(side=tk.LEFT, padx=5)  # Place button1 on the left side of the frame
+		self.next_button.pack(side=tk.LEFT, padx=5)  # Place button2 next to button1 on the left side
 
 		self.frame_webcam = frame_webcam.FrameWebcam(self)
 		self.frame_recognition_buttons = frame_recognition_buttons.FrameRecognitionButtons(self)
@@ -89,20 +89,20 @@ class GomokuApp(Tk):
 		self.close_secondary_windows()
 		self.last_window_type = window_type
 
-		match window_type:
+		match window_type:#removed redundant assignment to new_window
 			case "Play":
-				new_window = new_game_window.NewGameWindow(self)
+				new_game_window.NewGameWindow(self)
 			case "PhysicalPlay":
-				new_window = physical_play_window.PhysicalPlayWindow(self)
+				physical_play_window.PhysicalPlayWindow(self)
 			case "Replay":
-				new_window = replay_window.ReplayWindow(self)
+				replay_window.ReplayWindow(self)
 			case "Train":
-				new_window = train_window.TrainWindow(self)
+				train_window.TrainWindow(self)
 			case "Evaluate":
-				new_window = evaluate_window.EvaluateWindow(self)
+				evaluate_window.EvaluateWindow(self)
 
 			case "Models":
-				new_window = models_window.ModelsWindow(self)
+				models_window.ModelsWindow(self)
 		
 	def hide_unnecessary_widgets(self): #this function is used so the buttons are hided when starting a controller, not when opening a new window. (A user may want to close a window without starting a new game.)
 		self.show_replay_buttons(self.last_window_type=="Replay") #show replay buttons when using replay mode
@@ -217,8 +217,8 @@ class GomokuApp(Tk):
 	def update_replay_button_states(self):
 		"""Enable or disable buttons based on the current index."""
 		current_index = self.controller.current_index
-		self.prev_button.config(state=DISABLED if current_index == -1 else NORMAL)
-		self.next_button.config(state=DISABLED if current_index == len(self.controller.moves) - 1 else NORMAL)
+		self.prev_button.config(state=tk.DISABLED if current_index == -1 else tk.NORMAL)
+		self.next_button.config(state=tk.DISABLED if current_index == len(self.controller.moves) - 1 else tk.NORMAL)
 
 	def activate_replay_frame(self):
 		self.frame_replay.grid(row=2, column=0, padx=10)  
@@ -229,7 +229,7 @@ class GomokuApp(Tk):
 
 	def close_secondary_windows(self):
 		for widget in self.winfo_children():
-			if isinstance(widget, Toplevel):
+			if isinstance(widget, tk.Toplevel):
 				widget.destroy()
 		
 	def clear_canvas(self):
