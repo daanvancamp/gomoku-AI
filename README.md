@@ -56,7 +56,7 @@ A sophisticated implementation of the Gomoku (Five in a Row) game with artificia
 - **Concluded initial design phase**
 
 ### September-December 2024 and Beyond
-- **Complete codebase redesign using MVC architecture**
+- **Redesigned entire codebase using MVC architecture without altering core logic**
 - Enhanced feature restoration
 - Implemented new fullscreen interface
 - Perfected webcam recognition under proper lighting conditions
