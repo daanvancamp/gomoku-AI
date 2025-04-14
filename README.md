@@ -1,17 +1,6 @@
-# started from gomoku-thesis-proj, but we changed and improved almost everything.
-https://github.com/Mig26/gomoku-thesis-proj
-
-**The latest stable release is version 1.4. The recognition doesn't work in this version yet, but all the other features should work perfectly, if not: please report the bug.** That version is the compiled version of the python code. It is made for those who don't want to experience issues caused by features that are in development or those who just want to play it as fast as possible without having to install python or anything else.
-
-latest stable release:https://github.com/daanvancamp/gomoku-thesis-proj/releases/tag/v1.4
-
-Note: the project is still under development. Some added features aren't stable as of right now, but overall it works better than the program of Mikko (from which I started). The project will hopefully be finished in april of 2025, so you can expect a complete version ultimately then, but it could be done earlier. **The stable version doesn't contain all latest features, but you can download it from the releases tab.** An executable will be released every few weeks.
-
-I added support for physical boards via webcam. I also optimized a few things. The code for the recognition can be found here, but it is already built in.
+# Gomoku-AI
+I added support for physical boards via webcam. I also optimized a few things. The code for the recognition can be found here, but it is already built in and has been updated. The outdated recognition code can be found here:
 https://github.com/daanvancamp/five_in_a_row_recognition
-
-
-I also want to mention the following: "please don't hesitate to report any bugs". There are probably many undiscovered bugs. Please check if your bug if listed below before reporting it, because then it's a known issue/bug. Feature suggestions are also more than welcome, because they can help to develop a better, more versatile program. **Don't report any bugs in the code in this repository. Only report bugs that were caused by the executable file.**
 
 A few of the optimizations I have done and some added features:
 
@@ -142,7 +131,7 @@ august 2024:
 
   **This design reached the end of his life.**
 
-september,october,november,december 2024:
+september,october,november,december 2024-...:
 
   **We redesigned the whole code, using the MVC-architecture.**
 
@@ -150,20 +139,17 @@ september,october,november,december 2024:
   
   new fullscreen gui
 
-  recognition using webcam is functional
+  recognition using webcam is perfect as long as the lighting is good
+
 
 
 
 **issues:**
 
-You shouldn't experience any issues if you use the latest release.
-
+You shouldn't experience any issues.
 
 **roadmap(in descending priority):**
 
-last bugfixes
-
-new features
 
 developped by:
 daanvancamp & wimnevelsteen
