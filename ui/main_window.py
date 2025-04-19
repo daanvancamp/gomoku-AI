@@ -250,14 +250,14 @@ class GomokuApp(tk.Tk):
 		self.canvas.create_line(x1 + padding, y1 + padding, x2 - padding, y2 - padding, fill="white", width=4, tags="line")
 
 	def end_game(self):
-		mb.showinfo("End of the game" ,f"There's a winner: {self.controller.get_player(self.controller.game.winner)}")
+		mb.showinfo("End of the game\n" ,f"There's a winner: {self.controller.get_player(self.controller.game.winner)}\n")
 
 	def end_game_draw(self):
-		mb.showinfo("End of the game, The game ended in a draw")
+		mb.showinfo("End of the game\n, The game ended in a draw\n")
 
 	def show_load_error(self, error):
-		print(f"Please select a valid file, error:,{error}")
+		print(f"Please select a valid file, error:,{error}\n")
 		self.show_error("invalid file",f"Please select a valid file, error:{error}")
 
 	def show_error(self, title, errormessage):
-		mb.showerror(title,errormessage)
+		mb.showerror(title,errormessage+"\n")

@@ -166,20 +166,27 @@ class PlayBoardProcessor():
 
         return list_shapes
 
-    def get_move(self, img):
+    def detect_board(self, img):
         number_of_inner_corners = (self.BOARD_SIZE - 1, self.BOARD_SIZE - 1)
-
-        grayscaled_image = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-
-        grayscaled_image = cv2.medianBlur(grayscaled_image, 13)
-       
+        grayscaled_image = cv2.medianBlur(cv2.cvtColor(img, cv2.COLOR_BGR2GRAY), 13)
         ret, inner_corners = cv2.findChessboardCornersSB(grayscaled_image, number_of_inner_corners,
                                                 flags = cv2.CALIB_CB_EXHAUSTIVE + cv2.CALIB_CB_ACCURACY )
     
         if not ret:
             print("no chessboard detected at first")
             ret, inner_corners = cv2.findChessboardCorners(grayscaled_image, number_of_inner_corners, flags = cv2.CALIB_CB_PLAIN + cv2.CALIB_CB_FAST_CHECK )
-        
+        if not ret:
+            print("no chessboard detected at second")
+            ret, inner_corners = cv2.findChessboardCorners(img, number_of_inner_corners)
+        if not ret:
+            print("no chessboard detected at third")
+            ret, inner_corners = cv2.findChessboardCornersSB(grayscaled_image, number_of_inner_corners,
+                                                flags = cv2.CALIB_CB_EXHAUSTIVE + cv2.CALIB_CB_ACCURACY )
+        return ret, inner_corners
+
+    def get_move(self, img):
+        grayscaled_image = cv2.medianBlur(cv2.cvtColor(img, cv2.COLOR_BGR2GRAY), 13)
+        ret, inner_corners = self.detect_board(img)
         if ret:
             print("Chessboard detected")
             inner_corners = cv2.cornerSubPix(grayscaled_image, inner_corners, (11, 11), (-1, -1), 
@@ -199,21 +206,22 @@ class PlayBoardProcessor():
 
             list_human_moves = []
             for piece in self.pieces:#piece has the following type: [color,(x,y)]
-                if piece not in self.previous_state_board and piece[0]==self.COLOR_TO_DETECT:
+                if piece not in self.previous_state_board and piece[0] == self.COLOR_TO_DETECT:
                     print(piece,"detected")
                     list_human_moves.append(piece[1])
 
             match len(list_human_moves):
                 case 0:
-                    print("No moves detected")
-                    return None, None,"no moves detected"
+                    logger.info("No moves detected")
+                    return None, None, "no moves detected"
                 case 1:
-                    self.previous_state_board = self.pieces
-                    return list_human_moves[0], img_with_corners,None # human_move_list is a list with one item in this case
+                    self.previous_state_board = self.pieces  # only add the pieces to the board if there is only one move
+                    logger.info(f"Move detected: {list_human_moves[0]}")
+                    return list_human_moves[0], img_with_corners, None  # human_move_list is a list with one item in this case
                 case _:
+                    logger.warning("Multiple moves detected")
                     return list_human_moves, None, "multiple moves detected"
 
         else:
             print("No chessboard detected")
             return None, None,"no chessboard detected"
-            #todo: add backup if possible

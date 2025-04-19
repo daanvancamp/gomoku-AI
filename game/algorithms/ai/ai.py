@@ -23,7 +23,7 @@ EPSILON_DECAY_RATE = 0.999
 class ConvNet(nn.Module):
 	def __init__(self, input_dim, hidden_dim, output_dim):
 		super(ConvNet, self).__init__()
-		self.list_dropout_rates=[0.05,0.1,0.2,0.25,0.3,0.35,0.4,0.45,0.5] #the other values aren't used, but are logically equivalent.
+		self.list_dropout_rates = [0.05,0.1,0.2,0.25,0.3,0.35,0.4,0.45,0.5] #the other values aren't used, but are logically equivalent.
 		# Define your CNN architecture here
 		self.layer1 = torch.nn.Sequential(
 			torch.nn.Conv2d(3, hidden_dim, kernel_size=5, stride=1, padding=2),
@@ -82,13 +82,14 @@ class AI_Algorithm:
 		self.BOARD_SIZE = _board_size
 		self.board = None
 		self.gamma = 0.2
-		self.epsilon = 0.25
+		self.epsilon = 0.25 # random exploration rate
 		self.memory = deque(maxlen=MAX_MEMORY)
 		self.model = self.build_model(self.BOARD_SIZE)
 		self.optimizer= optim.SGD(params=self.model.parameters(), lr=self.learning_rate)
 		self.criterion = nn.MSELoss()
 		self.loss = 0
 		self.train = False
+
 		self.allow_overrule = True
 		self.current_player_id = None
 		self.threat_moves =[]
@@ -392,14 +393,13 @@ class AI_Algorithm:
 		attempts = 0
 		max_attempts = 70
 		while action is None:
-			attempts+=1
-			if attempts>max_attempts:
+			attempts += 1
+			if attempts > max_attempts:
 				action = random.choice(valid_moves) #form: (x,y), move is completely random after max_attempts
 				if action is None:
 					raise Exception("A random move couldn't be found")
 				print("move not found, random move chosen")
 				 
-			# if no action, switch to exploration
 			else:
 				action = self.id_to_move(self.get_random_action(), valid_moves)
 		# Decay Epsilon Over Time
@@ -512,5 +512,5 @@ class AI_Algorithm:
 			if new_normalized_score < 0:
 				new_normalized_score = 0
 			scores_normalized.append(new_normalized_score)
-		return max_score, scored_board, scores_normalized#return the highest score, the board with scores and the normalised scores
+		return max_score, scored_board, scores_normalized#return the highest score, the board with scores and the normalized scores
 

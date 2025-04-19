@@ -1,6 +1,6 @@
 # Gomoku-AI
 
-A sophisticated implementation of the Gomoku (Five in a Row) game with artificial intelligence and webcam support for physical game boards. The updated recognition system is integrated into this project, while the original version can be found at: https://github.com/daanvancamp/five_in_a_row_recognition
+A sophisticated implementation of the Gomoku (Five in a Row) game with artificial intelligence and webcam support for physical game boards. The updated recognition system is integrated into this project (file 'playboard_processor'), while the original version can be found at: https://github.com/daanvancamp/five_in_a_row_recognition
 
 ## Development Timeline
 

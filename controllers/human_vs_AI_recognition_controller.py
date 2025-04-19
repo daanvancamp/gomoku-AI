@@ -20,7 +20,7 @@ class Human_vs_AI_RecognitionController(controller.BaseController):
 		AI_player = self.game.player1 if color_human != "red" else self.game.player2
 		AI_player.load_model(modelname,False)
 		AI_player.set_allow_overrule(allow_overrule)
-		
+
 		self.set_up_recognition(color_human)
 
 		if self.game.player1.type=="AI": #player 1 always plays red and begins
