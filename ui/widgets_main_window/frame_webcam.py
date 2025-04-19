@@ -48,6 +48,7 @@ class FrameWebcam(tk.Frame):
 			if not self.master.controller.cap.isOpened():
 				sleep(0.5) #minimise CPU usage
 		self.after_id = self.master.after(20, self.update_video_feed)
+		self.label_videofeed.config(text="", bg="green")
 	
 	def show_board(self,frame_board):
 		img = Image.fromarray(frame_board)
