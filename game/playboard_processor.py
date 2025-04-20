@@ -144,7 +144,7 @@ class PlayBoardProcessor():
                     min_distance = distance
                     closest_center = center
         
-            max_distance = ((self.avg_horizontal+self.avg_vertical)/2)*0.75
+            max_distance = ((self.avg_horizontal+self.avg_vertical)/2)*0.6
 
             if min_distance>max_distance:
                 continue
