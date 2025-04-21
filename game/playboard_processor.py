@@ -215,9 +215,9 @@ class PlayBoardProcessor():
                     logger.info("No moves detected")
                     return None, None, "no moves detected"
                 case 1:
-                    self.previous_state_board = self.pieces  # only add the pieces to the board if there is only one move
+                    self.previous_state_board = self.pieces  # only add the pieces to the board if there is only one move, the user has to try again in all other cases
                     logger.info(f"Move detected: {list_human_moves[0]}")
-                    return list_human_moves[0], img_with_corners, None  # human_move_list is a list with one item in this case
+                    return list_human_moves[0], img_with_corners, None  # human_move_list is a list containing one item in this case
                 case _:
                     logger.warning("Multiple moves detected")
                     return list_human_moves, None, "multiple moves detected"

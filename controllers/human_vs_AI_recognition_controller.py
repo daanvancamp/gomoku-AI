@@ -42,7 +42,7 @@ class Human_vs_AI_RecognitionController(controller.BaseController):
 		human_move, edited_frame, error_message = self.playboard_processor.get_move(frame)
 		if error_message is None:
 			print(human_move)
-			speak_coordinates(*human_move,self.game.current_player.type)
+			#speak_coordinates(*human_move,self.game.current_player.type)
 			self.human_put_piece(*human_move)
 			self.view.frame_webcam.show_board(edited_frame)
 		else:
@@ -88,7 +88,7 @@ class Human_vs_AI_RecognitionController(controller.BaseController):
 		self.game.current_player.final_action = action
 		self.game.current_player.moves += 1
 
-		speak_coordinates(*action,self.game.current_player.type)
+		#speak_coordinates(*action,self.game.current_player.type)
 		self.game.put_piece(*action)
 		self.view.draw_pieces(self.game.board.board)
 		self.view.window_mode = ui.main_window.WindowMode.recognition
